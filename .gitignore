@@ -1,0 +1,5 @@
+# Keep generated local state and operating-system files out of the shared SUEDE repository.
+.DS_Store
+.wiki/
+__pycache__/
+*.py[cod]
