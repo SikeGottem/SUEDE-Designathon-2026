@@ -1,0 +1,209 @@
+<!doctype html>
+<!-- Exploratory SUEDE pitch deck: Jobs-style diagnosis of an unwritten social rule. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>warm & fuzzies · exploratory pitch</title>
+  <style>
+    @font-face { font-family: Gaegu; src: url("assets/gaegu.woff2") format("woff2"); font-display: swap; }
+    :root { --navy:#0B2858; --paper:#FFF; --ink:var(--navy); --enter:cubic-bezier(.23,1,.32,1); --move:cubic-bezier(.77,0,.175,1); }
+    * { box-sizing:border-box; }
+    html,body { margin:0; min-height:100%; background:var(--navy); color:var(--ink); font-family:Gaegu, "Comic Sans MS", cursive; }
+    button { font:inherit; }
+    #shell { width:100vw; height:100vh; overflow:hidden; position:relative; background:var(--navy); }
+    #deck { width:1600px; height:900px; position:absolute; left:50%; top:50%; transform-origin:center; background:var(--paper); overflow:hidden; }
+    .slide { position:absolute; inset:0; display:none; padding:64px 80px 54px; background:var(--paper); color:var(--ink); }
+    .slide.active { display:block; }
+    .slide.navy, .slide.receiver-full { background:var(--navy); color:var(--paper); }
+    .meta, .source, .control, .axis, .quiet, .status { font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:.045em; font-size:14px; line-height:1.35; text-transform:uppercase; color:rgb(11 40 88 / .72); }
+    .navy .meta,.navy .source,.navy .control,.navy .axis,.navy .quiet,.navy .status,.receiver-full .meta,.receiver-full .source,.receiver-full .control,.receiver-full .axis,.receiver-full .quiet,.receiver-full .status { color:rgb(255 255 255 / .76); }
+    .meta { position:absolute; top:30px; left:80px; z-index:5; }
+    .source { position:absolute; left:80px; bottom:58px; max-width:75%; font-size:11px; z-index:5; }
+    .slide-count { display:none; }
+    h1,h2,p { margin:0; }
+    .headline { font-size:70px; line-height:.9; font-weight:400; max-width:1080px; letter-spacing:-.025em; }
+    .headline.large { font-size:96px; max-width:1190px; }
+    .headline.center { position:absolute; inset:0; display:grid; place-items:center; text-align:center; padding:90px 220px; }
+    .sentence { font-size:43px; line-height:1; padding:20px 25px 16px; border:2px solid currentColor; display:inline-block; transform:rotate(-1.3deg); background:var(--paper); }
+    .navy .sentence { background:var(--navy); }
+    .rule { height:2px; background:currentColor; transform:rotate(-.4deg); opacity:.9; }
+    .build { opacity:0; translate:0 18px; transition:opacity 190ms var(--enter),translate 190ms var(--enter); pointer-events:none; }
+    .build.show { opacity:1; translate:none; pointer-events:auto; }
+    .move { transition:all 480ms var(--move); }
+    .map { position:absolute; left:140px; right:125px; top:215px; bottom:116px; border-left:2px solid currentColor; border-bottom:2px solid currentColor; }
+    .map:before,.map:after { content:""; position:absolute; background:currentColor; width:12px; height:2px; }
+    .map:before { right:-2px; bottom:-1px; transform:rotate(35deg); transform-origin:right; }
+    .map:after { left:-2px; top:-1px; transform:rotate(-55deg); transform-origin:left; }
+    .axis.x { position:absolute; right:0; bottom:-48px; font-size:18px; }
+    .axis.y { position:absolute; left:-111px; top:4px; width:210px; transform:rotate(-90deg); transform-origin:left top; font-size:18px; }
+    .point { position:absolute; display:flex; align-items:center; gap:12px; font-size:28px; white-space:nowrap; }
+    .point:before { content:""; width:13px; height:13px; border:2px solid currentColor; background:var(--paper); transform:rotate(45deg); }
+    .navy .point:before { background:var(--navy); }
+    .chat { right:48px; bottom:70px; }
+    .letter { left:90px; top:76px; }
+    .empty { right:210px; top:132px; font-size:36px; opacity:.7; }
+    .caption { position:absolute; right:124px; top:155px; }
+    .tuesday .sentence { position:absolute; left:480px; top:390px; width:620px; transform:rotate(-1.3deg); }
+    .occasion { position:absolute; left:160px; top:380px; font-size:52px; }
+    .occasion-alt { top:474px; }
+    .occasion-strike { position:absolute; left:151px; top:420px; width:190px; height:3px; background:currentColor; transform:rotate(-5deg); }
+    .interpretations { position:absolute; right:125px; top:352px; width:320px; font-size:34px; line-height:1.14; }
+    .interpretations p { border-bottom:2px solid currentColor; padding:13px 0 6px; transform:rotate(-1deg); }
+    .chain { position:absolute; left:112px; right:112px; top:340px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .chain .node { width:210px; min-height:120px; display:grid; place-items:center; text-align:center; font-size:33px; line-height:.92; border:2px solid currentColor; padding:16px; transform:rotate(var(--r,0deg)); }
+    .chain .arrow { flex:1; height:2px; background:currentColor; position:relative; }
+    .chain .arrow:after { content:""; position:absolute; right:0; top:-5px; width:11px; height:11px; border-right:2px solid currentColor; border-top:2px solid currentColor; transform:rotate(45deg); }
+    .final-rule { position:absolute; left:50%; bottom:115px; transform:translateX(-50%); width:1030px; text-align:center; font-size:50px; line-height:.95; }
+    .evidence { position:absolute; left:150px; right:150px; top:255px; bottom:130px; display:grid; grid-template-columns:1fr 1fr; gap:110px; }
+    .evidence .side { border-top:2px solid currentColor; padding-top:30px; font-size:42px; line-height:.95; }
+    .evidence .arrowbig { position:absolute; left:49%; top:44%; font-size:70px; }
+    .boundary { position:absolute; left:150px; right:150px; bottom:104px; font-size:20px; line-height:1.1; }
+    .contract { position:absolute; inset:200px 120px 100px; }
+    .note { position:absolute; left:50%; top:48%; transform:translate(-50%,-50%) rotate(-1deg); border:2px solid currentColor; width:360px; min-height:180px; display:grid; place-items:center; text-align:center; font-size:38px; line-height:.95; padding:22px; }
+    .condition { position:absolute; width:275px; font-size:34px; line-height:.9; }
+    .condition:before { content:""; display:block; width:26px; height:26px; border:2px solid currentColor; transform:rotate(45deg); margin-bottom:13px; }
+    .c1 { left:20px; top:25px; } .c2 { right:25px; top:38px; } .c3 { left:65px; bottom:12px; } .c4 { right:12px; bottom:15px; }
+    .scripts { position:absolute; inset:215px 110px 120px; }
+    .script-route { position:absolute; left:0; right:0; top:58px; width:100%; height:150px; overflow:visible; fill:none; stroke:currentColor; stroke-width:2; }
+    .script-route path { stroke-dasharray:7 8; }
+    .script-note { position:absolute; left:440px; top:16px; z-index:2; width:500px; border:2px solid currentColor; padding:14px 18px 10px; text-align:center; font-size:26px; white-space:nowrap; background:var(--paper); transform:rotate(-1deg); transition:left 480ms var(--move),top 480ms var(--move),opacity 190ms var(--enter),translate 190ms var(--enter); }
+    .script-stop { position:absolute; width:330px; font-size:31px; line-height:.96; }
+    .script-stop h3 { margin:0 0 15px; font-size:45px; line-height:.9; font-weight:400; }
+    .script-stop p { border-top:2px solid currentColor; padding-top:14px; }
+    .chat-stop { left:0; top:285px; }
+    .paper-stop { left:500px; top:225px; }
+    .test-stop { right:0; top:285px; }
+    .social-scripts-slide.script-chat .script-note { left:0; top:150px; }
+    .social-scripts-slide.script-paper .script-note { left:440px; top:90px; }
+    .social-scripts-slide.script-test .script-note { left:880px; top:150px; }
+    .social-scripts-slide.script-paper .chat-stop,.social-scripts-slide.script-test .chat-stop,.social-scripts-slide.script-test .paper-stop { opacity:.38; }
+    .risk-line { max-width:90%; font-size:16px; }
+    .prototype { display:grid; grid-template-columns:1fr 460px; gap:110px; align-items:center; height:100%; padding:90px 60px 28px; }
+    .device { width:290px; border:2px solid currentColor; display:block; transform:rotate(1.5deg); }
+    .device.large { width:360px; }
+    .device-wrap { position:relative; display:grid; place-items:center; }
+    .device-wrap:before { content:""; position:absolute; width:345px; height:660px; border:2px solid currentColor; transform:rotate(-2deg); }
+    .proto-copy .headline { max-width:800px; }
+    .proto-copy .sub { font-size:39px; line-height:1; margin-top:45px; max-width:670px; }
+    .path { position:absolute; left:120px; right:110px; top:325px; height:300px; display:flex; justify-content:space-between; align-items:center; }
+    .path:before { content:""; position:absolute; left:30px; right:30px; top:50%; height:2px; background:currentColor; transform:rotate(-1deg); }
+    .path-step { position:relative; width:180px; text-align:center; font-size:31px; line-height:.94; background:var(--paper); padding:18px 10px; }
+    .navy .path-step { background:var(--navy); }
+    .path-step:before { content:""; display:block; width:24px; height:24px; border:2px solid currentColor; margin:0 auto 14px; transform:rotate(45deg); }
+    .annotate { position:absolute; font-size:31px; line-height:.94; width:260px; }
+    .annotate:before { content:""; display:block; width:90px; height:2px; background:currentColor; margin-bottom:12px; transform:rotate(var(--line,-8deg)); }
+    .receiver { position:absolute; inset:105px 80px 55px; transition:background 480ms var(--move),color 480ms var(--move); }
+    .arrival-device { position:absolute; left:165px; top:95px; }
+    .arrival-device .device { width:270px; }
+    .receiver-copy { position:absolute; left:560px; top:150px; width:760px; }
+    .receiver-copy .headline { font-size:76px; }
+    .actions { font-size:38px; margin-top:55px; letter-spacing:.06em; }
+    .no-receipt { font-size:23px; margin-top:24px; }
+    .reveal-state { opacity:0; pointer-events:none; position:absolute; inset:0; background:var(--navy); color:var(--paper); transition:opacity 480ms var(--move); }
+    .receiver.revealed .reveal-state { opacity:1; pointer-events:auto; }
+    .receiver.revealed .arrival-state { opacity:0; }
+    .reveal-device { position:absolute; right:175px; top:36px; }
+    .reveal-device .device { width:300px; border-color:var(--paper); }
+    .echo { position:absolute; left:125px; top:130px; width:680px; font-size:74px; line-height:.84; }
+    .echo small { font-size:34px; display:block; margin-top:45px; }
+    .test { position:absolute; left:135px; right:135px; top:255px; display:grid; grid-template-columns:250px 1fr 1fr 1fr; gap:0; border-top:2px solid currentColor; border-left:2px solid currentColor; }
+    .test > div { min-height:130px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; padding:20px; font-size:31px; line-height:.95; }
+    .test .tablehead { font-size:20px; font-family:ui-sans-serif,system-ui,sans-serif; text-transform:uppercase; letter-spacing:.04em; }
+    .test .condition-name { font-size:38px; }
+    .test-note { position:absolute; left:138px; bottom:135px; font-size:35px; max-width:1050px; line-height:.98; }
+    .occupy { position:absolute; right:170px; top:255px; font-size:35px; width:390px; }
+    .occupy .sentence { font-size:32px; margin-top:25px; }
+    #hud { position:absolute; inset:auto 28px 23px; height:18px; color:var(--navy); font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; display:flex; align-items:center; justify-content:space-between; z-index:50; }
+    #progress { position:absolute; left:0; bottom:0; height:4px; background:var(--navy); transform-origin:left; transition:width 200ms var(--enter); z-index:51; }
+    #shell.on-navy #hud { color:var(--paper); }
+    #shell.on-navy #progress { background:var(--paper); }
+    .hotspot { position:absolute; inset:0; cursor:pointer; z-index:40; background:transparent; border:0; }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .controls button { color:inherit; background:none; border:1px solid currentColor; border-radius:0; padding:3px 7px; cursor:pointer; }
+    .skip { position:absolute; right:78px; top:30px; z-index:45; background:none; color:inherit; border:1px solid currentColor; border-radius:0; font-family:ui-sans-serif,system-ui,sans-serif; font-size:12px; letter-spacing:.04em; padding:5px 8px; opacity:0; }
+    .skip:focus-visible { opacity:1; }
+    .slide.active .headline,.slide.active .map,.slide.active .prototype,.slide.active .path,.slide.active .chain { animation:in 200ms var(--enter) both; }
+    @keyframes in { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none} }
+    @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation-duration:0ms!important; transition-duration:0ms!important; scroll-behavior:auto!important; } }
+    @page { size:1600px 900px; margin:0; }
+    @media print { html,body { print-color-adjust:exact; -webkit-print-color-adjust:exact; } #shell { display:block; height:auto; } #deck { position:relative; left:0; top:0; width:1600px!important; height:auto; transform:none!important; overflow:visible; } .slide { display:block!important; position:relative; width:1600px; height:900px; overflow:hidden; break-after:page; page-break-after:always; } .build { opacity:1!important; translate:none!important; } .script-note { left:880px!important; top:150px!important; } #hud,#progress,.hotspot,.skip { display:none!important; } .slide[data-title="Receiver"] { background:var(--navy); color:var(--paper); } .slide[data-title="Receiver"] .meta,.slide[data-title="Receiver"] .source { color:rgb(255 255 255 / .76); } .receiver { inset:0!important; } .receiver .reveal-state { opacity:1!important; position:absolute!important; } .receiver .arrival-state { opacity:0!important; } }
+  </style>
+</head>
+<body>
+<main id="shell"><section id="deck" aria-live="polite" aria-label="Exploratory SUEDE pitch deck">
+  <article class="slide active" data-title="Opening" data-steps="2">
+    <div class="meta">SUEDE 2026 · team details pending</div><button class="skip" aria-label="Advance build">next ↵</button>
+    <h1 class="headline large" style="position:absolute;left:160px;top:270px;max-width:920px">We have never had more ways to talk.</h1>
+    <div class="rule build" data-step="1" style="position:absolute;left:160px;right:190px;top:495px"></div><p class="headline build" data-step="1" style="position:absolute;left:160px;top:548px;font-size:61px;max-width:970px">So why can one honest sentence still feel hard to send?</p>
+    <div class="sentence build" data-step="2" style="position:absolute;right:160px;bottom:145px;max-width:760px;text-align:center;font-size:38px">I really appreciate having you in my life.</div>
+    <span class="slide-count status">01 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Social map" data-steps="3">
+    <div class="meta">THE PROBLEM · A SOCIAL MAP</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">Our easiest channels feel ordinary. Our most deliberate ones feel exceptional.</h2>
+    <p class="caption status">conceptual map · not measured data</p><div class="map"><span class="axis x">normal on an ordinary day</span><span class="axis y">clearly deliberate</span><div class="point chat build" data-step="1">everyday chat</div><div class="point letter build" data-step="2">birthday card / physical letter</div><div class="point empty build" data-step="3">?</div></div><span class="slide-count status">02 / 12</span>
+  </article>
+
+  <article class="slide tuesday" data-title="Tuesday" data-steps="4">
+    <div class="meta">THE MISSING SPACE · HYPOTHESIS</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline" style="position:absolute;left:145px;top:110px;max-width:1120px">Same words. Remove the occasion.</h2>
+    <p class="occasion build" data-step="1">birthday</p><div class="sentence build move" data-step="2">I really appreciate having you in my life.</div><span class="occasion-strike build" data-step="3" aria-hidden="true"></span><p class="occasion occasion-alt build" data-step="3">ordinary Tuesday</p><div class="interpretations build" data-step="4"><p>Why now?</p><p>Is something wrong?</p><p>Do I need to say it back?</p></div><span class="slide-count status">03 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Causal rule" data-steps="6">
+    <div class="meta">THE CAUSE · HYPOTHESIS</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline" style="margin-left:45px">The occasion was doing the explaining.</h2>
+    <div class="chain"><div class="node build" data-step="1" style="--r:-2deg">care<br>exists</div><i class="arrow build" data-step="2"></i><div class="node build" data-step="2" style="--r:1deg">no recognised<br>occasion</div><i class="arrow build" data-step="3"></i><div class="node build" data-step="3" style="--r:-1deg">meaning feels<br>loaded</div><i class="arrow build" data-step="4"></i><div class="node build" data-step="4" style="--r:2deg">sender softens<br>or withholds</div><i class="arrow build" data-step="5"></i><div class="node build" data-step="5" style="--r:-1deg">friend never<br>receives it</div></div>
+    <p class="final-rule build" data-step="6">The unwritten rule: deliberate appreciation is expected to have a reason.</p><span class="slide-count status">04 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Evidence" data-steps="3">
+    <div class="meta">EVIDENCE · NARROW AND DIRECTIONAL</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">This is a prediction problem, not a lack-of-care problem.</h2>
+    <div class="evidence"><section class="side build" data-step="1">Senders of gratitude letters<br><strong>overpredicted awkwardness.</strong></section><b class="arrowbig build" data-step="2">→</b><section class="side build" data-step="2">They <strong>underestimated</strong> how positively recipients would respond.</section></div>
+    <p class="boundary build" data-step="3">That does not prove every friendship shares this norm, or that our product fixes it.</p><p class="source">Kumar &amp; Epley, 2018 · Psychological Science · DOI 10.1177/0956797618772506</p><span class="slide-count status">05 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Receiving contract" data-steps="4">
+    <div class="meta">DESIGN REQUIREMENT · PROVISIONAL</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">We are testing a different receiving contract.</h2><div class="contract"><div class="note">the thought<br>you already had</div><p class="condition c1 build" data-step="1">self-authored</p><p class="condition c2 build" data-step="2">clearly deliberate</p><p class="condition c3 build" data-step="3">receiver-paced</p><p class="condition c4 build" data-step="4">can end without requiring a performance back</p></div><span class="slide-count status">06 / 12</span>
+  </article>
+
+  <article class="slide social-scripts-slide" data-title="Social scripts" data-steps="4">
+    <div class="meta">MEDIUM TEST · PROPOSED COMPARISON</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">The same words enter three different social scripts.</h2><div class="scripts"><svg class="script-route build" data-step="1" viewBox="0 0 1380 150" preserveAspectRatio="none" aria-hidden="true"><path d="M165 116C360 3 500 7 665 76S1018 167 1215 116" /></svg><div class="script-note build" data-step="1">I really appreciate having you in my life.</div><section class="script-stop chat-stop build" data-step="2"><h3>in everyday chat</h3><p>normal<br>immediate<br>reply-shaped</p></section><section class="script-stop paper-stop build" data-step="3"><h3>as a physical letter</h3><p>deliberate · keepable<br>occasion-coded<br>+ logistical friction</p></section><section class="script-stop test-stop build" data-step="4"><h3>inside our test object</h3><p>private · receiver-controlled<br>mixed media · replayable<br><span class="status">what the prototype proposes</span></p></section></div><p class="source risk-line">Risk: craft can make the message feel more loaded. · Not better than paper. Built for different conditions.</p><span class="slide-count status">07 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Prototype" data-steps="2">
+    <div class="meta">WORKING PROTOTYPE · EXPLORATORY</div><button class="skip" aria-label="Advance build">next ↵</button><div class="prototype"><div class="proto-copy"><h2 class="headline large">We built one way to test that contract.</h2><p class="sub build" data-step="1">warm &amp; fuzzies</p><p class="sub build" data-step="2">One private, made object—not another chat turn.</p></div><div class="device-wrap build" data-step="2"><img class="device large" src="assets/product-home.png" alt="Current prototype home screen"></div></div><p class="source">Product state shown is the current working prototype, not outcome evidence.</p><span class="slide-count status">08 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Sender" data-steps="4">
+    <div class="meta">SENDER · ACTUAL CURRENT PROTOTYPE STATE</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">The sender makes the meaning visible.</h2><div class="device-wrap" style="position:absolute;right:360px;top:175px"><img class="device large" src="assets/sender-studio.png" alt="Current sender studio prototype screen"></div><p class="annotate build" data-step="1" style="left:135px;top:310px;--line:-10deg">words remain theirs</p><p class="annotate build" data-step="2" style="left:170px;top:480px;--line:7deg">effort is visible</p><p class="annotate build" data-step="3" style="right:50px;top:310px;--line:10deg">intimacy is not generated</p><p class="status build" data-step="4" style="position:absolute;right:130px;bottom:130px">working prototype</p><p class="source">Source: current local product prototype state, 5 September 2026.</p><span class="slide-count status">09 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Receiver" data-steps="2">
+    <div class="meta">RECEIVER · THE THRESHOLD</div><button class="skip" aria-label="Advance build">next ↵</button><div class="receiver" id="receiver"><div class="arrival-state"><div class="arrival-device"><img class="device" src="assets/arrival.png" alt="Current prototype arrival screen"></div><div class="receiver-copy"><h2 class="headline">Opening changes whose space it is.</h2><p class="actions build" data-step="1">open now · another time · not for me</p><p class="no-receipt build status" data-step="1">the receiver chooses when—or whether—to enter · no sender-visible receipt</p></div></div><div class="reveal-state"><p class="echo">I really appreciate having you in my life.<small>They can keep it. They can close it. They do not owe a performance back.</small></p><div class="reveal-device"><img class="device" src="assets/receiver-reveal.png" alt="Current receiver reveal prototype screen"></div><p class="actions" style="position:absolute;left:125px;bottom:115px">keep · close · remove</p></div></div><p class="source">The navy transition is a working interaction hypothesis, not proof of reduced pressure.</p><span class="slide-count status">10 / 12</span>
+  </article>
+
+  <article class="slide navy" data-title="Test" data-steps="3">
+    <div class="meta">NEXT TEST · NOT YET RUN</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">What we still need to prove.</h2><div class="test"><div class="tablehead build" data-step="1">same words</div><div class="tablehead build" data-step="1">chat</div><div class="tablehead build" data-step="1">physical</div><div class="tablehead build" data-step="1">prototype</div><div class="condition-name build" data-step="2">sender expectation</div><div class="build" data-step="2">predicted awkwardness<br>reply pressure</div><div class="build" data-step="2">predicted awkwardness<br>reply pressure</div><div class="build" data-step="2">predicted awkwardness<br>reply pressure</div><div class="condition-name build" data-step="3">receiver interpretation</div><div class="build" data-step="3">warmth / debt / alarm / normal</div><div class="build" data-step="3">warmth / debt / alarm / normal</div><div class="build" data-step="3">warmth / debt / alarm / normal</div></div><p class="test-note">Does it reduce hesitation without creating new pressure?</p><span class="slide-count status">11 / 12</span>
+  </article>
+
+  <article class="slide" data-title="Close" data-steps="3">
+    <div class="meta">CLOSING · TESTING POSITION</div><button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline large" style="max-width:1020px">Care should not need an occasion to be legible.</h2><div class="map" style="top:305px;bottom:135px"><span class="axis x">normal on an ordinary day</span><span class="axis y">clearly deliberate</span><div class="point chat show">everyday chat</div><div class="point letter show">birthday card / physical letter</div><div class="point empty build" data-step="1" style="right:155px;top:76px">working prototype</div><div class="occupy build" data-step="2">A hypothesis and testing position, not a win.<br><div class="sentence">made object</div></div></div><p class="status build" data-step="3" style="position:absolute;left:145px;bottom:70px">working demo · QR/no-device route pending</p><span class="slide-count status">12 / 12</span>
+  </article>
+</section><div id="progress" aria-hidden="true"></div><div id="hud"><span id="hudtitle">01 · Opening</span><div class="controls"><button id="prev" aria-label="Previous slide">←</button><button id="full" aria-label="Toggle fullscreen">fullscreen</button><button id="next" aria-label="Next build or slide">→</button></div></div></main>
+<script type="module">
+  import { prepare, layout } from './assets/pretext.js';
+  const deck = document.querySelector('#deck'), slides = [...document.querySelectorAll('.slide')], hud = document.querySelector('#hudtitle'), progress = document.querySelector('#progress');
+  let index = 0, step = 0;
+  const params = new URLSearchParams(location.search); const qSlide = Number(params.get('slide')); const qStep = Number(params.get('step'));
+  function fit(){ const s=Math.min(innerWidth/1600,innerHeight/900); deck.style.transform=`translate(-50%,-50%) scale(${s})`; }
+  async function typeset(){ await document.fonts.ready; document.querySelectorAll('.headline,.sentence,.sub').forEach(el=>{ const cs=getComputedStyle(el), width=el.clientWidth||1100; try { const p=prepare(el.textContent, cs.font); layout(p,width,parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)); } catch(_){} }); }
+  function updateURL(){ history.replaceState(null,'',`?slide=${index+1}&step=${step}`); }
+  function render(){ slides.forEach((s,i)=>s.classList.toggle('active',i===index)); const active=slides[index]; active.querySelectorAll('.build').forEach(el=>el.classList.toggle('show',Number(el.dataset.step)<=step)); const social=slides[6]; social.classList.remove('script-chat','script-paper','script-test'); if(index===6){if(step===2)social.classList.add('script-chat');if(step===3)social.classList.add('script-paper');if(step>=4)social.classList.add('script-test');} const receiver=document.querySelector('#receiver'); const receiverOpen=index===9&&step>=2; if(receiver) receiver.classList.toggle('revealed',receiverOpen); slides[9].classList.toggle('receiver-full',receiverOpen); document.querySelector('#shell').classList.toggle('on-navy',active.classList.contains('navy')||receiverOpen); hud.textContent=`${String(index+1).padStart(2,'0')} · ${active.dataset.title}`; progress.style.width=`${((index+(step/Math.max(1,Number(active.dataset.steps))))/slides.length)*100}%`; updateURL(); }
+  function next(){ const max=Number(slides[index].dataset.steps)||0; if(step<max){step++;} else if(index<slides.length-1){index++;step=0;} render(); }
+  function prev(){ if(step>0){step--;} else if(index>0){index--;step=Number(slides[index].dataset.steps)||0;} render(); }
+  document.querySelector('#next').addEventListener('click',next); document.querySelector('#prev').addEventListener('click',prev); document.querySelectorAll('.skip').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();next()})); deck.addEventListener('click',e=>{ if(!e.target.closest('button'))next(); });
+  document.addEventListener('keydown',e=>{ if(['ArrowRight',' ','Enter','PageDown'].includes(e.key)){e.preventDefault();next()} if(['ArrowLeft','Backspace','PageUp'].includes(e.key)){e.preventDefault();prev()} if(e.key==='Home'){index=0;step=0;render()} if(e.key==='End'){index=slides.length-1;step=Number(slides[index].dataset.steps)||0;render()} if(e.key==='f'||e.key==='F')document.querySelector('#full').click(); });
+  document.querySelector('#full').addEventListener('click',()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen());
+  new ResizeObserver(()=>{fit();typeset()}).observe(document.documentElement); window.addEventListener('resize',fit); fit(); index=Number.isFinite(qSlide)&&qSlide>0&&qSlide<=slides.length?qSlide-1:0; step=Number.isFinite(qStep)&&qStep>=0?qStep:0; render(); typeset();
+</script></body></html>
