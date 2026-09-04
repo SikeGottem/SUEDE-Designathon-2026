@@ -130,7 +130,7 @@ receiver shelf -> open one kept object -> revisit one medium
 ## Compact visual contract
 
 - **Communication job:** make “complete when received” visible without needing narration.
-- **Source anchors:** the references' sparse black linework, `uglyhandwriting` type, large paper fields, small concrete drawings, and muted book-cover colour blocking; the transcript's envelope/letter reveal; voice/photo/song as memory material; the receiver's shelf or cabinet.
+- **Source anchors:** the references' sparse black linework, wonky Ugly Dave-like handwriting, large paper fields, small concrete drawings, and muted book-cover colour blocking; the transcript's envelope/letter reveal; voice/photo/song as memory material; the receiver's shelf or cabinet.
 - **Reference delta:** borrow the loose ink grammar, quiet density, and book-cover colour logic. Do not copy `grug`, its mascot, exact copy, screen layout, sunrise drawing, or brand proportions.
 - **Rejected default 1:** no gradient, glow, glass, or evenly distributed rainbow palette; each object or state gets one dominant book-cover field and at most one support colour.
 - **Rejected default 2:** no equal card grid, bento dashboard, or rounded container around every thought; a finite object needs hierarchy and open space.
@@ -153,7 +153,7 @@ receiver shelf -> open one kept object -> revisit one medium
 - Oxblood: `#651d25`
 - Amber: `#cf842b`
 - Colour rule: one dominant field plus one support colour per object or state; ink and paper remain constant.
-- Type: the supplied `uglyhandwriting.ttf` (`uglyhandwriting`, Medium) is the primary visible UI face. It is a real local font created with MyScriptFont, not an AI approximation. A system sans is reserved for hidden/debug utility text.
+- Type: locally bundled Gaegu Regular is the current open-licensed Ugly Dave-like stand-in for visible UI copy. The supplied `uglyhandwriting.ttf` remains a local fallback, and the stack is deliberately easy to replace after the team refines the final lettering. A system sans is reserved for hidden/debug utility text.
 - Variance: high enough to feel placed by hand, but no random rotation on functional labels.
 - Motion: one purposeful open/unfold sequence plus direct feedback for user actions; respect reduced motion.
 - Density: low. One decision per screen.

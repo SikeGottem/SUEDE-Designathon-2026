@@ -508,7 +508,7 @@ These must remain visible before a real service is claimed.
 
 ### Typography
 
-Use the local Ugly Handwriting font as the defining voice for headings, labels, captions, and the authored object in this prototype. If a critical legal, safety, or accessibility line becomes hard to read, a restrained readable companion face may support it without replacing the main voice.
+Use locally bundled Gaegu Regular as the current open-licensed Ugly Dave-like stand-in for headings, labels, captions, and the authored object in this prototype. Keep the prior local Ugly Handwriting font as a fallback, and keep the stack reversible while the team refines the final lettering. If a critical legal, safety, or accessibility line becomes hard to read, a restrained readable companion face may support it without replacing the main voice.
 
 ### Hand-drawn system
 
