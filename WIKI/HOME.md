@@ -39,6 +39,7 @@ The central belief is:
 - [[IDEAS]] - separate directions and their unresolved assumptions
 - [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
 - [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
+- [[FRIENDSHIP_APPRECIATION_QUESTION_BANK]] - unanswered adversarial questions attacking the friendship-appreciation problem and current digital-letter direction from every major lens
 - [[RULE_BANK]] - ninety precise rule hypotheses for wide problem discovery
 - [[CONCEPT_BANK]] - cross-disciplinary experience mechanisms and fast falsification tests
 - [[IDEA_SCAFFOLD]] - detailed intake, divergence, red-team and design-ready handoff
