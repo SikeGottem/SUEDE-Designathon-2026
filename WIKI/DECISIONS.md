@@ -320,6 +320,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: one timed live ideation session using the new brief, including whether it produces materially different mechanisms and a clearer next test.
 - Recommendation: use quick capture immediately, then run the full dossier only on the two or three directions that survive the first discussion.
 
+## 2026-09-04 - Choose friendship appreciation as the working rule and problem direction
+
+- Status: current
+- Decision: focus the next exploration cycle on the unwritten rule that direct, deliberate appreciation between friends is not expected on an ordinary day and may be read as unusually intense, romantic, farewell-like, alarming or response-seeking. Treat a deliberately authored digital keepsake as solution territory only; the audience, mechanism, medium and product remain unselected.
+- Reason: the team's discussion through question 29 repeatedly converged on appreciation already existing while expression, channel choice and anticipated interpretation create the difficult moment. The team also identified a possible gap between low-signal chat and high-friction physical letters.
+- Evidence: the [latest meeting transcript](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md) records the convergence and personal examples. Published research in the [friendship-appreciation dossier](FRIENDSHIP_APPRECIATION_DOSSIER.md) supports a narrower sender prediction gap, but prevalence, receiver pressure, the target group and digital-medium advantage remain unverified.
+- Consequence: the team may continue the question bank while parallelising evidence synthesis, direct research preparation, medium comparisons, reversible technical experiments and pitch infrastructure. It may not treat the digital letter, scrapbook or app as selected, begin material UI or make final claims before the relevant gates pass.
+- Revisit when: questions 30–65 expose a different root cause or rule; direct sender and receiver evidence contradicts the framing; or a comparison shows ordinary chat, physical letters or a non-digital ritual performs better.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The direction identifies a specific unwritten expectation and aims primarily to redesign it. | The exact official 2026 wording and preferred brief verb remain unverified. |
+| Problem identification | strengthens | The team distinguishes existing appreciation from the moment of expression and interpretation. | The exact person, frequency, harm and enforcement mechanism lack direct evidence. |
+| Solution approach | unknown | Keeping the solution open preserves room for a cause-matched mechanism. | The digital direction may already anchor later reasoning. |
+| Design innovation | unknown | The rule offers richer territory than a generic messaging feature. | A digital letter or scrapbook alone is familiar and may only restyle the behaviour. |
+| Visual communication | neutral | No visual direction is selected. | Premature polish could make the current candidate appear more valid than it is. |
+| Presentation skills | strengthens | A shared working rule gives the team a clearer story to interrogate and retell. | A clean story could hide unresolved evidence. |
+| Evidence quality | unknown | The meeting provides authentic team anecdotes and a traceable rationale. | Most claims remain internal interpretation; no project test is planned or completed. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Current answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Appreciation may already be visible through action rather than words. | The direction does not treat action-based care as deficient, and people who do not want explicit appreciation may sit outside the eventual audience. | Which alternative cause best explains the behaviour? |
+| Behaviour and context | “Friendship” and “ordinary day” are still broad. | The difficult moment is provisionally expression, channel choice and anticipated interpretation. | Which real person and repeated situation should lead? |
+| Medium necessity | Digital may be a worse physical letter or an overproduced text. | It is only a candidate territory and must win a matched comparison. | What digital-only value preserves meaning? |
+| Alternatives | Text, voice, physical letters, practical care and social rituals may perform better. | Each remains a control rather than a dismissed workaround. | Which option best changes the rule? |
+| Human specificity | Some people dislike direct sentiment or use other care languages. | They are not assumed to share the problem. | Who actively wants this expression but lacks a workable channel? |
+| Inclusion and accessibility | Culture, disability and communication style can change the meaning of direct care. | Later design must support multiple forms and accessible equivalents. | Which differences materially change the rule and flow? |
+| Trust, safety and privacy | Contact may be unwanted, exposed or emotionally coercive. | Receiver agency and consent are requirements, not later polish. | What refusal, deletion and privacy model is safe? |
+| Failure and recovery | A message may be read as crisis, romance, farewell or obligation. | Those are central test conditions. | Can the experience correct a misreading without making it worse? |
+| Feasibility and demo truth | Rich media can produce spectacle without proof. | Only disposable feasibility work is currently allowed. | What smallest working flow proves the social mechanism? |
+| Incentives and second-order effects | The idea could create reply debt, performance or an effort arms race. | The receiving contract and repeated-use effects stay open. | Does the intervention reduce or intensify those effects? |
+| Simplicity and retellability | Several supporting rules may blur the primary one. | One ordinary-day appreciation rule leads; reciprocity and effort are supporting rules. | Can outsiders repeat the rule without the product explanation? |
+| Authorship and distinctiveness | AI or templates could manufacture intimate expression. | Humans own intimate content, selection, testing and final design. | What assistance remains authentic to both people? |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: continue question-led framing; build an evidence ledger; prepare and run consent-safe sender/receiver research; compare matched media; audit precedents; create rough, disposable stimuli and technical spikes; prepare the source, Q&A and deck infrastructure.
+- Blocking conditions: label internal conclusions as hypotheses; keep at least four mechanism-level alternatives alive; do not select the digital letter or build polished UI, production architecture or a final pitch; pass a new judge review before material design.
+- Weakest judging angle: evidence quality, because the team has conviction and anecdotes but no direct external validation or completed test.
+- Main trade-off: parallel preparation saves time, but visible digital artefacts could anchor the team before the cause and medium are proven.
+- Next evidence that could change the verdict: separate sender and receiver reactions to the same specific appreciation delivered through ordinary chat, a physical/crafted control and a rough digital artefact.
+- Recommendation: treat this as a chosen investigation, not a chosen product, and use the next cycle to make the rule and medium earn commitment.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

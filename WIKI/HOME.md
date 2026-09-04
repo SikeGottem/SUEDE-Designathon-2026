@@ -7,7 +7,7 @@ Ethan has supplied the working 2026 brief: “Design an experience that reveals,
 
 Every consequential decision must now pass the judging review in `WIKI/JUDGING.md` before it is approved or implemented.
 
-The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. Five live ideation recordings are preserved as raw sources and expanded into a research-backed initial report, 90 rule hypotheses and 103 cross-disciplinary concept cards. No concept has been selected. The pickup-sport app is an obvious control; the newer friendship-appreciation branch is also still a hypothesis. Both remain in comparison with status, safety, access, institutional, spatial, incentive and non-interaction mechanisms.
+The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. The live ideation recordings are preserved as raw sources and expanded into a research-backed initial report, 90 rule hypotheses and 103 cross-disciplinary concept cards. The team has chosen friendship appreciation as the working rule and problem direction, but no audience, mechanism or final solution has been selected. The pickup-sport app remains an obvious control rather than the lead.
 
 The idea scaffold and stress-test skill must turn contenders into design-ready packets before visual work. The three broad visual skills remain available for separate exploration, but each real artifact must declare one visual lead. Native Figma Design-file authoring is verified; Figma Slides still needs a native test.
 
@@ -38,8 +38,10 @@ The central belief is:
 - [[BRIEF]] - official question, constraints and interpretations
 - [[IDEAS]] - separate directions and their unresolved assumptions
 - [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
+- [[FRIENDSHIP_APPRECIATION_DIRECTION]] - compact source of truth for the chosen working rule, problem and open solution direction
 - [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
 - [[FRIENDSHIP_APPRECIATION_QUESTION_BANK]] - unanswered adversarial questions attacking the friendship-appreciation problem and current digital-letter direction from every major lens
+- [[TEAM_CATCHUP_DISCORD]] - ready-to-send catch-up draft for Akari and Chloe
 - [[RULE_BANK]] - ninety precise rule hypotheses for wide problem discovery
 - [[CONCEPT_BANK]] - cross-disciplinary experience mechanisms and fast falsification tests
 - [[IDEA_SCAFFOLD]] - detailed intake, divergence, red-team and design-ready handoff

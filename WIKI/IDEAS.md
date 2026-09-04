@@ -29,7 +29,7 @@ Before an idea is recommended, compared as a finalist or converted into material
 
 ## Open directions
 
-No direction is selected. The initial ideation sequence is preserved across five recordings and expanded in three layers:
+Friendship appreciation is the chosen working rule and problem direction. The exact audience, mechanism, medium and final solution remain unselected. The initial ideation sequence is preserved across its recordings and expanded in three layers:
 
 - [Initial ideation](INITIAL_IDEATION.md) — what the team said, the questions it raised, factual reality checks and the current tunnel-vision diagnosis
 - [Rule bank](RULE_BANK.md) — ninety precise unwritten-rule hypotheses across social, institutional, cultural, material and digital life
@@ -37,7 +37,7 @@ No direction is selected. The initial ideation sequence is preserved across five
 
 The pickup-sport listing idea remains the **obvious control**. Existing products already claim game discovery, solo registration and fill-in coordination; it should not become the lead merely because it was first. One hypothesis is that permission to enter an established group is invisible and the outsider bears most of the social risk, but it still needs comparison with status, safety, access, institutional burden, spatial design, incentives and cases where more interaction is not desirable.
 
-The friendship-appreciation branch is now more precise but remains open: direct care may feel unusually intense, a reminder may weaken perceived sincerity, an unexpected message may be read as alarm, and receiving it may create reply debt. Delayed letters and collaborative boards already exist, so a viable concept must change one of those rules rather than merely offer prettier scrapbooking. The complete evidence, product and precedent scan, problem decomposition and next research plan are in the [Friendship appreciation dossier](FRIENDSHIP_APPRECIATION_DOSSIER.md), with the deliberately unanswered challenge set in the [adversarial question bank](FRIENDSHIP_APPRECIATION_QUESTION_BANK.md).
+The [working direction](FRIENDSHIP_APPRECIATION_DIRECTION.md) is now explicit: direct appreciation between friends on an ordinary day can feel socially out of place, overly intense or response-seeking, even when the care itself already exists. A deliberately authored digital keepsake is the current solution territory, not a selected product. It must earn its medium against ordinary chat, voice, physical letters and non-digital rituals. The complete evidence, product and precedent scan is in the [Friendship appreciation dossier](FRIENDSHIP_APPRECIATION_DOSSIER.md), with the deliberately unanswered challenge set in the [adversarial question bank](FRIENDSHIP_APPRECIATION_QUESTION_BANK.md).
 
 Current open families include permission and group entry, invisible need and disclosure, commuter burden, hidden curricula, care and maintenance, status and voice, consent and graceful exit, algorithmic expectations, public-space choreography, cultural translation, conflict and repair, and the competition's own unwritten rules. These are search territories, not finalists.
 
