@@ -20,7 +20,7 @@
   --navy-deep: #081f4d;
   --paper: #ffffff;
   --warm-white: #f9f9d8;
-  --powder: #f2f0e9;
+  --powder: #f9f9d8;
   --butter: #eda343;
   --brand-slate: #5b7a85;
   --brand-rust: #b56d5f;
@@ -31,6 +31,7 @@
   --ink-rust: #85575a;
   --ink-ochre: #8d6c47;
   --ink-olive: #666d6d;
+  --muted-ink: #5b7a85;
   --envelope-rust: #f9f9d8;
   --envelope-rust-ink: #b56d5f;
   --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -1551,11 +1552,12 @@
 
 .story-layer-edit {
   position: absolute;
+  top: -50px;
   right: 0;
-  bottom: -38px;
+  bottom: auto;
   left: 0;
   width: fit-content;
-  min-height: 34px !important;
+  min-height: 44px !important;
   margin: auto;
   padding: 0 8px !important;
   background: var(--warm-white) !important;
@@ -3018,6 +3020,10 @@
   display: none;
 }
 
+.authored-paper.paper-plain {
+  background: var(--paper);
+}
+
 .authored-paper.paper-note {
   background: color-mix(in srgb, var(--warm-white) 86%, var(--butter));
 }
@@ -3635,23 +3641,56 @@
   width: 100%;
   aspect-ratio: 1.28;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--navy) 16%, transparent);
-  background: var(--warm-white);
-  box-shadow: 0 8px 18px rgba(8, 34, 75, 0.1);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   color: var(--navy);
 }
 
 .sealed-envelope-artwork[data-envelope="night"] {
-  border-radius: 16px 5px 14px 4px;
-  background: var(--navy-deep);
   color: var(--warm-white);
 }
 
 .sealed-envelope-artwork[data-envelope="rust"] {
-  border: 5px double var(--envelope-rust-ink);
-  background: var(--envelope-rust);
   color: var(--envelope-rust-ink);
-  clip-path: polygon(1% 2%, 99% 0, 98% 98%, 0 100%);
+}
+
+.sealed-envelope-fill {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: 20% 13% 16% 12%;
+  background: var(--paper);
+  clip-path: polygon(16% 6%, 88% 2%, 94% 10%, 92% 88%, 86% 94%, 19% 97%, 15% 90%);
+}
+
+[data-envelope="night"] > .sealed-envelope-fill {
+  background: var(--navy-deep);
+}
+
+[data-envelope="rust"] > .sealed-envelope-fill {
+  background: var(--envelope-rust);
+}
+
+.sealed-envelope-source {
+  position: absolute;
+  z-index: 2;
+  top: -30%;
+  left: -5%;
+  display: block;
+  width: 110%;
+  max-width: none;
+  height: auto;
+  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  pointer-events: none;
+}
+
+[data-envelope="night"] > .sealed-envelope-source {
+  filter: brightness(0) saturate(100%) invert(98%) sepia(25%) saturate(537%) hue-rotate(347deg) brightness(108%) contrast(95%);
+}
+
+[data-envelope="rust"] > .sealed-envelope-source {
+  filter: brightness(0) saturate(100%) invert(48%) sepia(23%) saturate(1115%) hue-rotate(325deg) brightness(91%) contrast(85%);
 }
 
 .envelope-template-detail {
@@ -3722,8 +3761,8 @@
 .sealed-artwork-stamp {
   position: absolute;
   z-index: 5;
-  right: 18%;
-  bottom: 18%;
+  right: 14%;
+  bottom: 13%;
   display: grid;
   width: 23%;
   aspect-ratio: 1;
@@ -3740,11 +3779,6 @@
   width: calc(100% - 14px);
   height: calc(100% - 14px);
   stroke: currentColor;
-}
-
-.sealed-envelope-artwork .envelope-address {
-  top: 27%;
-  left: 19%;
 }
 
 .sealed-preview {
@@ -3967,6 +4001,192 @@
   font-size: 18px;
 }
 
+/* Ethan's selected Figma hierarchy: white sender/archive surfaces, navy ink, and one physical object per screen. */
+.phase-preview,
+.phase-handoff,
+.phase-sent,
+.phase-cabinet {
+  background: var(--paper);
+  color: var(--navy);
+}
+
+.preview-identities {
+  margin-top: 36px;
+}
+
+.sealed-preview {
+  width: min(320px, 100%);
+  height: 258px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.preview-copy {
+  margin-top: 22px;
+}
+
+.preview-page > .quiet-link {
+  margin-top: 18px;
+}
+
+.preview-next {
+  margin-top: 48px;
+}
+
+.handoff-page header {
+  margin-top: 54px;
+}
+
+.handoff-page header p {
+  max-width: 310px;
+}
+
+.handoff-object {
+  display: grid;
+  width: 100%;
+  height: 190px;
+  margin-top: 16px;
+  place-items: center;
+}
+
+.handoff-object .carrier-icon {
+  width: 180px;
+  height: 200px;
+}
+
+.handoff-object .carrier-icon-firefly {
+  width: 164px;
+  height: 164px;
+}
+
+.handoff-object .carrier-icon-plane {
+  width: 190px;
+  height: 164px;
+}
+
+.handoff-link-tools {
+  margin-top: 20px;
+}
+
+.handoff-page > .drawn-action {
+  margin-top: 18px;
+}
+
+.handoff-page .system-note {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.sent-page {
+  justify-content: center;
+  padding-bottom: 72px;
+}
+
+.sent-copy {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.sent-secondary {
+  width: min(292px, 100%);
+  justify-content: space-between;
+  margin: 18px auto 0;
+  padding-top: 0;
+}
+
+.phase-cabinet .keepsake-shell {
+  padding-right: 28px;
+  padding-left: 28px;
+}
+
+.cabinet-page {
+  color: var(--navy);
+}
+
+.cabinet-page header h1 {
+  margin-top: 46px;
+  font-size: 46px;
+  line-height: 0.92;
+}
+
+.cabinet-field {
+  min-height: 0;
+  margin-top: 34px;
+  place-items: start stretch;
+}
+
+.cabinet-field:has(.cabinet-item) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 28px 14px;
+}
+
+.cabinet-item.cabinet-object {
+  min-height: 226px;
+  justify-content: flex-start;
+}
+
+.cabinet-item.cabinet-object > button:first-child {
+  min-height: 174px;
+  justify-content: flex-start;
+}
+
+.cabinet-item .carrier-icon {
+  width: 104px;
+  height: 120px;
+}
+
+.cabinet-item.cabinet-object > button:first-child > span {
+  margin-top: 8px;
+  color: var(--navy);
+  font-size: 21px;
+  line-height: 1;
+}
+
+.cabinet-item .cabinet-object small,
+.cabinet-object small {
+  margin-top: 7px;
+  color: var(--navy);
+  font-size: 15px;
+}
+
+.cabinet-remove-link {
+  margin-top: 6px;
+  color: var(--navy);
+  font-size: 16px !important;
+}
+
+.story-canvas {
+  background: var(--paper);
+}
+
+.story-topbar {
+  grid-template-columns: 64px minmax(0, 1fr) 80px;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+
+.story-primary-tools:not(.story-context-tools) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.story-primary-tools:not(.story-context-tools) button {
+  width: 100%;
+  min-width: 0;
+}
+
+.story-tool-dock {
+  padding-bottom: calc(var(--mobile-safe-area-height) + 13px);
+}
+
+.story-gesture-tip {
+  bottom: calc(var(--mobile-safe-area-height) + 88px);
+}
+
 @media (max-width: 360px) {
   .keepsake-shell {
     padding-right: 20px;
@@ -3996,6 +4216,12 @@
 
   .object-opening-copy h1 {
     font-size: 31px;
+  }
+
+  .story-primary-tools:not(.story-context-tools) {
+    gap: 10px;
+    padding-right: 16px;
+    padding-left: 16px;
   }
 }
 

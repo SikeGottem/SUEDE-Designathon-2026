@@ -375,7 +375,7 @@ export default function Prototype() {
   const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? "Maya");
   const [words, setWords] = useState(() => linkedSnapshot?.words ?? "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.");
   const [crossedOut, setCrossedOut] = useState<CrossOut[]>(() => linkedSnapshot?.crossedOut ?? []);
-  const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "ruled");
+  const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "plain");
   const [envelope, setEnvelope] = useState<EnvelopeId>(() => linkedSnapshot?.envelope ?? "mail");
   const [seal, setSeal] = useState<DoodleStroke[]>(() => linkedSnapshot?.seal ?? []);
   const [pieces, setPieces] = useState<PieceId[]>(() => linkedSnapshot?.pieces ?? ["photo"]);
@@ -435,10 +435,17 @@ export default function Prototype() {
   };
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
+    const resetScroll = () => {
       document.querySelector<HTMLElement>(".keepsake-app .mobile-scroll")?.scrollTo(0, 0);
-    });
-    return () => window.cancelAnimationFrame(frame);
+      document.querySelector<HTMLElement>("[data-phone-screen]")?.scrollTo(0, 0);
+    };
+    resetScroll();
+    const frame = window.requestAnimationFrame(resetScroll);
+    const transitionTimer = window.setTimeout(resetScroll, 240);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(transitionTimer);
+    };
   }, [phase]);
 
   useEffect(() => () => {
@@ -462,7 +469,7 @@ export default function Prototype() {
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setWords("");
     setCrossedOut([]);
-    setPaper("ruled");
+    setPaper("plain");
     setEnvelope("mail");
     setSeal([]);
     setCarrierId("bottle");
@@ -523,7 +530,7 @@ export default function Prototype() {
   };
 
   const canPreview = recipient.trim() !== "" && Boolean(words.trim() || captureAsset || pieces.length || doodleStrokes.length || stickers.length);
-  const navyPhase = ["cabinet", "removed"].includes(phase);
+  const navyPhase = ["removed"].includes(phase);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -543,13 +550,13 @@ export default function Prototype() {
             )}
             {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onEnvelope={setEnvelope} onSeal={setSeal} envelope={envelope} seal={seal} onNext={() => go("carrier")} />}
             {phase === "preview" && (
-              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} carrier={carrier} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
+              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
               <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
-              <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onReceiver={() => go("arrival")} onAgain={resetDraft} onLeave={() => go("home")} />
+              <Sent key="sent" onAgain={resetDraft} onLeave={() => go("home")} />
             )}
             {phase === "arrival" && (
               <Arrival key="arrival" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onUnavailable={() => go("unavailable")} />
@@ -563,7 +570,7 @@ export default function Prototype() {
             {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />}
             {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(activeSnapshot.id); go("removed"); }} />}
             {phase === "cabinet" && (
-              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onMake={resetDraft} onClose={() => go("home")} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
+              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onClose={() => go("home")} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
             )}
             {phase === "removed" && <Removed key="removed" onLeave={() => go("home")} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
           </AnimatePresence>
@@ -1064,7 +1071,6 @@ function StoryComposer({ capture, voice, song, recipient, words, crossedOut, pap
 
         <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} initial={{ opacity: 0, transform: "translate3d(0, 10px, 0) scale(.99)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1] }} onClick={startWritingOnPaper}>
           {paper === "ruled" && <PaperRuling />}
-          {!capture && !words && pieces.length === 0 && doodles.length === 0 && !editingText && !drawingActive && <motion.div className="blank-page-invitation" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ delay: 0.28, duration: 0.28 }}><span>tap anywhere to write</span><p>or make a doodle below</p></motion.div>}
 
           {drawingActive ? <DoodleSurface strokes={doodles} onStroke={onDoodle} /> : doodles.length > 0 ? <DoodleArtwork strokes={doodles} className="story-doodle-artwork" /> : null}
 
@@ -1080,7 +1086,7 @@ function StoryComposer({ capture, voice, song, recipient, words, crossedOut, pap
         <AnimatePresence>{voiceRecorderOpen && <VoiceRecorder onCancel={onCancelVoice} onRecorded={onVoice} />}</AnimatePresence>
 
         <p className="story-mode-status" aria-live="polite">{drawingActive ? `doodling · ${doodles.length} ${doodles.length === 1 ? "stroke" : "strokes"}` : editingText ? "writing directly on the paper" : ""}</p>
-        <AnimatePresence>{showGestureHint && !editingText && !drawingActive && (capture || words || pieces.some((piece) => piece !== "photo") || doodles.length > 0) && <motion.p className="story-gesture-tip" initial={{ opacity: 0, transform: "translateY(5px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>move a piece. use the corner to turn it.</motion.p>}</AnimatePresence>
+        <AnimatePresence>{showGestureHint && !editingText && !drawingActive && <motion.p className="story-gesture-tip" initial={{ opacity: 0, transform: "translateY(5px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>move a piece. use the corner to turn it.</motion.p>}</AnimatePresence>
 
         <StoryToolRail words={words} paper={paper} capture={capture} voice={voice} song={song} pieces={pieces} stickers={stickers} inkColor={inkColor} drawingActive={drawingActive} editingText={editingText} cuesOpen={cuesOpen} activePrompt={activePrompt} canUndoDoodle={doodles.length > 0} onText={onEditText} onFinishText={onFinishText} onToggleCues={onToggleCues} onPrompt={onPrompt} onPaper={onPaper} onDraw={onDraw} onDoneDrawing={onDoneDrawing} onUndoDoodle={onUndoDoodle} onCamera={onCamera} onVoice={onStartVoice} onSongFile={onSongFile} onAddSticker={onAddSticker} onInkColor={onInkColor} />
       </div>
@@ -1383,7 +1389,7 @@ function StoryToolRail({ words, paper, capture, voice, song, pieces, stickers, i
         {editingText && cuesOpen && <motion.div className="story-add-tray story-prompt-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }}><Carousel ariaLabel="Writing prompts" contentClassName="story-prompt-rail">{prompts.map((prompt) => <button key={prompt} className={prompt === activePrompt ? "is-current" : ""} type="button" onClick={() => onPrompt(prompt)}>{prompt}</button>)}</Carousel></motion.div>}
       </AnimatePresence>
       {editingText ? <div className="story-primary-tools story-context-tools"><button type="button" aria-expanded={cuesOpen} onClick={onToggleCues}><span>{cuesOpen ? "hide nudges" : "need a nudge?"}</span></button><button type="button" onClick={onFinishText}><span>done writing</span><Mark /></button></div> : drawingActive ? <div className="story-primary-tools story-context-tools"><button type="button" disabled={!canUndoDoodle} onClick={onUndoDoodle}>undo stroke</button><span className="drawing-now"><MaterialIcon id="drawing" /> draw anywhere</span><button type="button" onClick={onDoneDrawing}>done</button></div> : <div className="story-primary-tools">
-        <button className="story-write-tool" type="button" aria-pressed={Boolean(words)} onClick={onText}><span className="story-aa" aria-hidden="true">Aa</span><span>{words ? "edit" : "write"}</span></button>
+        <button className="story-write-tool" type="button" aria-pressed={Boolean(words)} onClick={onText}><span className="story-aa" aria-hidden="true">Aa</span><span>edit</span></button>
         <button className="story-draw-tool" type="button" aria-pressed={pieces.includes("drawing")} onClick={onDraw}><MaterialIcon id="drawing" /><span>doodle</span></button>
         <button className="story-add-tool" type="button" aria-expanded={addOpen} onClick={() => setAddOpen((current) => !current)}><AddMark /><span>{addOpen ? "close" : "add"}</span></button>
       </div>}
@@ -1444,16 +1450,16 @@ function CapturedMedia({ capture, className = "", interactive = false }: { captu
 
 function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: KeepsakeSnapshot; className?: string }) {
   const label = `A ${snapshot.envelope === "mail" ? "classic" : snapshot.envelope === "night" ? "midnight" : "postcard"} envelope for ${snapshot.recipient} from ${snapshot.sender}`;
-  return <div className={`sealed-envelope-artwork envelope-${snapshot.envelope} ${className}`} data-envelope={snapshot.envelope} role="img" aria-label={label}><span className="envelope-template-detail" aria-hidden="true" /><EnvelopeFoldLines /><span className="envelope-address">for {snapshot.recipient}<small>from {snapshot.sender}</small></span>{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
+  return <div className={`sealed-envelope-artwork envelope-${snapshot.envelope} ${className}`} data-envelope={snapshot.envelope} role="img" aria-label={label}><span className="sealed-envelope-fill" aria-hidden="true" /><span className="envelope-template-detail" aria-hidden="true" /><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
-function Preview({ snapshot, carrier, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; carrier: Carrier; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
+function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
   return (
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {snapshot.recipient}</span><span>from {snapshot.sender}</span></div>
-      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translateY(18px) rotate(-3deg) scale(0.95)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
-      <div className="preview-copy"><h1>one thing, ready to give.</h1><p>{carrier.label}. Nothing inside appears until {snapshot.recipient} opens it.</p></div>
+      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translate3d(0, 18px, 0) rotate(-3deg) scale(.95)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
+      <div className="preview-copy"><h1>one thing, ready to give.</h1></div>
       <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
       <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
     </Page>
@@ -1469,15 +1475,7 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
 }
 
 function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
-  const [inFlight, setInFlight] = useState(true);
-  const [pickedUp, setPickedUp] = useState(reduceMotion);
   const [qrOpen, setQrOpen] = useState(false);
-  useEffect(() => {
-    if (reduceMotion) { setInFlight(false); setPickedUp(true); return; }
-    const pickupTimer = window.setTimeout(() => setPickedUp(true), 1100);
-    const departureTimer = window.setTimeout(() => setInFlight(false), 3600);
-    return () => { window.clearTimeout(pickupTimer); window.clearTimeout(departureTimer); };
-  }, [reduceMotion]);
   useEffect(() => {
     if (!qrOpen) return;
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -1496,8 +1494,8 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
   return (
     <Page className="handoff-page">
       <TopLine onBack={onBack} label="back to the object" />
-      <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1><p>{failed ? "Nothing left this screen. Your object is still here." : "Send the link however you usually talk."}</p></header>
-      <div className="handoff-transfer" aria-label="A little courier carries your sealed object away">{!pickedUp && <CarrierIcon id={carrier.id} size="sealed" />}<AnimatePresence>{inFlight && <motion.div className="handoff-courier-motion" initial={{ opacity: 0, transform: "translate(-50%, 48px) scale(.86)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(-50%, 48px) scale(.86)", "translate(-20%, 16px) scale(1)", "translate(34%, -52px) scale(.86)", "translate(72%, -116px) scale(.62)"] }} transition={{ duration: 3.6, times: [0, .3, .72, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="pickup" /></motion.div>}</AnimatePresence></div>
+      <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1>{failed && <p>Nothing left this screen. Your object is still here.</p>}</header>
+      <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
       <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label={qrIsExact ? "Open receiver QR for this keepsake" : "Open scannable generic receiver demo QR"}><QRCodeSVG value={qrUrl} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title={qrIsExact ? "Receiver QR for this keepsake" : "Generic receiver demo QR"} /><span>{qrIsExact ? "scan it" : "demo QR"}</span></button>}</div>
       {copied ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
       <p className="system-note">This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected.</p>
@@ -1506,12 +1504,10 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
   );
 }
 
-function Sent({ recipient, carrier, reduceMotion, onReceiver, onAgain, onLeave }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onReceiver: () => void; onAgain: () => void; onLeave: () => void }) {
+function Sent({ onAgain, onLeave }: { onAgain: () => void; onLeave: () => void }) {
   return (
     <Page className="sent-page">
-      <div className="courier-flight" aria-hidden="true"><motion.div initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 168px, 0) rotate(-12deg)" }} animate={reduceMotion ? { opacity: 1, transform: "translate3d(266px, 10px, 0) rotate(18deg)" } : { opacity: [0, 1, 1, 0], transform: ["translate3d(0, 168px, 0) rotate(-12deg)", "translate3d(92px, 104px, 0) rotate(0deg)", "translate3d(218px, 35px, 0) rotate(16deg)", "translate3d(286px, -4px, 0) rotate(20deg)"] }} transition={{ duration: reduceMotion ? 0.01 : 3.8, times: [0, .16, .78, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="departure" /></motion.div></div>
-      <div className="sent-copy"><h1>that&apos;s it from you.</h1><p>{recipient} gets to choose what happens next. You do not have anything to check.</p><span>{carrier.shortLabel} chosen for this sample</span></div>
-      <button className="drawn-action" type="button" onClick={onReceiver}>open the receiving demo <Mark /></button>
+      <div className="sent-copy"><h1>that&apos;s it from you.</h1></div>
       <div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another</button><button className="quiet-link" type="button" onClick={onLeave}>leave</button></div>
     </Page>
   );
@@ -1627,14 +1623,13 @@ function Reveal(props: ReceiverObjectProps) {
   return <Page className="reveal-page"><ReceiverObject {...props} /></Page>;
 }
 
-function Cabinet({ items, removingId, onOpen, onMake, onClose, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onOpen: (item: KeepsakeSnapshot) => void; onMake: () => void; onClose: () => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
+function Cabinet({ items, removingId, onOpen, onClose, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onOpen: (item: KeepsakeSnapshot) => void; onClose: () => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
   return (
     <Page className="cabinet-page">
       <header><button className="navy-back" type="button" onClick={onClose}><Mark direction="left" /> close</button><h1>things you kept.</h1></header>
       <div className="cabinet-field">
         {items.length ? items.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
-      <button className="navy-action" type="button" onClick={onMake}>make something new <Mark /></button>
     </Page>
   );
 }

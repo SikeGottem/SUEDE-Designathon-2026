@@ -662,3 +662,80 @@ Only record choices that change direction, investment or the story. Every conseq
 ### Judge review
 
 Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A consequential decision is incomplete until this section exists.
+
+## 2026-09-05 - Adopt the human-redrawn white, object-first sender and cabinet layouts
+
+- Status: current exploratory implementation decision; team-directed, not participant-validated or final.
+- Decision: use Ethan's latest hand-composed layouts as the structural source of truth for Studio, sealed preview, private handoff, sent confirmation, and cabinet. Studio is one edge-to-edge white paper with a three-part top line and a fixed `edit / doodle / add` dock. Preview is identity, one large authored envelope, one sentence, a small carrier-change link, and the primary give action. Handoff is identity, one carrier object, the real link/QR row, and the explicit failure test. Sent is only `that's it from you.` with `make another / leave`. Cabinet is a white two-column field of kept carrier objects with sender, recipient, and a quiet remove action. Exact spacing remains responsive rather than tracing the rough Figma placement.
+- Supersedes: the deep-navy cabinet and any rule that recolours received content on opening. The system shell stays white with deep ink; the receiver sees the exact paper/material choices the maker authored. The broader Cecelia palette remains available inside authored materials and restrained identity accents, not generic interface chrome. The prior deep-ink removed state remains current.
+- Reason: the direct human redraw removes the explanatory clutter, generic cards, dark archive treatment, and auto-departure spectacle that made earlier passes feel AI-generated. It also creates a consistent rule: one physical object carries each stage, while trust and recovery mechanics remain real rather than decorative.
+- Evidence: Ethan supplied the five redesigned frames and explicitly directed that their layout and new colour scheme govern while rough spacing should not be copied literally. The implementation was compared at an unscaled 393/394 × 852 app surface in `output/design-qa/redesign-2026-09-05/`; the post-build pass retained working creation, envelope, carrier, link, QR, failure, receiver, keep, reopen, and remove paths. This is artifact and team-direction evidence, not user research.
+- Consequence: future UI passes must preserve the white/deep-ink hierarchy, sparse copy, actual Cecelia carrier/envelope assets, the maker's exact envelope template and personal seal, and the real private-link states. Do not restore decorative paths, generic cards, a persistent mascot, an automatic carrier departure, multicolour app chrome, a sender telemetry loop, or a visible receiver-demo CTA on the sent screen.
+- Revisit when: a real-phone maker-to-receiver walkthrough shows that the sparse hierarchy hides a critical action, the exact authored paper fails to survive opening/revisit, Cecelia supplies revised assets, or Ethan materially redraws one of these states.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The object and giving ritual remain the visible redesign of an ordinary-day appreciation rule. | A polished object can still distract from the unwritten rule unless the pitch leads with the behaviour. |
+| Problem identification | neutral | No problem claim changed in this visual pass. | The underlying hesitation and no-reply need remain team-framed rather than participant-validated. |
+| Solution approach | strengthens | Each state now exposes one action and preserves the make → seal → travel → receive → keep/leave sequence. | Sparse screens may hide first-use guidance. |
+| Design innovation | strengthens | The same authored physical object persists across stages instead of becoming a generic message card. | Envelope and carrier choice can still feel like surface theming without observed meaning. |
+| Visual communication | strengthens | Direct human hierarchy, white space, Gaegu, deep ink, and Cecelia's real assets create a coherent focal path. | Rough reference spacing required responsive judgement, so phone-size visual checks remain necessary. |
+| Presentation skills | strengthens | Preview, handoff, sent, and cabinet now read as four distinct, retellable beats without narration. | The live demo still needs a prepared receiver link because Sent intentionally omits an internal demo shortcut. |
+| Evidence quality | neutral | The source is direct team artwork plus matched render and interaction QA. | It is not participant research or outcome evidence. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Could less explanation simply make the product harder to understand? | Real controls, identities, action verbs, and explicit error states remain; only redundant explanation was removed. | First-time unaided comprehension on a real phone. |
+| Behaviour and context | Does the sparse flow still support a quick, ordinary-day act? | Creation opens on one paper and keeps the main tools at thumb reach. | Actual completion time and abandonment. |
+| Medium necessity | Could the same appreciation travel as an ordinary message? | The differentiator remains a composed object, deliberate opening, exact presentation, and receiver-owned cabinet. | A matched comparison against text/voice/physical notes. |
+| Alternatives | Why not retain the richer dark archive or automated courier theatre? | The supplied human redraw prioritises memory objects and calm agency; the removed treatments competed with them. | Whether recipients prefer stronger ceremony. |
+| Human specificity | Is this only the team's visual taste? | It is explicitly logged as team authorship rather than audience evidence. | Responses across relationships, cultures, and comfort levels. |
+| Inclusion and accessibility | Does sparse handwriting hide controls or reduce legibility? | Interactive text remains deep navy, controls keep semantic labels and touch targets, and motion respects reduced-motion settings. | Screen-reader, low-vision, motor, and sunlight testing on real devices. |
+| Trust, safety and privacy | Does a warm private handoff overpromise security? | The handoff keeps the prototype privacy limitation and does not claim encryption, delivery, or storage guarantees. | Authentication, forwarding, expiry, wrong-recipient, abuse, and deletion policy. |
+| Failure and recovery | Does removing copy create dead ends? | Back routes, broken-link state, draft retention, cabinet removal confirmation, and empty-state exit remain functional. | Recovery comprehension without facilitator narration. |
+| Feasibility and demo truth | Are the beautiful objects only pictures? | Creation, doodling, envelope/seal state, carrier selection, encoded link, QR, opening, keep, reopen, and removal are implemented. | Local-media transport and production persistence remain honestly unsupported. |
+| Incentives and second-order effects | Could a visible cabinet create collection or reciprocity pressure? | It has no counts, rankings, prompts, streaks, notifications, or sender telemetry. | Repeated-use behaviour and emotional storage burden. |
+| Simplicity and retellability | Are five states too many? | The sentence remains: make it, seal it, choose how it travels, let them decide whether to keep it. | Whether an outsider retells receiver agency rather than “digital card app.” |
+| Authorship and distinctiveness | Could the sparse handmade look still be generated slop? | Ethan materially redrew the hierarchy, Cecelia supplied the object assets, and the maker's own content/seal survives the flow. | Final line-weight and production-asset review by the team. |
+
+- Additional domain lens: authored-object continuity.
+- Why it is material: the envelope and page are the product's evidence of care; replacing them with a fixed preview asset would break the core promise.
+- Challenge, evidence-backed answer and unknown: the preview now uses Cecelia's envelope master while preserving selected template and personal seal state; a full maker-to-receiver real-phone run must still confirm that every authored choice survives exactly.
+
+- Verdict: Proceed with conditions.
+- Work permitted by this verdict: keep refining the five implemented states and their responsive spacing without expanding scope.
+- Blocking conditions: no loss of authored envelope/seal/paper state; no fake link or QR claims; no removal of error, recovery, accessibility, receiver-agency, or reduced-motion routes; no participant-validation claim.
+- Weakest judging angle: evidence quality, because all current support is team direction and prototype inspection.
+- Main trade-off: clearer human hierarchy and less AI-looking clutter in exchange for less explanatory guidance and a deliberately quiet ending.
+- Next evidence that could change the verdict: one unaided real-phone maker-to-receiver walkthrough including correction, seal, link opening, keep/reopen, and removal.
+- Recommendation: use these layouts for the current build and pitch capture, then change only what the walkthrough exposes.
+- Revisit when: that walkthrough or a new team redraw materially changes comprehension, authored continuity, or receiver agency.
+
+### Product and UI post-build review
+
+- Artifact or prototype location: `prototype/` at `http://127.0.0.1:4173/` during local QA.
+- Screens or states inspected: Studio, Preview, Carrier, Handoff, QR dialog, broken-link Handoff, Sent, Arrival/Opening, populated Cabinet, remove confirmation, and empty Cabinet.
+- Critical path understandable without narration: yes for the implemented prototype; participant evidence remains unknown.
+- Distinct mechanism visible: yes — one authored object is made, sealed, carried, opened, and optionally kept.
+- Error and recovery believable: yes for the prototype link failure and cabinet removal; production transport is unresolved.
+- Accessibility checked beyond decoration: semantic names, keyboard/escape paths, touch targets, reduced-motion behaviour, and browser console were inspected; assistive-technology testing is still pending.
+- Human point of view still visible: yes — the maker authors the object and the receiver controls opening, keeping, closing, or removing it without a reply demand.
+- Generic AI patterns found: over-explanation, decorative route lines, dark themed archive, generic cards, extra CTAs, and a fixed envelope that discarded authored state.
+- Evidence or testing that changed the artifact: the matched render pass removed the clutter/dark archive; functional review restored authored envelope/template/seal continuity and fixed a covered inline-edit control.
+- Required changes before higher fidelity: complete one real-device walkthrough and replace any remaining code-native material marks that Cecelia redraws.
+
+### Design authenticity post-build
+
+- Artifact or screenshot inspected: all five reference/implementation pairs in `output/design-qa/redesign-2026-09-05/`.
+- Strongest remaining AI tell: the QR/link utility row is necessarily more mechanical than the surrounding hand-drawn object system.
+- Logo-swap test: pass — the physical make/seal/travel/open/keep structure is specific to this concept, not a generic branded shell.
+- Team-voice test: pass — Ethan's structural redraw, Cecelia's objects, Gaegu, and direct product corrections determine the result.
+- Labels, containers, accents or copy removed: card-like framing, decorative flight paths, helper paragraphs, automatic departure spectacle, the receiver-demo CTA, dark cabinet, and cabinet bottom CTA.
+- Content-native signature still visible: one authored page becomes an envelope, travels inside a selected object, opens as authored, and can live as that object in the cabinet.
+- Material human-directed change: the supplied frames determined hierarchy, subtraction, colour role, and the quiet Sent/Cabinet compositions.
+- Next corrective action: observe the full flow once on a real phone before treating the hierarchy as final.
+- Verdict: Pass for the exploratory prototype.
