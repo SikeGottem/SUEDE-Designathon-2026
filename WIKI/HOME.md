@@ -40,6 +40,7 @@ The central belief is:
 - [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
 - [[FRIENDSHIP_APPRECIATION_DIRECTION]] - compact source of truth for the chosen working rule, problem and open solution direction
 - [[FRIENDSHIP_APPRECIATION_PRODUCT_SPEC]] - transcript-grounded build contract for the reversible sender-to-receiver prototype
+- [[FRIENDSHIP_APPRECIATION_SPEC_APPROVAL]] - seven-decision walkthrough for human review before the first product draft is approved
 - [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
 - [[FRIENDSHIP_APPRECIATION_QUESTION_BANK]] - unanswered adversarial questions attacking the friendship-appreciation problem and current digital-letter direction from every major lens
 - [[TEAM_CATCHUP_DISCORD]] - neutral dot-point catch-up for team members who missed the brief and recent discussion

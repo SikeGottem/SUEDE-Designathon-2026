@@ -3,6 +3,8 @@
 
 > **Status:** Controlled draft for an exploratory prototype. This document does not select a final product, audience, medium, brand, or pitch claim.
 >
+> **Review status:** ready for human review; no team approval has been recorded. Use the short [specification approval sheet](FRIENDSHIP_APPRECIATION_SPEC_APPROVAL.md) rather than approving the full document as one bundle.
+>
 > **Source cut-off:** all 27 transcript captures present in `WIKI/TRANSCRIPTS/` on 2026-09-04, including the late-arriving `2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md`, plus the brief, decision log, judging rules, research dossier, evidence ledger, and concept contract.
 >
 > **Authority:** when the exploratory prototype conflicts with this file, this file wins. A later team decision may change it only if the change is recorded and re-reviewed through the SUEDE idea, judge, and design-authenticity gates.

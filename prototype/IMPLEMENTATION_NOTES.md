@@ -7,7 +7,7 @@
 - It is an exploratory test stimulus, not a selected product, validated solution, final brand, or evidence of impact.
 - The formal judge, challenge, visual-authenticity, and rendered-artifact audits are intentionally deferred until the team reviews this first build.
 
-## What the current build makes real
+## What the current build lets the team test
 
 | Contract | Implemented state |
 | --- | --- |
