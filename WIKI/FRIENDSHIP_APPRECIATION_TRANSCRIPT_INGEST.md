@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 31 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 39 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -31,7 +31,13 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
    - borrow the supplied `grug` reference's visual grammar, not its identity.
    - [65e72…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md) records the team reviewing the first coded flow: a paper-sheet creator, a compact scrollable material rail, hand-drawn asset work, cabinet retention, and presentation constraints.
    - [4bf652…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created later on the same channel, is the highest-weighted direct critique of that render: simplify the home and carrier screens, remove ornamental paths/helper copy, rebuild the mobile creator, and preserve the cabinet. It is internal design feedback, not validation.
-   - [d4b7ec…](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), created after both reviews, identifies the still-unresolved creation-board interaction model. At 20:03–22:18 the team rejects the undesigned creator, prioritises ease over graphics, and selects a sparse Instagram-Story-like blank canvas with movable and rotatable text. Ethan's following direct clarification adds full-screen entry and immediate filming. This is now the highest-weighted creator direction.
+   - [d4b7ec…](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), [d4ea28…](TRANSCRIPTS/2026-09-04-d4ea28f5-a996-57e1-adbe-69726a64f356.md), and [a9499b…](TRANSCRIPTS/2026-09-04-a9499b3d-07e2-5182-bdfd-a9a85f9860db.md) form the newest creator sequence. They keep full-screen, sparse, movable/rotatable making, but correct the literal Story/camera reading: creation starts on paper, media becomes an optional Polaroid-like material, and drawing must be real.
+   - [913ddc…](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md), created later, narrows the carrier ritual: Preview is exterior-only; a one-time courier picks up and later drops the selected carrier; double-tap opening needs a direct fallback.
+   - [2d8ab5ab…](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md) corrects the rendered ritual: make the courier slow enough to read, do not render path/squiggle guides as decoration, keep the paper as a non-scrolling object, and make opening visibly unfold. The number of revealed pages remains open.
+   - [4ef45d20…](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md), created later, puts carrier choice after the maker has composed the message. This is a current reversible sequencing condition, not usability evidence.
+   - [bbc5485c…](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md), created later, removes the flower from the current carrier set, makes unfolding reveal the completed composed object directly, and asks for restrained colour/sticker materials so the creator feels like a real scrapbook tool. Exact palette, sticker set, and receiver media reveal remain open.
+   - [166f8cfb…](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md), created later at `2026-09-04T17:37:23.816Z`, directly replaces the current test's ladybug with the firefly (00:18; 04:59). The firefly remains a one-shot courier/carrier treatment, not a persistent product mascot.
+   - [0c2a02aa…](TRANSCRIPTS/2026-09-04-0c2a02aa-848e-5dae-9fe0-339d566da09a.md), created later at `2026-09-04T17:37:47.513Z`, asks for more personalisation and selectable page-design/page-character variation (00:00). It does not define a taxonomy, count, multi-page flow, or template marketplace.
 2. **Late all-team product and art-direction discussions**
    - [57f27…](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e…](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), and [204b7d…](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md).
 3. **The problem and medium being sharpened**
@@ -55,7 +61,10 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
 | Late visual work | Open empty space, inviting colour, shared hand-drawn language, real team-made assets | The handmade system survived. Current direct instruction narrows v0 to white first, then deep navy. |
 | Current correction | The first implementation felt like a generic form and missed the rich experience | The next artifact must start from this ingest and the conceptual spec, not inherit that layout. |
 | Latest render critique | The first rich coded pass still had too much ornamental/AI-looking surface and a crowded mobile creator | Keep the core flow, carrier test, opening and cabinet; simplify the home/carrier visual fields, give the creator one mobile paper sheet with progressive disclosure, and use team-drawn assets before treating a visual choice as final. |
-| Newest creator correction | Even the paper-sheet revision lacked a resolved mobile interaction model | Make creation full-screen and capture-first; use Story-like direct manipulation, movable/rotatable text and sparse contextual tools without copying Instagram's brand or social mechanics. |
+| Newest creator correction | Even the paper-sheet revision lacked a resolved mobile interaction model | Make creation full-screen and paper-first; use Story-like direct manipulation, movable/rotatable text, real freehand drawing and sparse contextual tools without copying Instagram's brand or social mechanics. |
+| Latest carrier sequencing and motion correction | Carrier choice interrupted expression; the courier and opening treatment read as unfinished | Compose first, then choose a carrier. Make the courier's transport legible and the opening visibly unfold; do not turn path guides into decoration or make a paper object scroll. |
+| Latest customization and direct-reveal correction | The creator lacked enough authored choice, and unfolding led to an extra transition instead of the object itself | Remove flower from the current carrier test; let unfolding reveal the completed composed object directly; add restrained colours and stickers as optional authored materials. |
+| Latest carrier and personalisation correction | The current ladybug and one-look page treatment were too narrow | Replace ladybug with firefly in the reversible trio; investigate a small selectable page-design/page-character variation so the authored object can become more personal. Exact variation system remains open. |
 
 ## Reconstructed product vision
 
@@ -92,18 +101,18 @@ The transcript repeatedly treats these as a palette of expressive materials. It 
 Creation should take over the phone like a Story composer while remaining a private, finite paper object rather than a social post. The newest review makes ease and interaction—not added graphics—the unresolved design problem.
 
 - The sender begins voluntarily with one person in mind.
-- The camera is immediately available for a photo or short video, with existing media and blank paper as equal paths.
-- A successful capture becomes the full-screen creation surface without an upload/settings interstitial.
+- The maker starts on blank physical paper, with restrained hand-drawn ruling rather than tacky texture.
+- Camera, existing media and short video remain optional actions; a successful capture becomes a small movable Polaroid-like material rather than the full-screen surface.
 - The recipient is a lightweight anchor inside the workspace, not a separate administrative screen.
 - Writing is central and remains human-authored.
-- Writing and selected memory materials land directly on the full-screen paper/captured moment.
+- Writing and selected memory materials land directly on the full-screen paper.
 - Memory tools remain sparse and contextual rather than forming a Canva-like control wall.
 - Chosen text and materials can be selected, moved, rotated, edited, overlapped, or removed directly on the canvas.
 - Optional reflective cues such as “favourite memory,” “what you taught me,” or “one word” help when requested; they do not become mandatory questions.
 - Creative effort should be visible through selection, arrangement, drawing, recording, and personal marks—not artificial waiting, needless friction, or an overloaded canvas.
 - The sender previews the finished experience as a whole, then gives it a boundary by finishing or sealing it.
 
-The strongest evidence for this richer authoring model appears in the late discussion of a scrapbook-like, multimedia artifact ([57f27… lines 28–76](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md)), the argument that layout and creative decisions are themselves communication ([532244… line 20](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md)), and the newest explicit selection of a Story-like blank canvas with movable/rotatable text ([d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md)).
+The strongest evidence for this richer authoring model appears in the late discussion of a scrapbook-like, multimedia artifact ([57f27… lines 28–76](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md)), the argument that layout and creative decisions are themselves communication ([532244… line 20](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md)), and the newest creator sequence: Story-like direct manipulation ([d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md)), then paper-first correction ([d4ea28… 34:35–39:56](TRANSCRIPTS/2026-09-04-d4ea28f5-a996-57e1-adbe-69726a64f356.md); [a9499b… 03:55–07:17](TRANSCRIPTS/2026-09-04-a9499b3d-07e2-5182-bdfd-a9a85f9860db.md)).
 
 ### The handoff
 
@@ -214,8 +223,9 @@ For the pitch, block the slide layout and story before asking AI to refine a vis
 - Which outcome leads: expression hesitation, misinterpretation, reply debt, or durable memory.
 - How freeform the composition surface should be.
 - Which media are available and how many belong in one object.
+- Whether a small selectable page-design/page-character variation helps the object feel personal, and what it should contain. No count, taxonomy, multi-page flow, or marketplace is approved.
 - Exact vessel: folded object, envelope, seal, bottle, another package, or no literal container.
-- Whether a firefly is a useful arrival signal or merely decoration.
+- Whether firefly's one-shot carrier/courier treatment is legible without becoming decoration.
 - Whether any acknowledgement exists.
 - Whether kept objects are permanent, temporary, exportable, or revocable.
 - Final product name, logo, brand palette, and deck identity.
@@ -258,7 +268,7 @@ For the pitch, block the slide layout and story before asking AI to refine a vis
 | No AI-authored intimacy / finite receiving contract | [356211… line 20](TRANSCRIPTS/2026-09-04-356211db-c212-5765-bcbb-205d615e351d.md), [532244… lines 20–34](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md) | Strong boundary |
 | Hand-drawn/open art direction | [57f27… lines 244–247](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e… lines 359–524](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), [204b7d… lines 35–94](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md) | Strong preference, narrowed by latest direct instruction |
 | Product-first pitch and working QR ending | [8d391… lines 33–54](TRANSCRIPTS/2026-09-03-8d39172c-4cee-5766-97e7-90708888daf3.md), [Recording 19 lines 133–196](TRANSCRIPTS/2026-09-04-new-recording-19.md), [Recording 14 lines 21–76](TRANSCRIPTS/2026-09-04-new-recording-14.md) | Team pitch direction; organiser disclosure rules still apply |
-| Current render correction and full-screen Story-like creator | [65e72… 32:28–34:16](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), [4bf652… 01:26–03:17](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), [d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md) | Newest team creator direction; internal design direction only |
+| Current render correction, full-screen paper-first creator and carrier ritual | [65e72… 32:28–34:16](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), [4bf652… 01:26–03:17](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), [d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), [d4ea28… 34:35–39:56](TRANSCRIPTS/2026-09-04-d4ea28f5-a996-57e1-adbe-69726a64f356.md), [a9499b… 03:55–07:17](TRANSCRIPTS/2026-09-04-a9499b3d-07e2-5182-bdfd-a9a85f9860db.md), [913ddc… 04:21–07:58](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md), [2d8ab5ab… 15:29–17:56](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md), [4ef45d20… 03:26–05:24](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md), [bbc5485c… 01:59–05:28](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md), [166f8cfb… 00:18, 04:59](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md), and [0c2a02aa… 00:00](TRANSCRIPTS/2026-09-04-0c2a02aa-848e-5dae-9fe0-339d566da09a.md) | Newest team creator/ritual direction; internal design direction only |
 
 ## Honest boundary
 
@@ -270,14 +280,14 @@ This ingest can reconstruct intent. It cannot prove desirability, causality, saf
 
 The meeting explored a browseable set of large, hand-drawn container/carrier icons; horizontal movement so each drawing can have room; a scrapbook-like creation surface closer to arranging pieces in Figma than filling out fields; a physical cabinet holding visually distinct objects; a bottle whose opening releases its contents; and a ladybug travelling with a dotted path as a sending/arrival notification idea. It also records preference for dark blue/navy, butter yellow and other soft colours, while explicitly leaving palette selection for prototype testing.
 
-These are not settled product choices. The prior transcript also contains menus of containers, courier animals, wood/bookcase metaphors, mascot ideas, and a bottom-navigation debate. Ethan's newer instruction governs the current build: use only a small reversible carrier set and horizontal browse; let the selected carrier affect handoff, arrival and opening choreography; use a bottle/cork interaction with a simple fallback; treat the ladybug as a one-time courier/notification path rather than a persistent mascot; avoid bottom navigation; keep the cabinet as distinct physical objects; and retain the rich scrapbook-like creator. The white-plus-navy sequence, Gaegu working type, and soft-yellow/other-palette question are likewise implementation choices or open visual tests, not validation.
+These are not settled product choices. The prior transcript also contains menus of containers, courier animals, wood/bookcase metaphors, mascot ideas, and a bottom-navigation debate. The later sources govern the current build: use only a small reversible carrier set and horizontal browse; let the selected carrier affect handoff, arrival and opening choreography; use a bottle/cork interaction with a simple fallback; treat the firefly as a one-time courier/carrier action rather than a persistent mascot; avoid bottom navigation; keep the cabinet as distinct physical objects; and retain the rich scrapbook-like creator. The white-plus-navy sequence, Gaegu working type, and soft-yellow/other-palette question are likewise implementation choices or open visual tests, not validation.
 
 ## 4 September implementation-review addendum — sources 29 and 30
 
 **Sources:** [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), 35-minute team review, created `2026-09-04T15:25:25.181Z`; and [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), 4-minute direct render critique, created later at `2026-09-04T15:27:36.809Z`. The later critique governs conflicts.
 
 - **Home:** retain “something good on your mind?” and the making action, but remove the central decorative loop; put the invitation/action bottom-centre and keep the page minimal ([4bf652… 01:26]).
-- **Carrier chooser:** retain “pick how it arrives” and the limited carrier browse, but remove bottle-wave/ladybug-route backdrop paths and the bottom helper/mascot explanation. The object alone, negative space, and purposeful transition motion do the work ([4bf652… 01:26]).
+- **Carrier chooser:** retain “pick how it arrives” and the limited carrier browse, but remove bottle-wave/firefly-route backdrop paths and the bottom helper/mascot explanation. The object alone, negative space, and purposeful transition motion do the work ([4bf652… 01:26]; later firefly replacement at [166f8cfb… 00:18, 04:59](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md)).
 - **Creator:** the existing first pass was judged overcrowded and insufficiently mobile. Keep one page, but make it read as one paper sheet; move addable pieces behind a compact, scrollable control rather than a field-like or cluttered layout ([65e72… 32:51–33:40]; [4bf652… 01:26]).
 - **Preview, opening and cabinet:** preserve the preview's “ready to give” role, deliberate opening, keep action, and cabinet. The preview hero artwork remains open pending the screenshot/reference Ethan said he would send; no final visual choice is inferred ([65e72… 33:40–34:16]; [4bf652… 02:55–03:17]).
 - **Craft and pitch:** replace important generated stand-ins with team-drawn priority assets; match illustration line weight to the Gaegu system ([65e72… 15:50–16:28; 26:40–27:39]). Build deck structure/layout first, then use AI as a bounded refinement tool; make every presentation-critical point understandable without audio ([65e72… 25:50–26:19; 30:21–30:58]).
@@ -292,6 +302,61 @@ These recordings show the team correcting its own prototype. They do not establi
 - The remaining hard problem is the creation board's interaction model, not another graphics pass (20:03–21:24).
 - The prior creation page is explicitly identified as the weakest page because it had no resolved interaction design (21:01).
 - The selected direction is a sparse blank canvas that works like Instagram Stories: text can move and rotate, the page should not show too much, and mobile ease is the priority (21:42–22:18).
-- Ethan's following direct clarification makes the creator a full-screen experience with immediate filming. That instruction governs the current exploratory prototype.
+- Ethan's following direct clarification made the creator full-screen. Sources 32 and 33 then narrow that request: full-screen remains, while capture-first does not.
 
-“Story-like” describes capture speed, full-screen focus, direct manipulation, and sparse contextual tools. It does not add Instagram branding, posting, expiry, views, reactions, replies, followers, or feed mechanics. This remains internal design direction, not proof that intended senders can create comfortably or that recipients value the result.
+“Story-like” describes full-screen focus, direct manipulation, sparse contextual tools, and low-friction making. It does not add capture-first camera hierarchy, Instagram branding, posting, expiry, views, reactions, replies, followers, or feed mechanics. This remains internal design direction, not proof that intended senders can create comfortably or that recipients value the result.
+
+## 4 September paper-first creator correction — sources 32 and 33
+
+**Sources:** [d4ea28f5…](TRANSCRIPTS/2026-09-04-d4ea28f5-a996-57e1-adbe-69726a64f356.md), 44-minute team capture created `2026-09-04T16:36:03.384Z`, especially 34:35–39:56; and [a9499b3d…](TRANSCRIPTS/2026-09-04-a9499b3d-07e2-5182-bdfd-a9a85f9860db.md), 8-minute follow-up created `2026-09-04T16:43:10.738Z`, especially 03:55–07:17. The later source confirms the correction.
+
+- Full-screen creation and direct manipulation remain, but the literal Story/camera interpretation is rejected.
+- Creation opens on blank physical paper. Restrained hand-drawn lines can make the paper legible; a faux paper texture is explicitly rejected as tacky.
+- Camera, photo and video are optional material actions. A captured image belongs as a small movable Polaroid-like item on paper, not as the canvas background or first screen.
+- The current button order is unresolved and needs redesign around making on paper, adding a material, arranging it, and finishing.
+- Drawing must become a usable freehand doodle interaction rather than a random placeholder mark.
+- At this point, the bottle, ladybug, plane and flowers were the small candidate carrier set. Source 37 later removes the flower, and source 38 later replaces the ladybug with the firefly, leaving bottle, firefly, and paper plane for the current reversible test. The team also says the product still risks feeling too much like an app; this is a critique to test, not a license to add decoration.
+
+These are internal team-direction corrections only. They do not prove a paper-first Studio is easier, more meaningful, or more authentic for intended senders or recipients.
+
+## 4 September carrier ritual correction — source 34
+
+**Source:** [913ddc06…](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md), 9-minute team capture created `2026-09-04T16:52:08.940Z`. Product-relevant direction appears at 04:21–07:58.
+
+- Preview should show the chosen sealed carrier by itself. The object interior and material fragments must not be exposed underneath it.
+- For this one reversible choreography test, a hand-drawn courier enters at handoff, collects the selected carrier, and leaves. At arrival it carries and drops the same carrier centrally before leaving.
+- The asset handoff needs wing-up, wing-down, carrying, pickup and drop states, with the carrier or letter as a separate payload layout.
+- Double-tap is the proposed opening action. It requires an equally direct visible tap, keyboard, and reduced-motion fallback; gesture is not the only instruction.
+- The courier is a one-time functional delivery action, not a persistent mascot, pet, brand identity, navigation device, or collection mechanic.
+
+This is internal prototype direction only. It does not establish that hiding the interior, courier motion, or double tap improves trust, meaning, or usability.
+
+## 4 September carrier sequencing and opening correction — sources 35 and 36
+
+**Sources:** [2d8ab5ab…](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md), 18-minute team capture created `2026-09-04T17:10:48.356Z`, especially 15:29–17:56; and the later [4ef45d20…](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md), 6-minute capture created `2026-09-04T17:16:09.300Z`, especially 03:26–05:24.
+
+- The maker composes the message before choosing how it arrives. Carrier choice remains a small reversible handoff treatment, not an entry task or a claim about what makes appreciation meaningful.
+- Courier motion must be slow enough to communicate pickup, departure, arrival, and drop. Sketchy paths and squiggles may describe motion during design, but must not appear as final interface decoration.
+- The paper is a physical object, not a scroll surface. At this point the number of revealed pages was still open; source 37 supersedes that uncertainty by requiring the fold to reveal the full composed object directly, while the pacing of optional media remains open.
+
+These are direct internal build corrections. They do not prove that the order is easier, that a courier improves comprehension, or that unfolding changes the receiver's experience.
+
+## 4 September customization and direct-reveal correction — source 37
+
+**Source:** [bbc5485c…](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md), 6-minute capture created `2026-09-04T17:22:18.230Z`, especially 01:59–05:28.
+
+- Remove the flower from the small reversible carrier set. Source 38 later replaces the remaining ladybug with the firefly; the current test trio becomes bottle, firefly, and paper plane. This does not settle the final vessel.
+- When the receiver opens the object, the fold directly reveals the full composed object. Do not add a separate post-unfold transition; receiver-led optional media actions remain open.
+- Add restrained maker-selected colour and sticker materials to the paper-first Studio so authorship can extend beyond the existing doodle, voice, and video tools. Writing remains the centre; palette, sticker set, and media limits remain open.
+
+This is direct internal prototype direction only. It does not establish that customization, a direct reveal, or any carrier changes meaning, comprehension, or desire to receive the object.
+
+## 4 September carrier and personalisation correction — sources 38 and 39
+
+**Sources:** [166f8cfb…](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md), 15-minute capture created `2026-09-04T17:37:23.816Z`, especially 00:18 and 04:59; and the later [0c2a02aa…](TRANSCRIPTS/2026-09-04-0c2a02aa-848e-5dae-9fe0-339d566da09a.md), 1-minute capture created `2026-09-04T17:37:47.513Z`, at 00:00.
+
+- Replace the current test's ladybug with the firefly. The firefly is a one-shot carrier/courier role within handoff and arrival, never a persistent product mascot, pet, helper, navigation device, or brand identity.
+- The current scrapbook treatment is judged insufficiently personal. Test a small selectable page-design/page-character variation alongside maker-authored materials so the object can carry more of the sender's own taste.
+- The sources do not prescribe what those designs are, how many exist, whether they are pages or modes, or a multi-page sequence. They do not authorise a public template gallery, popularity ranking, marketplace, or a return to a dense editor.
+
+These are latest internal prototype directions, not user research or proof that a firefly, page variation, or more customisation improves authenticity, expression, comprehension, or receiver experience.

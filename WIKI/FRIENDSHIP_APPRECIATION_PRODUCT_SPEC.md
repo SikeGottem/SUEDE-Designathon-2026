@@ -91,7 +91,7 @@ The artifact has a beginning, an opening, a body, and an ending. There are no me
 
 ### 5.3 Creative, not bureaucratic
 
-The creator should feel like a full-screen camera and blank notebook combined: as immediate as making a Story, but still one finite authored object. Recipient, writing, captured media, and selected materials live together in one evolving composition instead of becoming a sequence of form pages.
+The creator should feel like a full-screen sheet of paper with Story-level ease: immediate to begin, but still one finite authored object. Recipient, writing, optional captured media, and selected materials live together in one evolving composition instead of becoming a sequence of form pages.
 
 ### 5.4 Deliberate, not artificially difficult
 
@@ -150,6 +150,7 @@ The product may let the maker use:
 - **music** — a song connected to the person or moment;
 - **short video** — a moving memory where still imagery is not enough;
 - **drawing** — a doodle, diagram, line, or handmade symbol;
+- **colour** — maker-selected colour applied to a word, mark, sticker, or material when it carries personal emphasis rather than generic product decoration;
 - **marks** — stickers, stamp, signature, seal, underline, arrow, or divider;
 - **arrangement** — scale, spacing, order, overlap, and sequence as part of the expression.
 
@@ -203,14 +204,15 @@ The conceptual product has seven page families. Modes inside the creator remain 
 
 ```text
 1. Studio
-   └─ capture or blank paper → compose → arrange
-2. Preview and seal
-3. Handoff
+   └─ choose a small paper character → write/add/arrange optional materials → finish letter
+2. Fold, envelope and personal seal
+3. Carrier choice and sealed preview
+4. Handoff
 
-4. Arrival
-5. Opening threshold
-6. Full object
-7. Private cabinet (optional branch)
+5. Arrival
+6. Opening threshold
+7. Full object
+8. Private cabinet
 ```
 
 ## 10. Page 1 — Studio
@@ -225,23 +227,26 @@ Turn a genuine thought into a composed object without making the person feel lik
 
 Creation takes over the whole phone. It feels as immediate as making an Instagram Story, while keeping this product's own white/navy, handwritten, private-object language. The paper is the full-screen creation field rather than a bordered card inside another page, and ordinary app chrome recedes.
 
-The initial surface may be a live camera or blank white paper. Photo and video capture are immediately available; the maker can also choose an existing moment or begin without media. There is no feed, dashboard, archive, friend grid, template market, or product tour competing for attention.
+The initial surface is a blank white sheet of paper, visibly physical through restrained hand-drawn ruling rather than a faux paper texture. The maker can add a photograph, video, voice, song, or drawing when it earns a place in the object. There is no feed, dashboard, archive, friend grid, template market, or product tour competing for attention.
 
 ### How it begins
 
-- Entering the Studio exposes capture immediately rather than asking the maker to complete a form first.
-- One tap takes a photograph; switching to video makes the same central control start and stop filming.
-- Permission failure never traps the maker: retry, choose a device photo/video, use the labelled sample, and blank paper reach the same next state.
-- Successful capture moves directly into composition without an upload-confirmation or settings screen.
+- Entering the Studio opens the paper directly rather than asking the maker to complete a form or grant camera permission first.
+- Camera and device media are explicit optional actions. One tap takes a photograph; switching to video makes the same central control start and stop filming.
+- Permission failure never traps the maker: retry, choose a device photo/video, use the labelled sample, or return to the paper without losing the same draft.
+- Successful capture lands on the existing paper as a small, movable Polaroid-like material without an upload-confirmation or settings screen.
 - The recipient remains a light-touch editable anchor at the top and does not become a separate full-screen step or progress bar.
 
 ### How making works conceptually
 
-- Captured photo/video becomes the page itself; blank paper stays a first-class alternative.
-- A compact, hand-drawn tool rail offers words, camera, voice, song and drawing at thumb reach without becoming a Canva toolbar.
+- The physical paper remains the page. Captured photo/video is one optional material, not a full-screen replacement for the page.
+- A compact, hand-drawn tool rail offers words, camera, voice, song, drawing, restrained colour, and stickers at thumb reach without becoming a Canva toolbar.
 - Selecting a material lands it directly on the canvas with visible state feedback.
+- Drawing is a real freehand doodle surface; it is not a random or decorative placeholder mark.
 - Text and material pieces are selected in place, dragged directly, rotated from one small contextual handle, edited or removed. Controls disappear when the piece is not selected.
 - Text editing temporarily takes focus, with an optional reflective cue such as “favourite memory,” “what they taught you,” “one word,” or “one small thing you notice.” The cue never writes the appreciation for the maker.
+- A small, deliberately limited set of selectable paper/page characters sets the starting visual character without replacing the maker's own writing, materials, or arrangement. It is a personalisation choice, not a public template marketplace, a multi-page flow, or a gallery of themes.
+- Typed words appear as handwriting as they are entered. A Backspace attempt marks the existing letters with a hand-drawn strike-through rather than silently deleting them, so the letter preserves a believable working history. This must ship with a quiet, keyboard-accessible recovery route (for example, undo/restore the most recent strike-through) so an irreversible-looking effect never traps a maker.
 - A brief first-use gesture cue may explain move/rotate, then disappears; no permanent hint competes with the work.
 - A piece may overlap another when the composition still reads clearly, but the first canvas is not pre-populated with competing fragments.
 - Camera re-entry, text editing, placement and rotation preserve the same draft when the maker returns from Preview.
@@ -253,7 +258,7 @@ Freedom with enough constraint to stay intimate. The maker should see their own 
 
 ### Transition
 
-When the composition feels finished, one `done` action moves to the preview. There is no percentage complete, upload wizard, or system judgment of whether the message is emotional enough.
+When the composition feels finished, one `done` action folds the authored paper and moves into envelope decoration and a personal seal. Only after the envelope is finished does the maker choose a small carrier and see the sealed preview. Carrier choice cannot interrupt the initial act of writing and arranging. There is no percentage complete, upload wizard, or system judgment of whether the message is emotional enough.
 
 ### Must never appear
 
@@ -262,34 +267,39 @@ When the composition feels finished, one `done` action moves to the preview. The
 - occasion categories as the main starting point;
 - an infinite Canva-style feature wall;
 - copied Instagram branding, feed/story expiry, views, reactions, replies, or social posting;
+- a literal Story camera screen, shutter-first hierarchy, or photograph used as the whole canvas;
+- fake paper texture, scrapbook clutter, or ruling strong enough to read as a generic editor grid;
 - visible full-time media controls, prompt chips, drag hints, and sample fragments competing with the writing area;
 - equal rounded cards for every material;
 - public templates ranked by popularity;
 - friend suggestions, daily assignments, reminders, or streaks;
 - relationship scores or “effort” meters.
 
-## 11. Page 2 — Preview and seal
+## 11. Page 2 — Fold, envelope and personal seal
 
 **Status:** Proposed for review.
 
 ### Purpose
 
-Let the maker stop editing and experience the composition as one finished thing before giving it away.
+Make finishing the letter into a meaningful authorship moment: the completed paper folds, then the maker turns its envelope into part of the gift before choosing how it travels.
 
 ### What appears
 
-- the complete object without editing controls;
-- the recipient and maker identity;
-- the authored order in which pieces will be encountered;
-- any sound or motion only after the maker actively previews it;
-- one path back to editing;
-- one action to finish or seal.
+- the maker's completed paper folding into a finite letter;
+- a small set of hand-drawn envelope structures, each with room for personal placement and decoration rather than a pre-made aesthetic;
+- a direct surface for marks, colour, stamp-like details, address/signature treatment, and a maker-drawn personal seal;
+- one clear path back to the unfolded composition; and
+- one action that commits the envelope and advances to carrier choice.
+
+### Carrier timing
+
+The maker chooses the small reversible carrier set only after composing, folding, and decorating the envelope. The order is now deliberate: **make letter → fold → decorate envelope and draw/apply seal → choose carrier → send**. Carrier choice cannot precede or interrupt expression, and envelope decoration must be substantial enough to matter rather than a cosmetic confirmation screen.
 
 ### The object boundary
 
 Finishing gives the composition a clear edge. For the first prototype, the recommended expression is one folded or sealed hand-drawn object rather than a menu of bottles, birds, boxes, and themes.
 
-The sender may add one personal mark: a signature, stamp, seal symbol, or small drawing. It should signal authorship, not status or rarity.
+The maker may draw one personal seal or stamp mark and place it on the envelope. It signals authorship, not status, rarity, or a reward mechanic. The exact envelope template count and mark tools stay intentionally small so the stage never becomes a package marketplace.
 
 ### Preview colour
 
@@ -306,7 +316,8 @@ The shift from working draft to something ready to give.
 - fake delivered, seen, or opened states;
 - confetti for finishing;
 - pressure to add more material;
-- a package marketplace.
+- a package marketplace;
+- an irreversible finalisation with no way to return to the letter or quietly correct an accidental strike-through.
 
 ## 12. Page 3 — Handoff
 
@@ -318,12 +329,12 @@ Let the maker give the object privately, then finish their side of the experienc
 
 ### What happens
 
-- The product creates or simulates one private link.
+- The product creates one private, receiver-facing link for the prototype flow. A working QR can point to the same generic demonstration object.
 - The maker chooses how to pass that link outside the product.
-- A concise departure gesture may show the sealed object leaving.
+- A one-time courier may fly in, pick up the selected sealed carrier, and leave with it. The sender can watch that short departure before their side closes.
 - The maker sees a calm completion state with no receiver activity.
 
-The practical interaction may be “copy link” or a device share action, but the emotional framing is “give this,” not “publish” or “send a message.”
+The practical interaction may be “copy link” or a device share action, but the emotional framing is “give this,” not “publish” or “send a message.” Link length, expiry, recipient verification, storage limits, and failed-delivery recovery must be specified honestly before this becomes a real service claim.
 
 ### Sender ending
 
@@ -349,7 +360,7 @@ Give the receiver enough trust and control to decide whether this is a welcome m
 
 ### First impression
 
-The page is still white. One sealed, hand-drawn object waits in generous space. The receiver sees who made it before intimate content is revealed.
+The page is still white. A one-time courier may carry the sealed, hand-drawn object into the centre and drop it there before leaving. The receiver sees who made it before intimate content is revealed.
 
 Suggested information hierarchy:
 
@@ -387,9 +398,9 @@ Separate notification from receiving and make the white-to-navy transition meani
 
 ### Sequence
 
-1. The receiver chooses to open.
+1. The receiver double-taps the object to test a deliberate opening gesture, or uses the equally direct visible tap/keyboard/reduced-motion fallback.
 2. The seal or object responds under their touch.
-3. The white page recedes, unfolds, or is covered.
+3. The object visibly unfolds directly into the full composed object, rather than merely changing state, exposing a scrolling paper surface, or leading into a separate transition.
 4. Deep navy becomes the full field.
 5. Off-white handwriting and linework arrive with the object.
 6. The first authored words become readable without waiting for spectacle.
@@ -418,7 +429,7 @@ Let the receiver absorb one personal object away from chat and product chrome.
 
 ### First impression
 
-Deep navy fills the screen. Warm off-white handwriting and hand-drawn marks create the composition. Navigation disappears or becomes nearly invisible. The object, not the app, is the whole experience.
+Deep navy fills the screen as the fold reveals the full composed object directly. Warm off-white handwriting and hand-drawn marks create the composition. Navigation disappears or becomes nearly invisible. The object, not the app, is the whole experience.
 
 ### Recommended composition model: the living page
 
@@ -453,7 +464,7 @@ Presence, specificity, and the accumulated evidence that someone noticed and mad
 
 ## 16. Page 7 — Receiver ending and private cabinet
 
-**Status:** Strong desire with an unresolved persistence model.
+**Status:** Current approved prototype direction; service-level retention and deletion semantics remain open.
 
 ### Purpose
 
@@ -469,7 +480,7 @@ None of these actions informs the maker. None is styled as more caring.
 
 ### The private cabinet
 
-If the receiver keeps the object, they return to a deep-navy memory surface rather than an inbox. Objects can be reopened as distinct personal things. A voice recording from a year ago should still feel like the same object, not a buried chat attachment.
+If the receiver keeps the object, they return to a deep-navy memory surface rather than an inbox. The prototype must retain multiple distinct kept objects and let the receiver reopen each one as the same personal thing, not a buried chat attachment.
 
 The cabinet should feel closer to a memory box, record shelf, or camera roll of meaningful artifacts than a social product home screen.
 
@@ -492,7 +503,7 @@ The cabinet should feel closer to a memory box, record shelf, or camera roll of 
 
 ### Open questions
 
-- Is keeping opt-in, automatic, temporary, or unnecessary?
+- What persistence, size limits, expiry and storage controls can a real service honestly provide?
 - Can the maker revoke or edit after giving?
 - Can the receiver export or forward?
 - What happens after a wrong-recipient link or unwanted contact?
@@ -505,7 +516,7 @@ These must remain visible before a real service is claimed.
 
 - **Creation and unopened state:** white field, very dark ink, occasional off-white paper distinction only when necessary.
 - **Opened object and cabinet:** deep navy field, warm off-white writing and linework.
-- **Accent use:** one small accent only when it explains focus, media, or state. Do not revive the earlier multi-colour book-cover palette yet.
+- **Maker-authored colour:** restrained maker-selected colours may belong to words, drawings, stickers, and other placed materials. They are expressive materials, not a global theme, a generic palette UI, or a multi-colour book-cover treatment. Exact palette and selection model remain open.
 
 ### Typography
 
@@ -547,13 +558,14 @@ Potential motions:
 
 - a rough line draws itself once;
 - paper or an object gently unfolds;
+- a courier moves slowly enough for pickup, departure, arrival, and drop to read as transport;
 - a seal separates;
 - a photograph settles into position;
 - a voice line pulses only while playing;
 - a firefly lights once to indicate arrival;
 - the cabinet accepts an object without celebration.
 
-Avoid looping ambience, confetti, parallax, floating particles, springy SaaS micro-interactions, or animation added only to look expensive.
+Avoid looping ambience, confetti, parallax, floating particles, springy SaaS micro-interactions, visible route/path guides, or animation added only to look expensive.
 
 Sound begins only after a clear receiver action. Silence is the default.
 
@@ -626,7 +638,7 @@ Words, images, voice, and song sit in open space connected by one hand-drawn lin
 
 ### Current recommendation
 
-Use **A. The living page** as the conceptual base. Do not blend in B or C until Ethan and the team choose a specific element and name the job it performs.
+Use **A. The living page** as the conceptual base. Do not blend in B or C until Ethan and the team choose a specific element and name the job it performs. The envelope is the living page's authored outer skin, not a separate generic package system.
 
 ## 22. Design-authenticity preflight
 
@@ -698,8 +710,8 @@ It does not prove demand, prevalence, emotional benefit, or long-term use.
 Ethan approved all fourteen conditions on 5 September 2026. They now govern the next reversible prototype and remain editable when the team learns something new.
 
 1. **Core form** — one authored digital care package / scrapbook object.
-2. **Creator structure** — one full-screen capture/blank-paper Studio, not a field-by-field wizard or Canva workspace.
-3. **First sample materials** — captured photo/video when used + words + optional voice + song + one personal mark; blank-paper and simpler objects remain valid.
+2. **Creator structure** — one full-screen paper-first Studio with optional media, not a field-by-field wizard, camera-first Story clone, or Canva workspace.
+3. **First sample materials** — captured photo/video when used + words + optional voice + song + one personal mark, colour, or sticker; blank-paper and simpler objects remain valid.
 4. **Recipient anchor** — the name stays light-touch inside the Studio, not on a separate page.
 5. **Object treatment** — one folded/sealed object for v0; no package chooser.
 6. **Colour threshold** — white through arrival, deep navy after opening.
@@ -708,7 +720,7 @@ Ethan approved all fourteen conditions on 5 September 2026. They now govern the 
 9. **Reply contract** — no reply, reactions, receipts, or sender-visible receiver state.
 10. **Receiver ending** — private keep, close, or remove.
 11. **Cabinet** — visible as an optional receiver-owned branch, not assumed permanent home.
-12. **Firefly** — keep as a possible single arrival cue; do not approve it as mascot yet.
+12. **Firefly** — current reversible carrier/courier treatment; do not approve it as a persistent mascot or final brand element.
 13. **Brand** — remain unnamed and logo-neutral while the interaction is reviewed.
 14. **Demo** — real coded private-link/QR receiver flow; no Figma-only prototype.
 
@@ -718,14 +730,27 @@ Ethan approved all fourteen conditions on 5 September 2026. They now govern the 
 
 The former approval of one folded/sealed object with no package picker is **superseded only for this test**. It remains the approved baseline outside the test and must not be recorded as rejected or as a validated product conclusion.
 
-- **Carrier browse:** offer a small, hand-drawn set of carrier icons in a horizontal browse, so one selected object can be seen at a useful scale. Do not turn it into a marketplace, theme system, or dense chooser.
-- **Carrier field:** show the selected carrier by itself in generous negative space. Remove ornamental carrier backdrop paths (including bottle waves and ladybug routes) and the bottom mascot/helper explanation; the object and a purposeful selection transition are sufficient.
+- **Carrier browse:** offer bottle, firefly, and paper plane as a small, hand-drawn carrier set in a horizontal browse, so one selected object can be seen at a useful scale. Do not turn it into a marketplace, theme system, or dense chooser.
+- **Carrier field:** show the selected carrier by itself in generous negative space. Remove ornamental carrier backdrop paths (including bottle waves and firefly routes) and the bottom mascot/helper explanation; the object and a purposeful selection transition are sufficient.
+- **Carrier timing:** composition comes first. The maker folds and decorates the finished letter before the small carrier chooser; the approved order is make letter → fold → decorate envelope + custom seal → choose carrier → send.
 - **Choreography:** the selected carrier changes the handoff, arrival, and opening choreography, rather than changing intimate content or adding a different product flow.
 - **Bottle path:** test a bottle with a direct cork swipe/drag opening. If that gesture is unavailable, unclear, or reduced motion is requested, provide a simple explicit open control that reaches the same content immediately.
-- **Ladybug path:** a ladybug may make one dotted, one-time courier/notification journey. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
+- **Courier path:** the firefly may perform the one-shot courier/carrier role at handoff and arrival, with a separate carried-object payload when needed. It may use wing-up/wing-down/carrying states and moves slowly enough for the transport action to read. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
 - **Navigation and cabinet:** no bottom navigation. The optional private cabinet presents kept items as distinct physical objects, not generic rows, cards, or a feed.
-- **Creator and visual state:** Section 10 and the newest source supersede the bordered paper-sheet/rail treatment only: creation now fills the phone, exposes immediate photo/video or blank-paper entry, and uses sparse Story-like direct manipulation for movable/rotatable pieces. It remains a rich authored scrapbook object, not a Canva editor or social Story. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
+- **Creator and visual state:** Section 10 and sources 31–39 supersede only the bordered paper-sheet/rail treatment and literal capture-first interpretation: creation fills the phone but opens on paper first, with optional media, restrained colour, stickers, and a small undefined selectable page-design/page-character variation added as maker-directed materials/starting character. It keeps sparse Story-like direct manipulation for movable/rotatable pieces without becoming a Canva editor, public template market, or social Story. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Exact colour palette, sticker set, and variation taxonomy remain open, not approved brand choices.
+- **Direct reveal:** opening visibly unfolds into the full composed object itself, rather than a separate post-unfold transition. Receiver-led optional media reveal remains an open interaction detail.
 - **Home and preview correction:** the home keeps the core invitation/action but removes the decorative loop and bottom-centres the minimal composition. Preview remains the place where the maker sees something ready to give, but its hero artwork is explicitly open pending the supplied reference/screenshot; do not imply a final selected illustration.
+
+### 27.1 Approved flow and asset update — 5 September
+
+Ethan directly approved the following next-prototype changes. They supersede only conflicting open details above; they are not user validation:
+
+- **Approved core:** replace the ladybug with the firefly; introduce a small selectable paper-character set; deepen maker personalisation; preserve the maker's exact composed layout into receiving; use a real coded receiver link and QR for the demo; retain a persistent multi-object cabinet; and replace provisional recurring art with Cecelia's supplied hand-drawn masters.
+- **Approved finishing ritual:** after the maker finishes the letter, it folds. The maker then selects a limited envelope structure, decorates its exterior, draws/applies a custom personal seal, chooses the delivery carrier, and sends. Envelope decoration has equal experiential weight to carrier choice.
+- **Approved writing behaviour:** typed text renders like handwriting. Backspace strikes through rather than deleting. An unobtrusive keyboard-accessible undo/restore control is mandatory so this expressive constraint is never a destructive accessibility barrier.
+- **Asset authority:** `/Users/ethanwu/Downloads/Warm and Fuzzy- Firefly Logo Assets` is the authoritative current source for Cecelia's supplied firefly/logo illustration inputs. Assets must remain independently swappable, including wing-state and carried-object layers required by motion.
+- **Parked, not rejected:** carrier-specific opening rituals and receiver-led optional-media reveal are deferred. Do not expand them while implementing the approved core flow.
+- **Boundary:** envelope templates, page characters, carrier choices, and seal tools stay intentionally few and authored; none may become a theme, template, or package marketplace.
 
 The test must preserve sender-authored content, no sender-visible receiver state, no reply pressure, and the receiver's direct leave/close/remove routes.
 

@@ -417,11 +417,11 @@ Only record choices that change direction, investment or the story. Every conseq
 ## 2026-09-05 - Run a scoped carrier-and-opening prototype delta
 
 - Status: current, reversible test only
-- Decision: implement a small hand-drawn carrier set in a horizontal browse; let the selected carrier change handoff, arrival and opening choreography; test the bottle with a cork swipe/drag and a simple explicit-open fallback; use the ladybug once as courier/notification, not a mascot; omit bottom navigation; show the cabinet as distinct physical objects; keep a rich Figma/scrapbook-like creator; use white with navy ink before opening and full navy/off-white afterward; use Gaegu as working type; leave soft yellow and other accents open.
+- Decision: implement bottle, firefly, and paper plane as a small hand-drawn carrier set in a horizontal browse after the maker has composed the message; let the selected carrier change handoff, arrival and opening choreography; keep Preview exterior-only; test the bottle with a cork swipe/drag and a simple explicit-open fallback; use the firefly only as a one-shot courier/carrier action to pick up the selected carrier, fly away, and later drop it at arrival slowly enough for the transport to read; test double-tap opening with an equally direct visible/keyboard/reduced-motion fallback that unfolds directly into the full composed object; omit bottom navigation; show the cabinet as distinct physical objects; keep a rich Figma/scrapbook-like creator with restrained colour, sticker materials, and a small still-undefined page-design/page-character variation while writing stays central; use white with navy ink before opening and full navy/off-white afterward; use Gaegu as working type; leave exact palette, sticker set, variation taxonomy, and receiver-led optional media reveal open.
 - Scope boundary: this supersedes the earlier single folded/sealed object and no-picker approval **only for this reversible test**. It does not overturn the conceptual direction or establish a validated product decision.
 - Reason: Ethan's newer direct implementation instruction makes the 4 September team's unresolved visual exploration concrete enough to test without promoting it to user evidence.
-- Evidence: [4 September carrier and receiving meeting capture](TRANSCRIPTS/2026-09-04-d5e3d4ea-70d8-55cc-9baa-d319ad5e7e1c.md), supplied mockups/reference inspected as design inputs, and Ethan's newer direct instruction. No live Figma file was read; no participant evidence was collected.
-- Consequence: implementation may make one labelled carrier-flow prototype, while retaining the direct leave/close/remove path, no reply/telemetry contract, and the richer authored creator. It may not claim a carrier improves meaning, clarity, agency, or desirability.
+- Evidence: [4 September carrier and receiving meeting capture](TRANSCRIPTS/2026-09-04-d5e3d4ea-70d8-55cc-9baa-d319ad5e7e1c.md), supplied mockups/reference inspected as design inputs, Ethan's newer direct instruction, [4 September ritual correction](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md) at 04:21–07:58, [render correction](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md) at 15:29–17:56, [sequencing correction](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md) at 03:26–05:24, [customization/direct-reveal correction](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md) at 01:59–05:28, then [firefly replacement](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md) at 00:18 and 04:59, and the later [page-variation request](TRANSCRIPTS/2026-09-04-0c2a02aa-848e-5dae-9fe0-339d566da09a.md) at 00:00. No live Figma file was read; no participant evidence was collected.
+- Consequence: implementation may make one labelled carrier-flow prototype, while retaining the direct leave/close/remove path, no reply/telemetry contract, and the richer authored creator. The firefly is a one-time transport action with separate wing/payload layouts, not a persistent mascot; path guides are not final UI. Carrier choice follows composition rather than interrupting it, and unfolding reveals the completed object directly. Colour, stickers, and a small page-design/page-character variation are optional authored materials, not generic theme controls or a template market. It may not claim a carrier, courier, unfolding gesture, post-composition sequence, customization, or page variation improves meaning, clarity, agency, or desirability.
 - Revisit when: a receiver comparison against the folded-object baseline or another simple control exposes a material difference in comprehension, comfort, agency, or desired next action.
 
 ### Judge review
@@ -432,7 +432,7 @@ Only record choices that change direction, investment or the story. Every conseq
 | Problem identification | neutral | The original appreciation moment remains intact. | No new user evidence identifies a carrier as the relevant barrier. |
 | Solution approach | strengthens | Carrier-specific choreography lets the team compare a concrete receiving ritual. | Several changed cues could obscure what caused a response. |
 | Design innovation | strengthens | Physical distinctness and an opening action avoid a generic message screen. | A container picker can regress into a familiar themed-card product. |
-| Visual communication | strengthens | Horizontal scale, white/navy states, and a one-off courier give elements clear jobs. | Handwriting or the cork gesture may reduce clarity or access. |
+| Visual communication | strengthens | Composition-first sequencing, direct unfold-to-object, and optional authored materials make the critical action and personal choices easier to see. | Colour/stickers, handwriting, the cork gesture, unfolding, or page variation may reduce clarity or access. |
 | Presentation skills | mixed | A bottle opening can make the demo memorable. | The reveal can eclipse the problem and receiver outcome. |
 | Evidence quality | weak | The 4 September capture records real team intent. | It is not user research; the visual choice has no receiver evidence. |
 
@@ -441,21 +441,21 @@ Only record choices that change direction, investment or the story. Every conseq
 | Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
 | --- | --- | --- | --- |
 | Assumption and inversion | What if a carrier adds pressure or means nothing? | It is a reversible presentation condition, not a product claim. | Receiver interpretation. |
-| Behaviour and context | Will people understand the selected object before opening? | Sender identity and an explicit fallback remain available. | Whether the metaphor signals warmth, romance, crisis, or confusion. |
+| Behaviour and context | Does choosing a carrier interrupt the moment of expression? | The maker composes before choosing the delivery treatment. | Whether the revised order actually feels more natural. |
 | Medium necessity | Could an ordinary link work as well? | It remains an essential comparison control. | Whether choreography earns digital complexity. |
 | Alternatives | Why bottle, not folded object or no vessel? | The earlier folded object stays the baseline outside this test. | Comparative receiver preference and comprehension. |
 | Human specificity | Do different friendship styles read carriers differently? | No universal meaning is assumed. | Which contexts are comfortable or alienating. |
-| Inclusion and accessibility | Can gesture, colour, and handwriting be used by everyone? | Direct open, readable critical copy, and reduced-motion equivalence are required. | Actual assistive-technology and usability testing. |
+| Inclusion and accessibility | Can gesture, colour, handwriting, and unfolding be used by everyone? | Direct open, readable critical copy, and reduced-motion equivalence are required. | Actual assistive-technology and usability testing. |
 | Trust, safety and privacy | Could the courier obscure unwanted contact? | Sender identity and private leave/remove routes remain structural. | Real identity, blocking, and abuse policy. |
 | Failure and recovery | What if the cork gesture fails? | The simple explicit-open fallback reaches the same content. | Failure handling for media and wrong recipients. |
-| Feasibility and demo truth | Can this ship without fake breadth? | Limit the set and label simulated behaviours. | Event-time build cost and interaction polish. |
+| Feasibility and demo truth | Can this ship without fake breadth? | Limit the carrier set and keep colour/sticker/page-variation materials restrained and honestly scoped. | Event-time build cost, interaction polish, asset breadth, and an undefined variation taxonomy. |
 | Incentives and second-order effects | Does a cabinet or carrier create collecting pressure? | No scores, prompts, public state, or mascot loop are allowed. | Repeated-use and storage burden. |
 | Simplicity and retellability | Is this too much to explain? | The story remains make, give, open, keep/leave. | Whether people reduce it to a themed digital card. |
-| Authorship and distinctiveness | Could it look like an AI mascot/template system? | Ladybug is one-off; icons are hand-drawn and carrier-specific. | Whether the final render feels team-authored rather than decorative. |
+| Authorship and distinctiveness | Could it look like an AI mascot/template system? | Firefly is one-shot; icons are hand-drawn and carrier-specific; page variation stays maker-authored rather than a template market. | Whether the final render feels team-authored rather than decorative. |
 
 - Verdict: Proceed with conditions
 - Work permitted by this verdict: build and review one labelled carrier-and-opening delta alongside the approved experience.
-- Blocking conditions: keep the set small; no persistent mascot, bottom navigation, package marketplace, sender telemetry, reply pressure, or validation claims; provide a simple opening fallback and retain the folded-object baseline as a comparison condition.
+- Blocking conditions: keep the carrier set to bottle, firefly, and paper plane; let the maker compose before carrier choice; preview only the carrier exterior; no persistent mascot, bottom navigation, package marketplace, sender telemetry, reply pressure, visible path guides, or validation claims; provide a visible direct opening fallback alongside double-tap, unfold directly into the composed object, keep colours/stickers and any page variation restrained and maker-authored, and retain the folded-object baseline as a comparison condition.
 - Weakest judging angle: evidence quality, because the new detail is based on team intent and mockups, not receiver evidence.
 - Main trade-off: a more memorable, physically legible receiving ritual costs clarity and may hide whether the underlying no-reply contract works.
 - Next evidence that could change the verdict: a consented receiver comparison of the carrier delta against the folded-object baseline, measuring comprehension, comfort, pressure, agency, and desired next action.
@@ -464,7 +464,7 @@ Only record choices that change direction, investment or the story. Every conseq
 ## 2026-09-05 - Correct the prototype toward a sparse, mobile paper-sheet experience
 
 - Status: current correction; prototype direction remains reversible.
-- Supersession note: the Studio-only paper-sheet treatment below is superseded by the later full-screen, capture-first Story-composer decision. Its home, carrier, cabinet, motion, deck, and evidence constraints remain current.
+- Supersession note: the bordered, rail-led Studio treatment below is superseded by the later full-screen composer decisions. Its paper-first visual premise is restored by the newest correction; its home, carrier, cabinet, motion, deck, and evidence constraints remain current.
 - Decision: keep the small carrier-picker test, deliberate opening, receiver keep/close/remove paths, and physical cabinet. Correct the render by removing the home-loop ornament, bottom-centring the core home invitation/action, removing carrier backdrop paths and mascot/helper copy, increasing negative space, and using purposeful motion only. Rebuild the creator as one mobile paper sheet with a dominant writing layer plus a compact scrollable material rail/progressive disclosure. Keep preview's “ready to give” role, but leave its hero artwork open pending Ethan's supplied screenshot. Prioritise team-drawn recurring assets whose line weight belongs with Gaegu. Do not build a 3D tree archive. For the deck, establish layout/story first, use AI only to refine bounded treatments, and ensure the presentation works silently.
 - Reason: the team reviewed the first rich coded pass and found it visually noisy, AI-looking, crowded on mobile, and insufficiently resolved despite preserving the desired overall flow. The later direct critique governs overlap.
 - Evidence: [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), created `2026-09-04T15:25:25.181Z`, records the paper-sheet/scroll-rail discussion (32:28–33:40), retained opening/keep/cabinet (33:40–34:16), line-weight/artwork correction (15:50–16:28; 26:40–27:39), 3D-tree rejection (07:48–10:08), and silent/layout-first deck direction (25:50–26:19; 30:21–30:58). The later [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created `2026-09-04T15:27:36.809Z`, directly rejects the home loop, carrier ornament/helper copy, crowded maker page, and current preview hero while retaining the carrier premise and cabinet (01:26–03:17).
@@ -510,13 +510,90 @@ Only record choices that change direction, investment or the story. Every conseq
 
 ## 2026-09-05 - Test a full-screen, capture-first Story composer
 
-- Status: current exploratory implementation decision; not validated or final.
+- Status: superseded in part by the paper-first correction below; full-screen, sparse direct manipulation remains current.
 - Decision: replace the bordered paper-form Studio with a full-screen creation mode. Enter through immediate photo/video capture or blank paper, move straight into one sparse canvas, and let selected words and materials move, rotate, edit and remove in place. Keep tools contextual and at thumb reach. Borrow the speed and direct-manipulation model of Instagram Stories without copying Instagram branding, social posting, expiry, views, reactions, replies, or feed behaviour.
 - Reason: the newest team review identifies the creation board as the unresolved core UX problem and explicitly says the earlier creator was the weakest screen because its interaction model had not been designed. Ethan then made full-screen entry and immediate filming the highest-priority prototype requirement.
 - Evidence: [d4b7ec93… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), created `2026-09-04T15:51:31.829Z`, plus Ethan's direct 5 September clarification in the active build session.
 - Consequence: the current prototype may implement local browser camera/photo/video capture, device-media and honest fallback paths, a full-screen canvas, sparse tools, movable/rotatable layers, and draft continuity through preview/reveal. It may not claim this is as usable as Instagram Stories until real-phone testing supports that claim.
 - Revisit when: a teammate completes the flow on a real phone, camera permission or touch gestures fail, the canvas feels more like Canva than a Story, or receiver testing shows the captured-media object weakens rather than strengthens intentionality.
 - Review boundary: Ethan explicitly asked to proceed with the prototype test before the deferred reviews. This authorises the reversible build only; it does not approve a final product, visual system, usability claim, or pitch claim.
+
+## 2026-09-05 - Correct the Story composer to be full-screen and paper-first
+
+- Status: current exploratory implementation decision; not validated or final.
+- Decision: keep the full-screen, sparse, direct-manipulation creator, but open on a visibly physical blank paper surface rather than a live camera. Use restrained hand-drawn paper lines, never faux paper texture. Make camera/photo/video optional; captured media lands as a small movable Polaroid-like item. Replace the placeholder drawing material with real freehand doodling. Rework the control order around paper, optional material, arrangement, and finish.
+- Supersedes: only the capture-first entry, full-screen captured-media background, and literal Story-camera interpretation of the preceding decision. It does not supersede full-screen focus, movable/rotatable pieces, contextual controls, non-social boundaries, carriers, opening, cabinet, or the receiver contract.
+- Reason: the first literal implementation was reviewed and found to go too far toward Instagram. The later team captures say the paper version is better, the camera should not lead or fill the screen, paper texture is tacky, button order remains weak, and drawing must be real.
+- Evidence: [d4ea28f5… 34:35–39:56](TRANSCRIPTS/2026-09-04-d4ea28f5-a996-57e1-adbe-69726a64f356.md) and the later [a9499b3d… 03:55–07:17](TRANSCRIPTS/2026-09-04-a9499b3d-07e2-5182-bdfd-a9a85f9860db.md). These are internal team review captures, not user research.
+- Consequence: the prototype may render a full-screen paper-first Studio, optional local media as movable Polaroid-like material, and functional freehand drawing. It must not auto-request camera permission, use camera capture as the entire canvas, imitate Story capture chrome, add decorative paper texture, or claim that the new ordering is proven easier.
+- Revisit when: a teammate creates a complete object unaided on a real phone, especially testing whether they understand how to begin writing, add a memory, make a doodle, arrange it, and finish.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | neutral | The correction preserves the appreciation intervention and receiver contract. | The official 2026 rubric remains unconfirmed. |
+| Problem identification | neutral | It changes creator interaction, not the ordinary-day appreciation framing. | No sender evidence shows paper-first lowers hesitation. |
+| Solution approach | strengthens | Paper-first keeps the authored letter/scrapbook premise visible while media remains expressive material. | The revised order may still confuse a first-time maker. |
+| Design innovation | strengthens | It avoids a generic Story clone without removing direct manipulation. | A Polaroid treatment could still become decorative convention. |
+| Visual communication | strengthens | One paper focal surface makes the creator read as an object rather than a camera product. | Exact ruling, drawing treatment, and control hierarchy remain untested. |
+| Presentation skills | strengthens | The demo can show a clear authored surface before media enters. | A polished prototype can still overstate real usability. |
+| Evidence quality | weak | The change is supported by later internal review with direct render critique. | No intended user has compared the two creator models. |
+
+- Verdict: Revise / Proceed with conditions.
+- Work permitted: one reversible paper-first creator correction, including actual freehand drawing and optional Polaroid media.
+- Blocking conditions: no validation claims, no camera-first permission request, no photo-background canvas, no faux paper texture, no literal Instagram chrome, and no expansion of social or sender-tracking mechanics.
+- Next evidence: a real-phone maker walkthrough compared with the prior capture-first flow.
+
+## 2026-09-05 - Approve the authored envelope-and-seal flow
+
+- Status: current exploratory implementation decision; not validated or final.
+- Decision: approve the current next-prototype core: firefly replaces the ladybug; makers choose a small paper character, preserve their exact composition into receiving, and use handwriting-style typing with recoverable strike-through Backspace; on completion the letter folds, the maker selects and decorates a deliberately small envelope, draws/applies a personal seal, then chooses a carrier and sends; the coded demo uses a real receiver link/QR; and the receiver cabinet retains multiple distinct objects. Carrier-specific opening rituals and receiver-led optional-media reveal are parked. Cecelia's supplied firefly/logo assets at `/Users/ethanwu/Downloads/Warm and Fuzzy- Firefly Logo Assets` are the authoritative current hand-drawn inputs.
+- Reason: Ethan explicitly approved items 1–11 from the outstanding-ideas list and clarified that the envelope is as meaningful an authorship surface as carrier choice, while the letter should behave more like physical handwriting than a generic text field.
+- Evidence: Ethan's direct 5 September build-session approval; earlier firefly and personalisation captures [166f8cfb…](TRANSCRIPTS/2026-09-04-166f8cfb-39ee-57ce-9eaa-8b1a114657af.md) at 00:18 and 04:59 and [0c2a02aa…](TRANSCRIPTS/2026-09-04-0c2a02aa-848e-5dae-9fe0-339d566da09a.md) at 00:00. These are team direction, not participant validation.
+- Consequence: implementation may add only the bounded flow **make letter → fold → decorate envelope + custom seal → choose carrier → send**, along with the real demo route, multi-object cabinet and asset replacement. It must not add a template/package market, a persistent mascot, a social response loop, untested carrier rituals, or receiver-media mechanics.
+- Revisit when: a maker and receiver complete the full flow on a real phone; link/privacy/storage limits are specified; or the envelope step begins to feel like decorative labour rather than authored meaning.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The flow communicates and redesigns the ordinary-day appreciation rule through a visible making and giving ritual. | Official 2026 judging detail remains unverified. |
+| Problem identification | strengthens | The envelope gives the maker another deliberate way to make direct appreciation feel considered rather than abrupt in chat. | No intended maker has said this reduces awkwardness. |
+| Solution approach | strengthens | A bounded letter-to-envelope-to-carrier sequence makes authorship, transfer and receiving legible. | Extra stages may add friction without improving meaning. |
+| Design innovation | strengthens | The envelope is authored after the actual letter, rather than a generic greeting-card skin or theme picker. | It can still collapse into a decorative digital-card convention. |
+| Visual communication | strengthens | Folding and sealing make the same composed object visibly carry through to arrival. | Cecelia's assets and page/envelope hierarchy still need rendered review. |
+| Presentation skills | strengthens | The flow is retellable and demos cleanly through one link/QR. | A theatrical demo could hide the unresolved social problem. |
+| Evidence quality | weakens | Direct team approval is clear and sources show the direction's evolution. | There is no sender/receiver comparison, privacy test, or evidence that every feature earns its cost. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Does more decoration automatically mean more care? | Keep envelope choice and seal-making intentionally small and optional-looking. | Whether people experience the stage as meaning or pressure. |
+| Behaviour and context | Does a maker have time to make this when the thought occurs? | The flow starts with writing and keeps tools direct; carrier choice remains after expression. | Real completion time and abandonment. |
+| Medium necessity | Could a real envelope or ordinary link do the job? | Digital can preserve one composition, private access and a replayable multi-object cabinet. | Whether that advantage outweighs physical or chat alternatives. |
+| Alternatives | Could a card, voice note or shared album work better? | They remain legitimate controls; this prototype does not claim universal superiority. | Comparative sender/receiver preference. |
+| Human specificity | Do all friendship styles welcome deliberate sealing? | The product serves a voluntary, ordinary-day appreciation moment without requiring reciprocity. | Cultural, accessibility and relationship-context differences. |
+| Inclusion and accessibility | Does handwriting/strike-through exclude people or make correction unsafe? | An accessible undo/restore path and reduced-motion/direct-opening routes are mandatory. | Screen-reader, keyboard and motor testing of the actual build. |
+| Trust, safety and privacy | Can a private-looking link overpromise confidentiality? | The prototype may demonstrate a real route but must label unsolved privacy, expiry, size and storage limits honestly. | Authentication, wrong-recipient, abuse and deletion model. |
+| Failure and recovery | What happens after accidental Backspace or a bad seal choice? | Makers need quiet return/edit and undo/restore paths; receivers retain leave/close/remove routes. | Whether recovery is discoverable without breaking the physical-writing feeling. |
+| Feasibility and demo truth | Can link, QR, assets and cabinet be made real within the sprint? | Implement one bounded flow and distinguish working demo behaviour from service guarantees. | End-to-end deployment and persistence verification. |
+| Incentives and second-order effects | Could envelopes create an effort arms race or cabinet burden? | No rankings, scores, templates, prompts or sender telemetry are permitted. | Whether repeated use creates reciprocity pressure. |
+| Simplicity and retellability | Is the sequence too long to explain? | One sentence remains: make a letter, make its envelope, choose how it travels, let them receive it. | First-time comprehension and time-on-task. |
+| Authorship and distinctiveness | Could code or AI determine the product's apparent handmade quality? | Cecelia's supplied hand-drawn masters and maker-created words/seals are the required visual/content sources. | Human asset integration and post-render authenticity review. |
+
+- Additional domain lens: link transport and personal-media storage.
+- Why it is material: the object can carry intimate words, images, recordings and a receiver-facing link.
+- Challenge, evidence-backed answer and unknown: the demo may use a real link/QR, but it must not claim encryption, authentication, indefinite storage, delivery reliability, or size limits until those behaviours exist and are tested.
+- Verdict: Proceed with conditions.
+- Work permitted by this verdict: implement the approved bounded flow and substitute Cecelia's supplied assets; keep the parked ideas out of the current pass.
+- Blocking conditions: document and truthfully expose privacy/size/expiry/storage limits for link transport; provide accessible, non-invasive recovery for strike-through typing; preserve reduced-motion and direct interaction fallbacks; keep paper, envelope, seal and carrier choices small enough that they do not become a marketplace; do not call direct approval user validation.
+- Weakest judging angle: evidence quality, because the choices are direct team decisions rather than tested user findings.
+- Main trade-off: richer visible authorship and a clearer ritual in exchange for more completion friction and additional transport/storage responsibility.
+- Next evidence that could change the verdict: one observed maker-to-receiver walkthrough, including accidental correction, envelope choice, link opening, and cabinet revisit.
+- Recommendation: build the bounded sequence now, then test its friction and honesty before treating the ritual or link model as product truth.
+- Revisit when: the first full real-phone walkthrough, privacy/storage implementation decision, or post-build authenticity/accessibility review.
 
 ## Decision template
 
