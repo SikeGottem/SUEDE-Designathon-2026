@@ -1,20 +1,28 @@
-<!-- This file contains Ethan's ready-to-send Discord catch-up for Akari and Chloe; it is a draft and has not been sent. -->
-yo, quick catch-up since you both missed the brief release.
+<!-- This page gives returning team members a neutral dot-point summary of the current SUEDE direction and next work. -->
+# Team catch-up
 
-the working brief we have is: “Design an experience that reveals, communicates, questions, or redesigns an unwritten rule.”
-
-we went really broad at first, but we’ve now chosen friendship appreciation as the working problem direction. The pickup-sport idea is parked as a comparison for now. The rule we’re looking at is that you normally don’t directly tell a friend how much you appreciate them on a random day. Without a birthday, farewell or something else giving you permission, it can feel too intense, romantic, or like something is wrong. On the receiving side, a meaningful gesture can also feel like it needs an equally meaningful reply.
-
-our current read is that the appreciation is usually already there, but saying it directly on a random day can feel weird or too serious. Text can bury the meaning inside normal chat, while a physical letter takes enough effort that it isn’t always realistic. That’s still our hypothesis, not something we’ve proved with people yet.
-
-on the solution side, the main thing we’ve been exploring is some kind of deliberately made digital object or keepsake. The letter, scrapbook, envelope, QR/link and private archive are all candidates. We haven’t chosen the medium, mechanism or actual product, and digital still has to beat plain text, voice and a physical or non-digital ritual.
-
-the first thing we need to prove is whether this rule actually shows up outside our group, who it affects, and whether receivers feel the same ambiguity or reply pressure. If it does, we then need to prove digital adds something without making the moment more awkward.
-
-we’ve worked through questions 1–29 of the big red-team question bank. While we keep answering the rest, AI can handle the evidence ledger, competitor and format comparisons, research/test prep, matched test materials, Q&A/deck infrastructure and later throwaway feasibility checks once we know what mechanism is worth testing. We’re holding off on polished Figma screens, the full app and the final pitch story until the mechanism survives that work.
-
-short direction doc: https://github.com/SikeGottem/SUEDE-Designathon-2026/blob/main/WIKI/FRIENDSHIP_APPRECIATION_DIRECTION.md
-
-full question bank: https://github.com/SikeGottem/SUEDE-Designathon-2026/blob/main/WIKI/FRIENDSHIP_APPRECIATION_QUESTION_BANK.md
-
-when you’re back in, the most useful thing is to challenge the rule and the digital premise, then help us test it with people who aren’t us.
+- **Working brief:** “Design an experience that reveals, communicates, questions, or redesigns an unwritten rule.”
+- **Current stage:** The working rule and problem direction have been chosen. The exact audience, medium, mechanism and final solution have not.
+- **Current direction:** Friendship appreciation.
+- **Previous direction:** The pickup-sport idea is parked as a comparison rather than the lead.
+- **Chosen working rule:** On an ordinary day, friends are not generally expected to make a direct, deliberate expression of appreciation.
+- **Why the rule matters:** Without a birthday, farewell, crisis or another accepted occasion, direct appreciation can feel overly intense, romantic, farewell-like or alarming.
+- **Receiver-side issue:** A meaningful gesture may create pressure to give an equally meaningful reply or return gesture.
+- **Supporting hypotheses:** Visible effort may signal sincerity; sincere care may feel like it should be reciprocated; emotional directness may need a socially recognised container.
+- **Problem framing:** The appreciation often already exists. The likely difficulty is expressing it in a form that feels socially comfortable, deliberate and lasting.
+- **Current format hypothesis:** Ordinary chat can bury appreciation inside disposable conversation, while physical letters can require enough time and logistics to deter some senders.
+- **Open solution territory:** Test whether a deliberately authored digital object or keepsake can sit between casual chat and a physical letter.
+- **Possible materials:** Writing, photographs, voice, music, video, drawing and custom composition.
+- **Possible expressions:** A digital letter, scrapbook, envelope reveal, QR or link delivery and a private collection of received pieces.
+- **Important boundary:** These are candidates, not selected features. Digital still needs to earn its place against plain text, voice, physical letters and non-digital rituals.
+- **Likely brief posture:** Primarily test whether the experience can redesign the rule by making ordinary-day appreciation socially legible, while also revealing why the old rule exists.
+- **Human and AI roles:** AI can research, organise, challenge, compare and create disposable experiments. Humans own the framing, intimate content, interpretation, selection, testing and final design.
+- **Progress:** The team has discussed questions 1–29 of the 294-question adversarial bank.
+- **Evidence warning:** Those answers are team hypotheses and anecdotes. They do not yet prove that the problem recurs outside the team.
+- **Main unknowns:** Who experiences this problem, what the dominant cause is, whether receivers feel ambiguity or reply pressure, and whether digital improves the exchange.
+- **Make-or-break test:** Compare the same specific appreciation through ordinary chat, a physical or crafted control and a rough digital version, capturing sender predictions and receiver reactions separately.
+- **Work that can start in parallel:** Evidence ledger, competitor and format comparison, participant and test preparation, matched test materials, Q&A appendix, source library, unstyled deck structure and generic toolchain checks.
+- **Work that remains blocked:** Polished Figma screens, a production app, permanent architecture, locked features, final pitch claims and a final visual direction.
+- **Best contribution from returning members:** Challenge the rule and digital premise, identify people outside the team to test with and surface alternative explanations before the product is chosen.
+- **Short direction document:** https://github.com/SikeGottem/SUEDE-Designathon-2026/blob/main/WIKI/FRIENDSHIP_APPRECIATION_DIRECTION.md
+- **Full question bank:** https://github.com/SikeGottem/SUEDE-Designathon-2026/blob/main/WIKI/FRIENDSHIP_APPRECIATION_QUESTION_BANK.md

@@ -41,7 +41,7 @@ The central belief is:
 - [[FRIENDSHIP_APPRECIATION_DIRECTION]] - compact source of truth for the chosen working rule, problem and open solution direction
 - [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
 - [[FRIENDSHIP_APPRECIATION_QUESTION_BANK]] - unanswered adversarial questions attacking the friendship-appreciation problem and current digital-letter direction from every major lens
-- [[TEAM_CATCHUP_DISCORD]] - ready-to-send catch-up draft for Akari and Chloe
+- [[TEAM_CATCHUP_DISCORD]] - neutral dot-point catch-up for team members who missed the brief and recent discussion
 - [[RULE_BANK]] - ninety precise rule hypotheses for wide problem discovery
 - [[CONCEPT_BANK]] - cross-disciplinary experience mechanisms and fast falsification tests
 - [[IDEA_SCAFFOLD]] - detailed intake, divergence, red-team and design-ready handoff
