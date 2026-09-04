@@ -16,12 +16,23 @@
 }
 
 .keepsake-app {
-  --navy: #0b2858;
-  --navy-deep: #08224b;
+  --navy: #081f4d;
+  --navy-deep: #081f4d;
   --paper: #ffffff;
-  --warm-white: #fbf8ee;
-  --powder: #dce8f2;
-  --butter: #f1df90;
+  --warm-white: #f9f9d8;
+  --powder: #f2f0e9;
+  --butter: #eda343;
+  --brand-slate: #5b7a85;
+  --brand-rust: #b56d5f;
+  --brand-ochre: #eda343;
+  --brand-olive: #9f9d81;
+  --brand-cream: #f9f9d8;
+  --ink-slate: #446175;
+  --ink-rust: #85575a;
+  --ink-ochre: #8d6c47;
+  --ink-olive: #666d6d;
+  --envelope-rust: #f9f9d8;
+  --envelope-rust-ink: #b56d5f;
   --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--paper);
   color: var(--navy);
@@ -182,7 +193,7 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: multiply;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(46%) sepia(17%) saturate(669%) hue-rotate(151deg) brightness(94%) contrast(89%);
 }
 
 .home-copy {
@@ -194,17 +205,17 @@
 }
 
 .working-wordmark {
-  color: var(--navy);
+  color: var(--brand-slate);
   font-size: 70px;
   line-height: 0.8;
   letter-spacing: 0.015em;
   text-align: center;
-  -webkit-text-stroke: 1.25px var(--navy);
+  -webkit-text-stroke: 1.25px var(--brand-slate);
 }
 
 .home-copy > p {
   margin-top: 42px;
-  color: #5d5d5d;
+  color: var(--brand-slate);
   font-size: 33px;
   line-height: 1.02;
   letter-spacing: 0.025em;
@@ -846,19 +857,19 @@
 }
 
 .story-paper-first[data-ink="forest"] {
-  --maker-ink: #355c4a;
+  --maker-ink: var(--ink-olive);
 }
 
 .story-paper-first[data-ink="rust"] {
-  --maker-ink: #9a4b38;
+  --maker-ink: var(--ink-rust);
 }
 
 .story-paper-first[data-ink="plum"] {
-  --maker-ink: #69445e;
+  --maker-ink: var(--ink-slate);
 }
 
 .story-paper-first[data-ink="ochre"] {
-  --maker-ink: #9a6b18;
+  --maker-ink: var(--ink-ochre);
 }
 
 .control-mark {
@@ -935,7 +946,7 @@
 }
 
 .device-screen:has(.capture-live) .status-bar {
-  color: #fbf8ee;
+  color: var(--warm-white);
 }
 
 .device-screen:has(.capture-live) .status-indicator-svg,
@@ -944,7 +955,7 @@
 }
 
 .device-screen:has(.capture-live) .home-indicator-svg rect {
-  fill: #fbf8ee;
+  fill: var(--warm-white);
 }
 
 .capture-topbar > button:first-child,
@@ -1693,10 +1704,10 @@
 }
 
 .ink-navy { color: var(--navy); }
-.ink-forest { color: #355c4a; }
-.ink-rust { color: #9a4b38; }
-.ink-plum { color: #69445e; }
-.ink-ochre { color: #9a6b18; }
+.ink-forest { color: var(--ink-olive); }
+.ink-rust { color: var(--ink-rust); }
+.ink-plum { color: var(--ink-slate); }
+.ink-ochre { color: var(--ink-ochre); }
 
 .story-sticker-rail {
   width: 100%;
@@ -2320,7 +2331,7 @@
 }
 
 .device-screen:has(.keepsake-app.phase-navy) .status-bar {
-  color: #fbf8ee;
+  color: var(--warm-white);
 }
 
 .device-screen:has(.keepsake-app.phase-navy) .status-indicator-svg,
@@ -2329,7 +2340,7 @@
 }
 
 .device-screen:has(.keepsake-app.phase-navy) .home-indicator-svg rect {
-  fill: #fbf8ee;
+  fill: var(--warm-white);
 }
 
 .phase-navy .mobile-scrollbar-thumb {
@@ -2537,10 +2548,10 @@
   height: 48px;
 }
 
-.object-stickers-forest { color: #9dc9ae; }
-.object-stickers-rust { color: #efb1a1; }
-.object-stickers-plum { color: #dcb6d4; }
-.object-stickers-ochre { color: #f1df90; }
+.object-stickers-forest { color: var(--brand-olive); }
+.object-stickers-rust { color: var(--brand-rust); }
+.object-stickers-plum { color: var(--brand-slate); }
+.object-stickers-ochre { color: var(--brand-ochre); }
 
 .receiver-ending {
   margin-top: 86px;
@@ -3016,7 +3027,7 @@
   bottom: 18px;
   left: 34px;
   width: 1px;
-  background: color-mix(in srgb, #9a4b38 38%, transparent);
+  background: color-mix(in srgb, var(--brand-rust) 38%, transparent);
   content: "";
   pointer-events: none;
   transform: rotate(-0.25deg);
@@ -3062,7 +3073,7 @@
 }
 
 .paper-choice > button:nth-child(3)::before {
-  background: linear-gradient(90deg, transparent 0 10px, color-mix(in srgb, #9a4b38 30%, transparent) 10px 11px, transparent 11px), color-mix(in srgb, var(--warm-white) 86%, var(--butter));
+  background: linear-gradient(90deg, transparent 0 10px, color-mix(in srgb, var(--brand-rust) 30%, transparent) 10px 11px, transparent 11px), color-mix(in srgb, var(--warm-white) 86%, var(--butter));
 }
 
 .paper-choice > button[aria-pressed="true"]::after {
@@ -3294,6 +3305,7 @@
   border: 1px solid color-mix(in srgb, var(--navy) 16%, transparent);
   background: var(--warm-white);
   box-shadow: 0 8px 18px rgba(8, 34, 75, 0.1);
+  color: var(--navy);
   transform: rotate(-0.6deg);
 }
 
@@ -3303,29 +3315,8 @@
 }
 
 .envelope-canvas[data-envelope="rust"] {
-  background: #f4e2d2;
-  color: #7c3e2f;
-}
-
-.envelope-canvas > img {
-  position: absolute;
-  inset: -8% 4% -10%;
-  display: block;
-  width: 92%;
-  height: 118%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
-  pointer-events: none;
-}
-
-.envelope-canvas[data-envelope="night"] > img {
-  filter: brightness(0) invert(96%) sepia(7%) saturate(454%) hue-rotate(348deg) brightness(104%) contrast(96%);
-  mix-blend-mode: normal;
-}
-
-.envelope-canvas[data-envelope="rust"] > img {
-  filter: brightness(0) saturate(100%) invert(28%) sepia(24%) saturate(1665%) hue-rotate(325deg) brightness(88%) contrast(91%);
+  background: var(--envelope-rust);
+  color: var(--envelope-rust-ink);
 }
 
 .envelope-address {
@@ -3423,8 +3414,8 @@
 }
 
 .envelope-rust .envelope-swatch {
-  background: #f4e2d2;
-  color: #7c3e2f;
+  background: var(--envelope-rust);
+  color: var(--envelope-rust-ink);
 }
 
 .envelope-status {
@@ -3615,10 +3606,10 @@
 
 /* Shared authored-envelope art keeps maker preview, transit, and receiver arrival identical. */
 .authored-paper[data-ink="navy"] { --maker-ink: var(--navy); }
-.authored-paper[data-ink="forest"] { --maker-ink: #355d4b; }
-.authored-paper[data-ink="rust"] { --maker-ink: #8b4a36; }
-.authored-paper[data-ink="plum"] { --maker-ink: #69445e; }
-.authored-paper[data-ink="ochre"] { --maker-ink: #9a6b18; }
+.authored-paper[data-ink="forest"] { --maker-ink: var(--ink-olive); }
+.authored-paper[data-ink="rust"] { --maker-ink: var(--ink-rust); }
+.authored-paper[data-ink="plum"] { --maker-ink: var(--ink-slate); }
+.authored-paper[data-ink="ochre"] { --maker-ink: var(--ink-ochre); }
 
 .envelope-canvas,
 .sealed-envelope-artwork {
@@ -3643,9 +3634,9 @@
 }
 
 .sealed-envelope-artwork[data-envelope="rust"] {
-  border: 5px double #9a4b38;
-  background: #f4e2d2;
-  color: #7c3e2f;
+  border: 5px double var(--envelope-rust-ink);
+  background: var(--envelope-rust);
+  color: var(--envelope-rust-ink);
   clip-path: polygon(1% 2%, 99% 0, 98% 98%, 0 100%);
 }
 
@@ -3691,26 +3682,27 @@
   transform: rotate(-0.4deg);
 }
 
-.sealed-envelope-artwork > img {
+.envelope-fold-lines {
   position: absolute;
   z-index: 2;
-  inset: -8% 4% -10%;
+  inset: 0;
   display: block;
-  width: 92%;
-  height: 118%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  width: 100%;
+  height: 100%;
+  fill: none;
   pointer-events: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
-.sealed-envelope-artwork[data-envelope="night"] > img {
-  filter: brightness(0) invert(96%) sepia(7%) saturate(454%) hue-rotate(348deg) brightness(104%) contrast(96%);
-  mix-blend-mode: normal;
+.envelope-fold-lines path {
+  vector-effect: non-scaling-stroke;
 }
 
-.sealed-envelope-artwork[data-envelope="rust"] > img {
-  filter: brightness(0) saturate(100%) invert(28%) sepia(24%) saturate(1665%) hue-rotate(325deg) brightness(88%) contrast(91%);
+.envelope-fold-lines .envelope-seam-secondary {
+  opacity: 0.52;
 }
 
 .sealed-artwork-stamp {

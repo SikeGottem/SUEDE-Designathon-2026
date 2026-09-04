@@ -595,6 +595,59 @@ Only record choices that change direction, investment or the story. Every conseq
 - Recommendation: build the bounded sequence now, then test its friction and honesty before treating the ritual or link model as product truth.
 - Revisit when: the first full real-phone walkthrough, privacy/storage implementation decision, or post-build authenticity/accessibility review.
 
+## 2026-09-05 - Adopt Cecelia's current brand board for the prototype
+
+- Status: current prototype visual direction; team-authored but not user-validated or a complete final identity.
+- Decision: use Cecelia's supplied Gaegu/`warm & fuzzies` board as the current colour source of truth: deep ink `#081F4D`, steel blue `#5B7A85`, rust `#B56D5F`, ochre `#EDA343`, olive `#9F9D81`, and pale cream `#F9F9D8`. Keep literal white for making and unopened states, then cross into deep ink on opening. Use deep ink for small functional copy; use steel and the accent colours for large identity marks and restrained authored materials. The full envelope surface is the envelope itself, and a custom seal is optional rather than a progression gate.
+- Reason: the board is direct human design work from the team and gives the prototype a coherent palette without losing the already-selected white-to-dark receiving threshold. Ethan directly marked it as the new branding and rejected the nested-envelope treatment and seal-gated progression in the same review.
+- Evidence: [Cecelia's supplied brand board](REFERENCES/2026-09-05-cecelia-brand-board.png), Ethan's direct 5 September build-session feedback, and the inspected 393 × 852 Home, envelope, carrier, and blank-seal preview renders. This is team direction and artifact evidence, not participant research.
+- Consequence: the prototype tokens, Home identity treatment, envelope materials, maker inks, QR ink, and receiving field may follow this palette. Later AI or code passes must not revert to the prior generic navy/white placeholder palette or use low-contrast accent colours for small copy. The palette does not validate the product concept or permit generic multi-colour decoration.
+- Revisit when: Cecelia supplies an updated board, the team selects a final wordmark/asset set, or real-phone accessibility and recipient testing shows a contrast or tone problem.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | neutral | Colour does not change the chosen unwritten rule or appreciation mechanism. | Visual warmth alone cannot prove the experience changes behaviour. |
+| Problem identification | neutral | The ordinary-day appreciation problem remains unchanged. | No participant evidence links this palette to lower social hesitation. |
+| Solution approach | strengthens | A coherent team palette makes the authored object and delivery ritual easier to follow across states. | The envelope stage may still feel like decorative labour. |
+| Design innovation | neutral | The white-to-deep-ink threshold retains a product-specific narrative job. | A handmade palette is not novel by itself. |
+| Visual communication | strengthens | Human-selected colour roles now separate identity, functional copy, authored materials, and receiving state. | Several accent colours fail normal-text contrast on cream if misused. |
+| Presentation skills | strengthens | The prototype and deck can share one recognisable visual grammar. | The deck must still communicate the problem and evidence without relying on aesthetic polish. |
+| Evidence quality | weak | The board and render are direct team artifacts. | No intended maker or receiver has tested legibility, warmth, or comprehension. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Does warmer colour automatically make appreciation feel sincere? | No such claim is made; sincerity remains in the sender-authored object and receiver agency. | Recipient interpretation has not been observed. |
+| Behaviour and context | Could the palette make a quick ordinary-day message feel overproduced? | The outer shell stays sparse and colour is concentrated in identity/material moments. | Whether makers perceive the flow as light enough in context. |
+| Medium necessity | Does this justify a digital product? | No; the digital case still depends on mixed media, transfer, unfolding, and the cabinet. | The strongest medium-specific ingredient remains untested. |
+| Alternatives | Would plain text or a physical note work better? | Both remain legitimate comparison conditions. | No matched comparison exists. |
+| Human specificity | Is the palette the team's taste rather than the audience's? | It is explicitly recorded as team-authored direction, not audience evidence. | Cultural and relationship-context responses. |
+| Inclusion and accessibility | Are the lighter colours legible? | Deep ink remains mandatory for small controls/copy; lighter hues are limited to large marks or darkened authored-ink variants. | Full assistive-technology and sunlight/low-vision testing. |
+| Trust, safety and privacy | Could warmth imply safety the link does not provide? | Link limitations remain explicit and no palette is treated as a privacy guarantee. | Real authentication, expiry, forwarding, and deletion. |
+| Failure and recovery | What if a material choice becomes unreadable? | The implementation keeps accessible dark variants and all selections editable before giving. | Actual recovery comprehension on a phone. |
+| Feasibility and demo truth | Can the palette be applied consistently in time? | Shared tokens now govern the coded prototype; remaining hand-drawn assets stay swappable. | Final team asset breadth and cross-device visual QA. |
+| Incentives and second-order effects | Could colour/template choices create performance pressure? | Choices remain deliberately small with no rankings, rarity, or marketplace. | Repeated-use social expectations. |
+| Simplicity and retellability | Does the palette complicate the concept? | No; the flow remains make, envelope, travel, open, keep/leave. | Whether the envelope step itself needs subtraction. |
+| Authorship and distinctiveness | Is this still AI-looking styling? | The source board and mascot are Cecelia's work, Ethan materially selected the direction, and AI only translated it into tokens and code. | Final line weights, material icons, and the deck still need team edits. |
+
+- Verdict: **Proceed with conditions**.
+- Blocking conditions: preserve the white-to-deep-ink threshold; keep small functional text in deep ink; keep colour restrained and tokenised; do not call this participant validation or a complete final identity; retain team control of the final wordmark, illustration, and material-asset pass.
+- Weakest judging angle: **evidence quality**, because this is direct team art direction rather than maker/receiver testing.
+- Main trade-off: stronger coherence and human authorship in exchange for a narrower contrast-safe role for the lighter palette colours.
+- Next evidence that could change the verdict: one real-phone maker/receiver walkthrough that checks legibility, emotional tone, and whether the envelope still feels meaningful rather than ornamental.
+
+### Rendered authenticity review
+
+- Source anchors: Cecelia's brand board and supplied firefly masters, Ethan's simplified Home composition, Gaegu, and the white-to-dark receiving threshold.
+- Rejected defaults: generic navy-only styling, a decorative multi-colour app shell, nested envelope clip-art, placeholder seals, and seal-gated progression.
+- Structural divergence: colour follows the object's journey—sparse white making, restrained material accents, then a deliberate deep receiving field—rather than a generic component theme.
+- Content-native signature: the sender's exact paper becomes the envelope, travels as an object, and unfolds into the receiver's dark field.
+- Material human change: Cecelia drew the board and mascot; Ethan selected the branding and directly removed the nested icon/progression errors.
+- Render result: **Pass for exploratory prototype review**. The 393 × 852 render keeps the authored source visible, removes the nested envelope icon, and maintains readable control contrast. Remaining code-native material icons and final wordmark refinement still require team review before a final-brand claim.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

@@ -514,9 +514,11 @@ These must remain visible before a real service is claimed.
 
 ### Current palette sequence
 
-- **Creation and unopened state:** white field, very dark ink, occasional off-white paper distinction only when necessary.
-- **Opened object and cabinet:** deep navy field, warm off-white writing and linework.
-- **Maker-authored colour:** restrained maker-selected colours may belong to words, drawings, stickers, and other placed materials. They are expressive materials, not a global theme, a generic palette UI, or a multi-colour book-cover treatment. Exact palette and selection model remain open.
+- **Creation and unopened state:** preserve a literal white field and use deep ink `#081F4D` for readable copy and controls. The large `warm & fuzzies` wordmark and firefly may use steel blue `#5B7A85`.
+- **Opened object and cabinet:** deep ink `#081F4D` fills the field; pale cream `#F9F9D8` supplies writing and linework so the white-to-dark receiving threshold remains meaningful.
+- **Brand material accents:** Cecelia's current team board sets rust `#B56D5F`, ochre `#EDA343`, olive `#9F9D81`, pale cream `#F9F9D8`, and steel blue `#5B7A85`. Use them sparingly on paper, envelopes, marks, and large identity elements rather than turning every screen into a multi-colour theme.
+- **Contrast boundary:** steel blue and the three accents do not replace deep ink for small functional text on cream. Maker-authored ink may use darker, hue-matched variants when needed for legibility.
+- **Maker-authored colour:** restrained maker-selected colours may belong to words, drawings, stickers, and other placed materials. They are expressive materials, not a global theme, a generic palette UI, or a multi-colour book-cover treatment. The exact selection interaction remains open.
 
 ### Typography
 
@@ -737,7 +739,7 @@ The former approval of one folded/sealed object with no package picker is **supe
 - **Bottle path:** test a bottle with a direct cork swipe/drag opening. If that gesture is unavailable, unclear, or reduced motion is requested, provide a simple explicit open control that reaches the same content immediately.
 - **Courier path:** the firefly may perform the one-shot courier/carrier role at handoff and arrival, with a separate carried-object payload when needed. It may use wing-up/wing-down/carrying states and moves slowly enough for the transport action to read. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
 - **Navigation and cabinet:** no bottom navigation. The optional private cabinet presents kept items as distinct physical objects, not generic rows, cards, or a feed.
-- **Creator and visual state:** Section 10 and sources 31–39 supersede only the bordered paper-sheet/rail treatment and literal capture-first interpretation: creation fills the phone but opens on paper first, with optional media, restrained colour, stickers, and a small undefined selectable page-design/page-character variation added as maker-directed materials/starting character. It keeps sparse Story-like direct manipulation for movable/rotatable pieces without becoming a Canva editor, public template market, or social Story. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Exact colour palette, sticker set, and variation taxonomy remain open, not approved brand choices.
+- **Creator and visual state:** Section 10 and sources 31–39 supersede only the bordered paper-sheet/rail treatment and literal capture-first interpretation: creation fills the phone but opens on paper first, with optional media, restrained colour, stickers, and a small undefined selectable page-design/page-character variation added as maker-directed materials/starting character. It keeps sparse Story-like direct manipulation for movable/rotatable pieces without becoming a Canva editor, public template market, or social Story. Before opening, use literal white with deep ink; after opening, use full deep ink with pale cream. Use Gaegu as the working typeface. Cecelia's 5 September board now governs the current prototype palette; the sticker set and variation taxonomy remain open.
 - **Direct reveal:** opening visibly unfolds into the full composed object itself, rather than a separate post-unfold transition. Receiver-led optional media reveal remains an open interaction detail.
 - **Home and preview correction:** the home keeps the core invitation/action but removes the decorative loop and bottom-centres the minimal composition. Preview remains the place where the maker sees something ready to give, but its hero artwork is explicitly open pending the supplied reference/screenshot; do not imply a final selected illustration.
 
