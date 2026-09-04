@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "deck": {
+    "title": "",
+    "audience": "SUEDE judges",
+    "duration_seconds": 240,
+    "brief_status": "unconfirmed",
+    "aspect_ratio": "16:9",
+    "canvas": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "design": {
+    "direction": "",
+    "signature": "",
+    "font_families": [],
+    "palette": {},
+    "reference_files": []
+  },
+  "slides": [
+    {
+      "id": "opening-problem",
+      "section": "Problem",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "",
+      "evidence_refs": [],
+      "visual": {
+        "composition": "",
+        "assets": []
+      },
+      "speaker_notes": [],
+      "duration_seconds": 0,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    }
+  ]
+}

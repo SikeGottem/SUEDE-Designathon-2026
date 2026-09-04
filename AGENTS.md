@@ -13,7 +13,7 @@ Before making or evaluating a consequential decision, read:
 
 The exact 2026 brief and rubric outrank every historical criterion and inference. When official information changes, update `WIKI/JUDGING.md` first, then regenerate the wiki database with `python3 wiki.py sync`.
 
-## Mandatory judge review
+## Mandatory execution gate
 
 Use `.agents/skills/suede-judge-review/SKILL.md` before proposing, approving or implementing any consequential choice about:
 
@@ -25,6 +25,8 @@ Use `.agents/skills/suede-judge-review/SKILL.md` before proposing, approving or 
 - visual direction
 - pitch structure, claims or demonstrations
 
+This is a stop gate. `Proceed` permits the next stage. `Proceed with conditions` makes the conditions blocking. `Test first` permits only the named test. `Reject` stops the work. Do not begin implementation while a required review is missing.
+
 The review must cover:
 
 1. Brief fit
@@ -35,9 +37,13 @@ The review must cover:
 6. Presentation skills
 7. Evidence quality
 
+It must also cover the required challenge lenses in `WIKI/JUDGING.md`, including assumption inversion, behavioural context, medium necessity, non-digital alternatives, inclusion, trust, failure, feasibility, second-order effects, retellability and human authorship.
+
+Idea selection requires real divergence before comparison. Product and UI work requires both a preflight review and a post-build review of the actual artifact. AI-assisted work must follow the human-led AI doctrine: humans own framing, selection, taste, material edits, testing, approval and disclosure; AI may accelerate exploration and execution but cannot serve as evidence or final judgment.
+
 Do not invent numeric weights or scores. Finish with one verdict: `Proceed`, `Proceed with conditions`, `Test first` or `Reject`. State the weakest judging angle and the next piece of evidence that would most change the decision.
 
-Routine production choices such as typo fixes, file naming and pixel-level spacing do not require a full review unless they materially affect the judging case.
+Routine production choices such as typo fixes, file naming and pixel-level spacing do not require a full review unless they materially affect meaning, behaviour, scope, accessibility, trust, visual direction or the judging case.
 
 ## Decision record
 

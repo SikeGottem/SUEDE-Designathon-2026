@@ -22,12 +22,22 @@ POLICIES = (
     (
         "judging.review_required",
         "true",
-        "Review brief fit, five SUEDE criteria and evidence quality before material decisions.",
+        "Complete every judging and required challenge lens before a material decision advances.",
+    ),
+    (
+        "judging.verdict_controls_execution",
+        "true",
+        "Proceed permits work; conditions remain blocking; Test first permits only the named test; Reject stops work.",
     ),
     (
         "judging.review_skill",
         ".agents/skills/suede-judge-review/SKILL.md",
         "Project-local agent procedure for repeatable decision reviews.",
+    ),
+    (
+        "design.ai_is_human_led",
+        "true",
+        "Humans own framing, selection, taste, material edits, testing, approval and disclosure.",
     ),
     (
         "wiki.github_sync_required",

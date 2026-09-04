@@ -136,6 +136,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: the official 2026 criteria or direct organiser clarification.
 - Recommendation: keep judging as the main argument, label uncertainty plainly and update the deck immediately when official guidance appears.
 
+## 2026-09-04 - Make full-lens, human-led review a hard execution gate
+
+- Status: current
+- Decision: no material idea, product, UI, prototype or pitch direction may advance without the complete judging and challenge review in `WIKI/JUDGING.md`. AI may accelerate exploration and execution, but humans must own framing, divergence, selection, taste, material edits, testing, approval and disclosure.
+- Reason: the presentation principles need to control action rather than remain advice, and AI speed is valuable only when it does not replace evidence, authorship or a distinctive point of view.
+- Evidence: the current presentation and judging research show a connected path from specific problem to visible mechanism, proof and memorable story. Published 2024 and 2025 SUEDE rules did not ban AI or mandate a tool, but both required attribution of third-party material and an explanation of its use or improvement. The 2026 rules remain unpublished.
+- Consequence: verdicts now control execution; idea selection requires mechanism-level divergence; UI requires preflight and artifact review; AI contributions are recorded and disclosed; generic model defaults fail the authorship lens.
+- Revisit when: the official 2026 rules or rubric are published, or a completed concept cycle shows that a gate needs to be made more precise without weakening it.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | Every material decision must name its fit to the exact task before work advances. | The official 2026 brief and rubric are not yet available. |
+| Problem identification | strengthens | The gate requires a specific person, moment, cause and evidence before fidelity rises. | A review cannot substitute for direct research with real people. |
+| Solution approach | strengthens | Product and UI work must show the action, response, outcome, error and recovery states. | A long checklist could become theatre unless each answer affects the work. |
+| Design innovation | strengthens | Mechanism-level divergence, inversion and non-app alternatives prevent selection among cosmetic feature variants. | Divergence can still become performative if the team secretly commits to its first idea. |
+| Visual communication | strengthens | Preflight defines a point of view and post-build review inspects the actual artifact for clarity and generic patterns. | Taste remains a human judgment that a checklist cannot automate. |
+| Presentation skills | strengthens | Retellability and demo truth are tested before the story is locked. | Too much process language must not enter the live pitch. |
+| Evidence quality | strengthens | AI output cannot count as research, testing or proof; unknowns and simulated behaviour must remain visible. | Attribution requirements for AI remain an inference until 2026 rules are published. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Could the gate itself make the team rigid? | It allows raw divergence and proportional reviews while stopping only material advancement. | Observe the first live cycle and shorten wording that adds no decision value. |
+| Behaviour and context | Will the review happen where decisions are actually made? | The repository contract and agent skill trigger before proposing, approving or implementing material work. | Teammates working outside the repository need the same checkpoint habit. |
+| Medium necessity | Does this need a separate app or scoring system? | No. Markdown authority, templates and agent routing are sufficient and faster. | Revisit only if compliance cannot be observed during the event. |
+| Alternatives | Could a loose principle list work with less friction? | The existing list was easy to consult but did not control whether work could advance. | A facilitated team may need less enforcement than autonomous agents. |
+| Human specificity | Does the system preserve Ethan and the team's taste? | Human selection, manual editing, explanation and approval are explicit requirements. | The team still needs concrete references and real user evidence for each concept. |
+| Inclusion and accessibility | Is accessibility treated as a late polish item? | It is required in challenge review, UI preflight, state inventory and artifact review. | Actual keyboard, contrast and assistive-technology checks remain concept-dependent. |
+| Trust, safety and privacy | Could AI fabricate evidence or conceal its role? | Generated research and tests are forbidden as evidence; material tools and assets must be disclosed. | The organiser's exact 2026 AI disclosure expectation is unknown. |
+| Failure and recovery | What happens when a direction fails review? | `Test first` permits only the named test; `Reject` stops investment and preserves the reason. | The team must resist continuing production out of sunk-cost pressure. |
+| Feasibility and demo truth | Could a polished prototype imply functionality that does not exist? | Every review separates working, simulated and untested behaviour and asks what the artifact proves. | The selected concept determines which behaviour must be coded. |
+| Incentives and second-order effects | Could agents optimize for completing the template rather than improving the idea? | Reviews require evidence, risks and a work-control verdict, not numeric scores. | Quality must be sampled during the event to catch ritual compliance. |
+| Simplicity and retellability | Is the doctrine too large to use quickly? | The full authority is durable; the template supports concise completion and a one-sentence recommendation. | A compact event-day checklist may still be useful after one real trial. |
+| Authorship and distinctiveness | Could AI still produce polished median work? | AI cannot lead framing or selection, multiple paradigms are required and generic patterns explicitly fail the gate. | Only manual critique and testing of the actual output can confirm distinctiveness. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: activate the gate in agent contracts, templates, deck workflow and future design work.
+- Blocking conditions: update the doctrine when official 2026 rules arrive; keep reviews proportional; inspect real artifacts; do not let the checklist replace research or human taste.
+- Weakest judging angle: brief fit, because the 2026 brief and AI rules are still unavailable.
+- Main trade-off: stronger judgment, authorship and consistency in exchange for deliberate friction before material work advances.
+- Next evidence that could change the verdict: the official 2026 rules and one observed concept-to-prototype cycle using the gate.
+- Recommendation: activate the gate now and treat any skipped material review as incomplete work.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title
