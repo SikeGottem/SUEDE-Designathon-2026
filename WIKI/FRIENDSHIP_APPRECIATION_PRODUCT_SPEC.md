@@ -1,7 +1,7 @@
 <!-- This is the review-first conceptual specification for the friendship-appreciation prototype, describing experience and meaning rather than implementation. -->
 # Friendship appreciation — conceptual prototype specification
 
-> **Status:** Approved by Ethan on 5 September 2026 as the conceptual contract for the next reversible prototype. This approval selects the experience to build; it is not user validation or a final product decision.
+> **Status:** Approved by Ethan on 5 September 2026 as the conceptual contract for the next reversible prototype. The 5 September implementation delta below is a scoped test inside that contract; it is not user validation or a final product decision.
 >
 > **Supersedes:** the 4 September narrow field-by-field prototype specification. That version is retained in Git history as the deliberately safe control that Ethan rejected as the boring interpretation.
 >
@@ -705,6 +705,21 @@ Ethan approved all fourteen conditions on 5 September 2026. They now govern the 
 13. **Brand** — remain unnamed and logo-neutral while the interaction is reviewed.
 14. **Demo** — real coded private-link/QR receiver flow; no Figma-only prototype.
 
+## 27. Scoped implementation delta — carrier and receiving test
+
+**Status:** Current for one reversible prototype test only. This is Ethan's newer direct implementation decision, informed by the 4 September team-design capture and supplied mockups; it does not claim live Figma was read and does not validate a future product direction.
+
+The former approval of one folded/sealed object with no package picker is **superseded only for this test**. It remains the approved baseline outside the test and must not be recorded as rejected or as a validated product conclusion.
+
+- **Carrier browse:** offer a small, hand-drawn set of carrier icons in a horizontal browse, so one selected object can be seen at a useful scale. Do not turn it into a marketplace, theme system, or dense chooser.
+- **Choreography:** the selected carrier changes the handoff, arrival, and opening choreography, rather than changing intimate content or adding a different product flow.
+- **Bottle path:** test a bottle with a direct cork swipe/drag opening. If that gesture is unavailable, unclear, or reduced motion is requested, provide a simple explicit open control that reaches the same content immediately.
+- **Ladybug path:** a ladybug may make one dotted, one-time courier/notification journey. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
+- **Navigation and cabinet:** no bottom navigation. The optional private cabinet presents kept items as distinct physical objects, not generic rows, cards, or a feed.
+- **Creator and visual state:** creation remains a rich Figma/scrapbook-like arranging surface. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
+
+The test must preserve sender-authored content, no sender-visible receiver state, no reply pressure, and the receiver's direct leave/close/remove routes.
+
 The original review format is preserved below so later changes can identify the exact decision being revised:
 
 ```text
@@ -724,7 +739,7 @@ The original review format is preserved below so later changes can identify the 
 14. Demo — Approve / Change: ___ / Keep open
 ```
 
-## 27. Work boundary after approval
+## 28. Work boundary after approval
 
 Approval authorises a fresh conceptual implementation of these pages. It does not authorise product claims or final branding.
 

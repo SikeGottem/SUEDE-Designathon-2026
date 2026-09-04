@@ -414,6 +414,53 @@ Only record choices that change direction, investment or the story. Every conseq
 - Recommendation: review the conceptual spec now, select the v0 vessel/material/ending choices, then build a single complete maker-to-receiver experience without repairing the old layout.
 - Revisit when: the review or first walkthrough materially changes the concept.
 
+## 2026-09-05 - Run a scoped carrier-and-opening prototype delta
+
+- Status: current, reversible test only
+- Decision: implement a small hand-drawn carrier set in a horizontal browse; let the selected carrier change handoff, arrival and opening choreography; test the bottle with a cork swipe/drag and a simple explicit-open fallback; use the ladybug once as courier/notification, not a mascot; omit bottom navigation; show the cabinet as distinct physical objects; keep a rich Figma/scrapbook-like creator; use white with navy ink before opening and full navy/off-white afterward; use Gaegu as working type; leave soft yellow and other accents open.
+- Scope boundary: this supersedes the earlier single folded/sealed object and no-picker approval **only for this reversible test**. It does not overturn the conceptual direction or establish a validated product decision.
+- Reason: Ethan's newer direct implementation instruction makes the 4 September team's unresolved visual exploration concrete enough to test without promoting it to user evidence.
+- Evidence: [4 September carrier and receiving meeting capture](TRANSCRIPTS/2026-09-04-d5e3d4ea-70d8-55cc-9baa-d319ad5e7e1c.md), supplied mockups/reference inspected as design inputs, and Ethan's newer direct instruction. No live Figma file was read; no participant evidence was collected.
+- Consequence: implementation may make one labelled carrier-flow prototype, while retaining the direct leave/close/remove path, no reply/telemetry contract, and the richer authored creator. It may not claim a carrier improves meaning, clarity, agency, or desirability.
+- Revisit when: a receiver comparison against the folded-object baseline or another simple control exposes a material difference in comprehension, comfort, agency, or desired next action.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | mixed | The test makes the object and opening rule legible. | It may become surface novelty rather than a rule-changing mechanism. |
+| Problem identification | neutral | The original appreciation moment remains intact. | No new user evidence identifies a carrier as the relevant barrier. |
+| Solution approach | strengthens | Carrier-specific choreography lets the team compare a concrete receiving ritual. | Several changed cues could obscure what caused a response. |
+| Design innovation | strengthens | Physical distinctness and an opening action avoid a generic message screen. | A container picker can regress into a familiar themed-card product. |
+| Visual communication | strengthens | Horizontal scale, white/navy states, and a one-off courier give elements clear jobs. | Handwriting or the cork gesture may reduce clarity or access. |
+| Presentation skills | mixed | A bottle opening can make the demo memorable. | The reveal can eclipse the problem and receiver outcome. |
+| Evidence quality | weak | The 4 September capture records real team intent. | It is not user research; the visual choice has no receiver evidence. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if a carrier adds pressure or means nothing? | It is a reversible presentation condition, not a product claim. | Receiver interpretation. |
+| Behaviour and context | Will people understand the selected object before opening? | Sender identity and an explicit fallback remain available. | Whether the metaphor signals warmth, romance, crisis, or confusion. |
+| Medium necessity | Could an ordinary link work as well? | It remains an essential comparison control. | Whether choreography earns digital complexity. |
+| Alternatives | Why bottle, not folded object or no vessel? | The earlier folded object stays the baseline outside this test. | Comparative receiver preference and comprehension. |
+| Human specificity | Do different friendship styles read carriers differently? | No universal meaning is assumed. | Which contexts are comfortable or alienating. |
+| Inclusion and accessibility | Can gesture, colour, and handwriting be used by everyone? | Direct open, readable critical copy, and reduced-motion equivalence are required. | Actual assistive-technology and usability testing. |
+| Trust, safety and privacy | Could the courier obscure unwanted contact? | Sender identity and private leave/remove routes remain structural. | Real identity, blocking, and abuse policy. |
+| Failure and recovery | What if the cork gesture fails? | The simple explicit-open fallback reaches the same content. | Failure handling for media and wrong recipients. |
+| Feasibility and demo truth | Can this ship without fake breadth? | Limit the set and label simulated behaviours. | Event-time build cost and interaction polish. |
+| Incentives and second-order effects | Does a cabinet or carrier create collecting pressure? | No scores, prompts, public state, or mascot loop are allowed. | Repeated-use and storage burden. |
+| Simplicity and retellability | Is this too much to explain? | The story remains make, give, open, keep/leave. | Whether people reduce it to a themed digital card. |
+| Authorship and distinctiveness | Could it look like an AI mascot/template system? | Ladybug is one-off; icons are hand-drawn and carrier-specific. | Whether the final render feels team-authored rather than decorative. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: build and review one labelled carrier-and-opening delta alongside the approved experience.
+- Blocking conditions: keep the set small; no persistent mascot, bottom navigation, package marketplace, sender telemetry, reply pressure, or validation claims; provide a simple opening fallback and retain the folded-object baseline as a comparison condition.
+- Weakest judging angle: evidence quality, because the new detail is based on team intent and mockups, not receiver evidence.
+- Main trade-off: a more memorable, physically legible receiving ritual costs clarity and may hide whether the underlying no-reply contract works.
+- Next evidence that could change the verdict: a consented receiver comparison of the carrier delta against the folded-object baseline, measuring comprehension, comfort, pressure, agency, and desired next action.
+- Recommendation: proceed as a contained prototype condition, then choose or discard it on receiver evidence rather than internal enthusiasm.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

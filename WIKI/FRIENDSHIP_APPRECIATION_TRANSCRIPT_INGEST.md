@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 27 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 28 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -245,3 +245,11 @@ Do not borrow:
 ## Honest boundary
 
 This ingest can reconstruct intent. It cannot prove desirability, causality, safety, or whether a digital artifact changes the unwritten rule. Those claims still need real sender and receiver evidence. The next document is therefore a conceptual prototype proposal for Ethan and the team to approve, edit, or reject—not a validated product specification.
+
+## 4 September design-session addendum — source 28
+
+**Source:** [d5e3d4ea…](TRANSCRIPTS/2026-09-04-d5e3d4ea-70d8-55cc-9baa-d319ad5e7e1c.md), a 77-minute team meeting recorded on **4 September 2026**. It is team-intent evidence only, despite being ingested after Ethan's newer direct prototype instruction.
+
+The meeting explored a browseable set of large, hand-drawn container/carrier icons; horizontal movement so each drawing can have room; a scrapbook-like creation surface closer to arranging pieces in Figma than filling out fields; a physical cabinet holding visually distinct objects; a bottle whose opening releases its contents; and a ladybug travelling with a dotted path as a sending/arrival notification idea. It also records preference for dark blue/navy, butter yellow and other soft colours, while explicitly leaving palette selection for prototype testing.
+
+These are not settled product choices. The prior transcript also contains menus of containers, courier animals, wood/bookcase metaphors, mascot ideas, and a bottom-navigation debate. Ethan's newer instruction governs the current build: use only a small reversible carrier set and horizontal browse; let the selected carrier affect handoff, arrival and opening choreography; use a bottle/cork interaction with a simple fallback; treat the ladybug as a one-time courier/notification path rather than a persistent mascot; avoid bottom navigation; keep the cabinet as distinct physical objects; and retain the rich scrapbook-like creator. The white-plus-navy sequence, Gaegu working type, and soft-yellow/other-palette question are likewise implementation choices or open visual tests, not validation.

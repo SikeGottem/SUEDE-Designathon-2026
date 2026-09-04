@@ -69,12 +69,20 @@ The published timeline is more specific: background research began around 12:00,
 
 ## Complete transcript ingest: product intent versus decision status
 
-- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 27 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
+- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 28 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
 - Strong repeated observation: the later team discussion describes a custom, scrapbook-like digital artifact containing the sender's own words and selected photographs, voice, music, video, drawing, or personal marks. Creative arrangement is treated as part of the expression, not decoration.
 - Strong repeated observation: the desired receiver experience includes a deliberate opening, attention away from chat, ownership, and possible year-later replay inside a private cabinet or memory surface.
 - Boundary: the transcript set is evidence of team intent, not evidence of demand, impact, prevalence, safety, or a universal friendship norm.
 - Current direct prototype condition: reject the field-by-field wizard; use one white creator studio, then cross into a deep-navy receiver object at opening; use Ugly Handwriting and coherent human-drawn linework without copying `grug` identity.
 - What this changes for us: the [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) must express the rich creator and receiver experience while keeping vessel, media limits, archive permanence, and causal outcomes open for review and testing.
+
+## 4 September carrier and receiving session — team intent, not validation
+
+- Source: [d5e3d4ea… raw meeting capture](TRANSCRIPTS/2026-09-04-d5e3d4ea-70d8-55cc-9baa-d319ad5e7e1c.md), recorded 4 September 2026; four supplied wireframe/mockup images and one supplied visual reference were inspected as design inputs. No live Figma file was read.
+- Observation: the team explored large hand-drawn carrier icons, horizontal browse, a physical cabinet of individually designed objects, a Figma/scrapbook-like creator, a bottle opening that releases content, a ladybug with a dotted delivery path, no bottom navigation, navy/soft-yellow palette ideas, and handwritten type.
+- Boundary: this is one team's design exploration. It does not establish participant preference, usability, desirability, safety, carrier meaning, or the benefit of a no-reply receiver flow.
+- Current direct implementation decision: Ethan's newer instruction scopes a reversible test to a small horizontal carrier set; carrier-specific handoff/arrival/opening choreography; a bottle/cork interaction plus simple fallback; a one-time ladybug courier/notification; no bottom nav; physically distinct cabinet objects; rich scrapbook-like creation; white with navy ink before opening and navy/off-white after; Gaegu working type; and an open accent palette.
+- What this changes for us: evaluate the prototype against a receiver comparison. Do not call the single-folded-object baseline rejected, and do not treat the selected carrier treatment as a product decision beyond this test.
 
 ## Initial ideation reality checks: unwritten rules
 
