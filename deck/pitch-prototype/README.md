@@ -22,16 +22,16 @@ Local review exports (generated and intentionally ignored by the repository):
 - **Source anchors:** the actual white-to-navy receiver threshold; Gaegu handwritten product typography; current light hand-drawn linework; the minimal home with its bottom-centred invitation; the sender's one-paper-sheet workspace; and the receiver-owned `keep / close / remove` ending.
 - **Reference delta:** Steve Jobs supplies the diagnostic structure, not an Apple visual imitation. This deck uses a conceptual social map and a moving appreciation sentence, not product-keynote black slides, product glamour or fake metrics.
 - **Exact visual system:** #FFFFFF paper and #0B2858 navy only. Gaegu is the presentation voice; system sans is limited to source/status text. Geometry is square, linework is 1.5 to 2.2px navy ink, space is intentionally generous. No gradients, rounded cards, shadows, icon libraries, stock imagery, or decorative UI.
-- **Signature move:** the same sentence crosses social contexts. `birthday` is struck through and becomes `ordinary Tuesday`; at the receiver threshold the whole slide crosses white to navy. Motion explains interpretation and ownership, not decoration.
-- **Rejected defaults:** (1) an inspirational story/photo opening, because it asks for belief before diagnosis; (2) a fake statistical Goldilocks graph, because no measurement supports one; (3) three equal comparison cards, because the audience needs an evolving social script, not a feature table; (4) the usual product-app reveal before the problem requirement exists.
+- **Signature move:** three concentric social-ceremony rings make the Goldilocks gap literal without turning it into measured data. The same sentence then crosses social contexts: `birthday` is struck through and becomes `ordinary Tuesday`; at the receiver threshold the whole slide crosses white to navy. Motion explains interpretation and ownership, not decoration.
+- **Rejected defaults:** (1) an inspirational story/photo opening, because it asks for belief before diagnosis; (2) numeric axes or a fake optimum marker, because no measurement supports one; (3) three equal comparison cards, because the audience needs an evolving social script, not a feature table; (4) the usual product-app reveal before the problem requirement exists; and (5) decorative loops or identical entrances on every slide.
 - **Restraint:** no fake QR, no fabricated audience quote, no claim that paper is inferior, and no result graphic for the planned test.
-- **Human decision:** Ethan chose the Jobs-style diagnosis and the current product prototype as the visual reference. The deck keeps the social-map direction explicitly exploratory.
+- **Human decision:** Ethan chose the Jobs-style diagnosis, the current product prototype as the visual reference, and then materially redirected the original x/y map into three Goldilocks rings while requesting clearer comparison graphics and more purposeful motion. The middle ring remains explicitly exploratory.
 
 ## Structural divergence considered
 
 | Direction | Viewer notices first | What it clarifies | Main risk | Source anchor |
 | --- | --- | --- | --- | --- |
-| A. Map-as-stage **chosen** | The empty high-right social space | Why a new receiving contract might be needed | Can look falsely quantitative | Occasion permission and same-words test |
+| A. Three-orbit ceremony spectrum **chosen after render review** | The missing middle ring between casual and occasion-coded scripts | Why a different receiving contract might be worth testing without implying measured coordinates | Viewers may mistake the middle for a proven optimum unless every marker stays provisional | Occasion permission, Ethan's Goldilocks-ring direction and the same-words test |
 | B. Sentence-as-stage | One unchanged sentence changing meaning | The enforcement mechanism | May become anecdotal before the opportunity is clear | Birthday versus Tuesday distinction |
 | C. Object-journey | The sender-to-receiver handoff | The interaction and threshold | Reveals product before the judges accept the problem | Current working prototype |
 
@@ -68,7 +68,7 @@ Local review exports (generated and intentionally ignored by the repository):
 
 ## Evidence boundary
 
-The conceptual map is explicitly not measured data. It maps a hypothesis. Kumar and Epley (2018) found that gratitude-letter expressers overestimated recipient awkwardness and underestimated recipients' positive response; it does not establish that all friends share an occasion rule or that this digital format solves it. Slide 11 is a plan, not a results slide.
+The three-ring social-framing spectrum is explicitly not measured data. Ring radius represents increasing social ceremony, and the middle ring maps a hypothesis rather than a discovered optimum. Kumar and Epley (2018) found that gratitude-letter expressers overestimated recipient awkwardness and underestimated recipients' positive response; it does not establish that all friends share an occasion rule or that this digital format solves it. Slide 11 is a comparison protocol, not a results graph.
 
 ## Assets and disclosure
 
@@ -77,7 +77,7 @@ The conceptual map is explicitly not measured data. It maps a hypothesis. Kumar 
 | `assets/gaegu.woff2` | Copied from `prototype/public/assets/fonts/Gaegu-Regular-latin.woff2`; display typeface matching current prototype. License: `assets/Gaegu-OFL.txt`. |
 | `assets/pretext.js` | Copied from `~/.claude/skills/gstack/design-html/vendor/pretext.js`; local text-measurement helper, no network dependency. |
 | `assets/product-home.png` | Current local minimal-home prototype capture, used on slide 8. |
-| `assets/sender-studio.png` | Current local one-paper-sheet maker capture, used on slide 10. |
+| `assets/sender-studio.png` | Current local populated paper-first Story-composer capture, used on slide 9. |
 | `assets/arrival.png` | Current local receiver-arrival capture, used on slide 10 initial state. |
 | `assets/receiver-reveal.png` | Current local receiver-reveal capture, used on slide 10 revealed state. |
 

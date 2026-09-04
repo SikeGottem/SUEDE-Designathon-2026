@@ -6,17 +6,17 @@ Target: 5:25 total, leaving 35 seconds recovery inside the six-minute heat limit
 | Slide | Time | Narration prompt | Click cue | Source / caveat |
 | --- | ---: | --- | --- | --- |
 | 1. Opening | 0:00–0:20 | We can talk instantly. Name the contradiction, then let the sentence land. | Claim → question → sentence | Team details pending. |
-| 2. Social map | 0:20–0:45 | Name the two known ends without judging either one. Point to the empty space. | Chat → letter → empty space | Conceptual map, not measured data. |
+| 2. Goldilocks gap | 0:20–0:45 | Read the rings as increasing social ceremony: chat is ordinary, a letter is occasion-coded, and the middle has no established script. | Inner ring → outer ring → missing middle | Conceptual framing spectrum, not measured data or a proven optimum. |
 | 3. Tuesday | 0:45–1:10 | Same words, different social explanation. Let the questions appear before naming the rule. | Birthday → sentence → Tuesday → interpretations | Hypothesis, not universal fact. |
-| 4. Causal rule | 1:10–1:35 | Walk left to right. The care is already there. The occasion explains the intensity. | One causal link per click → rule | Avoid claims about all friends, men or cultures. |
+| 4. Causal rule | 1:10–1:35 | Walk the three causal beats. The care is already there; the occasion normally explains the intensity. Say “our hypothesis” before the final line lands. | Context → hesitation → non-receipt + hypothesis | Avoid claims about all friends, men or cultures. |
 | 5. Evidence | 1:35–2:00 | One narrow study supports the hesitation pattern, not the occasion rule or product premise. State that boundary plainly. | Sender prediction → recipient response → boundary | Kumar & Epley, 2018, DOI 10.1177/0956797618772506. |
-| 6. Receiving contract | 2:00–2:25 | Translate the risk into four conditions worth testing—not proven requirements. | One condition per click | The contract is provisional until testing. |
-| 7. Social scripts | 2:25–2:55 | Follow the same note as it moves through chat, paper and the test object. Surface the risk that craft can add pressure. | Note → chat → letter → test object | The test object is proposed, not validated or “better.” |
+| 6. Receiving contract | 2:00–2:25 | Translate the risk into four connected conditions worth testing—not proven requirements. Distinguish deliberate care from needing an occasion. | One connected condition per click | The contract is provisional until testing. |
+| 7. Social scripts | 2:25–2:55 | Follow the same note as each medium changes what happens next: conversation, occasion, or receiver-paced opening. Surface the risk that craft can add pressure. | Note → chat → letter → test object | The test object is proposed, not validated or “better.” |
 | 8. Prototype | 2:55–3:20 | Close the loop: this is one way to test the contract. It is one finite object, not another chat turn. | Name → proposition → home screen | Current working prototype state. |
-| 9. Sender | 3:20–3:50 | Show that authorship belongs to the sender. Do not over-narrate the UI. | Words → effort → no generated intimacy → status | Actual local prototype screen. |
+| 9. Sender | 3:20–3:50 | Show that authorship belongs to the sender. Point only to editable words and chosen media/marks; do not over-narrate the UI. | Editable words → chosen material → status | Actual local prototype screen captured 5 September 2026. |
 | 10. Receiver | 3:50–4:30 | Pause on open / another time / not for me. Then cross the navy threshold and reveal keep / close / remove. | Entry choice → white-to-navy reveal | Interaction is a working hypothesis. |
-| 11. Test | 4:30–5:00 | This is what would make us change our minds. Compare expectations with interpretation. | Headers → sender row → receiver row | Test not yet run. No results. |
-| 12. Close | 5:00–5:25 | Return to the empty space. The prototype occupies a testing position, not a victory position. End quiet. | Prototype position → hypothesis → route pending | No fake QR. Team must decide live ending. |
+| 11. Test | 4:30–5:00 | This is what would make us change our minds: hold the words constant, change the delivery, then compare sender expectation with receiver interpretation. | Same words → three deliveries → two perspectives | Protocol only. Test not yet run and no results are shown. |
+| 12. Close | 5:00–5:25 | Return to the three rings. The prototype sits on the middle orbit as a question, not a victory. End on what you are testing. | Prototype position → hypothesis boundary → route pending | No fake Goldilocks win and no fake QR. Team must decide the live ending. |
 
 ## Live handling
 
