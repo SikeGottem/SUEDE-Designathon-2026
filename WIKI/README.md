@@ -8,14 +8,15 @@ This folder is the team's working memory. The presentation explains the shared a
 1. Read [JUDGING.md](JUDGING.md) before making a consequential decision.
 2. Open [HOME.md](HOME.md) for the current state.
 3. Put new interpretations in [IDEAS.md](IDEAS.md) before they become screens.
-4. Put observations, links and quotes in [EVIDENCE.md](EVIDENCE.md).
-5. Record quick learning loops in [TESTS.md](TESTS.md).
-6. Log settled decisions and their completed judge reviews in [DECISIONS.md](DECISIONS.md).
-7. Use [TOOLCHAIN.md](TOOLCHAIN.md) for the installed workflow, safe hybrid rule and deferred Figma setup.
-8. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the research behind the tool choices.
-9. Use [FRETO_REFERENCE.md](FRETO_REFERENCE.md) for the verified structure of the 2024 winner's public Canva deck and case study.
-10. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
-11. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
+4. Use [INITIAL_IDEATION.md](INITIAL_IDEATION.md), [RULE_BANK.md](RULE_BANK.md) and [CONCEPT_BANK.md](CONCEPT_BANK.md) to widen the field without confusing generated options with evidence or selection.
+5. Put observations, links and quotes in [EVIDENCE.md](EVIDENCE.md).
+6. Record quick learning loops in [TESTS.md](TESTS.md).
+7. Log settled decisions and their completed judge reviews in [DECISIONS.md](DECISIONS.md).
+8. Use [TOOLCHAIN.md](TOOLCHAIN.md) for the installed workflow, safe hybrid rule and deferred Figma setup.
+9. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the research behind the tool choices.
+10. Use [FRETO_REFERENCE.md](FRETO_REFERENCE.md) for the verified structure of the 2024 winner's public Canva deck and case study.
+11. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
+12. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
 
 ## Working rule
 

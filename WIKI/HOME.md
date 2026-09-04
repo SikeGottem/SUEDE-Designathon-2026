@@ -7,7 +7,9 @@ Ethan has supplied the working 2026 brief: “Design an experience that reveals,
 
 Every consequential decision must now pass the judging review in `WIKI/JUDGING.md` before it is approved or implemented.
 
-The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. The new idea scaffold and stress-test skill must turn contenders into design-ready packets before visual work. The three broad visual skills remain available for separate exploration, but each real artifact must declare one visual lead. Native Figma Design-file authoring is verified; Figma Slides still needs a native test.
+The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. Five live ideation recordings are preserved as raw sources and expanded into a research-backed initial report, 90 rule hypotheses and 103 cross-disciplinary concept cards. No concept has been selected. The pickup-sport app is an obvious control; the newer friendship-appreciation branch is also still a hypothesis. Both remain in comparison with status, safety, access, institutional, spatial, incentive and non-interaction mechanisms.
+
+The idea scaffold and stress-test skill must turn contenders into design-ready packets before visual work. The three broad visual skills remain available for separate exploration, but each real artifact must declare one visual lead. Native Figma Design-file authoring is verified; Figma Slides still needs a native test.
 
 The central belief is:
 
@@ -28,11 +30,16 @@ The central belief is:
 - What is the minimum evidence we need before investing in high-fidelity execution?
 - How will we notice when an idea is merely polished rather than genuinely strong?
 - Which unwritten rule creates a specific, consequential moment that an experience can change without simply explaining or reinforcing it?
+- Which rule remains strong after we speak to the people who learn, enforce and are burdened by it?
+- Which experience changes the allocation of permission, effort, risk or power rather than only publishing the norm?
 
 ## Page map
 
 - [[BRIEF]] - official question, constraints and interpretations
 - [[IDEAS]] - separate directions and their unresolved assumptions
+- [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
+- [[RULE_BANK]] - ninety precise rule hypotheses for wide problem discovery
+- [[CONCEPT_BANK]] - cross-disciplinary experience mechanisms and fast falsification tests
 - [[IDEA_SCAFFOLD]] - detailed intake, divergence, red-team and design-ready handoff
 - [[EVIDENCE]] - research, precedent and observations
 - [[JUDGING]] - confirmed criteria, likely interpretation and review questions
