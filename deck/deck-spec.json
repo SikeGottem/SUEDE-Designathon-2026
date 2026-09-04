@@ -1,0 +1,420 @@
+{
+  "version": 1,
+  "deck": {
+    "title": "SUEDE Designathon 2026 pitch — content skeleton",
+    "audience": "SUEDE heat judges",
+    "duration_seconds": 360,
+    "brief_status": "unconfirmed",
+    "aspect_ratio": "16:9",
+    "canvas": {
+      "width": 1920,
+      "height": 1080
+    },
+    "working_constraint_source": "WIKI/BRIEF.md#captured-presentation-guidance--confirm-against-organiser-materials"
+  },
+  "design": {
+    "direction": "Temporary brand-free black-and-white editorial scaffold",
+    "signature": "",
+    "font_families": [
+      "Arial"
+    ],
+    "palette": {
+      "background": "#FFFFFF",
+      "text": "#000000",
+      "muted": "#666666",
+      "rule": "#D9D9D9"
+    },
+    "reference_files": [
+      "deck/PRESENTATION_STRUCTURE.md",
+      "deck/TRANSCRIPT_PRESENTATION_FINDINGS.md",
+      "WIKI/FRETO_REFERENCE.md"
+    ]
+  },
+  "slides": [
+    {
+      "id": "cover-premise",
+      "section": "Opening",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "Know who the team is and be able to repeat the selected idea in one sentence.",
+      "evidence_refs": [
+        "WIKI/BRIEF.md",
+        "WIKI/DECISIONS.md"
+      ],
+      "visual": {
+        "composition": "Team details and one plain sentence; mark missing name, number and mechanism as blocked.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 20 seconds.",
+        "Do not substitute a polished slogan for the missing mechanism."
+      ],
+      "duration_seconds": 20,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "lived-moment",
+      "section": "Problem",
+      "status": "draft",
+      "claim": "When did you last receive something made deliberately to show appreciation?",
+      "audience_takeaway": "Recall the emotional difference between receiving a deliberate object and an ordinary message.",
+      "evidence_refs": [
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md",
+        "WIKI/EVIDENCE.md"
+      ],
+      "visual": {
+        "composition": "One question plus an empty evidence slot for a consented real letter or care-package object.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 30 seconds.",
+        "Use one real team-owned story only with consent; no invented persona or quote.",
+        "Transition: why does this feel unusual on an ordinary day?"
+      ],
+      "duration_seconds": 30,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "unwritten-rule",
+      "section": "Problem",
+      "status": "draft",
+      "claim": "Why can “I appreciate you” feel natural on a birthday, but sound like goodbye on an ordinary Tuesday?",
+      "audience_takeaway": "Understand the hypothesised unwritten rule without mistaking it for a universal fact.",
+      "evidence_refs": [
+        "WIKI/BRIEF.md",
+        "WIKI/DECISIONS.md",
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md"
+      ],
+      "visual": {
+        "composition": "The same sentence appears once, with birthday and ordinary-day context on opposite sides; label the frame as a hypothesis.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 25 seconds.",
+        "Do not claim that all friends or all men share this reaction.",
+        "Transition: research gives us a narrower explanation for why people hold back."
+      ],
+      "duration_seconds": 25,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "evidence-gap",
+      "section": "Evidence",
+      "status": "draft",
+      "claim": "We may hold back because we mispredict how appreciation will land.",
+      "audience_takeaway": "See the supported prediction gap and the unresolved risks around meaning, sincerity and pressure.",
+      "evidence_refs": [
+        "WIKI/EVIDENCE.md",
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md"
+      ],
+      "visual": {
+        "composition": "Two sourced findings and one explicit limitation; no decorative research collage.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 30 seconds.",
+        "External gratitude research is directional evidence, not proof of this audience or medium.",
+        "Transition: that uncertainty changes what the experience must protect."
+      ],
+      "duration_seconds": 30,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "evidence-to-requirements",
+      "section": "Synthesis",
+      "status": "draft",
+      "claim": "A care experience must preserve authorship without turning receipt into a debt.",
+      "audience_takeaway": "Understand the provisional requirements that follow from the sender and receiver evidence.",
+      "evidence_refs": [
+        "WIKI/EVIDENCE.md",
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md"
+      ],
+      "visual": {
+        "composition": "A direct finding-to-requirement mapping for authorship, interpretation, agency, closure and keeping.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 25 seconds.",
+        "Keep requirements provisional until primary research is complete.",
+        "Transition: now make the medium prove it can satisfy those requirements."
+      ],
+      "duration_seconds": 25,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "same-words-test",
+      "section": "Direction",
+      "status": "blocked",
+      "claim": "The words stay the same. Does the container change what they mean?",
+      "audience_takeaway": "See ordinary chat, a physical or crafted control and a rough digital artefact compared fairly.",
+      "evidence_refs": [
+        "WIKI/TESTS.md",
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md"
+      ],
+      "visual": {
+        "composition": "Three matched representations with identical wording and empty result fields for sincerity, awkwardness, ownership, alarm and reply pressure.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 25 seconds.",
+        "Do not draw a speculative Goldilocks chart as if it were measured data.",
+        "Transition: the result, not preference, determines which direction earns the reveal."
+      ],
+      "duration_seconds": 25,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "concept-reveal",
+      "section": "Solution",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "Understand the selected response and its distinct mechanism in one sentence.",
+      "evidence_refs": [
+        "WIKI/DECISIONS.md",
+        "WIKI/IDEAS.md",
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "Product name, one-line mechanism and one dominant product state after selection.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 20 seconds.",
+        "A multimedia feature list is not a mechanism."
+      ],
+      "duration_seconds": 20,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "mechanism-map",
+      "section": "Solution",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "See where the selected mechanism changes the unwritten rule from trigger to outcome.",
+      "evidence_refs": [
+        "WIKI/DECISIONS.md",
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "Trigger, deliberate creation, bounded delivery, receiver-controlled opening and safe completion in one sequence.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 35 seconds.",
+        "Label every simulated or proposed state."
+      ],
+      "duration_seconds": 35,
+      "motion": {
+        "purpose": "sequence",
+        "description": "Only after the mechanism is selected; motion may reveal the causal sequence one state at a time.",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "sender-demo",
+      "section": "Demo",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "See why the sender acts now and what remains personally authored.",
+      "evidence_refs": [
+        "WIKI/DECISIONS.md",
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "One sender path from trigger through deliberate authorship; no feature tour.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 35 seconds.",
+        "Show that AI does not write the intimate content."
+      ],
+      "duration_seconds": 35,
+      "motion": {
+        "purpose": "demo",
+        "description": "Use only if it clarifies interaction order or system response.",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "receiver-demo",
+      "section": "Demo",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "See the receiver interpret, open, keep or close the experience without compulsory reciprocity.",
+      "evidence_refs": [
+        "WIKI/DECISIONS.md",
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "One receiver path from arrival through opening and safe completion; concentrate any justified reveal here.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 35 seconds.",
+        "A rich reveal must explain value, not substitute spectacle for evidence."
+      ],
+      "duration_seconds": 35,
+      "motion": {
+        "purpose": "demo",
+        "description": "Potential reveal motion is deferred until the product interaction is selected and reduced motion is supported.",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "trust-and-recovery",
+      "section": "Trust",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "Believe that the experience handles unwanted, mistaken, inaccessible or private moments safely.",
+      "evidence_refs": [
+        "WIKI/JUDGING.md",
+        "WIKI/FRIENDSHIP_APPRECIATION_DOSSIER.md"
+      ],
+      "visual": {
+        "composition": "The smallest set of real product states covering decline, delete, wrong recipient, privacy, reduced motion and no-device access.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 30 seconds.",
+        "Do not describe safeguards that the prototype does not demonstrate."
+      ],
+      "duration_seconds": 30,
+      "motion": {
+        "purpose": "none",
+        "description": "",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "test-to-change",
+      "section": "Proof",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "See one participant finding change the design and understand the remaining evidence boundary.",
+      "evidence_refs": [
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "Participant finding, before state, after state and observed effect kept adjacent.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 25 seconds.",
+        "No invented quote, number, score or effect."
+      ],
+      "duration_seconds": 25,
+      "motion": {
+        "purpose": "state-change",
+        "description": "After testing, a simple before-to-after transition may expose the design change.",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    },
+    {
+      "id": "callback-close",
+      "section": "Close",
+      "status": "blocked",
+      "claim": "",
+      "audience_takeaway": "Remember the changed social contract and experience the final flow without being pressured to participate.",
+      "evidence_refs": [
+        "WIKI/BRIEF.md",
+        "WIKI/DECISIONS.md",
+        "WIKI/TESTS.md"
+      ],
+      "visual": {
+        "composition": "Return to the opening person and sentence; optional generic QR plus an equally visible no-device route.",
+        "assets": []
+      },
+      "speaker_notes": [
+        "Timing: 25 seconds.",
+        "The audience reveal demonstrates the flow; it is not impact evidence.",
+        "Do not personalise from judge research or require a reply."
+      ],
+      "duration_seconds": 25,
+      "motion": {
+        "purpose": "attention",
+        "description": "A later verified transition may direct attention to the optional demo access after the final sentence.",
+        "manual_in_figma": true
+      },
+      "figma": {
+        "slide_node_id": null
+      }
+    }
+  ],
+  "appendix": [
+    "brief-and-deliverables",
+    "research-methods-and-limits",
+    "evidence-ledger",
+    "alternatives-and-competitors",
+    "full-divergence",
+    "extended-states",
+    "prototype-truth-table",
+    "testing-details",
+    "feasibility-and-scope",
+    "ai-third-party-credits",
+    "qa-and-backup-demo"
+  ]
+}

@@ -3,6 +3,14 @@
 
 The deck is generated from verified project knowledge, not from raw transcripts or an old presentation export.
 
+## Current content skeleton
+
+- [Presentation content and structure](PRESENTATION_STRUCTURE.md) defines the 13-slide six-minute working spine, appendix and pitch gate.
+- [Transcript presentation findings](TRANSCRIPT_PRESENTATION_FINDINGS.md) records the presentation direction recovered from the complete transcript set.
+- [`deck-spec.json`](deck-spec.json) is the current machine-readable content contract.
+- [`generated/SUEDE-2026-Content-Skeleton.pptx`](generated/SUEDE-2026-Content-Skeleton.pptx) is the editable local review deck; [`generated/SUEDE-2026-Content-Skeleton.pdf`](generated/SUEDE-2026-Content-Skeleton.pdf) is its shareable preview.
+- The current deck is deliberately brand-free: black, white, ordinary type and native editable objects only. Final styling must be derived from the selected product design, not from this scaffold.
+
 ## Source order
 
 1. `WIKI/BRIEF.md`
@@ -45,6 +53,14 @@ Validate while drafting:
 ```bash
 python3 deck/validate_deck_spec.py deck/deck-spec.json
 ```
+
+Render the current editable content-review deck:
+
+```bash
+python3 deck/build_content_skeleton.py
+```
+
+This local PPTX/PDF pair is a review and fallback format, not the final visual source of truth.
 
 Run the stricter gate before generating the final deck:
 

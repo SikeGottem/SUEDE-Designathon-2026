@@ -20,6 +20,22 @@ Not independently verified yet.
 - The final response will need both a clear idea and believable execution.
 - “Experience” does not imply an app or screen.
 
+## Captured presentation guidance — confirm against organiser materials
+
+The opening-session transcript captured the following presentation guidance. It is newer than the pre-event planning deck, but the machine transcript is compressed and no matching public 2026 rules page was found on 4 September 2026. Treat these as working constraints until checked against the organiser slides or Slack:
+
+- A pitch deck plus an appendix.
+- A maximum of 15 main slides, with the appendix excluded from that count.
+- A six-minute heat pitch followed by three minutes of Q&A.
+- Four teams advance to a seven-minute final pitch followed by five minutes of Q&A.
+- The front slide should include the team name, team number and member names.
+- The story should use minimal text and make sense to an audience with no prior context.
+- The submission should document the design process and disclose material third-party and AI use.
+- Devpost visuals should be accurate, attractive and checked carefully.
+
+- **Captured source:** Chronicle transcript `26548e42-bf5a-5414-8227-3ab6baf2dc5d` on 4 September 2026.
+- **Verification status:** captured live guidance; not independently confirmed.
+
 ## First interpretation
 
 Treat this as a working interpretation of the user-provided wording until the official source is verified.
