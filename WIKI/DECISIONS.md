@@ -461,6 +461,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: a consented receiver comparison of the carrier delta against the folded-object baseline, measuring comprehension, comfort, pressure, agency, and desired next action.
 - Recommendation: proceed as a contained prototype condition, then choose or discard it on receiver evidence rather than internal enthusiasm.
 
+## 2026-09-05 - Correct the prototype toward a sparse, mobile paper-sheet experience
+
+- Status: current correction; prototype direction remains reversible.
+- Decision: keep the small carrier-picker test, deliberate opening, receiver keep/close/remove paths, and physical cabinet. Correct the render by removing the home-loop ornament, bottom-centring the core home invitation/action, removing carrier backdrop paths and mascot/helper copy, increasing negative space, and using purposeful motion only. Rebuild the creator as one mobile paper sheet with a dominant writing layer plus a compact scrollable material rail/progressive disclosure. Keep preview's “ready to give” role, but leave its hero artwork open pending Ethan's supplied screenshot. Prioritise team-drawn recurring assets whose line weight belongs with Gaegu. Do not build a 3D tree archive. For the deck, establish layout/story first, use AI only to refine bounded treatments, and ensure the presentation works silently.
+- Reason: the team reviewed the first rich coded pass and found it visually noisy, AI-looking, crowded on mobile, and insufficiently resolved despite preserving the desired overall flow. The later direct critique governs overlap.
+- Evidence: [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), created `2026-09-04T15:25:25.181Z`, records the paper-sheet/scroll-rail discussion (32:28–33:40), retained opening/keep/cabinet (33:40–34:16), line-weight/artwork correction (15:50–16:28; 26:40–27:39), 3D-tree rejection (07:48–10:08), and silent/layout-first deck direction (25:50–26:19; 30:21–30:58). The later [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created `2026-09-04T15:27:36.809Z`, directly rejects the home loop, carrier ornament/helper copy, crowded maker page, and current preview hero while retaining the carrier premise and cabinet (01:26–03:17).
+- Consequence: a correction pass may replace the affected home, carrier, studio, and preview visual treatment. It must not add new carrier breadth, mascot loops, a 3D archive, sender telemetry, reply pressure, product claims, or a final-brand claim. The cabinet/receiver contract remain in scope but are not a redesign target.
+- Revisit when: Ethan supplies the promised preview screenshot, the team approves/rejects the new mobile composition, a rendered post-build review exposes another mismatch, or a receiver walkthrough challenges the carrier/opening premise.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | Reducing interface decoration keeps attention on the unwritten-rule intervention rather than a themed app shell. | The official 2026 brief/rubric still need confirmation. |
+| Problem identification | neutral | The correction does not alter the ordinary-day appreciation framing. | Internal visual critique provides no new evidence about the problem's prevalence or affected group. |
+| Solution approach | strengthens | A clearer one-sheet creator makes the authored-object mechanism easier to inspect on a mobile device. | Whether the rich creator actually lowers expression friction remains untested. |
+| Design innovation | mixed | Carrier choreography plus the white-to-navy opening remain distinctive when stripped of generic ornament. | It may still be described as a themed digital card without a real receiver comparison. |
+| Visual communication | strengthens | Removing loops/backdrops/helper copy creates a single focal object and room for team-drawn linework. | Hero artwork is intentionally unresolved; no final visual selection is claimed. |
+| Presentation skills | strengthens | Layout-first, silent-safe storytelling reduces the risk that a demo needs music or explanation to land. | The final pitch narrative and slide design have not been reviewed. |
+| Evidence quality | unknown | Sources are timestamped internal design review and are labelled as such. | No participant has evaluated the correction, authenticity, accessibility, carrier meaning, or no-reply effect. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if a sparse interface removes useful making guidance? | The correction retains optional prompts and materials behind progressive disclosure rather than eliminating support. | Observe whether non-designers can start and finish a composition. |
+| Behaviour and context | Does bottom-centred home copy make the entry task clearer in the actual use context? | It follows the team's direct critique of the rendered page, not a user claim. | Sender comprehension and motivation remain untested. |
+| Medium necessity | Does simplification make the product merely a prettier message? | The object, mixed-media potential, opening threshold, and receiver-owned ending remain intact. | Which digital ingredient earns the medium has not been isolated. |
+| Alternatives | Would a simple text/voice note work better than the paper-sheet composer? | Those remain explicit controls; this is a reversible prototype correction, not a superiority claim. | A matched comparison is still required. |
+| Human specificity | Could Gaegu-matched handmade assets become an aesthetic costume? | The requirement is tied to team-drawn recurring objects and sender-authored content, not decorative noise. | The final team assets and actual recipient interpretation are unknown. |
+| Inclusion and accessibility | Could a compact scroll rail or gestural motion hide content or controls? | Materials remain disclosed by explicit controls; purposeful motion must keep direct/reduced-motion alternatives. | Full mobile screen-reader, keyboard, contrast, and touch testing is still needed. |
+| Trust, safety and privacy | Does the correction weaken receiver agency? | No; opening fallback, defer/close/remove, no reply, and no telemetry remain unchanged. | Real identity, forwarding, expiry, deletion, and abuse controls are outside this prototype. |
+| Failure and recovery | What if the new hero/asset pass still looks synthetic or the mobile sheet overflows? | Stop at artifact review and replace only the named visual layer; do not expand the feature set to hide it. | The supplied preview screenshot and a full rendered audit are pending. |
+| Feasibility and demo truth | Is a 3D tree or audio-dependent pitch needed to communicate the idea? | The team explicitly rejected the tree as low-leverage for the sprint and requires a silent-safe presentation. | Actual event time and delivery constraints remain uncertain. |
+| Incentives and second-order effects | Could richer motion/objects create collection pressure or spectacle? | Motion is constrained to a product job; cabinet remains optional and no collecting mechanics are added. | Repeated-use effects and storage pressure need receiver research. |
+| Simplicity and retellability | Does carrier choice make the journey too complicated? | The story stays make, give, open, keep/leave; carrier is a small reversible choreography layer. | Test whether outsiders can retell the no-reply/receiver-ownership distinction. |
+| Authorship and distinctiveness | Could AI still determine the look despite team input? | The correction prioritises team-drawn assets, direct team critique, source references, and layout-first human story decisions. | The final render needs a post-build authenticity review and material team edits. |
+
+- Verdict: **Revise / Proceed with conditions**
+- Work permitted by this verdict: correct the named home, carrier, studio, preview and presentation-treatment layers; retain the opening and cabinet flow; make bounded motion and team-asset substitutions.
+- Blocking conditions: do not call a visual treatment final before the promised preview reference and a rendered authenticity review; no 3D tree, persistent mascot, decorative backdrop paths, audio-dependent pitch, new carrier marketplace, validation claim, or scope expansion.
+- Weakest judging angle: **evidence quality**, because the correction is grounded in internal team critique rather than sender/receiver research.
+- Main trade-off: stronger focus, mobile clarity, and a more team-authored look in exchange for removing visible guidance and delaying final hero-art selection.
+- Next evidence that could change the verdict: Ethan's screenshot/reference for preview, a mobile render review, and a consented receiver walkthrough against the folded-object baseline.
+- Recommendation: rebuild the named surfaces now, then audit the actual render before making any visual language or carrier outcome permanent.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

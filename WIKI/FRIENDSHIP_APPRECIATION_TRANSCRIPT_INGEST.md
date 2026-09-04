@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 28 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 30 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -21,7 +21,7 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
 
 ## Evidence hierarchy used here
 
-1. **Latest direct prototype instructions, 5 September 2026**
+1. **Latest implementation review and direct prototype instructions, 5 September 2026**
    - restart after a complete WIKI ingest;
    - make the real product in code rather than treating Figma as the final artifact;
    - create a conceptual, page-by-page specification before restarting implementation;
@@ -29,6 +29,8 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
    - use a white phase followed by a deep-navy phase;
    - use Ugly Handwriting and sparse human-drawn linework;
    - borrow the supplied `grug` reference's visual grammar, not its identity.
+   - [65e72…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md) records the team reviewing the first coded flow: a paper-sheet creator, a compact scrollable material rail, hand-drawn asset work, cabinet retention, and presentation constraints.
+   - [4bf652…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created later on the same channel, is the highest-weighted direct critique of that render: simplify the home and carrier screens, remove ornamental paths/helper copy, rebuild the mobile creator, and preserve the cabinet. It is internal design feedback, not validation.
 2. **Late all-team product and art-direction discussions**
    - [57f27…](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e…](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), and [204b7d…](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md).
 3. **The problem and medium being sharpened**
@@ -51,6 +53,7 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
 | Delivery exploration | QR/link, envelope, bottle, bird, stork, carrier pigeon, firefly, seal, stamp, selectable packages, and delay | Private link and a deliberate opening survived. Exact vessel, courier, and delay did not settle. Literal courier mascots were criticised as obvious and AI-like. |
 | Late visual work | Open empty space, inviting colour, shared hand-drawn language, real team-made assets | The handmade system survived. Current direct instruction narrows v0 to white first, then deep navy. |
 | Current correction | The first implementation felt like a generic form and missed the rich experience | The next artifact must start from this ingest and the conceptual spec, not inherit that layout. |
+| Latest render critique | The first rich coded pass still had too much ornamental/AI-looking surface and a crowded mobile creator | Keep the core flow, carrier test, opening and cabinet; simplify the home/carrier visual fields, give the creator one mobile paper sheet with progressive disclosure, and use team-drawn assets before treating a visual choice as final. |
 
 ## Reconstructed product vision
 
@@ -84,14 +87,16 @@ The transcript repeatedly treats these as a palette of expressive materials. It 
 
 ### The creator experience
 
-Creation should feel like opening a quiet worktable or notebook, not completing a form.
+Creation should feel like opening one quiet, mobile paper sheet or notebook, not completing a form or entering a busy scrapbook editor.
 
 - The sender begins voluntarily with one person in mind.
 - Recipient and reason are lightweight anchors inside the workspace, not separate administrative screens.
 - Writing is central and remains human-authored.
-- Memory materials can be placed around the writing and arranged into one composition.
+- Writing and the essential recipient anchor remain the first legible layer of one paper sheet.
+- Memory materials sit behind a compact, scrollable rail or drawer; they are revealed when wanted rather than all competing in the first viewport.
+- Chosen materials can be placed around the writing and arranged into one composition.
 - Optional reflective cues such as “favourite memory,” “what you taught me,” or “one word” help when requested; they do not become mandatory questions.
-- Creative effort should be visible through selection, arrangement, drawing, recording, and personal marks—not artificial waiting or needless friction.
+- Creative effort should be visible through selection, arrangement, drawing, recording, and personal marks—not artificial waiting, needless friction, or an overloaded canvas.
 - The sender previews the finished experience as a whole, then gives it a boundary by finishing or sealing it.
 
 The strongest evidence for this richer authoring model appears in the late discussion of a scrapbook-like, multimedia artifact ([57f27… lines 28–76](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md)) and in the explicit argument that layout and creative decisions are themselves a form of communication ([532244… line 20](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md)).
@@ -160,6 +165,14 @@ Do not borrow:
 - its flower, sunrise, navigation, copy, or phone composition;
 - its mascot identity;
 - an exact screen recreation.
+
+### Latest visual correction — sources 29 and 30
+
+The late 4 September review makes the current hierarchy more specific. The home page keeps the core invitation but becomes minimal: no central decorative loop, with the invitation and action bottom-centred. The carrier picker remains a small horizontal object browse, but it shows the selected carrier alone in generous negative space: no background route/wave paths and no mascot/helper explanation at the bottom. Purposeful motion belongs to object selection, placement, departure, opening, and receiver ownership; it must not replace space or become ambient ornament.
+
+The team also identified a craft requirement: the important recurring objects need team-drawn replacements, with line weight that sits close to Gaegu's weight and confidence. Current AI/code-generated stand-ins are implementation placeholders, not a visual approval. The 35-minute source briefly explored a rotating 3D tree archive, then rejected it as out of scope and low leverage for the designathon; keep the simpler cabinet direction.
+
+For the pitch, block the slide layout and story before asking AI to refine a visual treatment. A silent room presentation must not rely on song, audio, or an audio-only explanation. These are internal workflow and design-direction notes, not audience evidence.
 
 ## Current confidence ledger
 
@@ -241,6 +254,7 @@ Do not borrow:
 | No AI-authored intimacy / finite receiving contract | [356211… line 20](TRANSCRIPTS/2026-09-04-356211db-c212-5765-bcbb-205d615e351d.md), [532244… lines 20–34](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md) | Strong boundary |
 | Hand-drawn/open art direction | [57f27… lines 244–247](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e… lines 359–524](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), [204b7d… lines 35–94](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md) | Strong preference, narrowed by latest direct instruction |
 | Product-first pitch and working QR ending | [8d391… lines 33–54](TRANSCRIPTS/2026-09-03-8d39172c-4cee-5766-97e7-90708888daf3.md), [Recording 19 lines 133–196](TRANSCRIPTS/2026-09-04-new-recording-19.md), [Recording 14 lines 21–76](TRANSCRIPTS/2026-09-04-new-recording-14.md) | Team pitch direction; organiser disclosure rules still apply |
+| Current render correction and mobile paper-sheet creator | [65e72… 32:28–34:16](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), [4bf652… 01:26–03:17](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md) | Latest team critique; internal design direction only |
 
 ## Honest boundary
 
@@ -253,3 +267,15 @@ This ingest can reconstruct intent. It cannot prove desirability, causality, saf
 The meeting explored a browseable set of large, hand-drawn container/carrier icons; horizontal movement so each drawing can have room; a scrapbook-like creation surface closer to arranging pieces in Figma than filling out fields; a physical cabinet holding visually distinct objects; a bottle whose opening releases its contents; and a ladybug travelling with a dotted path as a sending/arrival notification idea. It also records preference for dark blue/navy, butter yellow and other soft colours, while explicitly leaving palette selection for prototype testing.
 
 These are not settled product choices. The prior transcript also contains menus of containers, courier animals, wood/bookcase metaphors, mascot ideas, and a bottom-navigation debate. Ethan's newer instruction governs the current build: use only a small reversible carrier set and horizontal browse; let the selected carrier affect handoff, arrival and opening choreography; use a bottle/cork interaction with a simple fallback; treat the ladybug as a one-time courier/notification path rather than a persistent mascot; avoid bottom navigation; keep the cabinet as distinct physical objects; and retain the rich scrapbook-like creator. The white-plus-navy sequence, Gaegu working type, and soft-yellow/other-palette question are likewise implementation choices or open visual tests, not validation.
+
+## 4 September implementation-review addendum — sources 29 and 30
+
+**Sources:** [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), 35-minute team review, created `2026-09-04T15:25:25.181Z`; and [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), 4-minute direct render critique, created later at `2026-09-04T15:27:36.809Z`. The later critique governs conflicts.
+
+- **Home:** retain “something good on your mind?” and the making action, but remove the central decorative loop; put the invitation/action bottom-centre and keep the page minimal ([4bf652… 01:26]).
+- **Carrier chooser:** retain “pick how it arrives” and the limited carrier browse, but remove bottle-wave/ladybug-route backdrop paths and the bottom helper/mascot explanation. The object alone, negative space, and purposeful transition motion do the work ([4bf652… 01:26]).
+- **Creator:** the existing first pass was judged overcrowded and insufficiently mobile. Keep one page, but make it read as one paper sheet; move addable pieces behind a compact, scrollable control rather than a field-like or cluttered layout ([65e72… 32:51–33:40]; [4bf652… 01:26]).
+- **Preview, opening and cabinet:** preserve the preview's “ready to give” role, deliberate opening, keep action, and cabinet. The preview hero artwork remains open pending the screenshot/reference Ethan said he would send; no final visual choice is inferred ([65e72… 33:40–34:16]; [4bf652… 02:55–03:17]).
+- **Craft and pitch:** replace important generated stand-ins with team-drawn priority assets; match illustration line weight to the Gaegu system ([65e72… 15:50–16:28; 26:40–27:39]). Build deck structure/layout first, then use AI as a bounded refinement tool; make every presentation-critical point understandable without audio ([65e72… 25:50–26:19; 30:21–30:58]).
+
+These recordings show the team correcting its own prototype. They do not establish that any screen, gesture, archive, carrier, or no-reply contract works for intended recipients.

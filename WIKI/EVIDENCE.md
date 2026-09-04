@@ -69,7 +69,7 @@ The published timeline is more specific: background research began around 12:00,
 
 ## Complete transcript ingest: product intent versus decision status
 
-- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 28 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
+- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 30 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
 - Strong repeated observation: the later team discussion describes a custom, scrapbook-like digital artifact containing the sender's own words and selected photographs, voice, music, video, drawing, or personal marks. Creative arrangement is treated as part of the expression, not decoration.
 - Strong repeated observation: the desired receiver experience includes a deliberate opening, attention away from chat, ownership, and possible year-later replay inside a private cabinet or memory surface.
 - Boundary: the transcript set is evidence of team intent, not evidence of demand, impact, prevalence, safety, or a universal friendship norm.
@@ -83,6 +83,15 @@ The published timeline is more specific: background research began around 12:00,
 - Boundary: this is one team's design exploration. It does not establish participant preference, usability, desirability, safety, carrier meaning, or the benefit of a no-reply receiver flow.
 - Current direct implementation decision: Ethan's newer instruction scopes a reversible test to a small horizontal carrier set; carrier-specific handoff/arrival/opening choreography; a bottle/cork interaction plus simple fallback; a one-time ladybug courier/notification; no bottom nav; physically distinct cabinet objects; rich scrapbook-like creation; white with navy ink before opening and navy/off-white after; Gaegu working type; and an open accent palette.
 - What this changes for us: evaluate the prototype against a receiver comparison. Do not call the single-folded-object baseline rejected, and do not treat the selected carrier treatment as a product decision beyond this test.
+
+## 4 September late prototype review — internal correction, not validation
+
+- Sources: [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), created `2026-09-04T15:25:25.181Z`, and the later [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created `2026-09-04T15:27:36.809Z`. The latter is the latest direct critique and carries more weight where they overlap.
+- Observation: the team retained the carrier-picker premise, deliberate opening, keep action and cabinet, but rejected the currently rendered home, ornamental carrier backdrops/helper copy, crowded creator composition, and placeholder-looking object treatment ([4bf652… 01:26–03:17]; [65e72… 32:28–34:16]).
+- Direction for the next correction: home invitation/action bottom-centred without a decorative loop; object-only carrier stage with negative space; purposeful motion only; one mobile paper-sheet creator with a compact scrollable material rail and progressive disclosure; preview role retained while its hero artwork remains open pending a supplied screenshot.
+- Craft requirement: priority recurring objects need team-drawn assets whose line weight feels coherent with Gaegu rather than AI/generated stand-ins ([65e72… 15:50–16:28; 26:40–27:39]). A proposed 3D rotating tree archive was explicitly rejected as out of scope for the event ([65e72… 07:48–10:08]).
+- Presentation workflow: block the story/layout first, then use AI to refine the visual treatment; a live pitch must remain understandable without sound or music ([65e72… 25:50–26:19; 30:21–30:58]).
+- Boundary: these are internal team review notes. They do not demonstrate usability, desirability, participant preference, perceived authenticity, accessibility, or the effect of the no-reply contract.
 
 ## Initial ideation reality checks: unwritten rules
 

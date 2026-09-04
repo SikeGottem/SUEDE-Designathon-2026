@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
-import { KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
+import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
 
 type Phase =
   | "home"
@@ -84,8 +84,7 @@ export default function Prototype() {
   const [words, setWords] = useState(
     "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.",
   );
-  const [pieces, setPieces] = useState<PieceId[]>(["photo", "voice", "song", "drawing"]);
-  const [trayOpen, setTrayOpen] = useState(false);
+  const [pieces, setPieces] = useState<PieceId[]>(["photo"]);
   const [cuesOpen, setCuesOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareFailed, setShareFailed] = useState(false);
@@ -124,8 +123,7 @@ export default function Prototype() {
       "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.",
     );
     setCarrierId("bottle");
-    setPieces(["photo", "voice", "song", "drawing"]);
-    setTrayOpen(false);
+    setPieces(["photo"]);
     setCuesOpen(false);
     setCopied(false);
     setShareFailed(false);
@@ -167,7 +165,7 @@ export default function Prototype() {
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("home")} onNext={() => go("studio")} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" recipient={recipient} reason={reason} words={words} pieces={pieces} trayOpen={trayOpen} cuesOpen={cuesOpen} canPreview={canPreview} onRecipient={setRecipient} onReason={setReason} onWords={setWords} onTogglePiece={togglePiece} onToggleTray={() => setTrayOpen((current) => !current)} onToggleCues={() => setCuesOpen((current) => !current)} onBack={() => go("carrier")} onPreview={() => go("preview")} />
+              <Studio key="studio" recipient={recipient} reason={reason} words={words} pieces={pieces} cuesOpen={cuesOpen} canPreview={canPreview} onRecipient={setRecipient} onReason={setReason} onWords={setWords} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onBack={() => go("carrier")} onPreview={() => go("preview")} />
             )}
             {phase === "preview" && (
               <Preview key="preview" recipient={recipient} words={words} pieces={pieces} carrier={carrier} onEdit={() => go("studio")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
@@ -204,7 +202,7 @@ export default function Prototype() {
 
 function Page({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <motion.section className={`experience-page ${className}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}>
+    <motion.section className={`experience-page ${className}`} initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(-5px)" }} transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}>
       {children}
     </motion.section>
   );
@@ -223,14 +221,13 @@ function Home({ kept, recipient, onMake, onCabinet, onDemo }: { kept: boolean; r
   return (
     <Page className="home-page">
       <p className="working-wordmark">warm &amp;<br />fuzzies</p>
-      <div className="home-loop" aria-hidden="true"><svg viewBox="0 0 280 220"><path d="M28 190C-6 123 22 37 103 37c62 0 94 70 50 106-35 28-81-3-56-39 30-43 120-18 154-72" /></svg></div>
+      <div className="home-quiet-actions">
+        {kept && <button className="quiet-link" type="button" onClick={onCabinet}>things you kept for {recipient}</button>}
+        <button className="quiet-link" type="button" onClick={onDemo}>receiver demo</button>
+      </div>
       <div className="home-invitation">
         <p>something good<br />on your mind?</p>
         <button className="drawn-action" type="button" onClick={onMake}>make it for them <Mark /></button>
-      </div>
-      <div className="home-quiet-actions">
-        {kept && <button className="quiet-link" type="button" onClick={onCabinet}>open your cabinet for {recipient}</button>}
-        <button className="quiet-link" type="button" onClick={onDemo}>jump to the receiving demo</button>
       </div>
     </Page>
   );
@@ -244,8 +241,7 @@ function CarrierPicker({ selected, onSelect, onCycle, onKeyDown, onBack, onNext 
       <header className="carrier-heading"><p>pick how it arrives.</p><span>each one opens a little differently.</span></header>
       <div className="carrier-stage">
         <button className="stage-arrow stage-arrow-left" type="button" aria-label="Previous carrier" onClick={() => onCycle(-1)}><Mark direction="left" /></button>
-        <motion.div key={selected} className="hero-carrier" initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
-          <CarrierBackdrop id={selected} />
+        <motion.div key={selected} className="hero-carrier" initial={{ opacity: 0, transform: "translateY(10px) rotate(-2deg) scale(0.97)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
           <CarrierIcon id={selected} size="hero" />
         </motion.div>
         <button className="stage-arrow stage-arrow-right" type="button" aria-label="Next carrier" onClick={() => onCycle(1)}><Mark /></button>
@@ -258,38 +254,36 @@ function CarrierPicker({ selected, onSelect, onCycle, onKeyDown, onBack, onNext 
         ))}
       </div>
       <div className="carrier-copy" aria-live="polite"><h1>{carrier.label}</h1><p>{carrier.description}</p></div>
-      <div className="guide-note"><CarrierIcon id="ladybug" size="guide" /><p>{selected === "ladybug" ? "this one knows the way." : `this one will ${carrier.action}.`}</p></div>
       <button className="drawn-action carrier-next" type="button" onClick={onNext}>make what goes inside <Mark /></button>
     </Page>
   );
 }
 
-function Studio({ recipient, reason, words, pieces, trayOpen, cuesOpen, canPreview, onRecipient, onReason, onWords, onTogglePiece, onToggleTray, onToggleCues, onBack, onPreview }: { recipient: string; reason: string; words: string; pieces: PieceId[]; trayOpen: boolean; cuesOpen: boolean; canPreview: boolean; onRecipient: (value: string) => void; onReason: (value: string) => void; onWords: (value: string) => void; onTogglePiece: (piece: PieceId) => void; onToggleTray: () => void; onToggleCues: () => void; onBack: () => void; onPreview: () => void }) {
+function Studio({ recipient, reason, words, pieces, cuesOpen, canPreview, onRecipient, onReason, onWords, onTogglePiece, onToggleCues, onBack, onPreview }: { recipient: string; reason: string; words: string; pieces: PieceId[]; cuesOpen: boolean; canPreview: boolean; onRecipient: (value: string) => void; onReason: (value: string) => void; onWords: (value: string) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onBack: () => void; onPreview: () => void }) {
   const workspaceRef = useRef<HTMLDivElement>(null);
   return (
     <Page className="studio-page">
       <TopLine onBack={onBack} label="change the carrier" />
-      <header className="studio-heading"><h1>make something for someone.</h1><p>put the words and little pieces where they feel right.</p></header>
-      <div className="studio-anchors">
-        <label><span>for</span><KeyboardInput aria-label="Who is this for?" value={recipient} onChange={(event) => onRecipient(event.target.value)} autoComplete="off" /></label>
-        <label><span>because</span><KeyboardInput aria-label="What made you think of them?" value={reason} onChange={(event) => onReason(event.target.value)} autoComplete="off" /></label>
-      </div>
-      <div className="studio-cue-row">
-        <button className="quiet-link" type="button" aria-expanded={cuesOpen} onClick={onToggleCues}>{cuesOpen ? "hide the little prompts" : "stuck for where to begin?"}</button>
-        <AnimatePresence>{cuesOpen && <motion.div className="cue-scribble" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.16 }}><span>a favourite memory</span><span>what they taught you</span><span>one small thing you notice</span></motion.div>}</AnimatePresence>
-      </div>
-      <div ref={workspaceRef} className="maker-workspace" aria-label="Your living page">
-        <label className="words-piece"><span>your words</span><KeyboardTextarea aria-label="Your words" value={words} onChange={(event) => onWords(event.target.value)} /></label>
+      <header className="studio-heading"><h1>make one page.</h1><button className="quiet-link" type="button" aria-expanded={cuesOpen} onClick={onToggleCues}>{cuesOpen ? "hide prompts" : "need a small prompt?"}</button></header>
+      <AnimatePresence>{cuesOpen && <motion.div className="cue-scribble" initial={{ opacity: 0, transform: "translateY(-4px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(-4px)" }} transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}><span>a favourite memory</span><span>what they taught you</span><span>one small thing you notice</span></motion.div>}</AnimatePresence>
+      <motion.div ref={workspaceRef} className="maker-workspace" aria-label="Your paper sheet" initial={{ opacity: 0, transform: "translateY(10px) rotate(-0.35deg)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(-0.35deg)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}>
+        <div className="sheet-anchors">
+          <label><span>for</span><KeyboardInput aria-label="Who is this for?" value={recipient} onChange={(event) => onRecipient(event.target.value)} autoComplete="off" /></label>
+          <label><span>because</span><KeyboardInput aria-label="What made you think of them?" value={reason} onChange={(event) => onReason(event.target.value)} autoComplete="off" /></label>
+        </div>
+        <label className="words-piece"><span>what do you want them to know?</span><KeyboardTextarea aria-label="Your words" value={words} onChange={(event) => onWords(event.target.value)} /></label>
         {pieces.includes("photo") && <DraggablePiece className="placed-photo" constraints={workspaceRef} onRemove={() => onTogglePiece("photo")} label="photo"><div className="moving-photo" role="img" aria-label="Sample photo of moving boxes in a new room"><span className="box-one" /><span className="box-two" /><span className="window-line" /></div><figcaption>first week home</figcaption></DraggablePiece>}
         {pieces.includes("voice") && <DraggablePiece className="placed-voice" constraints={workspaceRef} onRemove={() => onTogglePiece("voice")} label="voice note"><Waveform /><span>10 sec · “you made it easy”</span></DraggablePiece>}
         {pieces.includes("song") && <DraggablePiece className="placed-song" constraints={workspaceRef} onRemove={() => onTogglePiece("song")} label="song"><span className="record-mark" aria-hidden="true" /><span>First Week Home</span></DraggablePiece>}
         {pieces.includes("drawing") && <DraggablePiece className="placed-drawing" constraints={workspaceRef} onRemove={() => onTogglePiece("drawing")} label="drawing"><PersonalMark /></DraggablePiece>}
-        <p className="drag-hint">hold a piece and move it around.</p>
-      </div>
-      <div className="material-area">
-        <button className="place-trigger" type="button" aria-expanded={trayOpen} onClick={onToggleTray}><span className="place-plus" aria-hidden="true">+</span>{trayOpen ? "close the little drawer" : "place something"}</button>
-        <AnimatePresence>{trayOpen && <motion.div className="material-tray" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>{(Object.keys(pieceLabels) as PieceId[]).map((piece) => <button key={piece} type="button" aria-pressed={pieces.includes(piece)} onClick={() => onTogglePiece(piece)}><MaterialIcon id={piece} /><span>{pieceLabels[piece]}</span></button>)}</motion.div>}</AnimatePresence>
-      </div>
+        {pieces.length > 0 && <p className="drag-hint">hold a piece to move it.</p>}
+      </motion.div>
+      <section className="material-area" aria-labelledby="material-heading">
+        <div className="material-heading"><h2 id="material-heading">add something</h2><span>swipe</span></div>
+        <Carousel ariaLabel="Things to add to the page" className="material-carousel" contentClassName="material-tray" showScrollbar>
+          {(Object.keys(pieceLabels) as PieceId[]).map((piece) => <button key={piece} type="button" aria-pressed={pieces.includes(piece)} onClick={() => onTogglePiece(piece)}><MaterialIcon id={piece} /><span>{pieceLabels[piece]}</span></button>)}
+        </Carousel>
+      </section>
       <button className="drawn-action studio-next" type="button" disabled={!canPreview} onClick={onPreview}>see the whole thing <Mark /></button>
     </Page>
   );
@@ -297,7 +291,7 @@ function Studio({ recipient, reason, words, pieces, trayOpen, cuesOpen, canPrevi
 
 function DraggablePiece({ children, className, constraints, label, onRemove }: { children: ReactNode; className: string; constraints: React.RefObject<HTMLDivElement | null>; label: string; onRemove: () => void }) {
   return (
-    <motion.figure className={`placed-piece ${className}`} drag dragConstraints={constraints} dragElastic={0.08} dragMomentum={false} data-scroll-drag="ignore" initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
+    <motion.figure className={`placed-piece ${className}`} drag dragConstraints={constraints} dragElastic={0.08} dragMomentum={false} data-scroll-drag="ignore" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
       <button className="piece-remove" type="button" aria-label={`Remove ${label}`} onClick={onRemove}>×</button>{children}
     </motion.figure>
   );
@@ -308,7 +302,7 @@ function Preview({ recipient, words, pieces, carrier, onEdit, onChangeCarrier, o
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {recipient}</span><span>from {sender}</span></div>
-      <div className="sealed-preview"><CarrierIcon id={carrier.id} size="sealed" /><div className="preview-peek" aria-hidden="true"><span>{words.slice(0, 28)}…</span>{pieces.slice(0, 3).map((piece) => <MaterialIcon key={piece} id={piece} />)}</div><PersonalMark /></div>
+      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translateY(9px) rotate(-1deg)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /><div className="preview-peek" aria-hidden="true"><span>{words.slice(0, 28)}…</span>{pieces.slice(0, 3).map((piece) => <MaterialIcon key={piece} id={piece} />)}</div><PersonalMark /></motion.div>
       <div className="preview-copy"><h1>one thing, ready to give.</h1><p>{carrier.label}. Nothing inside appears until {recipient} opens it.</p></div>
       <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
       <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
@@ -332,7 +326,7 @@ function Handoff({ recipient, copied, failed, onBack, onCopy, onFail, onFinish }
 function Sent({ recipient, carrier, onReceiver, onAgain, onLeave }: { recipient: string; carrier: Carrier; onReceiver: () => void; onAgain: () => void; onLeave: () => void }) {
   return (
     <Page className="sent-page">
-      <div className="courier-flight" aria-hidden="true"><svg viewBox="0 0 320 230"><path d="M12 194c42-6 45-76 93-79 51-4 34 68 82 60 55-10 44-101 119-139" /></svg><motion.div initial={{ x: 0, y: 168, rotate: -12 }} animate={{ x: 266, y: 10, rotate: 18 }} transition={{ duration: 1.2, ease: [0.45, 0, 0.55, 1] }}><CarrierIcon id="ladybug" size="guide" /></motion.div></div>
+      <div className="courier-flight" aria-hidden="true"><svg viewBox="0 0 320 230"><path d="M12 194c42-6 45-76 93-79 51-4 34 68 82 60 55-10 44-101 119-139" /></svg><motion.div initial={{ opacity: 0, transform: "translate3d(0, 168px, 0) rotate(-12deg)" }} animate={{ opacity: 1, transform: "translate3d(266px, 10px, 0) rotate(18deg)" }} transition={{ duration: 1.2, ease: [0.45, 0, 0.55, 1] }}><CarrierIcon id="ladybug" size="guide" /></motion.div></div>
       <div className="sent-copy"><h1>that&apos;s it from you.</h1><p>{recipient} gets to choose what happens next. You do not have anything to check.</p><span>{carrier.shortLabel} chosen for this sample</span></div>
       <button className="drawn-action" type="button" onClick={onReceiver}>open the receiving demo <Mark /></button>
       <div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another</button><button className="quiet-link" type="button" onClick={onLeave}>leave</button></div>
@@ -375,7 +369,7 @@ function BottleOpening({ onOpen }: { onOpen: () => void }) {
   };
   return (
     <div className="bottle-opening">
-      <motion.div className="arrival-bottle" initial={{ x: "-50%", y: 4 }} animate={{ x: "-50%", y: [4, -3, 0] }} transition={{ duration: 0.56, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id="bottle" size="arrival" /></motion.div>
+      <motion.div className="arrival-bottle" initial={{ opacity: 0.92, transform: "translate(-50%, 4px)" }} animate={{ opacity: 1, transform: ["translate(-50%, 4px)", "translate(-50%, -3px)", "translate(-50%, 0)"] }} transition={{ duration: 0.56, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id="bottle" size="arrival" /></motion.div>
       <button className="bottle-cork" type="button" data-scroll-drag="ignore" aria-label="Swipe the cork upward or press to open" style={{ transform: `translateY(${-progress * 82}px) rotate(${progress * 8}deg)` }} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={() => { pointerId.current = null; setProgress(0); }} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); finish(); } }}><span aria-hidden="true" /></button>
       <p>pull the cork up<br /><small>or tap it once</small></p>
     </div>
@@ -414,12 +408,10 @@ function Reveal({ recipient, words, pieces, voiceState, songState, removeOpen, o
   return (
     <Page className="reveal-page">
       <header className="object-opening-copy"><span>for {recipient}</span><h1 ref={headingRef} tabIndex={-1}>{words}</h1><p>from {sender}</p></header>
-      <svg className="memory-thread memory-thread-one" viewBox="0 0 320 170" aria-hidden="true"><path d="M8 27c51 4 42 94 109 80 54-12 77-65 190 30" /></svg>
       {pieces.includes("photo") && <figure className="object-photo"><div className="moving-photo" role="img" aria-label="Sample photo of moving boxes in a new room"><span className="box-one" /><span className="box-two" /><span className="window-line" /></div><figcaption>the afternoon the boxes became furniture.</figcaption></figure>}
       {pieces.includes("voice") && <section className={`object-voice ${voiceState === "playing" ? "is-playing" : ""}`}><button type="button" onClick={onVoice} aria-label={voiceState === "playing" ? "Pause voice note" : "Play voice note"}><Waveform /><span>{voiceState === "playing" ? "pause voice" : voiceState === "played" ? "play again" : "play 10 sec"}</span></button><p><span>transcript</span> “I just wanted you to know that you made all of it easier.”</p></section>}
       {pieces.includes("song") && <section className="object-song"><button type="button" onClick={onSong} aria-label={songState === "playing" ? "Pause First Week Home" : "Play First Week Home"}><span className={`record-mark ${songState === "playing" ? "record-playing" : ""}`} aria-hidden="true" /><span><strong>First Week Home</strong><small>{songState === "playing" ? "playing · tap to pause" : "tap to play"}</small></span></button></section>}
       {pieces.includes("drawing") && <div className="object-mark"><PersonalMark /><span>you made a strange place feel ours.</span></div>}
-      <svg className="memory-thread memory-thread-two" viewBox="0 0 320 150" aria-hidden="true"><path d="M4 20c85 8 74 104 146 91 63-12 58-73 164-79" /></svg>
       <footer className="receiver-ending">
         <h2>what should this become?</h2>
         {removeOpen ? <div className="remove-confirm" role="alert"><p>Remove this from your private cabinet? {sender} will not be told.</p><button type="button" onClick={onConfirmRemove}>remove it</button><button type="button" onClick={onCancelRemove}>leave it here</button></div> : <div className="ending-actions"><button type="button" onClick={onKeep}><MaterialIcon id="photo" /><span>keep</span></button><button type="button" onClick={onClose}><span className="ending-x" aria-hidden="true">×</span><span>close</span></button><button type="button" onClick={onRemove}><span className="ending-remove" aria-hidden="true" /><span>remove</span></button></div>}
@@ -433,7 +425,7 @@ function Cabinet({ kept, recipient, carrier, removeOpen, onOpen, onMake, onClose
     <Page className="cabinet-page">
       <header><button className="navy-back" type="button" onClick={onClose}><Mark direction="left" /> close</button><h1>things you kept.</h1></header>
       <div className="cabinet-field">
-        {kept ? <motion.div className="cabinet-object" initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }}><button type="button" onClick={onOpen} aria-label={`Open kept object from ${sender} for ${recipient}`}><CarrierIcon id={carrier.id} size="cabinet" /><span>from {sender}<small>the moving week</small></span></button>{removeOpen ? <div className="cabinet-remove"><p>Remove it? {sender} will not be told.</p><button type="button" onClick={onConfirmRemove}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={onRemove}>remove from here</button>}</motion.div> : <div className="empty-cabinet"><svg viewBox="0 0 240 190" aria-hidden="true"><path d="M20 152c51-7 57-82 107-79 45 3 44 56 92 39M42 167h171" /></svg><p>nothing kept here yet.</p></div>}
+        {kept ? <motion.div className="cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={onOpen} aria-label={`Open kept object from ${sender} for ${recipient}`}><CarrierIcon id={carrier.id} size="cabinet" /><span>from {sender}<small>the moving week</small></span></button>{removeOpen ? <div className="cabinet-remove"><p>Remove it? {sender} will not be told.</p><button type="button" onClick={onConfirmRemove}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={onRemove}>remove from here</button>}</motion.div> : <div className="empty-cabinet"><svg viewBox="0 0 240 190" aria-hidden="true"><path d="M20 152c51-7 57-82 107-79 45 3 44 56 92 39M42 167h171" /></svg><p>nothing kept here yet.</p></div>}
       </div>
       <button className="navy-action" type="button" onClick={onMake}>make something new <Mark /></button>
     </Page>
@@ -450,17 +442,6 @@ function Removed({ onLeave, onRestore }: { onLeave: () => void; onRestore: () =>
 
 function TopLine({ onBack, label }: { onBack: () => void; label: string }) {
   return <div className="top-line"><button type="button" onClick={onBack}><Mark direction="left" /> {label}</button><span>warm &amp; fuzzies</span></div>;
-}
-
-function CarrierBackdrop({ id }: { id: CarrierId }) {
-  return (
-    <svg className={`carrier-backdrop backdrop-${id}`} viewBox="0 0 280 310" aria-hidden="true">
-      {id === "bottle" && <path d="M9 238c35-17 61 18 95 0 37-20 65 15 103-3 30-14 45 0 65-9M5 264c44-11 68 15 112-1 43-16 80 12 156-4" />}
-      {id === "ladybug" && <path d="M19 270C-5 197 41 151 111 174c63 21 91-32 72-77-14-35 22-63 79-72" />}
-      {id === "plane" && <path d="M15 235c46-58 80 26 132-36 44-52 81-18 119-97M201 84c22 3 39 14 57 35" />}
-      {id === "flowers" && <path d="M50 256c56-58 70-120 75-202M220 260c-60-75-56-134-66-201M74 185c60 12 82 5 137-13" />}
-    </svg>
-  );
 }
 
 function CarrierIcon({ id, size }: { id: CarrierId; size: "hero" | "thumb" | "guide" | "sealed" | "arrival" | "cabinet" }) {

@@ -215,7 +215,7 @@ The conceptual product has seven page families. Modes inside the creator remain 
 
 ## 10. Page 1 — Studio
 
-**Status:** Current direction, with details proposed for review.
+**Status:** Current direction, corrected by the later 4 September internal render review; details remain proposed for review.
 
 ### Purpose
 
@@ -223,7 +223,7 @@ Turn a genuine thought into a composed object without making the person feel lik
 
 ### First impression
 
-A mostly white screen with dark handwritten type, one small human-drawn mark, and one plain invitation: make something for someone.
+A mostly white screen with dark handwritten type, one small human-drawn mark, and one plain invitation: make something for someone. It resolves as one mobile paper sheet, not a busy composition of controls.
 
 It should feel like opening a blank notebook or clearing a desk. There is no feed, dashboard, archive, friend grid, template market, or product tour competing for attention.
 
@@ -240,11 +240,11 @@ These anchors sit at the edge of the workspace. They do not become full-screen s
 
 ### How making works conceptually
 
-- A generous written area is already present.
-- A small hand-drawn material tray offers words, photo, voice, song, video, and draw.
+- A generous written area is already present and remains the dominant first layer.
+- A compact, scrollable hand-drawn material rail or drawer offers words, photo, voice, song, video, and draw only when the maker asks to add something.
 - Selecting a material places a new piece directly on the page.
 - Pieces can be arranged, resized within reason, captioned, reordered, or removed.
-- A piece may overlap another when the composition still reads clearly.
+- A piece may overlap another when the composition still reads clearly, but the first mobile view is not pre-populated with competing fragments.
 - The maker can ask for a reflective cue, then dismiss it.
 - Autosaving or implementation mechanics remain outside the conceptual UI unless recovery is needed.
 
@@ -262,6 +262,7 @@ When the composition feels finished, a single “see it as they will” action m
 - AI “write it for me” or tone buttons;
 - occasion categories as the main starting point;
 - an infinite Canva-style feature wall;
+- visible full-time media controls, prompt chips, drag hints, and sample fragments competing with the writing area;
 - equal rounded cards for every material;
 - public templates ranked by popularity;
 - friend suggestions, daily assignments, reminders, or streaks;
@@ -516,6 +517,8 @@ Use locally bundled Gaegu Regular as the current open-licensed Ugly Dave-like st
 - Lines can wobble, taper, miss perfect symmetry, and carry pressure variation.
 - Imperfection comes from the hand, not random CSS rotation or fake noise.
 - Every recurring icon is drawn in the same visual language.
+- The recurring-object line weight must sit close to Gaegu's visible weight and confidence; neither hairline doodles nor heavy unrelated strokes pass as a coherent system.
+- Team-drawn priority assets replace AI/code-generated stand-ins before the treatment is called final.
 - Photographs can remain photographic; the product does not apply fake sketch filters to everything.
 
 ### Spatial rules
@@ -553,6 +556,10 @@ Potential motions:
 Avoid looping ambience, confetti, parallax, floating particles, springy SaaS micro-interactions, or animation added only to look expensive.
 
 Sound begins only after a clear receiver action. Silence is the default.
+
+### Presentation constraint
+
+The pitch must make sense in silence. Do not depend on a song, ambient audio, or an audio-only explanation to make the product or the demo understandable. For presentation construction, set the narrative and slide layout before using AI to refine individual visual treatments; AI is a bounded production aid, not the author of the deck's structure.
 
 ## 19. Product voice
 
@@ -712,11 +719,13 @@ Ethan approved all fourteen conditions on 5 September 2026. They now govern the 
 The former approval of one folded/sealed object with no package picker is **superseded only for this test**. It remains the approved baseline outside the test and must not be recorded as rejected or as a validated product conclusion.
 
 - **Carrier browse:** offer a small, hand-drawn set of carrier icons in a horizontal browse, so one selected object can be seen at a useful scale. Do not turn it into a marketplace, theme system, or dense chooser.
+- **Carrier field:** show the selected carrier by itself in generous negative space. Remove ornamental carrier backdrop paths (including bottle waves and ladybug routes) and the bottom mascot/helper explanation; the object and a purposeful selection transition are sufficient.
 - **Choreography:** the selected carrier changes the handoff, arrival, and opening choreography, rather than changing intimate content or adding a different product flow.
 - **Bottle path:** test a bottle with a direct cork swipe/drag opening. If that gesture is unavailable, unclear, or reduced motion is requested, provide a simple explicit open control that reaches the same content immediately.
 - **Ladybug path:** a ladybug may make one dotted, one-time courier/notification journey. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
 - **Navigation and cabinet:** no bottom navigation. The optional private cabinet presents kept items as distinct physical objects, not generic rows, cards, or a feed.
-- **Creator and visual state:** creation remains a rich Figma/scrapbook-like arranging surface. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
+- **Creator and visual state:** creation remains a rich Figma/scrapbook-like arranging surface, corrected to one mobile paper sheet with a dominant writing area and compact scrollable material rail/progressive disclosure. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
+- **Home and preview correction:** the home keeps the core invitation/action but removes the decorative loop and bottom-centres the minimal composition. Preview remains the place where the maker sees something ready to give, but its hero artwork is explicitly open pending the supplied reference/screenshot; do not imply a final selected illustration.
 
 The test must preserve sender-authored content, no sender-visible receiver state, no reply pressure, and the receiver's direct leave/close/remove routes.
 
