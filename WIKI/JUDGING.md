@@ -222,6 +222,8 @@ An AI-assisted artifact fails the authorship gate if:
 - the generated artifact becomes the reference that all later decisions merely polish
 - no human research, critique, manual edit or test materially changed the output
 
+The operational visual gate is `.agents/skills/suede-design-authenticity/SKILL.md`. Run it before material styling or Figma construction and again against the rendered artifact. Invoking an anti-slop or visual-design skill does not prove authorship; the output must survive the source-anchor, reference-delta, logo-swap, team-voice and subtraction checks.
+
 Possible stigma is a presentation risk, not a confirmed SUEDE rule. The answer is not to hide AI or avoid it categorically. Make human judgment visible: show the evidence, alternatives rejected, changes made after testing and deliberate choices that a model could not make responsibly on its own.
 
 ## Stage-specific gates

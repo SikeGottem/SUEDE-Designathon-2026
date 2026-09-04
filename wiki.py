@@ -40,6 +40,21 @@ POLICIES = (
         "Humans own framing, selection, taste, material edits, testing, approval and disclosure.",
     ),
     (
+        "design.authenticity_review_required",
+        "true",
+        "Material visual work must pass authenticity preflight before build and post-build review against the render.",
+    ),
+    (
+        "design.authenticity_skill",
+        ".agents/skills/suede-design-authenticity/SKILL.md",
+        "Project-local gate for source anchors, structural divergence, anti-AI checks and human authorship.",
+    ),
+    (
+        "design.generated_first_draft_is_source_of_truth",
+        "false",
+        "A generated draft cannot lead later work until a human selects or materially redirects it.",
+    ),
+    (
         "wiki.github_sync_required",
         "true",
         "Every completed wiki update must be committed and pushed to GitHub.",

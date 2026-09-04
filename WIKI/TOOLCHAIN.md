@@ -11,6 +11,7 @@
 | Layer | Tool | Current state | Use |
 | --- | --- | --- | --- |
 | Decision governance | SUEDE judge review | Active and mandatory | Reviews consequential ideas, UI, prototypes and pitch decisions before they advance. |
+| Design authenticity | SUEDE design-authenticity review | Active and mandatory for visual work | Rejects polished but interchangeable output before build and after inspecting the render. |
 | UX strategy | Intent `strategize` | Installed | Frames the user, behaviour, opportunity, hypothesis and project scope before solution work. |
 | Outside-the-box thinking | Intent `philosopher` | Installed | Challenges default app assumptions and produces materially different paradigms. |
 | Design language | gstack `design-consultation` | Installed and exercised | Creates one visual contract tied to the subject rather than generic style adjectives. |
@@ -19,7 +20,7 @@
 | Product-flow audit | OpenAI Product Design | Installed | Audits the rendered journey from screenshots and states what visual evidence cannot prove. |
 | Browser verification | Playwright | Installed and exercised | Checks real interaction, viewport behaviour, focus, console errors, network requests and reduced motion. |
 | Interaction motion | Emil Kowalski `find-animation-opportunities`, `animate`, `review-animations`, `improve-animations` | Installed | Adds or critiques motion only when it explains state, causality, continuity or feedback. |
-| Editable design and slides | Official Figma plugin v2.0.21 | Installed; account connection deferred | Creates native editable Figma UI and Figma Slides after OAuth is connected. |
+| Editable design and slides | Official Figma plugin v2.0.21 | Connected; native Design-file write verified | Creates native editable Figma UI. A native Slides-file test is still outstanding. |
 | Cinematic clip | Remotion | Not installed by design | Add only when the chosen pitch has a specific hero clip that static slides and the live prototype cannot communicate. |
 
 ## Safe hybrid rule
@@ -31,6 +32,7 @@ The team can use all three design candidates without turning them into one contr
 3. **Choose one lead per artifact.** Before coding a screen or building a deck, write the visual lead and design contract in `DESIGN.md`. Do not invoke the other broad visual skills during that implementation pass.
 4. **Borrow decisions, not constitutions.** A human may deliberately carry a useful idea from a losing direction into the selected one. Record what was taken and why; do not merge every default for type, spacing, colour, radius and motion.
 5. **Audit after rendering.** OpenAI Product Design, Playwright and the SUEDE post-build review inspect the actual artifact. They are verification layers, not competing art directors.
+6. **Prove authorship twice.** Run the SUEDE design-authenticity preflight before styling and its subtraction pass after rendering. A skill name in the prompt does not count as compliance.
 
 This preserves optionality now and visual coherence later. The permanent winner can be chosen after the official brief and a real product surface exist.
 
@@ -61,9 +63,11 @@ gstack design contract + one divergence round
         ↓
 one declared visual lead for the artifact
         ↓
+SUEDE authenticity preflight: source anchors + rejected defaults + signature
+        ↓
 native Figma structure and/or a bounded code prototype
         ↓
-Product Design audit + Playwright + human testing
+rendered-artifact subtraction pass + Product Design audit + Playwright + human testing
         ↓
 native Figma Slides + manual animation/rehearsal pass
         ↓
@@ -73,20 +77,21 @@ optional Remotion hero clip only if the story earns it
 ## Figma and presentation workflow
 
 - Use the official Figma plugin to build native editable frames, text, shapes, components and Slides. Do not treat a flattened HTML screenshot as the final editable deck.
+- Figma construction starts only after the authenticity preflight has named the communication job, subject-specific anchors, reference delta, rejected defaults and one content-native signature.
 - Use code when the question depends on real responsiveness, computation, direct manipulation, data or motion timing; carry the proven interaction back into the shared design specification.
 - Use [FreTo's 2024 artifacts](FRETO_REFERENCE.md) as a validated structural precedent: problem → evidence → synthesis → concept → test/iteration → product/value, with defensive detail in the appendix. Do not copy its premise, persona, metrics or scrapbook styling.
 - Keep presentation transitions and the final visual polish as a human Figma pass.
+- A visually polished first generation is still a draft. Inspect it at thumbnail and delivery scale, remove decorative labels and containers, rewrite model-like copy, then record at least one material human-directed change.
 
-### Deferred account step
+### Figma verification status
 
-The official plugin is installed, but Figma returned `USER_NOT_LOGGED_IN`. When Ethan is ready:
+The official plugin is connected. On 4 September 2026, Codex created and inspected native editable frames, text and Auto Layout in the shared SUEDE Figma Design file.
 
-1. Open Codex Plugins or Settings, choose Figma and select **Connect**.
-2. Complete the provider OAuth flow.
-3. Run one native Design-file test and one native Slides-file test.
-4. Confirm the UI and slide elements are editable before retiring older local Figma skill copies.
+Still required:
 
-Until that succeeds, do not claim direct Figma authoring is verified and do not remove the local fallbacks.
+1. Run one native Figma Slides-file test.
+2. Confirm slide elements and transitions remain directly editable.
+3. Keep the local fallbacks until both Design and Slides workflows are verified.
 
 ## Motion rule
 
@@ -95,5 +100,5 @@ Motion must have a named job: draw attention, explain a state change, show causa
 ## Next decisions
 
 1. When the official 2026 brief arrives, test the most relevant real screen—not another generic benchmark—and let Ethan choose the visual lead.
-2. Connect Figma when convenient and verify one editable UI file plus one editable Slides file.
+2. Verify one editable Figma Slides file; native Design-file authoring is already verified.
 3. Install Remotion only if the final story names a cinematic clip, its exact job and a strict time budget.

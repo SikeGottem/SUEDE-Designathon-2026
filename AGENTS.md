@@ -45,6 +45,17 @@ Do not invent numeric weights or scores. Finish with one verdict: `Proceed`, `Pr
 
 Routine production choices such as typo fixes, file naming and pixel-level spacing do not require a full review unless they materially affect meaning, behaviour, scope, accessibility, trust, visual direction or the judging case.
 
+## Mandatory design-authenticity gate
+
+Use `.agents/skills/suede-design-authenticity/SKILL.md` for every material deck, UI, prototype or visual direction:
+
+1. before styling or native Figma construction, to establish source anchors, rejected defaults, structural divergence and one content-native signature
+2. after rendering, to inspect the real artifact, subtract generic design signals and require a material human change
+
+`Pass` permits the artifact to advance. `Revise` permits only the named corrective edit. `Reject` stops the direction. A generated first draft, including an attractive one, cannot become the source of truth without human selection or material redirection.
+
+This is not a minimalism rule. Bland, safe and conventionally tasteful output also fails when it has no subject-specific point of view. Do not treat use of a broad anti-slop skill as evidence that the gate passed; verify the actual artifact.
+
 ## Decision record
 
 When Ethan or the team settles a consequential decision, append the decision and its completed judge review to `WIKI/DECISIONS.md`, then run:

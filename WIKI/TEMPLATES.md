@@ -118,6 +118,33 @@ Run the mandatory judge and challenge review before establishing the visual dire
 
 Run the mandatory judge and challenge review against the artifact itself.
 
+## Design authenticity preflight
+
+- Artifact and communication job:
+- Specific source anchors:
+- Reference delta:
+- Rejected model defaults and reasons:
+- Structural direction A, first impression and risk:
+- Structural direction B, first impression and risk:
+- Structural direction C, first impression and risk:
+- Selected direction and human decision behind it:
+- Content-native signature:
+- Deliberate restraint:
+- Declared visual lead:
+- Verdict: Pass / Revise / Reject
+
+## Design authenticity post-build
+
+- Artifact or screenshot inspected:
+- Strongest remaining AI tell:
+- Logo-swap test: pass / fail and why:
+- Team-voice test: pass / fail and why:
+- Labels, containers, accents or copy removed:
+- Content-native signature still visible:
+- Material human-directed change:
+- Next corrective action:
+- Verdict: Pass / Revise / Reject
+
 ## AI contribution record
 
 - Tool and version where available:

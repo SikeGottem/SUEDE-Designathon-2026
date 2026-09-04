@@ -228,6 +228,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the decision: the official 2026 brief plus one representative real screen or deck section reviewed by Ethan.
 - Recommendation: keep the bounded hybrid now, then choose quickly from real evidence once the concept exists.
 
+## 2026-09-04 - Add a mandatory design-authenticity gate
+
+- Status: current
+- Decision: add `suede-design-authenticity` as a mandatory preflight and post-build gate for every material deck, UI, prototype and visual direction.
+- Reason: the existing stack named human authorship and included an anti-slop visual skill, but still allowed a polished first generation to pass without proving a subject-specific point of view.
+- Evidence: the five-question Figma test used editable Auto Layout and an anti-slop visual lead, yet its coloured rail, repeated rows, stacked uppercase labels and slogan fragments remained recognisable model defaults. Ethan rejected it as obvious, uninteresting and visibly AI-authored.
+- Consequence: visual work must now establish real source anchors, three structural directions, rejected defaults, a reference delta and one content-native signature before build. The rendered artifact must then pass logo-swap, team-voice and subtraction checks and record a material human-directed change.
+- Revisit when: two real SUEDE artifact cycles show that any rule blocks useful originality or fails to catch a repeated model default.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The gate requires the visual direction to grow from the actual subject and sources. | The exact 2026 brief is still unavailable. |
+| Problem identification | neutral | The gate preserves problem evidence but does not create it. | Visual distinctiveness could still distract from weak research. |
+| Solution approach | strengthens | Product visuals must express the real mechanism instead of generic interface furniture. | A visual gate cannot validate whether the mechanism works. |
+| Design innovation | strengthens | Structural divergence and the content-native signature resist first-answer convergence. | Novel styling can still be mistaken for a novel solution. |
+| Visual communication | strengthens | The subtraction pass removes labels and containers that compete with the main job. | Over-subtraction could make a design safe or sterile. |
+| Presentation skills | strengthens | Team-voice and thumbnail checks make the artifact easier to say, scan and remember. | Human taste still requires direct review. |
+| Evidence quality | strengthens | The gate forbids fake evidence and requires source anchors plus a reference delta. | Authenticity remains a qualitative judgment, not objective proof. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Does anti-AI become a fixed anti-style? | The rules are warning signals with content-based override paths, not universal bans. | Observe whether agents become overly minimal. |
+| Behaviour and context | Will it run before visual momentum locks the direction? | The repository contract now requires preflight before styling or Figma construction. | Teammates working outside the repository must follow the same habit. |
+| Medium necessity | Does this need another tool or service? | No. A focused repository skill and templates are sufficient. | None. |
+| Alternatives | Could the existing broad skill be tightened instead? | Broad skills cover many products; the new gate carries SUEDE-specific authorship, evidence and winner-reference rules. | Tool updates may eventually absorb these checks. |
+| Human specificity | Does this preserve Ethan's taste rather than an agent's taste? | Human feedback or selection is a required input and post-render changes must be recorded. | A human still has to inspect candidate directions. |
+| Inclusion and accessibility | Could unusual composition reduce access? | The signature fails when it harms legibility, and the judge gate still owns accessibility. | Artifact-specific accessibility checks remain required. |
+| Trust, safety and privacy | Could AI contribution be hidden? | The existing AI contribution record and disclosure rules remain mandatory. | Official 2026 disclosure wording is unknown. |
+| Failure and recovery | What happens when a render fails? | `Revise` permits only the named correction; `Reject` stops the visual direction. | Teams must resist polishing a rejected draft. |
+| Feasibility and demo truth | Does the gate add heavy production overhead? | Three low-fidelity structural thumbnails and one screenshot subtraction pass are bounded. | Event-day speed should be observed. |
+| Incentives and second-order effects | Could people game the checklist with arbitrary novelty? | The content-native surprise must improve understanding and fail if it is decorative. | Qualitative review remains necessary. |
+| Simplicity and retellability | Is the gate understandable under time pressure? | It reduces to anchors, divergence, one signature, two decisive tests and subtraction. | A shorter event-day card may be useful after real use. |
+| Authorship and distinctiveness | Can polished median work still pass? | Logo-swap and team-voice tests directly reject interchangeable visuals and model-like copy. | Only inspection of the final artifact can confirm the result. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: add the skill, make both gates mandatory, update templates and apply it to future Figma, UI and deck work.
+- Blocking conditions: do not turn warning signals into a universal style ban; require a content-native surprise as well as subtraction; inspect the real render; keep human selection or redirection visible.
+- Weakest judging angle: problem identification, because this gate protects the expression of evidence but cannot replace the evidence itself.
+- Main trade-off: more deliberate authorship and distinctiveness at the cost of a short preflight and one required revision pass.
+- Next evidence that could change the verdict: the next two real artifact cycles, including whether the gate catches generic output without flattening the design.
+- Recommendation: activate the gate immediately and treat an attractive first generation as an exploratory draft, never the source of truth.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title
