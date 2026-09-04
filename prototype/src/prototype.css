@@ -2025,7 +2025,7 @@
 }
 
 .qr-dialog {
-  position: absolute;
+  position: fixed;
   z-index: 40;
   inset: 0;
   display: flex;
@@ -2040,7 +2040,7 @@
 
 .qr-dialog > svg {
   display: block;
-  width: min(264px, 76vw);
+  width: min(350px, 92vw);
   height: auto;
   border: 1px solid color-mix(in srgb, var(--navy) 14%, transparent);
 }

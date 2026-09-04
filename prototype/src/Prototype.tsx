@@ -12,7 +12,9 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
 import { QRCodeSVG } from "qrcode.react";
+import { createPortal } from "react-dom";
 import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
 
 type Phase =
@@ -79,6 +81,7 @@ type KeepsakeSnapshot = {
 const CECILIA = "/assets/illustrations/cecilia/";
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
 const LINK_MAX = 12_000;
+const QR_MAX = 620;
 const carrierIds: CarrierId[] = ["bottle", "firefly", "plane"];
 const paperIds: PaperId[] = ["plain", "ruled", "note"];
 const envelopeIds: EnvelopeId[] = ["mail", "night", "rust"];
@@ -87,17 +90,103 @@ const stickerIds: StickerId[] = ["burst", "ribbon", "stamp"];
 const inkColors: InkColor[] = ["navy", "forest", "rust", "plum", "ochre"];
 const layerIds: LayerId[] = ["words", "photo", "voice", "song", "burst", "ribbon", "stamp"];
 
-function base64UrlEncode(value: string) {
-  const bytes = new TextEncoder().encode(value);
-  let binary = "";
-  bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
 function base64UrlDecode(value: string) {
   const base64 = value.replace(/-/g, "+").replace(/_/g, "/") + "=".repeat((4 - value.length % 4) % 4);
   const binary = atob(base64);
   return new TextDecoder().decode(Uint8Array.from(binary, (char) => char.charCodeAt(0)));
+}
+
+function packStrokes(strokes: DoodleStroke[]) {
+  return strokes.map((stroke) => {
+    let previousX = 0;
+    let previousY = 0;
+    return stroke.points.flatMap((point, index) => {
+      const x = Math.round(point.x * 10);
+      const y = Math.round(point.y * 10);
+      const pair = index === 0 ? [x, y] : [x - previousX, y - previousY];
+      previousX = x;
+      previousY = y;
+      return pair;
+    });
+  });
+}
+
+function unpackStrokes(value: unknown): unknown {
+  if (!Array.isArray(value)) return null;
+  return value.map((stroke, strokeIndex) => {
+    if (!Array.isArray(stroke) || stroke.length % 2 !== 0 || !stroke.every(Number.isInteger)) return null;
+    let x = 0;
+    let y = 0;
+    const points: DoodlePoint[] = [];
+    for (let index = 0; index < stroke.length; index += 2) {
+      x = index === 0 ? Number(stroke[index]) : x + Number(stroke[index]);
+      y = index === 0 ? Number(stroke[index + 1]) : y + Number(stroke[index + 1]);
+      points.push({ x: x / 10, y: y / 10 });
+    }
+    return { id: `transport-${strokeIndex}`, points };
+  });
+}
+
+function unpackCrossedOut(value: unknown): unknown {
+  if (!Array.isArray(value)) return null;
+  return value.map((range) => Array.isArray(range) && range.length === 2 ? { start: range[0], end: range[1] } : null);
+}
+
+function encodeSnapshot(snapshot: KeepsakeSnapshot) {
+  const compact = [
+    snapshot.v,
+    snapshot.id,
+    snapshot.sender,
+    snapshot.recipient,
+    snapshot.words,
+    snapshot.crossedOut.map((range) => [range.start, range.end]),
+    snapshot.paper,
+    snapshot.carrier,
+    snapshot.envelope,
+    packStrokes(snapshot.seal),
+    snapshot.pieces,
+    snapshot.capture,
+    snapshot.voice,
+    snapshot.song,
+    packStrokes(snapshot.doodles),
+    snapshot.stickers,
+    snapshot.inkColor,
+    layerIds.map((layer) => {
+      const layout = snapshot.layouts[layer];
+      return [layout.x, layout.y, layout.rotation, layout.scale];
+    }),
+  ];
+  return compressToEncodedURIComponent(JSON.stringify(compact));
+}
+
+function expandCompactSnapshot(value: unknown): unknown {
+  if (!Array.isArray(value) || value.length !== 18 || !Array.isArray(value[17]) || value[17].length !== layerIds.length) return null;
+  const layouts = Object.fromEntries(layerIds.map((layer, index) => {
+    const layout = value[17][index];
+    return [layer, Array.isArray(layout) && layout.length === 4
+      ? { x: layout[0], y: layout[1], rotation: layout[2], scale: layout[3] }
+      : null];
+  }));
+  return {
+    v: value[0],
+    id: value[1],
+    sender: value[2],
+    recipient: value[3],
+    words: value[4],
+    crossedOut: unpackCrossedOut(value[5]),
+    paper: value[6],
+    carrier: value[7],
+    envelope: value[8],
+    seal: unpackStrokes(value[9]),
+    pieces: value[10],
+    capture: value[11],
+    voice: value[12],
+    song: value[13],
+    doodles: unpackStrokes(value[14]),
+    stickers: value[15],
+    inkColor: value[16],
+    layouts,
+  };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -172,11 +261,18 @@ function containsBlobMedia(snapshot: Pick<KeepsakeSnapshot, "capture" | "voice" 
 }
 
 function snapshotFromHash(): KeepsakeSnapshot | null {
-  if (typeof window === "undefined" || !window.location.hash.startsWith("#v1.")) return null;
+  if (typeof window === "undefined") return null;
+  const isCompact = window.location.hash.startsWith("#v3.");
+  const isCompressed = isCompact || window.location.hash.startsWith("#v2.");
+  const isLegacy = window.location.hash.startsWith("#v1.");
+  if (!isCompressed && !isLegacy) return null;
   const encoded = window.location.hash.slice(4);
   if (!encoded || encoded.length > LINK_MAX) return null;
   try {
-    const parsed: unknown = JSON.parse(base64UrlDecode(encoded));
+    const decoded = isCompressed ? decompressFromEncodedURIComponent(encoded) : base64UrlDecode(encoded);
+    if (!decoded || decoded.length > 250_000) return null;
+    const decodedValue: unknown = JSON.parse(decoded);
+    const parsed: unknown = isCompact ? expandCompactSnapshot(decodedValue) : decodedValue;
     return isSafeSnapshot(parsed) && !containsBlobMedia(parsed) ? parsed : null;
   } catch { return null; }
 }
@@ -264,7 +360,7 @@ function phaseFromQuery(): Phase | null {
 }
 
 export default function Prototype() {
-  const hashPresent = typeof window !== "undefined" && window.location.hash.startsWith("#v1.");
+  const hashPresent = typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
   const linkedSnapshot = snapshotFromHash() ?? (!hashPresent && typeof window !== "undefined" && window.location.pathname === "/demo" ? publicDemoSnapshot : null);
   // A fragment link always wins over the capture route and is immutable for the receiving demo.
   const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : phaseFromQuery() ?? "home"));
@@ -443,7 +539,7 @@ export default function Prototype() {
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} carrier={carrier} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = base64UrlEncode(JSON.stringify(snapshot)); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v1.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
               <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onReceiver={() => go("arrival")} onAgain={resetDraft} onLeave={() => go("home")} />
@@ -1376,18 +1472,20 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
     document.addEventListener("keydown", handleKeys);
     return () => { document.removeEventListener("keydown", handleKeys); previous?.focus(); };
   }, [qrOpen]);
-  const encoded = containsBlobMedia(snapshot) ? "" : base64UrlEncode(JSON.stringify(snapshot));
-  const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v1.${encoded}` : "";
-  const qrUrl = `${typeof window === "undefined" ? "" : window.location.origin}/demo`;
+  const encoded = containsBlobMedia(snapshot) ? "" : encodeSnapshot(snapshot);
+  const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v3.${encoded}` : "";
+  const fallbackQrUrl = `${typeof window === "undefined" ? "" : window.location.origin}/demo`;
+  const qrIsExact = Boolean(url) && url.length <= QR_MAX;
+  const qrUrl = qrIsExact ? url : fallbackQrUrl;
   return (
     <Page className="handoff-page">
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1><p>{failed ? "Nothing left this screen. Your object is still here." : "Send the link however you usually talk."}</p></header>
       <div className="handoff-transfer" aria-label="A little courier carries your sealed object away">{!pickedUp && <CarrierIcon id={carrier.id} size="sealed" />}<AnimatePresence>{inFlight && <motion.div className="handoff-courier-motion" initial={{ opacity: 0, transform: "translate(-50%, 48px) scale(.86)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(-50%, 48px) scale(.86)", "translate(-20%, 16px) scale(1)", "translate(34%, -52px) scale(.86)", "translate(72%, -116px) scale(.62)"] }} transition={{ duration: 3.6, times: [0, .3, .72, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="pickup" /></motion.div>}</AnimatePresence></div>
-      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label="Open scannable generic receiver demo QR"><QRCodeSVG value={qrUrl} size={88} level="M" marginSize={1} bgColor="#ffffff" fgColor="#08224b" title="Generic receiver demo QR" /><span>demo QR</span></button>}</div>
+      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label={qrIsExact ? "Open receiver QR for this keepsake" : "Open scannable generic receiver demo QR"}><QRCodeSVG value={qrUrl} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#08224b" title={qrIsExact ? "Receiver QR for this keepsake" : "Generic receiver demo QR"} /><span>{qrIsExact ? "scan it" : "demo QR"}</span></button>}</div>
       {copied ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
       <p className="system-note">This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected.</p>
-      <AnimatePresence>{qrOpen && <motion.div className="qr-dialog" role="dialog" aria-modal="true" aria-label="Generic receiver demo QR" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={qrUrl} size={264} level="M" marginSize={2} bgColor="#ffffff" fgColor="#08224b" title="Scan to open the generic receiver demo" /><p>scan to open a generic receiver demo.</p><small>The copied link above keeps this exact object. The QR uses a public sample so it stays scannable.</small></motion.div>}</AnimatePresence>
+      {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && <motion.div className="qr-dialog" role="dialog" aria-modal="true" aria-label={qrIsExact ? "Receiver QR for this keepsake" : "Generic receiver demo QR"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={qrUrl} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#08224b" title={qrIsExact ? "Scan to open this keepsake" : "Scan to open the generic receiver demo"} /><p>{qrIsExact ? `scan to give this to ${recipient}.` : "scan to open a generic receiver demo."}</p><small>{qrIsExact ? "This code opens the same sealed object as the copied private link." : "This object is too detailed for a reliable QR. The copied link above still keeps it exact."}</small></motion.div>}</AnimatePresence>, document.body)}
     </Page>
   );
 }
