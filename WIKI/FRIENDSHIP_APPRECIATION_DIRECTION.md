@@ -3,6 +3,8 @@
 
 > **Status:** The rule and problem direction are chosen for further work. The audience, mechanism, medium and final solution are not selected. Answers 1–29 are team hypotheses and anecdotes, not external validation.
 
+The current reversible build condition is defined in [FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md). That prototype is a test stimulus, not a final product decision.
+
 ## Chosen unwritten rule
 
 **On an ordinary day, friends are not expected to make a direct, deliberate expression of appreciation.** Without a birthday, farewell, crisis or other accepted occasion, it can feel disproportionately intense, romantic, farewell-like or alarming. A meaningful gesture may also make the receiver feel they owe an equally meaningful reply or return gesture.
@@ -50,4 +52,4 @@ The working brief posture to test is primarily to **redesign** the rule by makin
 - Run competitor, precedent, toolchain-plumbing and generic feasibility work in parallel without establishing product structure or visual direction.
 - Prepare the evidence library, Q&A appendix and unstyled deck skeleton while the final story and visuals remain open.
 
-Do not begin polished Figma screens, a production app, permanent architecture or final pitch claims until the person, rule, cause, medium and smallest testable mechanism pass the idea and judging gates.
+Do not begin polished Figma screens, a production app, permanent architecture or final pitch claims until the person, rule, cause, medium and smallest testable mechanism pass the idea and judging gates. A disposable HTML prototype may run ahead of that gate when it is explicitly labelled and structured to answer those unknowns.

@@ -22,7 +22,7 @@ POLICIES = (
     (
         "judging.review_required",
         "true",
-        "Complete every judging and required challenge lens before a material decision advances.",
+        "Complete every judging and required challenge lens before a product direction or pitch claim advances; a labelled reversible prototype may be built first as test evidence.",
     ),
     (
         "judging.verdict_controls_execution",
@@ -42,7 +42,7 @@ POLICIES = (
     (
         "design.authenticity_review_required",
         "true",
-        "Material visual work must pass authenticity preflight before build and post-build review against the render.",
+        "Final visual direction must pass authenticity review against the render; a transcript-grounded reversible prototype may receive that formal audit after its first build.",
     ),
     (
         "design.authenticity_skill",

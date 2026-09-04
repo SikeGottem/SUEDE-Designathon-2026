@@ -27,6 +27,8 @@ Use `.agents/skills/suede-judge-review/SKILL.md` before proposing, approving or 
 
 This is a stop gate. `Proceed` permits the next stage. `Proceed with conditions` makes the conditions blocking. `Test first` permits only the named test. `Reject` stops the work. Do not begin implementation while a required review is missing.
 
+**Explicit exploratory-build exception:** when Ethan directly asks to build a disposable prototype before the formal review, a completed evidence dossier and canonical specification may serve as the temporary build contract. The artifact must remain labelled as an unvalidated test stimulus, keep unresolved choices reversible, and cannot advance into final direction, polished Figma, product claims or the pitch until the deferred reviews are completed.
+
 The review must cover:
 
 1. Brief fit
@@ -39,7 +41,7 @@ The review must cover:
 
 It must also cover the required challenge lenses in `WIKI/JUDGING.md`, including assumption inversion, behavioural context, medium necessity, non-digital alternatives, inclusion, trust, failure, feasibility, second-order effects, retellability and human authorship.
 
-Idea selection requires real divergence before comparison. Product and UI work requires both a preflight review and a post-build review of the actual artifact. AI-assisted work must follow the human-led AI doctrine: humans own framing, selection, taste, material edits, testing, approval and disclosure; AI may accelerate exploration and execution but cannot serve as evidence or final judgment.
+Idea selection requires real divergence before comparison. Product and UI work requires both a preflight review and a post-build review of the actual artifact. Under the explicit exploratory-build exception above, transcript-grounded source anchors and the canonical specification may constrain the first implementation before formal scoring; the actual render still requires human-led review before it becomes a selected visual direction. AI-assisted work must follow the human-led AI doctrine: humans own framing, selection, taste, material edits, testing, approval and disclosure; AI may accelerate exploration and execution but cannot serve as evidence or final judgment.
 
 Do not invent numeric weights or scores. Finish with one verdict: `Proceed`, `Proceed with conditions`, `Test first` or `Reject`. State the weakest judging angle and the next piece of evidence that would most change the decision.
 
