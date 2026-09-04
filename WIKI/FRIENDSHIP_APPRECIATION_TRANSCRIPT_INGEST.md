@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 30 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 31 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -31,6 +31,7 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
    - borrow the supplied `grug` reference's visual grammar, not its identity.
    - [65e72…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md) records the team reviewing the first coded flow: a paper-sheet creator, a compact scrollable material rail, hand-drawn asset work, cabinet retention, and presentation constraints.
    - [4bf652…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created later on the same channel, is the highest-weighted direct critique of that render: simplify the home and carrier screens, remove ornamental paths/helper copy, rebuild the mobile creator, and preserve the cabinet. It is internal design feedback, not validation.
+   - [d4b7ec…](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), created after both reviews, identifies the still-unresolved creation-board interaction model. At 20:03–22:18 the team rejects the undesigned creator, prioritises ease over graphics, and selects a sparse Instagram-Story-like blank canvas with movable and rotatable text. Ethan's following direct clarification adds full-screen entry and immediate filming. This is now the highest-weighted creator direction.
 2. **Late all-team product and art-direction discussions**
    - [57f27…](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e…](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), and [204b7d…](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md).
 3. **The problem and medium being sharpened**
@@ -54,6 +55,7 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
 | Late visual work | Open empty space, inviting colour, shared hand-drawn language, real team-made assets | The handmade system survived. Current direct instruction narrows v0 to white first, then deep navy. |
 | Current correction | The first implementation felt like a generic form and missed the rich experience | The next artifact must start from this ingest and the conceptual spec, not inherit that layout. |
 | Latest render critique | The first rich coded pass still had too much ornamental/AI-looking surface and a crowded mobile creator | Keep the core flow, carrier test, opening and cabinet; simplify the home/carrier visual fields, give the creator one mobile paper sheet with progressive disclosure, and use team-drawn assets before treating a visual choice as final. |
+| Newest creator correction | Even the paper-sheet revision lacked a resolved mobile interaction model | Make creation full-screen and capture-first; use Story-like direct manipulation, movable/rotatable text and sparse contextual tools without copying Instagram's brand or social mechanics. |
 
 ## Reconstructed product vision
 
@@ -87,19 +89,21 @@ The transcript repeatedly treats these as a palette of expressive materials. It 
 
 ### The creator experience
 
-Creation should feel like opening one quiet, mobile paper sheet or notebook, not completing a form or entering a busy scrapbook editor.
+Creation should take over the phone like a Story composer while remaining a private, finite paper object rather than a social post. The newest review makes ease and interaction—not added graphics—the unresolved design problem.
 
 - The sender begins voluntarily with one person in mind.
-- Recipient and reason are lightweight anchors inside the workspace, not separate administrative screens.
+- The camera is immediately available for a photo or short video, with existing media and blank paper as equal paths.
+- A successful capture becomes the full-screen creation surface without an upload/settings interstitial.
+- The recipient is a lightweight anchor inside the workspace, not a separate administrative screen.
 - Writing is central and remains human-authored.
-- Writing and the essential recipient anchor remain the first legible layer of one paper sheet.
-- Memory materials sit behind a compact, scrollable rail or drawer; they are revealed when wanted rather than all competing in the first viewport.
-- Chosen materials can be placed around the writing and arranged into one composition.
+- Writing and selected memory materials land directly on the full-screen paper/captured moment.
+- Memory tools remain sparse and contextual rather than forming a Canva-like control wall.
+- Chosen text and materials can be selected, moved, rotated, edited, overlapped, or removed directly on the canvas.
 - Optional reflective cues such as “favourite memory,” “what you taught me,” or “one word” help when requested; they do not become mandatory questions.
 - Creative effort should be visible through selection, arrangement, drawing, recording, and personal marks—not artificial waiting, needless friction, or an overloaded canvas.
 - The sender previews the finished experience as a whole, then gives it a boundary by finishing or sealing it.
 
-The strongest evidence for this richer authoring model appears in the late discussion of a scrapbook-like, multimedia artifact ([57f27… lines 28–76](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md)) and in the explicit argument that layout and creative decisions are themselves a form of communication ([532244… line 20](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md)).
+The strongest evidence for this richer authoring model appears in the late discussion of a scrapbook-like, multimedia artifact ([57f27… lines 28–76](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md)), the argument that layout and creative decisions are themselves communication ([532244… line 20](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md)), and the newest explicit selection of a Story-like blank canvas with movable/rotatable text ([d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md)).
 
 ### The handoff
 
@@ -254,7 +258,7 @@ For the pitch, block the slide layout and story before asking AI to refine a vis
 | No AI-authored intimacy / finite receiving contract | [356211… line 20](TRANSCRIPTS/2026-09-04-356211db-c212-5765-bcbb-205d615e351d.md), [532244… lines 20–34](TRANSCRIPTS/2026-09-04-5322449d-86be-5681-abb6-09cbdf584c15.md) | Strong boundary |
 | Hand-drawn/open art direction | [57f27… lines 244–247](TRANSCRIPTS/2026-09-04-57f27d6d-511d-569c-ba4c-5b84cf5be137.md), [bc84e… lines 359–524](TRANSCRIPTS/2026-09-04-bc84e57a-ba81-599a-99b4-01fd57bf0db4.md), [204b7d… lines 35–94](TRANSCRIPTS/2026-09-04-204b7d68-eafa-5040-ae13-5e6f1e561644.md) | Strong preference, narrowed by latest direct instruction |
 | Product-first pitch and working QR ending | [8d391… lines 33–54](TRANSCRIPTS/2026-09-03-8d39172c-4cee-5766-97e7-90708888daf3.md), [Recording 19 lines 133–196](TRANSCRIPTS/2026-09-04-new-recording-19.md), [Recording 14 lines 21–76](TRANSCRIPTS/2026-09-04-new-recording-14.md) | Team pitch direction; organiser disclosure rules still apply |
-| Current render correction and mobile paper-sheet creator | [65e72… 32:28–34:16](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), [4bf652… 01:26–03:17](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md) | Latest team critique; internal design direction only |
+| Current render correction and full-screen Story-like creator | [65e72… 32:28–34:16](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), [4bf652… 01:26–03:17](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), [d4b7ec… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md) | Newest team creator direction; internal design direction only |
 
 ## Honest boundary
 
@@ -279,3 +283,15 @@ These are not settled product choices. The prior transcript also contains menus 
 - **Craft and pitch:** replace important generated stand-ins with team-drawn priority assets; match illustration line weight to the Gaegu system ([65e72… 15:50–16:28; 26:40–27:39]). Build deck structure/layout first, then use AI as a bounded refinement tool; make every presentation-critical point understandable without audio ([65e72… 25:50–26:19; 30:21–30:58]).
 
 These recordings show the team correcting its own prototype. They do not establish that any screen, gesture, archive, carrier, or no-reply contract works for intended recipients.
+
+## 4 September newest creator addendum — source 31
+
+**Source:** [d4b7ec93…](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), 23-minute team capture created `2026-09-04T15:51:31.829Z`. Product-relevant discussion occurs at 17:04, 18:48, and 20:03–22:18; unrelated ambient conversation is not treated as product evidence.
+
+- The team says the prototype still does not make motion visible enough and that transcript details were missed (17:04; 18:48).
+- The remaining hard problem is the creation board's interaction model, not another graphics pass (20:03–21:24).
+- The prior creation page is explicitly identified as the weakest page because it had no resolved interaction design (21:01).
+- The selected direction is a sparse blank canvas that works like Instagram Stories: text can move and rotate, the page should not show too much, and mobile ease is the priority (21:42–22:18).
+- Ethan's following direct clarification makes the creator a full-screen experience with immediate filming. That instruction governs the current exploratory prototype.
+
+“Story-like” describes capture speed, full-screen focus, direct manipulation, and sparse contextual tools. It does not add Instagram branding, posting, expiry, views, reactions, replies, followers, or feed mechanics. This remains internal design direction, not proof that intended senders can create comfortably or that recipients value the result.

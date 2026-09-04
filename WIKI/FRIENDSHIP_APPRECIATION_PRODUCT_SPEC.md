@@ -91,7 +91,7 @@ The artifact has a beginning, an opening, a body, and an ending. There are no me
 
 ### 5.3 Creative, not bureaucratic
 
-The creator should feel like a worktable or notebook. Recipient, reason, writing, and materials live together in one evolving composition instead of becoming a sequence of form pages.
+The creator should feel like a full-screen camera and blank notebook combined: as immediate as making a Story, but still one finite authored object. Recipient, writing, captured media, and selected materials live together in one evolving composition instead of becoming a sequence of form pages.
 
 ### 5.4 Deliberate, not artificially difficult
 
@@ -203,7 +203,7 @@ The conceptual product has seven page families. Modes inside the creator remain 
 
 ```text
 1. Studio
-   └─ intention → compose → arrange
+   └─ capture or blank paper → compose → arrange
 2. Preview and seal
 3. Handoff
 
@@ -215,7 +215,7 @@ The conceptual product has seven page families. Modes inside the creator remain 
 
 ## 10. Page 1 — Studio
 
-**Status:** Current direction, corrected by the later 4 September internal render review; details remain proposed for review.
+**Status:** Current exploratory direction, corrected by the newest 4 September interaction review and Ethan's direct 5 September clarification; details remain proposed for human testing.
 
 ### Purpose
 
@@ -223,30 +223,29 @@ Turn a genuine thought into a composed object without making the person feel lik
 
 ### First impression
 
-A mostly white screen with dark handwritten type, one small human-drawn mark, and one plain invitation: make something for someone. It resolves as one mobile paper sheet, not a busy composition of controls.
+Creation takes over the whole phone. It feels as immediate as making an Instagram Story, while keeping this product's own white/navy, handwritten, private-object language. The paper is the full-screen creation field rather than a bordered card inside another page, and ordinary app chrome recedes.
 
-It should feel like opening a blank notebook or clearing a desk. There is no feed, dashboard, archive, friend grid, template market, or product tour competing for attention.
+The initial surface may be a live camera or blank white paper. Photo and video capture are immediately available; the maker can also choose an existing moment or begin without media. There is no feed, dashboard, archive, friend grid, template market, or product tour competing for attention.
 
 ### How it begins
 
-The maker names the person and the thought that brought them here in one light-touch line:
-
-```text
-for [name]
-because [moment / quality / thought]
-```
-
-These anchors sit at the edge of the workspace. They do not become full-screen steps or a progress bar.
+- Entering the Studio exposes capture immediately rather than asking the maker to complete a form first.
+- One tap takes a photograph; switching to video makes the same central control start and stop filming.
+- Permission failure never traps the maker: retry, choose a device photo/video, use the labelled sample, and blank paper reach the same next state.
+- Successful capture moves directly into composition without an upload-confirmation or settings screen.
+- The recipient remains a light-touch editable anchor at the top and does not become a separate full-screen step or progress bar.
 
 ### How making works conceptually
 
-- A generous written area is already present and remains the dominant first layer.
-- A compact, scrollable hand-drawn material rail or drawer offers words, photo, voice, song, video, and draw only when the maker asks to add something.
-- Selecting a material places a new piece directly on the page.
-- Pieces can be arranged, resized within reason, captioned, reordered, or removed.
-- A piece may overlap another when the composition still reads clearly, but the first mobile view is not pre-populated with competing fragments.
-- The maker can ask for a reflective cue, then dismiss it.
-- Autosaving or implementation mechanics remain outside the conceptual UI unless recovery is needed.
+- Captured photo/video becomes the page itself; blank paper stays a first-class alternative.
+- A compact, hand-drawn tool rail offers words, camera, voice, song and drawing at thumb reach without becoming a Canva toolbar.
+- Selecting a material lands it directly on the canvas with visible state feedback.
+- Text and material pieces are selected in place, dragged directly, rotated from one small contextual handle, edited or removed. Controls disappear when the piece is not selected.
+- Text editing temporarily takes focus, with an optional reflective cue such as “favourite memory,” “what they taught you,” “one word,” or “one small thing you notice.” The cue never writes the appreciation for the maker.
+- A brief first-use gesture cue may explain move/rotate, then disappears; no permanent hint competes with the work.
+- A piece may overlap another when the composition still reads clearly, but the first canvas is not pre-populated with competing fragments.
+- Camera re-entry, text editing, placement and rotation preserve the same draft when the maker returns from Preview.
+- Autosaving or backend recovery remain outside the conceptual UI unless later testing shows they are necessary.
 
 ### What should be felt
 
@@ -254,7 +253,7 @@ Freedom with enough constraint to stay intimate. The maker should see their own 
 
 ### Transition
 
-When the composition feels finished, a single “see it as they will” action moves to the preview. There is no percentage complete and no system judgment of whether the message is emotional enough.
+When the composition feels finished, one `done` action moves to the preview. There is no percentage complete, upload wizard, or system judgment of whether the message is emotional enough.
 
 ### Must never appear
 
@@ -262,6 +261,7 @@ When the composition feels finished, a single “see it as they will” action m
 - AI “write it for me” or tone buttons;
 - occasion categories as the main starting point;
 - an infinite Canva-style feature wall;
+- copied Instagram branding, feed/story expiry, views, reactions, replies, or social posting;
 - visible full-time media controls, prompt chips, drag hints, and sample fragments competing with the writing area;
 - equal rounded cards for every material;
 - public templates ranked by popularity;
@@ -698,9 +698,9 @@ It does not prove demand, prevalence, emotional benefit, or long-term use.
 Ethan approved all fourteen conditions on 5 September 2026. They now govern the next reversible prototype and remain editable when the team learns something new.
 
 1. **Core form** — one authored digital care package / scrapbook object.
-2. **Creator structure** — one living white studio, not a field-by-field wizard.
-3. **First sample materials** — words + photo + voice + song + one personal mark; simpler objects remain valid.
-4. **Recipient anchor** — name and reason live inside the studio, not on separate pages.
+2. **Creator structure** — one full-screen capture/blank-paper Studio, not a field-by-field wizard or Canva workspace.
+3. **First sample materials** — captured photo/video when used + words + optional voice + song + one personal mark; blank-paper and simpler objects remain valid.
+4. **Recipient anchor** — the name stays light-touch inside the Studio, not on a separate page.
 5. **Object treatment** — one folded/sealed object for v0; no package chooser.
 6. **Colour threshold** — white through arrival, deep navy after opening.
 7. **Opening** — short tactile reveal with an immediate reduced-motion path.
@@ -724,7 +724,7 @@ The former approval of one folded/sealed object with no package picker is **supe
 - **Bottle path:** test a bottle with a direct cork swipe/drag opening. If that gesture is unavailable, unclear, or reduced motion is requested, provide a simple explicit open control that reaches the same content immediately.
 - **Ladybug path:** a ladybug may make one dotted, one-time courier/notification journey. It is not a persistent mascot, companion, navigation device, collection mechanic, or brand identity.
 - **Navigation and cabinet:** no bottom navigation. The optional private cabinet presents kept items as distinct physical objects, not generic rows, cards, or a feed.
-- **Creator and visual state:** creation remains a rich Figma/scrapbook-like arranging surface, corrected to one mobile paper sheet with a dominant writing area and compact scrollable material rail/progressive disclosure. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
+- **Creator and visual state:** Section 10 and the newest source supersede the bordered paper-sheet/rail treatment only: creation now fills the phone, exposes immediate photo/video or blank-paper entry, and uses sparse Story-like direct manipulation for movable/rotatable pieces. It remains a rich authored scrapbook object, not a Canva editor or social Story. Before opening, use white with navy ink; after opening, use full navy with warm off-white. Use Gaegu as the working typeface. Soft yellow and any other accent palette remain open visual tests, not approved brand choices.
 - **Home and preview correction:** the home keeps the core invitation/action but removes the decorative loop and bottom-centres the minimal composition. Preview remains the place where the maker sees something ready to give, but its hero artwork is explicitly open pending the supplied reference/screenshot; do not imply a final selected illustration.
 
 The test must preserve sender-authored content, no sender-visible receiver state, no reply pressure, and the receiver's direct leave/close/remove routes.

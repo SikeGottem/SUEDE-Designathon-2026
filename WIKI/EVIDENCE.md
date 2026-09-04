@@ -69,7 +69,7 @@ The published timeline is more specific: background research began around 12:00,
 
 ## Complete transcript ingest: product intent versus decision status
 
-- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 30 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
+- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 31 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
 - Strong repeated observation: the later team discussion describes a custom, scrapbook-like digital artifact containing the sender's own words and selected photographs, voice, music, video, drawing, or personal marks. Creative arrangement is treated as part of the expression, not decoration.
 - Strong repeated observation: the desired receiver experience includes a deliberate opening, attention away from chat, ownership, and possible year-later replay inside a private cabinet or memory surface.
 - Boundary: the transcript set is evidence of team intent, not evidence of demand, impact, prevalence, safety, or a universal friendship norm.
@@ -92,6 +92,14 @@ The published timeline is more specific: background research began around 12:00,
 - Craft requirement: priority recurring objects need team-drawn assets whose line weight feels coherent with Gaegu rather than AI/generated stand-ins ([65e72… 15:50–16:28; 26:40–27:39]). A proposed 3D rotating tree archive was explicitly rejected as out of scope for the event ([65e72… 07:48–10:08]).
 - Presentation workflow: block the story/layout first, then use AI to refine the visual treatment; a live pitch must remain understandable without sound or music ([65e72… 25:50–26:19; 30:21–30:58]).
 - Boundary: these are internal team review notes. They do not demonstrate usability, desirability, participant preference, perceived authenticity, accessibility, or the effect of the no-reply contract.
+
+## Newest creator interaction correction — internal direction, not usability evidence
+
+- Source: [d4b7ec93…](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), created `2026-09-04T15:51:31.829Z`, especially 20:03–22:18; Ethan's direct 5 September clarification adds full-screen entry and immediate filming.
+- Observation: the team identifies the creation board—not graphics—as the unresolved UX problem, rejects the prior undesigned page, and chooses a sparse Instagram-Story-like blank canvas with movable and rotatable text.
+- Current exploratory condition: enter a full-screen capture-first Studio; make photo/video and blank paper immediately available; move from capture directly to composition; expose words, voice, song, drawing and camera through sparse contextual controls; let selected elements move, rotate, edit and remove in place; preserve the draft through preview/edit.
+- Boundary: “Story-like” is an interaction analogy, not an Instagram visual/social clone and not evidence that the flow is easy for intended users. Real camera permissions, touch ergonomics, discoverability, accessibility, and the meaning of visible creation effort still need human testing.
+- What this changes for us: the bordered form-like paper sheet and below-page material rail are superseded for the current prototype. The full-screen composer is the next test stimulus, not a final product decision.
 
 ## Initial ideation reality checks: unwritten rules
 

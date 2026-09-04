@@ -1,8 +1,10 @@
 // Implements the transcript-led maker, carrier, handoff, and receiver experience inside the protected mobile runtime.
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
+  type ChangeEvent as ReactChangeEvent,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
@@ -28,6 +30,19 @@ type Phase =
 type CarrierId = "bottle" | "ladybug" | "plane" | "flowers";
 type PieceId = "photo" | "voice" | "song" | "drawing";
 type Playback = "idle" | "playing" | "played";
+type StudioMode = "capture" | "compose";
+type CaptureMode = "photo" | "video";
+type CaptureAsset = {
+  kind: CaptureMode | "sample";
+  url?: string;
+};
+type LayerId = "words" | Exclude<PieceId, "photo">;
+type LayerLayout = {
+  x: number;
+  y: number;
+  rotation: number;
+  scale: number;
+};
 
 type Carrier = {
   id: CarrierId;
@@ -76,11 +91,17 @@ const pieceLabels: Record<PieceId, string> = {
   drawing: "draw",
 };
 
+const defaultLayerLayouts: Record<LayerId, LayerLayout> = {
+  words: { x: 0, y: -42, rotation: -1.5, scale: 1 },
+  voice: { x: -42, y: 160, rotation: 2, scale: 1 },
+  song: { x: 42, y: 168, rotation: -2.5, scale: 1 },
+  drawing: { x: 92, y: -164, rotation: 8, scale: 0.92 },
+};
+
 export default function Prototype() {
   const [phase, setPhase] = useState<Phase>("home");
   const [carrierId, setCarrierId] = useState<CarrierId>("bottle");
   const [recipient, setRecipient] = useState("Maya");
-  const [reason, setReason] = useState("you made moving feel less scary");
   const [words, setWords] = useState(
     "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.",
   );
@@ -92,9 +113,20 @@ export default function Prototype() {
   const [removeOpen, setRemoveOpen] = useState(false);
   const [voiceState, setVoiceState] = useState<Playback>("idle");
   const [songState, setSongState] = useState<Playback>("idle");
+  const [studioMode, setStudioMode] = useState<StudioMode>("capture");
+  const [captureAsset, setCaptureAsset] = useState<CaptureAsset | null>(null);
+  const [layerLayouts, setLayerLayouts] = useState<Record<LayerId, LayerLayout>>(defaultLayerLayouts);
+  const captureAssetRef = useRef<CaptureAsset | null>(null);
   const keyboard = useKeyboard();
   const reduceMotion = useReducedMotion();
   const carrier = carriers.find((item) => item.id === carrierId) ?? carriers[0];
+
+  const replaceCapture = useCallback((next: CaptureAsset | null) => {
+    const previous = captureAssetRef.current;
+    if (previous?.url?.startsWith("blob:")) URL.revokeObjectURL(previous.url);
+    captureAssetRef.current = next;
+    setCaptureAsset(next);
+  }, []);
 
   const go = (next: Phase) => {
     keyboard.hide();
@@ -108,6 +140,18 @@ export default function Prototype() {
     return () => window.clearTimeout(timer);
   }, [phase, reduceMotion]);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(".keepsake-app .mobile-scroll")?.scrollTo(0, 0);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [phase]);
+
+  useEffect(() => () => {
+    const current = captureAssetRef.current;
+    if (current?.url?.startsWith("blob:")) URL.revokeObjectURL(current.url);
+  }, []);
+
   const togglePiece = (piece: PieceId) => {
     setPieces((current) =>
       current.includes(piece)
@@ -118,18 +162,22 @@ export default function Prototype() {
 
   const resetDraft = () => {
     setRecipient("Maya");
-    setReason("you made moving feel less scary");
-    setWords(
-      "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.",
-    );
+    setWords("");
     setCarrierId("bottle");
-    setPieces(["photo"]);
+    setPieces([]);
+    replaceCapture(null);
+    setStudioMode("capture");
+    setLayerLayouts(defaultLayerLayouts);
     setCuesOpen(false);
     setCopied(false);
     setShareFailed(false);
     setVoiceState("idle");
     setSongState("idle");
     go("carrier");
+  };
+
+  const updateLayer = (id: LayerId, next: LayerLayout) => {
+    setLayerLayouts((current) => ({ ...current, [id]: next }));
   };
 
   const cycleCarrier = (direction: -1 | 1) => {
@@ -147,13 +195,12 @@ export default function Prototype() {
     document.getElementById(`carrier-${carriers[next].id}`)?.focus();
   };
 
-  const canPreview = recipient.trim() !== "" && reason.trim() !== "" && words.trim() !== "";
+  const canPreview = recipient.trim() !== "" && Boolean(words.trim() || captureAsset || pieces.length);
   const navyPhase = ["opening", "reveal", "cabinet", "removed"].includes(phase);
 
   return (
     <MotionConfig reducedMotion="user">
       <MobileScroll
-        key={phase}
         className={`app-screen keepsake-app phase-${phase} ${navyPhase ? "phase-navy" : "phase-paper"}`}
       >
         <main className="keepsake-shell" aria-label="Friendship keepsake exploratory prototype">
@@ -165,10 +212,10 @@ export default function Prototype() {
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("home")} onNext={() => go("studio")} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" recipient={recipient} reason={reason} words={words} pieces={pieces} cuesOpen={cuesOpen} canPreview={canPreview} onRecipient={setRecipient} onReason={setReason} onWords={setWords} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onBack={() => go("carrier")} onPreview={() => go("preview")} />
+              <Studio key="studio" mode={studioMode} capture={captureAsset} recipient={recipient} words={words} pieces={pieces} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onRecipient={setRecipient} onWords={setWords} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={() => go("carrier")} onPreview={() => go("preview")} />
             )}
             {phase === "preview" && (
-              <Preview key="preview" recipient={recipient} words={words} pieces={pieces} carrier={carrier} onEdit={() => go("studio")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
+              <Preview key="preview" recipient={recipient} words={words} pieces={pieces} capture={captureAsset} carrier={carrier} onEdit={() => go("studio")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
               <Handoff key="handoff" recipient={recipient} copied={copied} failed={shareFailed} onBack={() => go("preview")} onCopy={() => { setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText("https://warm.local/for/maya-7a3c").catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
@@ -187,7 +234,7 @@ export default function Prototype() {
             )}
             {phase === "opening" && <Opening key="opening" recipient={recipient} />}
             {phase === "reveal" && (
-              <Reveal key="reveal" recipient={recipient} words={words} pieces={pieces} voiceState={voiceState} songState={songState} removeOpen={removeOpen} onVoice={() => setVoiceState((current) => current === "playing" ? "played" : "playing")} onSong={() => setSongState((current) => current === "playing" ? "played" : "playing")} onKeep={() => { setKept(true); go("cabinet"); }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { setKept(false); go("removed"); }} />
+              <Reveal key="reveal" recipient={recipient} words={words} pieces={pieces} capture={captureAsset} voiceState={voiceState} songState={songState} removeOpen={removeOpen} onVoice={() => setVoiceState((current) => current === "playing" ? "played" : "playing")} onSong={() => setSongState((current) => current === "playing" ? "played" : "playing")} onKeep={() => { setKept(true); go("cabinet"); }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { setKept(false); go("removed"); }} />
             )}
             {phase === "cabinet" && (
               <Cabinet key="cabinet" kept={kept} recipient={recipient} carrier={carrier} removeOpen={removeOpen} onOpen={() => go("reveal")} onMake={resetDraft} onClose={() => go("home")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { setKept(false); go("removed"); }} />
@@ -215,6 +262,18 @@ function Mark({ direction = "right" }: { direction?: "left" | "right" | "down" }
       <path d="M2 10.8c10-2.2 18-2.4 32-.6M27 3.5c3.4 2.5 6 4.7 8.5 7.2-3 2.3-5.4 4.1-8.8 6" />
     </svg>
   );
+}
+
+function CloseMark() {
+  return <svg className="control-mark control-mark-close" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 7c7 6 13 12 20 19M25 6C18 13 12 19 6 26" /></svg>;
+}
+
+function CameraMark() {
+  return <svg className="control-mark control-mark-camera" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 13c8-1 22-1 30 0l-1 21c-8 1-20 1-28 0zM14 13l3-6h8l3 6" /><circle cx="20" cy="23" r="7" /></svg>;
+}
+
+function RotateMark() {
+  return <svg className="control-mark control-mark-rotate" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 11c-4-6-14-5-17 2-4 9 6 17 14 12 3-2 4-4 5-7M20 6l5 5 2-7" /></svg>;
 }
 
 function Home({ kept, recipient, onMake, onCabinet, onDemo }: { kept: boolean; recipient: string; onMake: () => void; onCabinet: () => void; onDemo: () => void }) {
@@ -259,50 +318,411 @@ function CarrierPicker({ selected, onSelect, onCycle, onKeyDown, onBack, onNext 
   );
 }
 
-function Studio({ recipient, reason, words, pieces, cuesOpen, canPreview, onRecipient, onReason, onWords, onTogglePiece, onToggleCues, onBack, onPreview }: { recipient: string; reason: string; words: string; pieces: PieceId[]; cuesOpen: boolean; canPreview: boolean; onRecipient: (value: string) => void; onReason: (value: string) => void; onWords: (value: string) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onBack: () => void; onPreview: () => void }) {
-  const workspaceRef = useRef<HTMLDivElement>(null);
+function Studio({ mode, capture, recipient, words, pieces, cuesOpen, layouts, canPreview, onMode, onCapture, onRecipient, onWords, onTogglePiece, onToggleCues, onLayout, onBack, onPreview }: { mode: StudioMode; capture: CaptureAsset | null; recipient: string; words: string; pieces: PieceId[]; cuesOpen: boolean; layouts: Record<LayerId, LayerLayout>; canPreview: boolean; onMode: (mode: StudioMode) => void; onCapture: (capture: CaptureAsset | null) => void; onRecipient: (value: string) => void; onWords: (value: string) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onBack: () => void; onPreview: () => void }) {
+  const keyboard = useKeyboard();
+  const [selectedLayer, setSelectedLayer] = useState<LayerId | null>(words ? "words" : null);
+  const [editingText, setEditingText] = useState(false);
+  const [editingRecipient, setEditingRecipient] = useState(false);
+  const [activePrompt, setActivePrompt] = useState("say the thing you usually leave unsaid");
+  const [showGestureHint, setShowGestureHint] = useState(false);
+
+  useEffect(() => {
+    if (mode !== "compose") return;
+    setShowGestureHint(true);
+    const timer = window.setTimeout(() => setShowGestureHint(false), 2600);
+    return () => window.clearTimeout(timer);
+  }, [mode]);
+
+  const finishText = () => {
+    keyboard.hide();
+    setEditingText(false);
+    if (words.trim()) setSelectedLayer("words");
+  };
+
+  const removeLayer = (id: LayerId) => {
+    if (id === "words") onWords("");
+    else onTogglePiece(id);
+    setSelectedLayer(null);
+  };
+
+  const toggleLayer = (id: Exclude<LayerId, "words">) => {
+    const isPresent = pieces.includes(id);
+    onTogglePiece(id);
+    setSelectedLayer(isPresent ? null : id);
+  };
+
   return (
-    <Page className="studio-page">
-      <TopLine onBack={onBack} label="change the carrier" />
-      <header className="studio-heading"><h1>make one page.</h1><button className="quiet-link" type="button" aria-expanded={cuesOpen} onClick={onToggleCues}>{cuesOpen ? "hide prompts" : "need a small prompt?"}</button></header>
-      <AnimatePresence>{cuesOpen && <motion.div className="cue-scribble" initial={{ opacity: 0, transform: "translateY(-4px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(-4px)" }} transition={{ duration: 0.16, ease: [0.23, 1, 0.32, 1] }}><span>a favourite memory</span><span>what they taught you</span><span>one small thing you notice</span></motion.div>}</AnimatePresence>
-      <motion.div ref={workspaceRef} className="maker-workspace" aria-label="Your paper sheet" initial={{ opacity: 0, transform: "translateY(10px) rotate(-0.35deg)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(-0.35deg)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}>
-        <div className="sheet-anchors">
-          <label><span>for</span><KeyboardInput aria-label="Who is this for?" value={recipient} onChange={(event) => onRecipient(event.target.value)} autoComplete="off" /></label>
-          <label><span>because</span><KeyboardInput aria-label="What made you think of them?" value={reason} onChange={(event) => onReason(event.target.value)} autoComplete="off" /></label>
+    <motion.section className={`experience-page studio-page studio-${mode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
+      <AnimatePresence mode="wait" initial={false}>
+        {mode === "capture" ? (
+          <CaptureStage
+            key="capture"
+            capture={capture}
+            recipient={recipient}
+            onBack={onBack}
+            onKeep={() => onMode("compose")}
+            onCaptured={(asset) => { onCapture(asset); onMode("compose"); }}
+            onBlank={() => { onCapture(null); onMode("compose"); }}
+          />
+        ) : (
+          <StoryComposer
+            key="compose"
+            capture={capture}
+            recipient={recipient}
+            words={words}
+            pieces={pieces}
+            layouts={layouts}
+            selectedLayer={selectedLayer}
+            editingRecipient={editingRecipient}
+            showGestureHint={showGestureHint}
+            canPreview={canPreview}
+            onSelectLayer={setSelectedLayer}
+            onLayout={onLayout}
+            onRemoveLayer={removeLayer}
+            onEditText={() => setEditingText(true)}
+            onEditRecipient={() => setEditingRecipient(true)}
+            onRecipient={onRecipient}
+            onFinishRecipient={() => { keyboard.hide(); setEditingRecipient(false); }}
+            onToggleLayer={toggleLayer}
+            onCamera={() => { keyboard.hide(); onMode("capture"); }}
+            onBack={onBack}
+            onPreview={onPreview}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {editingText && mode === "compose" && (
+          <motion.section className="story-text-editor" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
+            <header><button type="button" onClick={() => { keyboard.hide(); setEditingText(false); }}>close</button><span>your words</span><button type="button" onClick={finishText}>done</button></header>
+            <p className="active-writing-prompt">{activePrompt}</p>
+            <KeyboardTextarea autoFocus aria-label="Write your message" value={words} placeholder="start anywhere…" onChange={(event) => onWords(event.target.value)} onBlur={() => keyboard.hide()} />
+            <button className="prompt-toggle" type="button" aria-expanded={cuesOpen} onClick={onToggleCues}>{cuesOpen ? "hide prompts" : "try a small prompt"}</button>
+            <AnimatePresence>
+              {cuesOpen && (
+                <motion.div className="story-prompts" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }}>
+                  <Carousel ariaLabel="Writing prompts" contentClassName="story-prompt-rail">
+                    {["a favourite memory", "what they taught you", "one word for them", "one small thing you notice"].map((prompt) => <button key={prompt} type="button" onClick={() => setActivePrompt(prompt)}>{prompt}</button>)}
+                  </Carousel>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.section>
+        )}
+      </AnimatePresence>
+    </motion.section>
+  );
+}
+
+type CameraStatus = "requesting" | "waiting" | "live" | "denied" | "unsupported";
+
+function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured, onBlank }: { capture: CaptureAsset | null; recipient: string; onBack: () => void; onKeep: () => void; onCaptured: (asset: CaptureAsset) => void; onBlank: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const recorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const mountedRef = useRef(true);
+  const cameraRequestRef = useRef(0);
+  const [status, setStatus] = useState<CameraStatus>("requesting");
+  const [captureMode, setCaptureMode] = useState<CaptureMode>("photo");
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [recording, setRecording] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [cameraNote, setCameraNote] = useState("");
+
+  const stopCamera = useCallback(() => {
+    cameraRequestRef.current += 1;
+    const recorder = recorderRef.current;
+    if (recorder && recorder.state !== "inactive") {
+      recorder.onstop = null;
+      recorder.stop();
+    }
+    recorderRef.current = null;
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    if (videoRef.current) videoRef.current.srcObject = null;
+  }, []);
+
+  const openCamera = useCallback(async (nextFacing: "user" | "environment" = "user", withAudio = false) => {
+    stopCamera();
+    const requestId = cameraRequestRef.current;
+    setStatus("requesting");
+    setCameraNote("");
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setStatus("unsupported");
+      return;
+    }
+    const video = { facingMode: { ideal: nextFacing }, width: { ideal: 1080 }, height: { ideal: 1920 } };
+    try {
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video, audio: withAudio });
+      } catch {
+        if (!withAudio) throw new Error("camera unavailable");
+        stream = await navigator.mediaDevices.getUserMedia({ video, audio: false });
+        setCameraNote("camera is live without microphone audio.");
+      }
+      if (!mountedRef.current || requestId !== cameraRequestRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        return;
+      }
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play().catch(() => undefined);
+      }
+      setStatus("live");
+    } catch {
+      if (mountedRef.current && requestId === cameraRequestRef.current) setStatus("denied");
+    }
+  }, [stopCamera]);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    void openCamera(facingMode, captureMode === "video");
+    return () => {
+      mountedRef.current = false;
+      stopCamera();
+    };
+  }, [captureMode, facingMode, openCamera, stopCamera]);
+
+  useEffect(() => {
+    if (status !== "requesting") return;
+    const timer = window.setTimeout(() => setStatus((current) => current === "requesting" ? "waiting" : current), 5000);
+    return () => window.clearTimeout(timer);
+  }, [status]);
+
+  useEffect(() => {
+    if (!recording) return;
+    const timer = window.setInterval(() => setElapsed((current) => current + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [recording]);
+
+  useEffect(() => {
+    const recorder = recorderRef.current;
+    if (recording && elapsed >= 15 && recorder?.state === "recording") recorder.stop();
+  }, [elapsed, recording]);
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    if (!video || status !== "live" || !video.videoWidth) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    if (facingMode === "user") {
+      context.translate(canvas.width, 0);
+      context.scale(-1, 1);
+    }
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      if (!mountedRef.current) {
+        URL.revokeObjectURL(url);
+        return;
+      }
+      onCaptured({ kind: "photo", url });
+    }, "image/jpeg", 0.9);
+  };
+
+  const toggleRecording = () => {
+    const current = recorderRef.current;
+    if (current && current.state !== "inactive") {
+      current.stop();
+      return;
+    }
+    const stream = streamRef.current;
+    if (!stream || status !== "live" || typeof MediaRecorder === "undefined") {
+      setCameraNote("video recording is not available in this browser. choose a clip instead.");
+      return;
+    }
+    let recorder: MediaRecorder | null = null;
+    try {
+      const mimeType = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"].find((candidate) => MediaRecorder.isTypeSupported(candidate));
+      recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+      chunksRef.current = [];
+      recorder.ondataavailable = (event) => { if (event.data.size) chunksRef.current.push(event.data); };
+      recorder.onstop = () => {
+        if (!mountedRef.current) return;
+        recorderRef.current = null;
+        setRecording(false);
+        const blob = new Blob(chunksRef.current, { type: recorder?.mimeType || "video/webm" });
+        if (!blob.size) {
+          setCameraNote("that clip was empty. try once more.");
+          return;
+        }
+        onCaptured({ kind: "video", url: URL.createObjectURL(blob) });
+      };
+      recorder.start(180);
+      recorderRef.current = recorder;
+      setElapsed(0);
+      setRecording(true);
+      navigator.vibrate?.(8);
+    } catch {
+      if (recorder && recorder.state !== "inactive") {
+        recorder.onstop = null;
+        recorder.stop();
+      }
+      recorderRef.current = null;
+      setRecording(false);
+      setCameraNote("video recording is not available in this browser. choose a clip instead.");
+    }
+  };
+
+  const handleFile = (event: ReactChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const kind: CaptureMode = file.type.startsWith("video/") ? "video" : "photo";
+    onCaptured({ kind, url: URL.createObjectURL(file) });
+    event.target.value = "";
+  };
+
+  const useSample = () => onCaptured({ kind: "sample" });
+  const videoRecordingAvailable = typeof MediaRecorder !== "undefined";
+  const statusCopy = status === "requesting" ? "opening your camera…" : status === "waiting" ? "camera permission is still waiting." : status === "denied" ? "camera permission is off." : "this browser cannot open a camera here.";
+
+  return (
+    <motion.div className={`capture-stage capture-${status}`} data-recording={recording ? "true" : "false"} initial={{ opacity: 0, transform: "scale(1.015)" }} animate={{ opacity: 1, transform: "scale(1)" }} exit={{ opacity: 0, transform: "scale(0.99)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }} data-scroll-drag="ignore">
+      <video ref={videoRef} className={`camera-feed ${facingMode === "user" ? "camera-mirrored" : ""}`} autoPlay muted playsInline aria-label="Live camera preview" />
+      <div className="capture-scrim" aria-hidden="true" />
+      <header className="capture-topbar"><button type="button" aria-label="Back to carrier selection" onClick={onBack}><CloseMark /></button><span>for {recipient || "someone"}</span>{capture ? <button type="button" onClick={onKeep}>keep page</button> : <span aria-hidden="true" />}</header>
+
+      {status !== "live" && (
+        <div className="camera-state" aria-live="polite">
+          <CameraMark />
+          <h1>{statusCopy}</h1>
+          <p>{status === "requesting" ? "The page stays private on this device." : "You can retry, choose a moment, or begin on blank paper."}</p>
+          {status !== "requesting" && <button className="drawn-action" type="button" onClick={() => void openCamera(facingMode, captureMode === "video")}>try the camera again <Mark /></button>}
         </div>
-        <label className="words-piece"><span>what do you want them to know?</span><KeyboardTextarea aria-label="Your words" value={words} onChange={(event) => onWords(event.target.value)} /></label>
-        {pieces.includes("photo") && <DraggablePiece className="placed-photo" constraints={workspaceRef} onRemove={() => onTogglePiece("photo")} label="photo"><div className="moving-photo" role="img" aria-label="Sample photo of moving boxes in a new room"><span className="box-one" /><span className="box-two" /><span className="window-line" /></div><figcaption>first week home</figcaption></DraggablePiece>}
-        {pieces.includes("voice") && <DraggablePiece className="placed-voice" constraints={workspaceRef} onRemove={() => onTogglePiece("voice")} label="voice note"><Waveform /><span>10 sec · “you made it easy”</span></DraggablePiece>}
-        {pieces.includes("song") && <DraggablePiece className="placed-song" constraints={workspaceRef} onRemove={() => onTogglePiece("song")} label="song"><span className="record-mark" aria-hidden="true" /><span>First Week Home</span></DraggablePiece>}
-        {pieces.includes("drawing") && <DraggablePiece className="placed-drawing" constraints={workspaceRef} onRemove={() => onTogglePiece("drawing")} label="drawing"><PersonalMark /></DraggablePiece>}
-        {pieces.length > 0 && <p className="drag-hint">hold a piece to move it.</p>}
-      </motion.div>
-      <section className="material-area" aria-labelledby="material-heading">
-        <div className="material-heading"><h2 id="material-heading">add something</h2><span>swipe</span></div>
-        <Carousel ariaLabel="Things to add to the page" className="material-carousel" contentClassName="material-tray" showScrollbar>
-          {(Object.keys(pieceLabels) as PieceId[]).map((piece) => <button key={piece} type="button" aria-pressed={pieces.includes(piece)} onClick={() => onTogglePiece(piece)}><MaterialIcon id={piece} /><span>{pieceLabels[piece]}</span></button>)}
-        </Carousel>
-      </section>
-      <button className="drawn-action studio-next" type="button" disabled={!canPreview} onClick={onPreview}>see the whole thing <Mark /></button>
-    </Page>
+      )}
+
+      <footer className="capture-controls">
+        {cameraNote && <p className="camera-note" aria-live="polite">{cameraNote}</p>}
+        <div className="capture-mode-switch" role="tablist" aria-label="Capture mode">
+          <button type="button" role="tab" aria-selected={captureMode === "photo"} disabled={recording} onClick={() => setCaptureMode("photo")}>photo</button>
+          <button type="button" role="tab" aria-selected={captureMode === "video"} disabled={recording || !videoRecordingAvailable} title={videoRecordingAvailable ? undefined : "Video recording is unavailable in this browser"} onClick={() => setCaptureMode("video")}>{videoRecordingAvailable ? "video" : "video unavailable"}</button>
+        </div>
+        <div className="capture-action-row">
+          <button className="capture-side-action" type="button" onClick={() => fileRef.current?.click()}>choose<br />a moment</button>
+          <button className="story-shutter" type="button" disabled={status !== "live"} aria-label={recording ? "Stop recording" : captureMode === "video" ? "Start recording" : "Take photo"} onClick={captureMode === "video" ? toggleRecording : capturePhoto}><span />{recording && <small>{elapsed}s</small>}</button>
+          <button className="capture-side-action" type="button" disabled={status !== "live" || recording} onClick={() => setFacingMode((currentFacing) => currentFacing === "user" ? "environment" : "user")}>flip<br />camera</button>
+        </div>
+        <div className="capture-quiet-actions"><button type="button" onClick={useSample}>use sample moment</button><button type="button" onClick={onBlank}>start on blank paper</button></div>
+      </footer>
+      <input ref={fileRef} className="capture-file-input" type="file" accept="image/*,video/*" onChange={handleFile} tabIndex={-1} />
+    </motion.div>
   );
 }
 
-function DraggablePiece({ children, className, constraints, label, onRemove }: { children: ReactNode; className: string; constraints: React.RefObject<HTMLDivElement | null>; label: string; onRemove: () => void }) {
+function StoryComposer({ capture, recipient, words, pieces, layouts, selectedLayer, editingRecipient, showGestureHint, canPreview, onSelectLayer, onLayout, onRemoveLayer, onEditText, onEditRecipient, onRecipient, onFinishRecipient, onToggleLayer, onCamera, onBack, onPreview }: { capture: CaptureAsset | null; recipient: string; words: string; pieces: PieceId[]; layouts: Record<LayerId, LayerLayout>; selectedLayer: LayerId | null; editingRecipient: boolean; showGestureHint: boolean; canPreview: boolean; onSelectLayer: (id: LayerId | null) => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onRemoveLayer: (id: LayerId) => void; onEditText: () => void; onEditRecipient: () => void; onRecipient: (value: string) => void; onFinishRecipient: () => void; onToggleLayer: (id: Exclude<LayerId, "words">) => void; onCamera: () => void; onBack: () => void; onPreview: () => void }) {
   return (
-    <motion.figure className={`placed-piece ${className}`} drag dragConstraints={constraints} dragElastic={0.08} dragMomentum={false} data-scroll-drag="ignore" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}>
-      <button className="piece-remove" type="button" aria-label={`Remove ${label}`} onClick={onRemove}>×</button>{children}
-    </motion.figure>
+    <motion.div className={`story-composer ${capture ? "story-has-capture" : "story-blank"}`} initial={{ opacity: 0, transform: "translateY(16px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(10px)" }} transition={{ duration: 0.26, ease: [0.23, 1, 0.32, 1] }} data-scroll-drag="ignore">
+      <div className="story-canvas" aria-label="Full-screen keepsake canvas" onPointerDown={() => onSelectLayer(null)}>
+        <CapturedMedia capture={capture} className="story-background" />
+        {capture && <div className="story-media-scrim" aria-hidden="true" />}
+        {!capture && !words && pieces.length === 0 && <motion.div className="blank-page-invitation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}><span>blank paper.</span><p>film a moment or add the first thing below.</p></motion.div>}
+
+        <header className="story-topbar">
+          <button type="button" aria-label="Back to carrier selection" onClick={onBack}><CloseMark /></button>
+          {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" onClick={onEditRecipient}>for {recipient || "someone"}</button>}
+          <button className="story-done" type="button" disabled={!canPreview} onClick={onPreview}>done <Mark /></button>
+        </header>
+
+        <AnimatePresence>
+          {words.trim() && <CanvasLayer key="words" id="words" label="message" layout={layouts.words} selected={selectedLayer === "words"} onSelect={onSelectLayer} onLayout={onLayout} onRemove={onRemoveLayer} onEdit={onEditText}><p className="story-words-visual">{words}</p></CanvasLayer>}
+          {pieces.includes("voice") && <CanvasLayer key="voice" id="voice" label="voice note" layout={layouts.voice} selected={selectedLayer === "voice"} onSelect={onSelectLayer} onLayout={onLayout} onRemove={onRemoveLayer}><div className="story-voice-visual"><Waveform /><span>10 sec · tap to hear me</span></div></CanvasLayer>}
+          {pieces.includes("song") && <CanvasLayer key="song" id="song" label="song" layout={layouts.song} selected={selectedLayer === "song"} onSelect={onSelectLayer} onLayout={onLayout} onRemove={onRemoveLayer}><div className="story-song-visual"><span className="record-mark" aria-hidden="true" /><span>First Week Home</span></div></CanvasLayer>}
+          {pieces.includes("drawing") && <CanvasLayer key="drawing" id="drawing" label="personal mark" layout={layouts.drawing} selected={selectedLayer === "drawing"} onSelect={onSelectLayer} onLayout={onLayout} onRemove={onRemoveLayer}><div className="story-drawing-visual"><PersonalMark /></div></CanvasLayer>}
+        </AnimatePresence>
+
+        <AnimatePresence>{showGestureHint && (words || pieces.some((piece) => piece !== "photo")) && <motion.p className="story-gesture-tip" initial={{ opacity: 0, transform: "translateY(5px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>move anything. turn the small handle.</motion.p>}</AnimatePresence>
+
+        <StoryToolRail words={words} pieces={pieces} onText={onEditText} onCamera={onCamera} onToggleLayer={onToggleLayer} />
+      </div>
+    </motion.div>
   );
 }
 
-function Preview({ recipient, words, pieces, carrier, onEdit, onChangeCarrier, onGive }: { recipient: string; words: string; pieces: PieceId[]; carrier: Carrier; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
+function CanvasLayer({ id, label, layout, selected, children, onSelect, onLayout, onRemove, onEdit }: { id: LayerId; label: string; layout: LayerLayout; selected: boolean; children: ReactNode; onSelect: (id: LayerId | null) => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onRemove: (id: LayerId) => void; onEdit?: () => void }) {
+  const layerRef = useRef<HTMLDivElement>(null);
+  const rotationRef = useRef({ pointerId: -1, startAngle: 0, startRotation: 0, moved: false });
+  const dragBounds = id === "words" ? { left: -20, right: 20, top: -270, bottom: 236 } : id === "drawing" ? { left: -116, right: 116, top: -270, bottom: 244 } : { left: -56, right: 56, top: -270, bottom: 244 };
+  const clampPosition = (x: number, y: number) => ({
+    x: Math.max(dragBounds.left, Math.min(dragBounds.right, x)),
+    y: Math.max(dragBounds.top, Math.min(dragBounds.bottom, y)),
+  });
+  const startRotate = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    const bounds = layerRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    const angle = Math.atan2(event.clientY - (bounds.top + bounds.height / 2), event.clientX - (bounds.left + bounds.width / 2)) * 180 / Math.PI;
+    rotationRef.current = { pointerId: event.pointerId, startAngle: angle, startRotation: layout.rotation, moved: false };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const rotate = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    const session = rotationRef.current;
+    if (session.pointerId !== event.pointerId) return;
+    const bounds = layerRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    const angle = Math.atan2(event.clientY - (bounds.top + bounds.height / 2), event.clientX - (bounds.left + bounds.width / 2)) * 180 / Math.PI;
+    const delta = angle - session.startAngle;
+    if (Math.abs(delta) > 2) session.moved = true;
+    onLayout(id, { ...layout, rotation: session.startRotation + delta });
+  };
+  const finishRotate = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    if (rotationRef.current.pointerId !== event.pointerId) return;
+    try { event.currentTarget.releasePointerCapture(event.pointerId); } catch { /* Capture may already be released. */ }
+    rotationRef.current.pointerId = -1;
+  };
+  return (
+    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${selected ? "is-selected" : ""}`} role="group" aria-label={`${label}. Drag to move; use the corner handle to rotate.`} tabIndex={0} drag dragConstraints={dragBounds} dragElastic={0.04} dragMomentum={false} style={{ x: layout.x, y: layout.y }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={(event) => { event.stopPropagation(); onSelect(id); }} onDoubleClick={onEdit} onDragEnd={(_, info) => { const next = clampPosition(layout.x + info.offset.x, layout.y + info.offset.y); onLayout(id, { ...layout, ...next }); }} onKeyDown={(event) => {
+      const movement = event.shiftKey ? 18 : 6;
+      if (event.key === "ArrowLeft") onLayout(id, { ...layout, ...clampPosition(layout.x - movement, layout.y) });
+      else if (event.key === "ArrowRight") onLayout(id, { ...layout, ...clampPosition(layout.x + movement, layout.y) });
+      else if (event.key === "ArrowUp") onLayout(id, { ...layout, ...clampPosition(layout.x, layout.y - movement) });
+      else if (event.key === "ArrowDown") onLayout(id, { ...layout, ...clampPosition(layout.x, layout.y + movement) });
+      else if (event.key === "[") onLayout(id, { ...layout, rotation: layout.rotation - 6 });
+      else if (event.key === "]") onLayout(id, { ...layout, rotation: layout.rotation + 6 });
+      else if (event.key === "Delete" || event.key === "Backspace") onRemove(id);
+      else return;
+      event.preventDefault();
+    }}>
+      <div className="story-layer-paper" style={{ transform: `rotate(${layout.rotation}deg) scale(${layout.scale})` }}>
+        {children}
+        {selected && <><button className="story-layer-remove" type="button" aria-label={`Remove ${label}`} onPointerDown={(event) => event.stopPropagation()} onClick={() => onRemove(id)}><CloseMark /></button><button className="story-layer-rotate" type="button" aria-label={`Rotate ${label}`} onPointerDown={startRotate} onPointerMove={rotate} onPointerUp={finishRotate} onPointerCancel={finishRotate} onClick={() => { if (!rotationRef.current.moved) onLayout(id, { ...layout, rotation: layout.rotation + 12 }); }}><RotateMark /></button>{onEdit && <button className="story-layer-edit" type="button" onPointerDown={(event) => event.stopPropagation()} onClick={onEdit}>edit words</button>}</>}
+      </div>
+    </motion.div>
+  );
+}
+
+function StoryToolRail({ words, pieces, onText, onCamera, onToggleLayer }: { words: string; pieces: PieceId[]; onText: () => void; onCamera: () => void; onToggleLayer: (id: Exclude<LayerId, "words">) => void }) {
+  return (
+    <div className="story-tool-dock">
+      <Carousel ariaLabel="Things to add" contentClassName="story-tool-rail">
+        <button type="button" aria-pressed={Boolean(words)} onClick={onText}><span className="story-aa" aria-hidden="true">Aa</span><span>words</span></button>
+        <button type="button" onClick={onCamera}><CameraMark /><span>camera</span></button>
+        {(["voice", "song", "drawing"] as const).map((piece) => <button key={piece} type="button" aria-pressed={pieces.includes(piece)} onClick={() => onToggleLayer(piece)}><MaterialIcon id={piece} /><span>{pieceLabels[piece]}</span></button>)}
+      </Carousel>
+    </div>
+  );
+}
+
+function CapturedMedia({ capture, className = "", interactive = false }: { capture: CaptureAsset | null; className?: string; interactive?: boolean }) {
+  if (!capture) return null;
+  if (capture.kind === "sample") return <div className={`captured-media sample-capture ${className}`} role="img" aria-label="Illustrative sample moving-day moment"><span className="sample-window" /><span className="sample-box sample-box-one" /><span className="sample-box sample-box-two" /><small>sample moment</small></div>;
+  if (!capture.url) return null;
+  return capture.kind === "video" ? <video className={`captured-media ${className}`} src={capture.url} autoPlay={!interactive} loop={!interactive} muted={!interactive} controls={interactive} playsInline aria-label="Your captured video" /> : <img className={`captured-media ${className}`} src={capture.url} alt="Your captured moment" draggable={false} />;
+}
+
+function Preview({ recipient, words, pieces, capture, carrier, onEdit, onChangeCarrier, onGive }: { recipient: string; words: string; pieces: PieceId[]; capture: CaptureAsset | null; carrier: Carrier; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
   return (
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {recipient}</span><span>from {sender}</span></div>
-      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translateY(9px) rotate(-1deg)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /><div className="preview-peek" aria-hidden="true"><span>{words.slice(0, 28)}…</span>{pieces.slice(0, 3).map((piece) => <MaterialIcon key={piece} id={piece} />)}</div><PersonalMark /></motion.div>
+      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translateY(18px) rotate(-3deg) scale(0.95)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /><div className={`preview-peek ${capture ? "preview-peek-with-media" : ""}`} aria-hidden="true"><CapturedMedia capture={capture} className="preview-capture" /><span>{words ? `${words.slice(0, 28)}…` : "a moment made for you"}</span>{pieces.filter((piece) => piece !== "photo").slice(0, 2).map((piece) => <MaterialIcon key={piece} id={piece} />)}</div><PersonalMark /></motion.div>
       <div className="preview-copy"><h1>one thing, ready to give.</h1><p>{carrier.label}. Nothing inside appears until {recipient} opens it.</p></div>
       <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
       <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
@@ -402,12 +822,13 @@ function Opening({ recipient }: { recipient: string }) {
   );
 }
 
-function Reveal({ recipient, words, pieces, voiceState, songState, removeOpen, onVoice, onSong, onKeep, onClose, onRemove, onCancelRemove, onConfirmRemove }: { recipient: string; words: string; pieces: PieceId[]; voiceState: Playback; songState: Playback; removeOpen: boolean; onVoice: () => void; onSong: () => void; onKeep: () => void; onClose: () => void; onRemove: () => void; onCancelRemove: () => void; onConfirmRemove: () => void }) {
+function Reveal({ recipient, words, pieces, capture, voiceState, songState, removeOpen, onVoice, onSong, onKeep, onClose, onRemove, onCancelRemove, onConfirmRemove }: { recipient: string; words: string; pieces: PieceId[]; capture: CaptureAsset | null; voiceState: Playback; songState: Playback; removeOpen: boolean; onVoice: () => void; onSong: () => void; onKeep: () => void; onClose: () => void; onRemove: () => void; onCancelRemove: () => void; onConfirmRemove: () => void }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => { headingRef.current?.focus(); }, []);
   return (
     <Page className="reveal-page">
-      <header className="object-opening-copy"><span>for {recipient}</span><h1 ref={headingRef} tabIndex={-1}>{words}</h1><p>from {sender}</p></header>
+      <header className="object-opening-copy"><span>for {recipient}</span>{words && <h1 ref={headingRef} tabIndex={-1}>{words}</h1>}<p>from {sender}</p></header>
+      {capture && <motion.figure className="object-capture" data-scroll-drag="ignore" initial={{ opacity: 0, transform: "translateY(24px) rotate(-1.5deg)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(1deg)" }} transition={{ delay: 0.12, duration: 0.36, ease: [0.23, 1, 0.32, 1] }}><CapturedMedia capture={capture} interactive /><figcaption>{capture.kind === "video" ? "a moment you can return to." : "one small moment, kept here."}</figcaption></motion.figure>}
       {pieces.includes("photo") && <figure className="object-photo"><div className="moving-photo" role="img" aria-label="Sample photo of moving boxes in a new room"><span className="box-one" /><span className="box-two" /><span className="window-line" /></div><figcaption>the afternoon the boxes became furniture.</figcaption></figure>}
       {pieces.includes("voice") && <section className={`object-voice ${voiceState === "playing" ? "is-playing" : ""}`}><button type="button" onClick={onVoice} aria-label={voiceState === "playing" ? "Pause voice note" : "Play voice note"}><Waveform /><span>{voiceState === "playing" ? "pause voice" : voiceState === "played" ? "play again" : "play 10 sec"}</span></button><p><span>transcript</span> “I just wanted you to know that you made all of it easier.”</p></section>}
       {pieces.includes("song") && <section className="object-song"><button type="button" onClick={onSong} aria-label={songState === "playing" ? "Pause First Week Home" : "Play First Week Home"}><span className={`record-mark ${songState === "playing" ? "record-playing" : ""}`} aria-hidden="true" /><span><strong>First Week Home</strong><small>{songState === "playing" ? "playing · tap to pause" : "tap to play"}</small></span></button></section>}

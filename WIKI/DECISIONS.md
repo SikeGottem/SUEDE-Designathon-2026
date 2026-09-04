@@ -464,6 +464,7 @@ Only record choices that change direction, investment or the story. Every conseq
 ## 2026-09-05 - Correct the prototype toward a sparse, mobile paper-sheet experience
 
 - Status: current correction; prototype direction remains reversible.
+- Supersession note: the Studio-only paper-sheet treatment below is superseded by the later full-screen, capture-first Story-composer decision. Its home, carrier, cabinet, motion, deck, and evidence constraints remain current.
 - Decision: keep the small carrier-picker test, deliberate opening, receiver keep/close/remove paths, and physical cabinet. Correct the render by removing the home-loop ornament, bottom-centring the core home invitation/action, removing carrier backdrop paths and mascot/helper copy, increasing negative space, and using purposeful motion only. Rebuild the creator as one mobile paper sheet with a dominant writing layer plus a compact scrollable material rail/progressive disclosure. Keep preview's “ready to give” role, but leave its hero artwork open pending Ethan's supplied screenshot. Prioritise team-drawn recurring assets whose line weight belongs with Gaegu. Do not build a 3D tree archive. For the deck, establish layout/story first, use AI only to refine bounded treatments, and ensure the presentation works silently.
 - Reason: the team reviewed the first rich coded pass and found it visually noisy, AI-looking, crowded on mobile, and insufficiently resolved despite preserving the desired overall flow. The later direct critique governs overlap.
 - Evidence: [65e72fa1…](TRANSCRIPTS/2026-09-04-65e72fa1-b8b1-5b23-869d-dd63f1a92d6b.md), created `2026-09-04T15:25:25.181Z`, records the paper-sheet/scroll-rail discussion (32:28–33:40), retained opening/keep/cabinet (33:40–34:16), line-weight/artwork correction (15:50–16:28; 26:40–27:39), 3D-tree rejection (07:48–10:08), and silent/layout-first deck direction (25:50–26:19; 30:21–30:58). The later [4bf6522b…](TRANSCRIPTS/2026-09-04-4bf6522b-ed6e-5d7d-a2d6-62ec7981fd4e.md), created `2026-09-04T15:27:36.809Z`, directly rejects the home loop, carrier ornament/helper copy, crowded maker page, and current preview hero while retaining the carrier premise and cabinet (01:26–03:17).
@@ -506,6 +507,16 @@ Only record choices that change direction, investment or the story. Every conseq
 - Main trade-off: stronger focus, mobile clarity, and a more team-authored look in exchange for removing visible guidance and delaying final hero-art selection.
 - Next evidence that could change the verdict: Ethan's screenshot/reference for preview, a mobile render review, and a consented receiver walkthrough against the folded-object baseline.
 - Recommendation: rebuild the named surfaces now, then audit the actual render before making any visual language or carrier outcome permanent.
+
+## 2026-09-05 - Test a full-screen, capture-first Story composer
+
+- Status: current exploratory implementation decision; not validated or final.
+- Decision: replace the bordered paper-form Studio with a full-screen creation mode. Enter through immediate photo/video capture or blank paper, move straight into one sparse canvas, and let selected words and materials move, rotate, edit and remove in place. Keep tools contextual and at thumb reach. Borrow the speed and direct-manipulation model of Instagram Stories without copying Instagram branding, social posting, expiry, views, reactions, replies, or feed behaviour.
+- Reason: the newest team review identifies the creation board as the unresolved core UX problem and explicitly says the earlier creator was the weakest screen because its interaction model had not been designed. Ethan then made full-screen entry and immediate filming the highest-priority prototype requirement.
+- Evidence: [d4b7ec93… 20:03–22:18](TRANSCRIPTS/2026-09-04-d4b7ec93-efb6-516d-99da-c84cfa746154.md), created `2026-09-04T15:51:31.829Z`, plus Ethan's direct 5 September clarification in the active build session.
+- Consequence: the current prototype may implement local browser camera/photo/video capture, device-media and honest fallback paths, a full-screen canvas, sparse tools, movable/rotatable layers, and draft continuity through preview/reveal. It may not claim this is as usable as Instagram Stories until real-phone testing supports that claim.
+- Revisit when: a teammate completes the flow on a real phone, camera permission or touch gestures fail, the canvas feels more like Canva than a Story, or receiver testing shows the captured-media object weakens rather than strengthens intentionality.
+- Review boundary: Ethan explicitly asked to proceed with the prototype test before the deferred reviews. This authorises the reversible build only; it does not approve a final product, visual system, usability claim, or pitch claim.
 
 ## Decision template
 
