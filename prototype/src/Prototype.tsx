@@ -523,7 +523,7 @@ export default function Prototype() {
   };
 
   const canPreview = recipient.trim() !== "" && Boolean(words.trim() || captureAsset || pieces.length || doodleStrokes.length || stickers.length);
-  const navyPhase = ["opening", "reveal", "cabinet", "removed"].includes(phase);
+  const navyPhase = ["cabinet", "removed"].includes(phase);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -574,8 +574,9 @@ export default function Prototype() {
 }
 
 function Page({ children, className = "" }: { children: ReactNode; className?: string }) {
+  const handsOffToOpening = className.includes("arrival-page");
   return (
-    <motion.section className={`experience-page ${className}`} initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(-5px)" }} transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}>
+    <motion.section className={`experience-page ${className}`} initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={handsOffToOpening ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-5px)" }} transition={{ duration: handsOffToOpening ? .08 : 0.2, ease: [0.23, 1, 0.32, 1] }}>
       {children}
     </motion.section>
   );
@@ -607,7 +608,7 @@ function Home({ onMake }: { onMake: () => void }) {
     <Page className="home-page">
       <div className="home-bee-mark" aria-hidden="true">
         <motion.img
-          src={`${CECILIA}firefly-line-b1.png`}
+          src={`${CECILIA}firefly-brand-mark.png`}
           alt=""
           draggable={false}
           data-asset-slot="home-bee"
@@ -1061,7 +1062,7 @@ function StoryComposer({ capture, voice, song, recipient, words, crossedOut, pap
           <button className="story-done" type="button" disabled={!canPreview} aria-label="Next: fold and decorate the envelope" onClick={onPreview}>next <Mark /></button>
         </header>
 
-        <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} initial={{ opacity: 0, transform: "translateY(28px) rotate(-1.4deg) scale(0.975)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(-0.25deg) scale(1)" }} transition={{ duration: 0.46, ease: [0.16, 1, 0.3, 1] }} onClick={startWritingOnPaper}>
+        <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} initial={{ opacity: 0, transform: "translate3d(0, 10px, 0) scale(.99)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1] }} onClick={startWritingOnPaper}>
           {paper === "ruled" && <PaperRuling />}
           {!capture && !words && pieces.length === 0 && doodles.length === 0 && !editingText && !drawingActive && <motion.div className="blank-page-invitation" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ delay: 0.28, duration: 0.28 }}><span>tap anywhere to write</span><p>or make a doodle below</p></motion.div>}
 
@@ -1303,7 +1304,7 @@ function EnvelopeStudio({ snapshot, envelope, seal, onEnvelope, onSeal, onBack, 
     document.addEventListener("keydown", handleTemplateKeys);
     return () => document.removeEventListener("keydown", handleTemplateKeys);
   }, [envelope, folded, onEnvelope]);
-  return <Page className="envelope-page"><TopLine onBack={onBack} label="back to your paper" /><AnimatePresence>{!folded && <motion.div className="envelope-fold-preview" exit={{ opacity: 0 }} transition={{ duration: .18 }}><motion.div className="folding-paper-shell" initial={reduced ? false : { transform: "translateY(18px) scale(.88) rotate(0deg)" }} animate={reduced ? { transform: "translateY(70px) scale(.34) rotate(-3deg)" } : { transform: ["translateY(18px) scale(.88) rotate(0deg)", "translateY(18px) scale(.88) rotate(0deg)", "translateY(70px) scale(.34) rotate(-3deg)"], opacity: [1, 1, .72] }} transition={{ duration: 1.36, times: [0, .65, 1], ease: [0.77, 0, 0.175, 1] }}><AuthoredPaper snapshot={snapshot} className="fold-paper-base" /><motion.div className="fold-leaf fold-leaf-left" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(178deg)" }} transition={{ delay: .18, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-right" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(-178deg)" }} transition={{ delay: .24, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-bottom" initial={false} animate={reduced ? { transform: "rotateX(0deg)" } : { transform: "rotateX(-178deg)" }} transition={{ delay: .76, duration: .5, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div></motion.div><p>your page folds with every mark still in place.</p></motion.div>}</AnimatePresence><AnimatePresence>{folded && <motion.section className="envelope-workbench" aria-label="Decorate the outside envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}><header><h1>make the outside yours.</h1><p>Pick its paper, then leave your mark.</p></header><div className={`envelope-canvas envelope-${envelope}`} data-envelope={envelope}><span className="envelope-template-detail" aria-hidden="true" /><EnvelopeFoldLines /><span className="envelope-address">for {snapshot.recipient}<small>from {snapshot.sender}</small></span><button className={`seal-stamp ${seal.length ? "has-seal" : ""}`} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal seal" : "Draw your personal seal"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your seal</span>}</button></div><div className="envelope-options" role="radiogroup" aria-label="Envelope templates">{(["mail", "night", "rust"] as EnvelopeId[]).map((option) => <button className={`envelope-option envelope-${option}`} key={option} type="button" role="radio" aria-checked={envelope === option} onClick={() => onEnvelope(option)}><span className="envelope-swatch" aria-hidden="true" /><span>{option === "mail" ? "classic" : option === "night" ? "midnight" : "postcard"}</span></button>)}</div><p className="envelope-status" aria-live="polite">{seal.length ? "sealed by you." : "add a seal, or keep it simple."}</p></motion.section>}</AnimatePresence><button className="drawn-action envelope-next" type="button" disabled={!folded} onClick={onNext}>choose how it travels <Mark /></button><AnimatePresence>{sealOpen && <motion.section className="seal-editor" role="dialog" aria-modal="true" aria-label="Draw your personal seal" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: .24, ease: [0.23, 1, .32, 1] }}><button className="seal-editor-close" type="button" onClick={() => setSealOpen(false)} aria-label="Close seal editor"><CloseMark /></button><header><span>one mark, made by you</span><h1>draw your seal.</h1><p>It will be stamped onto the envelope exactly like this.</p></header><SealSurface strokes={seal} onChange={onSeal} onDone={() => setSealOpen(false)} /></motion.section>}</AnimatePresence></Page>;
+  return <Page className="envelope-page"><TopLine onBack={onBack} label="back to your paper" /><AnimatePresence>{!folded && <motion.div className="envelope-fold-preview" exit={{ opacity: 0 }} transition={{ duration: .18 }}><motion.div className="folding-paper-shell" initial={reduced ? false : { transform: "translateY(18px) scale(.88) rotate(0deg)" }} animate={reduced ? { transform: "translateY(70px) scale(.34) rotate(-3deg)" } : { transform: ["translateY(18px) scale(.88) rotate(0deg)", "translateY(18px) scale(.88) rotate(0deg)", "translateY(70px) scale(.34) rotate(-3deg)"], opacity: [1, 1, .72] }} transition={{ duration: 1.36, times: [0, .65, 1], ease: [0.77, 0, 0.175, 1] }}><AuthoredPaper snapshot={snapshot} className="fold-paper-base" /><motion.div className="fold-leaf fold-leaf-left" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(178deg)" }} transition={{ delay: .18, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-right" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(-178deg)" }} transition={{ delay: .24, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-bottom" initial={false} animate={reduced ? { transform: "rotateX(0deg)" } : { transform: "rotateX(-178deg)" }} transition={{ delay: .76, duration: .5, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div></motion.div><p>your page folds with every mark still in place.</p></motion.div>}</AnimatePresence><AnimatePresence>{folded && <motion.section className="envelope-workbench" aria-label="Decorate the outside envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}><header><h1>make the outside yours.</h1><p>Pick its paper, then leave your mark.</p></header><div className={`envelope-canvas envelope-${envelope}`} data-envelope={envelope}><span className="envelope-template-detail" aria-hidden="true" /><EnvelopeFoldLines /><span className="envelope-address">for {snapshot.recipient}<small>from {snapshot.sender}</small></span><button className={`seal-stamp ${seal.length ? "has-seal" : ""}`} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal seal" : "Draw your personal seal"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your seal</span>}</button></div><div className="envelope-options" role="radiogroup" aria-label="Envelope templates">{(["mail", "night", "rust"] as EnvelopeId[]).map((option) => <button className={`envelope-option envelope-${option}`} key={option} type="button" role="radio" aria-checked={envelope === option} onClick={() => onEnvelope(option)}><span className="envelope-swatch" aria-hidden="true" /><span>{option === "mail" ? "classic" : option === "night" ? "midnight" : "postcard"}</span></button>)}</div><p className="envelope-status" aria-live="polite">{seal.length ? "sealed by you." : "add a seal, or keep it simple."}</p></motion.section>}</AnimatePresence>{folded ? <button className="drawn-action envelope-next" type="button" onClick={onNext}>choose how it travels <Mark /></button> : <p className="envelope-fold-status" role="status">folding your page…</p>}<AnimatePresence>{sealOpen && <motion.section className="seal-editor" role="dialog" aria-modal="true" aria-label="Draw your personal seal" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: .24, ease: [0.23, 1, .32, 1] }}><button className="seal-editor-close" type="button" onClick={() => setSealOpen(false)} aria-label="Close seal editor"><CloseMark /></button><header><span>one mark, made by you</span><h1>draw your seal.</h1><p>It will be stamped onto the envelope exactly like this.</p></header><SealSurface strokes={seal} onChange={onSeal} onDone={() => setSealOpen(false)} /></motion.section>}</AnimatePresence></Page>;
 }
 
 function CanvasLayer({ id, label, layout, selected, editing = false, children, onSelect, onLayout, onRemove, onEdit }: { id: LayerId; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; children: ReactNode; onSelect: (id: LayerId | null) => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onRemove: (id: LayerId) => void; onEdit?: () => void }) {
@@ -1464,7 +1465,7 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
     const source = carrier.id === "bottle" ? "bottle-intact.png" : "carrier-plane.png";
     return <div className={`courier courier-${state} courier-${carrier.id}`} aria-hidden="true"><div className="courier-body courier-object-body" data-asset-slot={`courier-${carrier.id}`}><img src={`${CECILIA}${source}`} alt="" /></div></div>;
   }
-  return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-frame-a" src={`${CECILIA}firefly-filled-f1.png`} alt="" /><img className="courier-firefly-frame courier-firefly-frame-b" src={`${CECILIA}firefly-filled-f2.png`} alt="" /></div><div className="courier-payload" data-asset-slot="courier-payload"><img src={`${CECILIA}envelope-mail-02.png`} alt="" /></div></div>;
+  return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={`${CECILIA}firefly-brand-mark.png`} alt="" /></div><div className="courier-payload" data-asset-slot="courier-payload"><img src={`${CECILIA}envelope-mail-02.png`} alt="" /></div></div>;
 }
 
 function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
@@ -1518,13 +1519,30 @@ function Sent({ recipient, carrier, reduceMotion, onReceiver, onAgain, onLeave }
 
 function Arrival({ recipient, carrier, reduceMotion, onOpen, onDefer, onUnavailable }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onOpen: () => void; onDefer: () => void; onUnavailable: () => void }) {
   const [landed, setLanded] = useState(reduceMotion);
+  const [tapPrimed, setTapPrimed] = useState(false);
   const lastTapRef = useRef(0);
+  const tapTimerRef = useRef<number | null>(null);
   useEffect(() => { if (reduceMotion) return; const timer = window.setTimeout(() => setLanded(true), 3600); return () => window.clearTimeout(timer); }, [reduceMotion]);
-  const attemptOpen = () => { const now = performance.now(); if (now - lastTapRef.current < 340) { onOpen(); return; } lastTapRef.current = now; };
+  useEffect(() => () => { if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current); }, []);
+  const open = () => {
+    if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current);
+    setTapPrimed(false);
+    navigator.vibrate?.([10, 18, 12]);
+    onOpen();
+  };
+  const attemptOpen = () => {
+    const now = performance.now();
+    if (now - lastTapRef.current < 420) { open(); return; }
+    lastTapRef.current = now;
+    setTapPrimed(true);
+    navigator.vibrate?.(8);
+    if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current);
+    tapTimerRef.current = window.setTimeout(() => setTapPrimed(false), 460);
+  };
   return (
     <Page className={`arrival-page arrival-carrier-${carrier.id}`}>
       <header><span>for {recipient}</span><h1>{sender} made something private for you.</h1></header>
-      <div className="arrival-object"><AnimatePresence>{!landed && <motion.div className="arrival-courier-motion" initial={{ opacity: 0, transform: "translate(130px, -158px) rotate(17deg)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(130px, -158px) rotate(17deg)", "translate(34px, -58px) rotate(4deg)", "translate(0, 0) rotate(0deg)", "translate(-92px, 80px) rotate(-14deg)"] }} transition={{ duration: 3.6, times: [0, .18, .64, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>{landed && <div className="arrival-drop"><button type="button" className="arrival-carrier-button" aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onOpen(); } }}><CarrierIcon id={carrier.id} size="arrival" /></button><p>double tap to open<br /><small>or use the open button</small></p><button className="quiet-link direct-open" type="button" onClick={onOpen}>open it</button></div>}</div>
+      <div className="arrival-object"><AnimatePresence>{!landed && <motion.div className="arrival-courier-motion" initial={{ opacity: 0, transform: "translate(130px, -158px) rotate(17deg)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(130px, -158px) rotate(17deg)", "translate(34px, -58px) rotate(4deg)", "translate(0, 0) rotate(0deg)", "translate(-92px, 80px) rotate(-14deg)"] }} transition={{ duration: 3.6, times: [0, .18, .64, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>{landed && <div className="arrival-drop"><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } }} animate={{ transform: tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="arrival" /></motion.button><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></div>}</div>
       <div className="arrival-options"><button className="quiet-link" type="button" onClick={onDefer}>another time</button><button className="quiet-link unavailable-link" type="button" onClick={onUnavailable}>this link is not for me</button></div>
     </Page>
   );
@@ -1553,26 +1571,27 @@ function Opening({ snapshot, removeOpen, reduceMotion, onKeep, onClose, onRemove
   const [keepFailed, setKeepFailed] = useState(false);
   useEffect(() => {
     if (reduceMotion) return;
-    const timer = window.setTimeout(() => setOpened(true), 1840);
+    const timer = window.setTimeout(() => setOpened(true), 1540);
     return () => window.clearTimeout(timer);
   }, [reduceMotion]);
   const keep = () => {
     if (!onKeep()) setKeepFailed(true);
   };
   return (
-    <motion.section className={`opening-page opening-envelope ${opened ? "is-open" : ""}`} initial={{ backgroundColor: "#ffffff" }} animate={{ backgroundColor: opened ? "#081f4d" : "#ffffff" }} transition={{ duration: reduceMotion ? 0.01 : 0.32, ease: [0.23, 1, 0.32, 1] }} aria-label="Opening the sealed private envelope">
-      <AnimatePresence mode="wait" initial={false}>
-        {!opened ? <motion.div key="folding" className="receiver-unfold-stage" exit={{ opacity: 0, transform: "scale(1.04)" }} transition={{ duration: .18, ease: [0.23, 1, 0.32, 1] }}>
-          <motion.div className="opening-sealed-object" initial={{ opacity: 1, transform: "scale(1) rotate(-1deg)" }} animate={{ opacity: [1, 1, 0], transform: ["scale(1) rotate(-1deg)", "scale(1.02) rotate(0deg)", "scale(.72) rotate(1deg)"] }} transition={{ duration: 0.62, times: [0, .54, 1], ease: moveEase }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
-          <motion.div className="receiver-folding-paper" aria-hidden="true" inert initial={{ opacity: 0, transform: "scale(.28) rotate(-2deg)" }} animate={{ opacity: [0, 1, 1], transform: ["scale(.28) rotate(-2deg)", "scale(.34) rotate(0deg)", "scale(.92) rotate(0deg)"] }} transition={{ delay: .46, duration: 1.24, times: [0, .18, 1], ease: moveEase }}>
-            <AuthoredPaper snapshot={snapshot} className="fold-paper-base" receiver />
-            <motion.div className="fold-leaf fold-leaf-left" initial={{ transform: "rotateY(178deg)" }} animate={{ transform: "rotateY(0deg)" }} transition={{ delay: .62, duration: .52, ease: moveEase }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} receiver /></motion.div>
-            <motion.div className="fold-leaf fold-leaf-right" initial={{ transform: "rotateY(-178deg)" }} animate={{ transform: "rotateY(0deg)" }} transition={{ delay: .68, duration: .52, ease: moveEase }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} receiver /></motion.div>
-            <motion.div className="fold-leaf fold-leaf-bottom" initial={{ transform: "rotateX(-178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: 1.04, duration: .5, ease: moveEase }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} receiver /></motion.div>
-          </motion.div>
-          <p>opening what {snapshot.sender} made.</p>
-        </motion.div> : <motion.div key="opened" className="opening-object-content" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: reduceMotion ? .01 : .34, ease: [0.23, 1, 0.32, 1] }}><AuthoredPaper snapshot={snapshot} receiver /><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></motion.div>}
-      </AnimatePresence>
+    <motion.section className={`opening-page opening-envelope ${opened ? "is-open" : "is-unfolding"}`} initial={{ backgroundColor: "#ffffff" }} animate={{ backgroundColor: "#ffffff" }} transition={{ duration: .18, ease: [0.23, 1, 0.32, 1] }} aria-label="Opening the sealed private envelope">
+      {!opened && <motion.div className="opening-sealed-object" initial={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1) rotate(-1deg)" }} animate={{ opacity: [1, 1, 1, .58, 0], transform: ["translate3d(0, 0, 0) scale(1) rotate(-1deg)", "translate3d(0, 2px, 0) scale(.97) rotate(-1.5deg)", "translate3d(0, 18px, 0) scale(.94) rotate(.4deg)", "translate3d(0, 76px, 0) scale(.84) rotate(.8deg)", "translate3d(0, 126px, 0) scale(.76) rotate(1deg)"] }} transition={{ duration: .82, times: [0, .2, .46, .76, 1], ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>}
+      <div className="opening-object-content">
+        <div className="receiver-paper-stage" aria-hidden={!opened} inert={!opened ? true : undefined}>
+          <motion.div className="receiver-paper-final" initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: reduceMotion || opened ? 1 : 0 }} transition={{ duration: reduceMotion ? .18 : .24, ease: [0.23, 1, 0.32, 1] }}><AuthoredPaper snapshot={snapshot} receiver={opened} /></motion.div>
+          {!opened && <motion.div className="receiver-fold-panels" aria-hidden="true" initial={{ opacity: 0, transform: "translate3d(0, 66px, 0) scale(.42) rotate(-2deg)" }} animate={{ opacity: [0, 1, 1, 1, 0], transform: ["translate3d(0, 66px, 0) scale(.42) rotate(-2deg)", "translate3d(0, 42px, 0) scale(.56) rotate(.8deg)", "translate3d(0, 12px, 0) scale(.82) rotate(-.3deg)", "translate3d(0, 0, 0) scale(1) rotate(0deg)", "translate3d(0, 0, 0) scale(1) rotate(0deg)"] }} transition={{ delay: .16, duration: 1.34, times: [0, .2, .57, .88, 1], ease: moveEase }}>
+            <motion.div className="receiver-fold-segment receiver-fold-segment-top" initial={{ transform: "rotateX(178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: .38, duration: .52, ease: moveEase }}><AuthoredPaper snapshot={snapshot} /></motion.div>
+            <div className="receiver-fold-segment receiver-fold-segment-middle"><AuthoredPaper snapshot={snapshot} /></div>
+            <motion.div className="receiver-fold-segment receiver-fold-segment-bottom" initial={{ transform: "rotateX(-178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: .72, duration: .56, ease: moveEase }}><AuthoredPaper snapshot={snapshot} /></motion.div>
+          </motion.div>}
+        </div>
+        <AnimatePresence initial={false}>{opened && <motion.div className="receiver-actions-reveal" initial={{ opacity: 0, transform: "translate3d(0, 14px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: .28, ease: [0.23, 1, 0.32, 1] }}><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></motion.div>}</AnimatePresence>
+      </div>
+      {!opened && <motion.p className="receiver-opening-status" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ delay: .22, duration: 1.08, times: [0, .18, .74, 1], ease: [0.23, 1, 0.32, 1] }}>unfolding what {snapshot.sender} made.</motion.p>}
     </motion.section>
   );
 }
@@ -1633,7 +1652,7 @@ function TopLine({ onBack, label }: { onBack: () => void; label: string }) {
 }
 
 function CarrierIcon({ id, size }: { id: CarrierId; size: "hero" | "thumb" | "guide" | "sealed" | "arrival" | "cabinet" }) {
-  const source = id === "bottle" ? "bottle-intact.png" : id === "plane" ? "carrier-plane.png" : size === "guide" ? "firefly-carrying-envelope.png" : "firefly-filled-f1.png";
+  const source = id === "bottle" ? "bottle-intact.png" : id === "plane" ? "carrier-plane.png" : "firefly-brand-mark.png";
   return <span className={`carrier-icon carrier-icon-${id} carrier-icon-${size}`} role="img" aria-label={id === "firefly" ? "Firefly courier" : id}><img src={`${CECILIA}${source}`} alt="" draggable={false} /></span>;
 }
 

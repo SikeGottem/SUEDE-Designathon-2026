@@ -1162,15 +1162,12 @@
 .story-paper-sheet {
   position: absolute;
   z-index: 2;
-  top: 96px;
-  right: 11px;
-  bottom: calc(var(--mobile-safe-area-height) + 82px);
-  left: 11px;
-  border: 1px solid color-mix(in srgb, var(--navy) 16%, transparent);
+  inset: 0;
+  border: 0;
   background: var(--warm-white);
-  box-shadow: 0 9px 24px rgba(8, 34, 75, 0.11), 0 2px 4px rgba(8, 34, 75, 0.08);
+  box-shadow: none;
   color: var(--maker-ink);
-  transform-origin: 52% 12%;
+  transform-origin: center;
 }
 
 .paper-ruling {
@@ -2178,20 +2175,23 @@
 }
 
 .phase-opening .mobile-scroll-content,
+.phase-opening .keepsake-shell,
 .phase-opening .experience-page {
+  width: 100%;
+  height: 100%;
   min-height: 100%;
 }
 
 .opening-page {
   position: relative;
-  display: grid;
-  min-height: 932px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 810px;
   overflow: hidden;
-  padding: 0 30px;
-  place-content: center;
+  padding: 0;
   color: var(--warm-white);
   perspective: 1100px;
-  text-align: center;
 }
 
 .opening-page > p {
@@ -2206,7 +2206,8 @@
 
 .opening-page.is-open {
   display: block;
-  min-height: 100%;
+  height: auto;
+  min-height: 810px;
   overflow: visible;
   padding: 0;
   text-align: left;
@@ -2251,6 +2252,8 @@
 .opening-object-content {
   position: relative;
   z-index: 5;
+  width: 100%;
+  min-height: 100%;
   color: var(--warm-white);
 }
 
@@ -2348,7 +2351,6 @@
 }
 
 /* Full living object */
-.phase-reveal .keepsake-shell,
 .phase-cabinet .keepsake-shell,
 .phase-removed .keepsake-shell {
   padding-right: 28px;
@@ -3544,6 +3546,18 @@
   white-space: nowrap;
 }
 
+.envelope-fold-status {
+  position: absolute;
+  z-index: 12;
+  right: 50%;
+  bottom: calc(var(--mobile-safe-area-height) + 22px);
+  margin: 0;
+  transform: translateX(50%);
+  color: var(--muted-ink);
+  font-size: 16px;
+  white-space: nowrap;
+}
+
 .handoff-link-blocked {
   border-color: #9a4b38;
   color: #7a392d;
@@ -3793,64 +3807,137 @@
   49%, 100% { opacity: 1; }
 }
 
-/* Receiver sees the same sealed exterior, then the exact authored page unfold. */
-.receiver-unfold-stage {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  overflow: hidden;
-  background: var(--paper);
-  color: var(--navy);
-  place-items: center;
-  perspective: 1100px;
-}
-
+/* Receiver sees one continuous object: the sealed exterior yields to a paper that becomes the screen. */
 .opening-sealed-object {
   position: absolute;
-  z-index: 4;
+  z-index: 8;
+  top: 50%;
+  left: 50%;
   width: min(320px, calc(100% - 48px));
+  transform-origin: 50% 66%;
+  translate: -50% -50%;
+  will-change: transform, opacity;
 }
 
-.receiver-folding-paper {
+.receiver-paper-stage {
   position: relative;
-  z-index: 3;
-  width: min(320px, calc(100% - 52px));
-  height: min(570px, calc(100% - 190px));
+  z-index: 4;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: var(--paper);
+  perspective: 1200px;
   transform-style: preserve-3d;
 }
 
-.receiver-folding-paper > .authored-paper,
-.receiver-folding-paper > .fold-leaf,
-.receiver-folding-paper .fold-leaf .authored-paper {
+.receiver-paper-final,
+.receiver-fold-panels {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.receiver-unfold-stage > p {
-  position: absolute;
-  right: 0;
-  bottom: calc(var(--mobile-safe-area-height) + 28px);
-  left: 0;
-  font-size: 17px;
-  text-align: center;
+.receiver-paper-final {
+  z-index: 2;
 }
 
-.opening-page.is-open .opening-object-content {
+.receiver-paper-final > .authored-paper,
+.receiver-fold-segment > .authored-paper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   min-height: 100%;
-  padding: 62px 24px calc(var(--mobile-safe-area-height) + 34px);
-  background: var(--navy);
+  border: 0;
+  box-shadow: none;
+}
+
+.receiver-fold-panels {
+  position: absolute;
+  z-index: 5;
+  filter: drop-shadow(0 10px 12px rgba(16, 35, 70, 0.16));
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.receiver-fold-segment {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 33.3334%;
+  overflow: hidden;
+  backface-visibility: hidden;
+  outline: 1px solid color-mix(in srgb, var(--navy) 13%, transparent);
+  background: var(--warm-white);
+  transform-style: preserve-3d;
+}
+
+.receiver-fold-segment-top {
+  top: 0;
+  z-index: 3;
+  box-shadow: 0 2px 12px rgba(16, 35, 70, 0.12);
+  transform-origin: 50% 100%;
+}
+
+.receiver-fold-segment-middle {
+  top: 33.3333%;
+  z-index: 2;
+}
+
+.receiver-fold-segment-bottom {
+  top: 66.6666%;
+  z-index: 3;
+  box-shadow: 0 -2px 12px rgba(16, 35, 70, 0.12);
+  transform-origin: 50% 0;
+}
+
+.receiver-fold-segment > .authored-paper {
+  height: 300%;
+}
+
+.receiver-fold-segment-top > .authored-paper {
+  top: 0;
+  bottom: auto;
+}
+
+.receiver-fold-segment-middle > .authored-paper {
+  top: -100%;
+  bottom: auto;
+}
+
+.receiver-fold-segment-bottom > .authored-paper {
+  top: -200%;
+  bottom: auto;
+}
+
+.opening-page > .receiver-opening-status {
+  position: absolute;
+  z-index: 14;
+  right: 0;
+  bottom: calc(var(--mobile-safe-area-height) + 26px);
+  left: 0;
+  margin: 0;
+  color: var(--navy);
+  font-size: 18px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.receiver-actions-reveal {
+  position: relative;
+  z-index: 6;
+  padding: 0 24px calc(var(--mobile-safe-area-height) + 34px);
+  background: var(--navy-deep);
   color: var(--warm-white);
 }
 
-.opening-page.is-open .opening-object-content > .authored-paper {
-  position: relative;
-  inset: auto;
-  width: 100%;
-  height: 660px;
-  border-color: color-mix(in srgb, var(--warm-white) 22%, transparent);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+.receiver-actions-reveal .receiver-ending {
+  margin-top: 0;
 }
 
 .receiver-save-note {
