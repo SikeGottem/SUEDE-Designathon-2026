@@ -3,13 +3,15 @@
 
 This folder is a disposable, self-contained HTML presentation stimulus. It is **not** the deck source of truth, a final pitch, a validated product claim, or a replacement for `deck/deck-spec.json` / Figma Slides. It exists to test a Jobs-style problem diagnosis and a receiver-first product demonstration before a human selects a final direction.
 
-Serve the repository locally, then open the deck:
+Open `index.html` directly, or serve the repository locally when you want the optional text-measurement helper:
 
 ```sh
 python3 -m http.server 4176 --bind 127.0.0.1
 ```
 
 Visit `http://127.0.0.1:4176/deck/pitch-prototype/`. Arrow keys, space, Enter, click, and the on-screen controls advance; `F` toggles fullscreen. Use `?slide=N&step=M` to open an exact build state, for example `?slide=10&step=2`. Print exposes the final state of every slide.
+
+Run the standalone-file regression check with `node --test tests/file-open.test.mjs`.
 
 Local review exports (generated and intentionally ignored by the repository):
 
