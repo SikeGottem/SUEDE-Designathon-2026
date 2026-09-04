@@ -57,6 +57,16 @@ The published timeline is more specific: background research began around 12:00,
 - Limitation: the 2025 public criteria were listed as TBA, and the 2026 rubric is not yet published. Treat this as a working model and replace it when official criteria arrive.
 - New priority: use the explicit 2024 SUEDE criteria before generic Devpost guidance. Generic guidance is supporting evidence only.
 
+## Team discussion: simplicity and purposeful wit in the pitch
+
+- Source: [New Recording 14 raw transcript](TRANSCRIPTS/2026-09-04-new-recording-14.md), recorded 4 September 2026.
+- Observation: the speakers repeatedly argued that a technically informed judging audience should still receive a problem explanation simple enough for a non-specialist to understand.
+- Observation: Steve Jobs's explanation of the physical keyboard and stylus was discussed as an example of making an unfamiliar problem immediately perceptible.
+- Observation: the discussion converged on using humour or wit only when it makes the problem or solution clearer, possibly once or twice, while reading the room and avoiding personal or employer-directed insults.
+- Interpretation: the useful device is not comedy by itself. A sharp comparison can compress explanation, demonstrate confidence and make the mechanism easier to remember.
+- Limitation: the mono recording has no reliable speaker attribution, and this entry records a working team discussion rather than an approved pitch script.
+- What this changes for us: test the problem explanation on a non-specialist; keep any joke only if removing it makes the problem or mechanism harder to understand.
+
 ## New evidence inbox
 
 Add raw links or observations here, then promote useful items into a section above.
