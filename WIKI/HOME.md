@@ -38,6 +38,7 @@ The central belief is:
 - [[BRIEF]] - official question, constraints and interpretations
 - [[IDEAS]] - separate directions and their unresolved assumptions
 - [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
+- [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
 - [[RULE_BANK]] - ninety precise rule hypotheses for wide problem discovery
 - [[CONCEPT_BANK]] - cross-disciplinary experience mechanisms and fast falsification tests
 - [[IDEA_SCAFFOLD]] - detailed intake, divergence, red-team and design-ready handoff
