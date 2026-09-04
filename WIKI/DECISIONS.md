@@ -370,9 +370,10 @@ Only record choices that change direction, investment or the story. Every conseq
 
 - Status: current
 - Decision: rebuild the next reversible friendship-appreciation prototype around one authored digital care package / sendable scrapbook, using a single white creator studio, private handoff, deliberate opening into a deep-navy receiver object, and a receiver-owned ending; complete and review the conceptual specification before restarting UI implementation.
+- Approval: Ethan approved all fourteen conceptual conditions on 5 September 2026. Fresh implementation is now permitted under the conditions below.
 - Reason: Ethan rejected the first field-by-field prototype as the boring version of the idea and required a complete transcript ingest. The late recordings repeatedly describe creative composition, mixed media, intentional opening, receiver ownership, and later replay, while keeping exact vessel, media limits, and persistence unresolved.
 - Evidence: [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md), and Ethan's direct 5 September instructions selecting the transcript-first restart, real coded product, white-then-navy sequence, Ugly Handwriting, and supplied handmade visual grammar without `grug` identity.
-- Consequence: the previous wizard is no longer a design source. WIKI synthesis and human review may proceed now. Fresh UI implementation begins only after Ethan/team approval; it must remain a labelled stimulus, use one coherent creator surface and object treatment, preserve open decisions, and pass post-build judge and authenticity review before becoming selected direction.
+- Consequence: the previous wizard is no longer a design source. Fresh UI implementation may now proceed; it must remain a labelled stimulus, use one coherent creator surface and object treatment, preserve open decisions, and pass post-build judge and authenticity review before becoming selected direction.
 - Revisit when: Ethan or the team changes any of the fourteen approval decisions, a rendered prototype exposes a conceptual failure, or sender/receiver testing changes the problem or medium.
 
 ### Judge review
@@ -405,8 +406,8 @@ Only record choices that change direction, investment or the story. Every conseq
 | Authorship and distinctiveness | Can AI-generated UI and handwriting still look synthetic? | Ethan selected the source anchors, rejected the first generated layout, required a fresh ingest, and set a specific white-to-navy signature move; intimate content stays human-authored. | Only the rendered artifact plus material team edits can pass the post-build authenticity gate. |
 
 - Verdict: Proceed with conditions
-- Work permitted by this verdict: complete, sync, and share the transcript ingest and conceptual specification for human review. After explicit approval, build one fresh reversible coded prototype from that specification.
-- Blocking conditions: no UI implementation before review; no inheritance from the old wizard; no validation claims; keep media limits, object vessel, firefly, acknowledgement, and persistence visibly editable; do not generate intimate copy; use one declared visual lead and one coherent v0 object; run full post-build judge, accessibility, and authenticity reviews.
+- Work permitted by this verdict: build one fresh reversible coded prototype from the approved conceptual specification.
+- Blocking conditions: no inheritance from the old wizard; no validation claims; keep media limits, object vessel, firefly, acknowledgement, and persistence visibly editable; do not generate intimate copy; use one declared visual lead and one coherent v0 object; run full post-build judge, accessibility, and authenticity reviews.
 - Weakest judging angle: evidence quality, because the record supports team intent but no participant has confirmed the problem or the proposed mechanism.
 - Main trade-off: the richer concept finally expresses the team's ambition and digital-medium thesis, but combines enough mechanisms that later testing must carefully separate what caused any reaction.
 - Next evidence that could change the verdict: Ethan/team review of the fourteen conceptual decisions, followed by one consented sender/receiver walkthrough compared with an ordinary message.

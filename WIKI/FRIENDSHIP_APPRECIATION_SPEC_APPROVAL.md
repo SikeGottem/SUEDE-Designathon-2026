@@ -1,7 +1,7 @@
 <!-- This sheet lets the team approve or change the conceptual friendship-appreciation prototype one decision at a time. -->
 # Friendship appreciation — conceptual specification review
 
-> **Status:** Awaiting Ethan/team review.
+> **Status:** Approved by Ethan on 5 September 2026. All fourteen recommended conditions are active for the next reversible prototype.
 >
 > **Read first:** [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md). Use the [transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) when a choice needs its original context.
 >
@@ -126,4 +126,4 @@ Copy this and change only the items you disagree with:
 - whether a physical letter, voice note, text, or simpler ritual performs better;
 - any claim of demand, impact, or validation.
 
-After review, update the conceptual spec and decision log before implementation begins.
+Review is complete. Fresh implementation may begin from the conceptual specification; later changes should update the relevant numbered decision before the prototype follows them.

@@ -3,7 +3,7 @@
 
 > **Status:** The rule and problem direction are chosen for further work. A richer authored digital object is now the conceptual condition for the next prototype, not a validated final product. The audience, causal mechanism, and long-term service remain unselected. Answers 1–29 are team hypotheses and anecdotes, not external validation.
 
-The [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) reconstructs how the direction changed. The [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) turns that record into a page-by-page proposal for team review; it supersedes the earlier field-by-field control.
+The [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) reconstructs how the direction changed. Ethan approved every condition in the [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) on 5 September 2026; it is now the page-by-page contract for the next reversible build and supersedes the earlier field-by-field control.
 
 ## Chosen unwritten rule
 
@@ -60,4 +60,4 @@ The working brief posture to test is primarily to **redesign** the rule by makin
 - Run competitor, precedent, toolchain-plumbing and generic feasibility work in parallel without converting prototype choices into validation.
 - Prepare the evidence library, Q&A appendix and unstyled deck skeleton while the final story and visuals remain open.
 
-Do not begin the fresh coded UI until Ethan and the team review the conceptual specification. Figma is a later feedback surface, not the current implementation destination. The prototype remains disposable and cannot become the final product, permanent architecture, or pitch proof until the relevant judge and post-build authenticity gates pass.
+The fresh coded UI may now begin from the approved conceptual specification. Figma is a later feedback surface, not the current implementation destination. The prototype remains reversible and cannot become the final product, permanent architecture, or pitch proof until the relevant judge and post-build authenticity gates pass.

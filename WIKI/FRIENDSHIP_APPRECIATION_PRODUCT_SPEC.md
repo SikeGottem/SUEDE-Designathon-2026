@@ -1,13 +1,13 @@
 <!-- This is the review-first conceptual specification for the friendship-appreciation prototype, describing experience and meaning rather than implementation. -->
 # Friendship appreciation — conceptual prototype specification
 
-> **Status:** Draft for Ethan and team review. Nothing in this document is treated as validated product truth.
+> **Status:** Approved by Ethan on 5 September 2026 as the conceptual contract for the next reversible prototype. This approval selects the experience to build; it is not user validation or a final product decision.
 >
 > **Supersedes:** the 4 September narrow field-by-field prototype specification. That version is retained in Git history as the deliberately safe control that Ethan rejected as the boring interpretation.
 >
 > **Grounding:** [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), current working direction, research dossier, and Ethan's latest direct visual and workflow decisions.
 >
-> **Build boundary:** do not restart the product UI from this document until the team has reviewed the choices at the end. The eventual code is the real prototype; Figma may later communicate refinements back into it.
+> **Build boundary:** fresh product UI implementation may now restart from this document. The code is the real prototype; Figma may later communicate refinements back into it.
 
 ## 1. How to read this draft
 
@@ -688,7 +688,7 @@ It does not prove demand, prevalence, emotional benefit, or long-term use.
 
 ## 26. Approval decisions
 
-The current recommendation is shown first. Ethan and the team can approve, change, or leave each open.
+Ethan approved all fourteen conditions on 5 September 2026. They now govern the next reversible prototype and remain editable when the team learns something new.
 
 1. **Core form** — one authored digital care package / scrapbook object.
 2. **Creator structure** — one living white studio, not a field-by-field wizard.
@@ -705,7 +705,7 @@ The current recommendation is shown first. Ethan and the team can approve, chang
 13. **Brand** — remain unnamed and logo-neutral while the interaction is reviewed.
 14. **Demo** — real coded private-link/QR receiver flow; no Figma-only prototype.
 
-Reply in this format, changing only what you disagree with:
+The original review format is preserved below so later changes can identify the exact decision being revised:
 
 ```text
 1. Core form — Approve / Change: ___ / Keep open
