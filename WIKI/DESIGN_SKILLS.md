@@ -15,15 +15,16 @@ Use a small specialist chain. Do not create a pile of overlapping “make it loo
 The best-supported system is:
 
 1. `WIKI/JUDGING.md` and `suede-judge-review` govern every consequential decision.
-2. `suede-design-authenticity` rejects interchangeable visual directions before build and after the real render is inspected.
-3. Real evidence and a short `DESIGN.md` establish the product's point of view before visual generation.
-4. Selected Intent methods challenge the problem, medium and assumptions.
-5. gstack creates the design language and one genuinely divergent visual round.
-6. Broad coded-interface skills may contribute separate options or critiques, but each artifact declares one visual lead before implementation so contradictory defaults are not stacked.
-7. The official Figma plugin owns native, editable product screens and Figma Slides.
-8. OpenAI Product Design plus Playwright inspect rendered flows, states and responsiveness.
-9. Emil Kowalski's skills own interaction motion; Remotion is optional for one rendered hero clip.
-10. Humans own framing, selection, taste, material editing, testing, approval and disclosure throughout.
+2. `suede-idea-stress-test` and `WIKI/IDEA_SCAFFOLD.md` turn rough thoughts into evidence-honest, red-teamed, design-ready packets before selection.
+3. `suede-design-authenticity` rejects interchangeable visual directions before build and after the real render is inspected.
+4. Real evidence and a short `DESIGN.md` establish the product's point of view before visual generation.
+5. Selected Intent methods challenge the problem, medium and assumptions.
+6. gstack creates the design language and one genuinely divergent visual round.
+7. Broad coded-interface skills may contribute separate options or critiques, but each artifact declares one visual lead before implementation so contradictory defaults are not stacked.
+8. The official Figma plugin owns native, editable product screens and Figma Slides.
+9. OpenAI Product Design plus Playwright inspect rendered flows, states and responsiveness.
+10. Emil Kowalski's skills own interaction motion; Remotion is optional for one rendered hero clip.
+11. Humans own framing, selection, taste, material editing, testing, approval and disclosure throughout.
 
 There is no credible common benchmark showing that one visual-design skill universally creates the “best output.” GitHub stars show adoption, not taste or result quality. Our controlled Relay test produced a provisional result, but Ethan chose to wait for the real 2026 concept before making a permanent selection.
 
@@ -46,6 +47,7 @@ This is also where current product practice is moving. Figma describes AI as wor
 | Use case | Recommended owner | Status | Why it belongs |
 | --- | --- | --- | --- |
 | Decision governance | SUEDE `JUDGING.md` + `suede-judge-review` | Keep; now mandatory | The only layer tailored to the event, evidence standard and judging case. It stops attractive but weak work from advancing. |
+| Idea development and red-team | SUEDE `suede-idea-stress-test` + `IDEA_SCAFFOLD.md` | Keep; mandatory for contenders | Joins desirability, viability, feasibility, medium necessity, mechanism, risks, states, proof and design inputs into one packet before UI begins. |
 | Visual authenticity | SUEDE `suede-design-authenticity` | Keep; mandatory before and after visual builds | Converts authorship from a principle into a source-anchor, divergence, logo-swap, team-voice and subtraction gate. |
 | Research synthesis | Anthropic `synthesize-research` pattern | Add after review | Separates observations, behaviours, themes, contradictions, confidence and open questions while keeping source labels. |
 | Problem framing and outside-box thinking | Selected [Intent](https://github.com/ghaida/intent) modules | Adapt selectively | Strongest inspected system for strategy, journeys, assumptions, inclusion, resilience, ethics and non-default paradigms. |

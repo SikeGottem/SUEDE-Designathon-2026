@@ -29,6 +29,26 @@ If every option is a feature variant of an app, dashboard, assistant or chatbot,
 
 Use the table to expose the argument. Do not turn it into fake precision by assigning scores.
 
+## Idea stress-test checkpoint
+
+Use the complete conversational workbook in [IDEA_SCAFFOLD.md](IDEA_SCAFFOLD.md). The minimum record for a plausible contender is:
+
+- One-line person / moment / rule / cause / mechanism / outcome:
+- Unwritten rule, setting, signals and enforcement:
+- Chosen posture: reveal / communicate / question / redesign
+- Evidence versus inference versus blocking unknown:
+- Four mechanism-level paradigms considered:
+- Current behaviour and credible non-app alternative:
+- Core loop, failure and recovery:
+- Desirability, viability and feasibility concern:
+- Trust, inclusion and second-order effect:
+- Strongest fair objection:
+- Smallest falsifiable test and decision rule:
+- Design and pitch inputs still missing:
+- Work permitted now:
+
+Run `.agents/skills/suede-idea-stress-test/SKILL.md` to develop this packet. It prepares the evidence for `suede-judge-review`; it cannot approve its own direction.
+
 ## Mandatory judge review
 
 ### Decision

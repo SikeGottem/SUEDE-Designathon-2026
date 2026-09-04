@@ -274,6 +274,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: the next two real artifact cycles, including whether the gate catches generic output without flattening the design.
 - Recommendation: activate the gate immediately and treat an attractive first generation as an exploratory draft, never the source of truth.
 
+## 2026-09-04 - Require an idea dossier before material design
+
+- Status: current
+- Decision: every raw idea receives a quick intake, and every plausible contender must complete the `suede-idea-stress-test` workflow and `WIKI/IDEA_SCAFFOLD.md` dossier before selection or material UI, prototype or pitch work.
+- Reason: the existing judging and design gates were comprehensive but fragmented. They could criticise an idea after it had momentum without first producing the detailed person, rule, cause, mechanism, viability, feasibility, state, risk and proof inputs needed for accurate design.
+- Evidence: Ethan explicitly requested a form-like scaffold that examines ideas from every angle, compares them against the established criteria, includes a devil's advocate and improves first design output. A read-only audit found viability and design-input completeness to be the largest gaps in the existing idea template.
+- Consequence: ideas now use a two-speed workflow. Sparks stay fast; only contenders receive the full dossier. The stress test prepares evidence and objections, while `suede-judge-review` retains final execution authority.
+- Revisit when: the first live ideation session shows that a question adds no decision value, a missing lens repeatedly causes rework, or the official rules change the required proof.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The current-brief section makes every idea locate and act on an unwritten rule rather than merely mention one. | The user-provided wording still needs official verification. |
+| Problem identification | strengthens | The dossier requires a specific person, moment, current behaviour, consequence and cause ladder. | Completing fields cannot substitute for contact with real people. |
+| Solution approach | strengthens | The mechanism and state map trace trigger, action, response, correction, payoff, failure and recovery. | The packet may create false confidence if hypotheses are not labelled. |
+| Design innovation | strengthens | Four mechanism-level paradigms, medium necessity and inversion prevent app-feature convergence. | Teams may still secretly favour the first idea. |
+| Visual communication | strengthens | Designers receive the communication job, real content, critical states, source anchors and anti-default constraints. | Too much input can flatten hierarchy unless the design brief identifies one dominant job. |
+| Presentation skills | strengthens | Retellability, demo truth and the proof artifact are considered before slides begin. | Internal workbook language must not leak into the live pitch. |
+| Evidence quality | strengthens | A claim ledger separates evidence, inference, assumptions, contradictions and falsification. | Evidence remains weak until the team gathers it. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Could the scaffold harden the first framing? | It requires cause questioning, four paradigms and explicit disconfirming evidence. | The facilitator must allow the framing to change. |
+| Behaviour and context | Does it locate the rule in real behaviour? | It asks for the setting, trigger, signals, current workaround, enforcement and consequence. | Direct observation is still needed. |
+| Medium necessity | Will detailed prompts still default to apps? | A credible non-app response and medium justification are mandatory before material UI. | The winning medium is idea-specific. |
+| Alternatives | Are alternatives genuinely different? | The control, embedded, beyond-screen and inversion paradigms must differ by mechanism. | Weak facilitation could produce cosmetic variants. |
+| Human specificity | Does the form produce a real person or a polished persona? | Fabricated personas and quotes are forbidden; missing evidence stays unknown. | Recruitment and access to relevant people remain open. |
+| Inclusion and accessibility | Is inclusion embedded before UI? | The packet checks access, language, culture, power, stigma and the accessible equivalent of the critical action. | Actual testing depends on the selected context. |
+| Trust, safety and privacy | Can revealing a rule expose people? | The brief-specific map asks about humiliation, coercion, surveillance, consent and accidental reinforcement. | Domain-specific harms will require added lenses. |
+| Failure and recovery | What if the intervention is wrong or ignored? | The state map includes wrong input, missing data, decline, adversarial use, safe failure and recovery. | The real mechanism determines the credible fallback. |
+| Feasibility and demo truth | Is the idea buildable and honestly demonstrable? | Dependencies are separated from prototype substitutes, simulation and future work. | Event duration and submission format need confirmation. |
+| Incentives and second-order effects | Could the experience reinforce the norm? | The form asks who gains or loses power and how to detect reinforcement instead of change. | Effects after repeated use need real-world evidence. |
+| Simplicity and retellability | Is a 463-line workbook usable under time pressure? | The two-speed workflow limits every spark to quick capture and reserves the full dossier for contenders. | The first event-day run will show what can be shortened. |
+| Authorship and distinctiveness | Does detailed AI completion replace team thinking? | Human framing and selection remain mandatory, evidence cannot be invented and the design handoff includes source anchors and rejected defaults. | The team must actively edit rather than accept completed prose. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: activate the stress-test skill, use the quick intake for every spark and require the full dossier before a contender is selected or materially designed.
+- Blocking conditions: preserve the two-speed workflow; leave unknowns visible; do not treat completion as evidence; require mechanism-level divergence; retain human selection and the separate judge verdict.
+- Weakest judging angle: evidence quality, because the scaffold can expose missing proof but cannot supply it.
+- Main trade-off: stronger concepts and more accurate design inputs in exchange for deliberate friction only after an idea becomes a contender.
+- Next evidence that could change the verdict: one timed live ideation session using the new brief, including whether it produces materially different mechanisms and a clearer next test.
+- Recommendation: use quick capture immediately, then run the full dossier only on the two or three directions that survive the first discussion.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

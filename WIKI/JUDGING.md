@@ -230,7 +230,9 @@ Possible stigma is a presentation risk, not a confirmed SUEDE rule. The answer i
 
 ### Idea gate
 
-Before selection, require the divergence set, the full judging review, all challenge lenses and one sentence describing the person, moment, cause, mechanism and outcome. A leading idea must be more than a feature list.
+Before selection, require the quick intake plus a completed contender dossier from `WIKI/IDEA_SCAFFOLD.md`, the divergence set, a falsifiable next test, the full judging review, all challenge lenses and one sentence describing the person, moment, cause, mechanism and outcome. Use `.agents/skills/suede-idea-stress-test/SKILL.md` to develop the packet; it does not replace the judge verdict. A leading idea must be more than a feature list.
+
+For the current user-provided brief, the packet must also name the unwritten rule, setting, signals, enforcement, beneficiaries, burdens, exceptions and chosen posture: reveal, communicate, question, redesign or a justified combination. Reject a concept that merely displays a social norm, reinforces it without recognising the harm, or assumes a screen before the experience mechanism is clear.
 
 ### Product and UI preflight
 

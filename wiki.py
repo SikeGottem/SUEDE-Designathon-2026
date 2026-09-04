@@ -55,6 +55,21 @@ POLICIES = (
         "A generated draft cannot lead later work until a human selects or materially redirects it.",
     ),
     (
+        "idea.intake_required",
+        "true",
+        "Every raw idea needs quick capture; plausible contenders need the full dossier before selection or material design.",
+    ),
+    (
+        "idea.intake_skill",
+        ".agents/skills/suede-idea-stress-test/SKILL.md",
+        "Project-local workflow for evidence, divergence, devil's advocate, proof and design-ready idea packets.",
+    ),
+    (
+        "idea.full_dossier_before_material_design",
+        "true",
+        "Unknown people, rules, causes, mechanisms and proof boundaries cannot be hidden by polished UI or pitch work.",
+    ),
+    (
         "wiki.github_sync_required",
         "true",
         "Every completed wiki update must be committed and pushed to GitHub.",

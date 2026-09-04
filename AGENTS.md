@@ -56,6 +56,18 @@ Use `.agents/skills/suede-design-authenticity/SKILL.md` for every material deck,
 
 This is not a minimalism rule. Bland, safe and conventionally tasteful output also fails when it has no subject-specific point of view. Do not treat use of a broad anti-slop skill as evidence that the gate passed; verify the actual artifact.
 
+## Mandatory idea-development gate
+
+Use `.agents/skills/suede-idea-stress-test/SKILL.md` whenever the team captures, expands, compares, recommends or prepares to design a material idea.
+
+- Every raw idea gets the quick intake: person, moment, unwritten rule, cause, proposed change, most dangerous assumption and next evidence action.
+- Plausible contenders complete the full dossier in `WIKI/IDEA_SCAFFOLD.md` before selection or material UI, prototype or pitch work.
+- Idea comparison requires mechanism-level alternatives and qualitative trade-offs, never invented numeric scoring.
+- The stress test develops evidence and objections; it does not approve the idea. `suede-judge-review` still controls selection and execution.
+- Missing evidence stays unknown. Do not fabricate answers to make a prompt look complete.
+
+For the current user-provided brief, every idea must identify the unwritten rule, how people learn and enforce it, who benefits or is burdened, whether the response reveals, communicates, questions or redesigns it, and the risk of accidentally reinforcing it.
+
 ## Decision record
 
 When Ethan or the team settles a consequential decision, append the decision and its completed judge review to `WIKI/DECISIONS.md`, then run:

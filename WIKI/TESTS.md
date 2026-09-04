@@ -11,11 +11,17 @@ A test exists to change confidence, not to perform a research ritual.
 - Idea link:
 - Uncertainty:
 - What we believe now:
+- Falsification condition:
 - Smallest useful test:
 - Who or what we need:
+- Owner:
+- Timebox:
+- Observable supporting signal:
+- Observable weakening signal:
 - Observation:
 - What surprised us:
 - Confidence after: lower / unchanged / higher
+- Decision rule applied:
 - What changes next:
 
 ## Planned

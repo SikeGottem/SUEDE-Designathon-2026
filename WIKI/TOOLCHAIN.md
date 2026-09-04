@@ -11,6 +11,7 @@
 | Layer | Tool | Current state | Use |
 | --- | --- | --- | --- |
 | Decision governance | SUEDE judge review | Active and mandatory | Reviews consequential ideas, UI, prototypes and pitch decisions before they advance. |
+| Idea development | SUEDE idea stress test + idea scaffold | Active and mandatory for contenders | Turns a spark into an evidence-honest, red-teamed, design-ready packet without fake scoring. |
 | Design authenticity | SUEDE design-authenticity review | Active and mandatory for visual work | Rejects polished but interchangeable output before build and after inspecting the render. |
 | UX strategy | Intent `strategize` | Installed | Frames the user, behaviour, opportunity, hypothesis and project scope before solution work. |
 | Outside-the-box thinking | Intent `philosopher` | Installed | Challenges default app assumptions and produces materially different paradigms. |
@@ -53,11 +54,13 @@ The blind review selected C with moderate confidence. Ethan deferred the permane
 ```text
 official brief + real evidence
         ↓
-SUEDE review + Intent strategy/philosopher
+quick idea capture + Intent strategy/philosopher
         ↓
 mechanism-level alternatives
         ↓
-human selection
+idea dossier + devil's advocate + smallest falsifiable test
+        ↓
+SUEDE selection review + human selection
         ↓
 gstack design contract + one divergence round
         ↓
@@ -82,6 +85,14 @@ optional Remotion hero clip only if the story earns it
 - Use [FreTo's 2024 artifacts](FRETO_REFERENCE.md) as a validated structural precedent: problem → evidence → synthesis → concept → test/iteration → product/value, with defensive detail in the appendix. Do not copy its premise, persona, metrics or scrapbook styling.
 - Keep presentation transitions and the final visual polish as a human Figma pass.
 - A visually polished first generation is still a draft. Inspect it at thumbnail and delivery scale, remove decorative labels and containers, rewrite model-like copy, then record at least one material human-directed change.
+
+## Idea-to-design handoff
+
+- Every spark gets the quick capture in `WIKI/IDEAS.md`; only plausible contenders complete `WIKI/IDEA_SCAFFOLD.md`.
+- Use `suede-idea-stress-test` to fill gaps conversationally, mark unknowns honestly and construct the strongest fair objection.
+- Do not ask Figma or a coded-interface skill to compensate for an unknown person, rule, cause, mechanism, state or proof boundary.
+- The completed packet feeds `suede-judge-review`. Only its verdict and human selection permit material design work.
+- For the current brief, include the rule's setting, signals, enforcement, beneficiaries, burdens and chosen reveal / communicate / question / redesign posture.
 
 ### Figma verification status
 
