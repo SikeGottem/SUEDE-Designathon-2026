@@ -7,7 +7,7 @@ Ethan has supplied the working 2026 brief: “Design an experience that reveals,
 
 Every final product decision and pitch claim must pass the judging review in `WIKI/JUDGING.md` before it is presented as settled. Reversible prototypes may be built first as test stimuli, then audited against the evidence they produce.
 
-The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. The live ideation recordings are preserved as raw sources and expanded into a research-backed initial report, 90 rule hypotheses and 103 cross-disciplinary concept cards. The team has chosen friendship appreciation as the working rule and problem direction. A finite, receiver-owned digital keepsake is now the controlled prototype condition, not the selected final product; the audience, causal mechanism, preferred medium and long-term persistence model remain open. The canonical build contract is `WIKI/FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md`.
+The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. The live ideation recordings are preserved as raw sources and expanded into a research-backed initial report, 90 rule hypotheses and 103 cross-disciplinary concept cards. The team has chosen friendship appreciation as the working rule and problem direction. The complete transcript pass now reconstructs the intended experience as a richer authored digital care package / sendable scrapbook rather than a field-by-field message form. The next prototype is proposed as one white creator studio, a private handoff, and a deliberate opening into a deep-navy receiver-owned object. This remains a reviewable test condition, not a validated final product.
 
 The idea scaffold and stress-test skill must turn contenders into design-ready packets before visual work. The three broad visual skills remain available for separate exploration, but each real artifact must declare one visual lead. Native Figma Design-file authoring is verified; Figma Slides still needs a native test.
 
@@ -39,8 +39,9 @@ The central belief is:
 - [[IDEAS]] - separate directions and their unresolved assumptions
 - [[INITIAL_IDEATION]] - recording synthesis, question answers, evidence boundaries and tunnel-vision diagnosis
 - [[FRIENDSHIP_APPRECIATION_DIRECTION]] - compact source of truth for the chosen working rule, problem and open solution direction
-- [[FRIENDSHIP_APPRECIATION_PRODUCT_SPEC]] - transcript-grounded build contract for the reversible sender-to-receiver prototype
-- [[FRIENDSHIP_APPRECIATION_SPEC_APPROVAL]] - seven-decision walkthrough for human review before the first product draft is approved
+- [[FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST]] - chronological reconstruction of the product vision, later refinements, unresolved branches and rejected boring versions
+- [[FRIENDSHIP_APPRECIATION_PRODUCT_SPEC]] - non-technical, page-by-page conceptual specification for the fresh sender-to-receiver prototype
+- [[FRIENDSHIP_APPRECIATION_SPEC_APPROVAL]] - fourteen-decision walkthrough for Ethan and the team to approve or edit before implementation restarts
 - [[FRIENDSHIP_APPRECIATION_DOSSIER]] - full problem analysis, research, comparable products, precedents and test plan for the friendship-appreciation thread
 - [[FRIENDSHIP_APPRECIATION_QUESTION_BANK]] - unanswered adversarial questions attacking the friendship-appreciation problem and current digital-letter direction from every major lens
 - [[TEAM_CATCHUP_DISCORD]] - neutral dot-point catch-up for team members who missed the brief and recent discussion

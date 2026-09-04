@@ -36,6 +36,10 @@ The opening-session transcript captured the following presentation guidance. It 
 - **Captured source:** Chronicle transcript `26548e42-bf5a-5414-8227-3ab6baf2dc5d` on 4 September 2026.
 - **Verification status:** captured live guidance; not independently confirmed.
 
+### Live pitch versus documented process
+
+The team separately agreed that the live story should sell the problem, changed experience, and product rather than become a diary of internal setbacks ([3 September discussion](TRANSCRIPTS/2026-09-03-8d39172c-4cee-5766-97e7-90708888daf3.md)). This is a team presentation preference, not organiser policy. It remains compatible with the captured requirement to document process and disclose material AI/third-party use in the submission or appendix.
+
 ## First interpretation
 
 Treat this as a working interpretation of the user-provided wording until the official source is verified.

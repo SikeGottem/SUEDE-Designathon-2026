@@ -1,9 +1,9 @@
 <!-- This page is the compact source of truth for the team's chosen friendship-appreciation rule and open solution direction. -->
 # Friendship appreciation — working direction
 
-> **Status:** The rule and problem direction are chosen for further work. The audience, mechanism, medium and final solution are not selected. Answers 1–29 are team hypotheses and anecdotes, not external validation.
+> **Status:** The rule and problem direction are chosen for further work. A richer authored digital object is now the conceptual condition for the next prototype, not a validated final product. The audience, causal mechanism, and long-term service remain unselected. Answers 1–29 are team hypotheses and anecdotes, not external validation.
 
-The current reversible build condition is defined in [FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md). That prototype is a test stimulus, not a final product decision.
+The [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) reconstructs how the direction changed. The [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) turns that record into a page-by-page proposal for team review; it supersedes the earlier field-by-field control.
 
 ## Chosen unwritten rule
 
@@ -21,11 +21,11 @@ The team currently sees a format gap:
 - A physical letter is intentional, personal and keepable, but the team expects its time, logistics and distance friction to deter some senders.
 - Some people prefer care through actions, humour or presence and may not have this problem; they are not the assumed audience.
 
-## Open solution territory
+## Current prototype territory
 
-Test whether a **deliberately authored digital object or keepsake** can sit between casual chat and a physical letter. It would need to preserve personal effort, give the receiver something they can feel ownership over and make distance easier without automating the intimacy.
+Test whether a **deliberately authored digital care package, sendable scrapbook, or keepsake** can sit between casual chat and a physical letter. It needs to preserve personal effort, make creative choices visible, give the receiver something they can feel ownership over, and make distance easier without automating the intimacy.
 
-Writing, photographs, voice, music, video, drawing and custom composition are possible materials. A digital letter, scrapbook, envelope reveal, QR or link delivery and a private archive are candidate expressions, not locked features.
+Writing, photographs, voice, music, video, drawing, personal marks, and custom composition form the expressive territory. The next prototype is proposed as one living creator surface rather than a form wizard. A private link, deliberate opening, full-object receiver view, and optional cabinet make up the current experience arc; their exact vessel, media limit, and persistence model still require team approval.
 
 The working brief posture to test is primarily to **redesign** the rule by making ordinary-day appreciation socially legible, while also revealing why the old rule exists.
 
@@ -36,6 +36,14 @@ The working brief posture to test is primarily to **redesign** the rule by makin
 - Both sender and receiver matter; receiver meaning and response pressure cannot be treated as an afterthought.
 - Digital must earn its place against plain text, voice, physical letters and non-digital rituals.
 - AI may research, organise, challenge and build disposable experiments. Humans own the rule, interpretation, intimate content, selection, testing and final design.
+
+## Current visual condition
+
+- Creation and the sealed arrival are white, spacious, and unfinished.
+- The receiver's deliberate opening changes the full experience to deep navy with warm off-white writing and linework.
+- Ugly Handwriting and one coherent human-drawn icon/illustration system define the current prototype language.
+- The supplied `grug` references contribute sparse composition and line quality only; their name, flower, copy, navigation, mascot, and exact layouts are excluded.
+- This is a prototype condition, not the final name, logo, brand system, or deck identity.
 
 ## Make-or-break unknowns
 
@@ -49,7 +57,7 @@ The working brief posture to test is primarily to **redesign** the rule by makin
 - Continue questions 30–294 in blocker groups rather than treating all questions as equally urgent.
 - Turn answers 1–29 into an evidence ledger and test the disputed claims with senders and receivers.
 - Compare matched text, voice, physical and rough digital versions before choosing a medium.
-- Run competitor, precedent, toolchain-plumbing and generic feasibility work in parallel without establishing product structure or visual direction.
+- Run competitor, precedent, toolchain-plumbing and generic feasibility work in parallel without converting prototype choices into validation.
 - Prepare the evidence library, Q&A appendix and unstyled deck skeleton while the final story and visuals remain open.
 
-Do not begin polished Figma screens, a production app, permanent architecture or final pitch claims until the person, rule, cause, medium and smallest testable mechanism pass the idea and judging gates. A disposable HTML prototype may run ahead of that gate when it is explicitly labelled and structured to answer those unknowns.
+Do not begin the fresh coded UI until Ethan and the team review the conceptual specification. Figma is a later feedback surface, not the current implementation destination. The prototype remains disposable and cannot become the final product, permanent architecture, or pitch proof until the relevant judge and post-build authenticity gates pass.

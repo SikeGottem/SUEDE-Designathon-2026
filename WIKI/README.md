@@ -6,19 +6,20 @@ This folder is the team's working memory. The presentation explains the shared a
 ## Start here
 
 1. Open [HOME.md](HOME.md) for the current state.
-2. Use [FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) as the canonical contract for the current reversible prototype.
-3. Review its material choices through [FRIENDSHIP_APPRECIATION_SPEC_APPROVAL.md](FRIENDSHIP_APPRECIATION_SPEC_APPROVAL.md); approval selects experiment conditions, not findings.
-4. Read [JUDGING.md](JUDGING.md) before treating a product decision or pitch claim as settled.
-5. Put new interpretations in [IDEAS.md](IDEAS.md) before they become final direction.
-6. Use [INITIAL_IDEATION.md](INITIAL_IDEATION.md), [RULE_BANK.md](RULE_BANK.md) and [CONCEPT_BANK.md](CONCEPT_BANK.md) to widen the field without confusing generated options with evidence or selection.
-7. Put observations, links and quotes in [EVIDENCE.md](EVIDENCE.md).
-8. Record quick learning loops in [TESTS.md](TESTS.md).
-9. Log settled decisions and their completed judge reviews in [DECISIONS.md](DECISIONS.md).
-10. Use [TOOLCHAIN.md](TOOLCHAIN.md) for the installed workflow, safe hybrid rule and deferred Figma setup.
-11. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the research behind the tool choices.
-12. Use [FRETO_REFERENCE.md](FRETO_REFERENCE.md) for the verified structure of the 2024 winner's public Canva deck and case study.
-13. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
-14. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
+2. Read [FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) for the complete chronology and the distinction between later direction, open branches, and rejected versions.
+3. Use [FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) as the non-technical conceptual contract for the next reversible prototype.
+4. Review its page and interaction choices through [FRIENDSHIP_APPRECIATION_SPEC_APPROVAL.md](FRIENDSHIP_APPRECIATION_SPEC_APPROVAL.md); approval selects experiment conditions, not findings.
+5. Read [JUDGING.md](JUDGING.md) before treating a product decision or pitch claim as settled.
+6. Put new interpretations in [IDEAS.md](IDEAS.md) before they become final direction.
+7. Use [INITIAL_IDEATION.md](INITIAL_IDEATION.md), [RULE_BANK.md](RULE_BANK.md) and [CONCEPT_BANK.md](CONCEPT_BANK.md) to widen the field without confusing generated options with evidence or selection.
+8. Put observations, links and quotes in [EVIDENCE.md](EVIDENCE.md).
+9. Record quick learning loops in [TESTS.md](TESTS.md).
+10. Log settled decisions and their completed judge reviews in [DECISIONS.md](DECISIONS.md).
+11. Use [TOOLCHAIN.md](TOOLCHAIN.md) for the installed workflow, safe hybrid rule and deferred Figma setup.
+12. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the research behind the tool choices.
+13. Use [FRETO_REFERENCE.md](FRETO_REFERENCE.md) for the verified structure of the 2024 winner's public Canva deck and case study.
+14. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
+15. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
 
 ## Working rule
 

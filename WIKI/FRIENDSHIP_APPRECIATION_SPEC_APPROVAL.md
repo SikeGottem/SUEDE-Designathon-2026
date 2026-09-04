@@ -1,109 +1,129 @@
-<!-- This sheet turns the canonical friendship-appreciation specification into a short human approval sequence. -->
-# Friendship appreciation — specification approval
+<!-- This sheet lets the team approve or change the conceptual friendship-appreciation prototype one decision at a time. -->
+# Friendship appreciation — conceptual specification review
 
-> **Status:** Awaiting Ethan/team review. This is an approval of the next experiment and its interaction contract, not proof that the product works or a selection of the final product, audience, brand, or pitch claim.
+> **Status:** Awaiting Ethan/team review.
 >
-> **Full contract:** [FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md)
+> **Read first:** [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md). Use the [transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) when a choice needs its original context.
+>
+> **Meaning of approval:** approval selects the next prototype expression. It does not prove the problem, validate the product, select a permanent brand, or turn transcript ideas into research findings.
 
-## What is already settled for this direction
+## What is already fixed for this review
 
-- The working rule concerns direct appreciation between friends on an ordinary day feeling unusually intense, ambiguous, or reciprocal.
-- The appreciation already exists; the project must not imply that people do not care or that text, humour, action, presence, or physical gestures are inferior.
-- Sender and receiver are co-equal users. Receiver agency cannot be a decorative promise.
-- Intimate words stay self-authored. AI does not write the appreciation.
-- No relational telemetry, fabricated research, public scoring, streaks, assigned friends, anonymous delivery, or mental-health claims.
-- Digital must earn its place against ordinary chat, voice, physical mail, and doing nothing.
+- The previous field-by-field wizard is not the product vision.
+- The experience centres on one authored digital care package / scrapbook object.
+- Creation is white; opening crosses into a deep-navy receiver world.
+- Ugly Handwriting and coherent human-drawn linework define the current visual language.
+- The supplied `grug` work is a visual-language reference, never an identity or layout to copy.
+- Intimate content remains human-authored.
+- No social feed, random recipient, streak, AI-written message, reply thread, or sender-visible receiver activity.
+- Code becomes the real prototype after review; Figma is optional later feedback, not the current destination.
 
-If one of these is no longer true, change the working direction before approving the prototype.
+If any fixed item is wrong, change it before approving the page decisions below.
 
-## Recommended baseline
+## Decisions to review
 
-Approve one reversible mobile-web test of this proposition:
+### 1. Core form
 
-> One known person makes one finite, private, self-authored keepsake for one intact friend on an ordinary day. It arrives outside chat, the receiver controls when it opens and how it ends, and the sender cannot monitor what happens next.
+**Recommended:** one private digital care package / scrapbook artifact rather than a letter app, greeting card, or messaging product.
 
-## Seven approval decisions
+**Change if:** “care package,” “scrapbook,” or “artifact” implies the wrong object.
 
-### 1. Test pair and moment
+### 2. Creator structure
 
-**Decision:** Are we designing this iteration for intact close or still-close friends, where the sender already has one specific ordinary-day thought they want to express?
+**Recommended:** one living white studio that contains intention, writing, material placement, and arrangement. No separate recipient → reason → write → media wizard.
 
-**Recommended:** Approve. Do not include prompting, reconciliation, apology, estrangement, romance, crisis, or unwanted contact in this test.
+**Change if:** the team wants a more guided structure; name how guidance avoids becoming a form.
 
-**If changed:** name the exact relationship and moment; safety, copy, and arrival behaviour may need to change.
+### 3. Recipient and reason
 
-### 2. Primary tension
+**Recommended:** `for [person] / because [thought]` sits lightly inside the studio. The reason guides making and may or may not appear in the received object.
 
-**Decision:** Which one outcome should this iteration primarily investigate?
+**Open:** whether the reason is private guidance or visible content.
 
-**Recommended:** Receiver-perceived reply pressure or conversational obligation. Continue observing withheld expression, misinterpretation, warmth, and durable memory as secondary outcomes.
+### 4. Expressive materials
 
-**Why:** the distinctive mechanism removes the reply loop. If durable memory or message creation becomes primary, this needs a different core flow.
+**Recommended first sample:** words, one photograph, one short voice recording, one song reference, and one personal mark. The available palette may later include video and drawing; a simple object remains valid.
 
-### 3. Minimum no-reply contract
+**Open:** material limit, video in v0, and whether music is a reference or playable.
 
-**Decision:** Should the main condition remove chat, reply, reactions, receipts, and all sender-visible receiver state, while explicit “nothing is expected back” copy remains a separate comparison variant?
+### 5. Composition grammar
 
-**Recommended:** Approve structural closure as the default. Do not add acknowledgement or sender-visible activity yet.
+**Recommended:** the living page—one continuous authored surface with spatial placement and an intended order, not cards or slides.
 
-**If changed:** specify exactly what can return to the sender. That changes the causal mechanism, not merely the interface.
+**Alternatives preserved:** a pocket of fragments or a threaded constellation. Do not mix them without naming the exact interaction job.
 
-### 4. Receiver ending and persistence
+### 6. Finished object
 
-**Decision:** Should the receiver be offered three distinct private endings—keep, close, and discard—while the shelf/archive remains an optional local test branch?
+**Recommended:** one provisional folded/sealed object with an optional personal mark. No package or theme chooser in v0.
 
-**Recommended:** Approve all three choices for the experiment. Do not assume that keeping is preferred or that a permanent archive is wanted.
+**Open:** whether the final vessel should be literal paper, a less literal container, or simply the composition itself.
 
-**If changed:** choose `temporary only`, `optional keep`, or `private archive`; the kept state and home structure will be revised accordingly.
+### 7. Colour threshold
 
-### 5. Digital capability
+**Recommended:** creation, preview, handoff, and sealed arrival remain white. The receiver's deliberate opening changes the full field to deep navy; warm off-white writing and linework live inside it.
 
-**Decision:** What must the digital medium contribute in this iteration?
+### 8. Opening ritual
 
-**Recommended:** Remote, accountless transfer of a bounded object with a receiver-controlled reveal. Rich media and storage are optional branches, not the reason the product exists.
+**Recommended:** one brief, tactile, skippable opening that makes `unopened → receiver's object` legible. Sound never starts without a separate action.
 
-**If changed:** name the one required capability. If ordinary chat or a physical note serves it equally well, the digital-object direction must be compared or simplified.
+**Open:** seal break, unfold, expansion, or another handmade motion.
 
-### 6. Object metaphor
+### 9. Receiver object
 
-**Decision:** Should v0 use one restrained envelope/keepsake treatment only to make `unopened → opened → ended` legible?
+**Recommended:** one continuous navy experience led by the maker's words. Photographs, voice, music, video, and marks appear as parts of the composition rather than generic UI cards.
 
-**Recommended:** Approve as a temporary interaction metaphor. Keep the seal, stamp, firefly, shelf, bird, bottle, stork, capsule, and mascot ideas unapproved until one earns a functional job.
+### 10. Reply contract
 
-**If changed:** name one replacement metaphor and the state change it clarifies. Do not approve a theme menu.
+**Recommended:** no reply, reactions, receipts, or sender-visible open/keep/replay/removal state. Whether the object explicitly says “nothing is expected back” remains a future test.
 
-### 7. Supporting material
+### 11. Receiver ending
 
-**Decision:** What content should the first clean test use?
+**Recommended:** private keep, close, and remove paths with no moral hierarchy and no signal to the maker.
 
-**Recommended:** Text-only as the complete default. Test one optional voice version after the receiving contract is understood; keep photo and all other media out of the first controlled comparison.
+### 12. Cabinet
 
-**If changed:** choose `text-only`, `photo`, or `voice` and state what the material is meant to test. More media is not automatically more personal.
+**Recommended:** include a small private cabinet branch so the prototype expresses ownership and year-later replay, while keeping permanence visibly unresolved.
 
-## Not approvable yet
+**Open:** whether keeping is opt-in, temporary, exportable, or unnecessary.
 
-The following remain evidence or production questions even if all seven decisions are approved:
+### 13. Firefly and drawn symbols
 
-- whether the problem is frequent or severe enough for a product;
-- a final audience or ICP;
-- whether the experience actually reduces pressure, increases warmth, or changes interpretation;
-- whether a chat label, voice note, physical gesture, or simpler service performs better;
-- final persistence, acknowledgement, forwarding, expiry, revocation, deletion, authentication, and real-data policies;
-- final name, brand, wax seal, firefly, colour customisation, packages, or Cecelia's production asset set;
-- exact official 2026 organiser rules not yet confirmed from the organiser source.
+**Recommended:** retain the firefly only as a possible one-time arrival light. Do not approve it as mascot. Use real hand-drawn icons and one maker-created signature/stamp mark.
 
-## Reply format
+### 14. Pitch demo
 
-Copy this and change only what you disagree with:
+**Recommended:** a real coded private-link experience can also open from a generic QR in the pitch. Participation remains optional, accessible, non-personal, and cannot count as evidence of impact.
+
+## Fast reply format
+
+Copy this and change only the items you disagree with:
 
 ```text
-1. Test pair/moment — Approve / Change: ___ / Keep open
-2. Primary tension — Approve: reply pressure / Change: ___ / Keep open
-3. No-reply contract — Approve / Change: ___ / Keep open
-4. Receiver ending — Approve: keep + close + discard / Change: ___ / Keep open
-5. Digital capability — Approve: accountless bounded transfer + controlled reveal / Change: ___ / Keep open
-6. Object metaphor — Approve: temporary envelope/keepsake / Change: ___ / Keep open
-7. Supporting material — Approve: text-first, voice later / Change: ___ / Keep open
+1. Core form — Approve / Change: ___ / Keep open
+2. Creator structure — Approve / Change: ___ / Keep open
+3. Recipient and reason — Approve / Change: ___ / Keep open
+4. Expressive materials — Approve / Change: ___ / Keep open
+5. Composition grammar — Approve / Change: ___ / Keep open
+6. Finished object — Approve / Change: ___ / Keep open
+7. Colour threshold — Approve / Change: ___ / Keep open
+8. Opening ritual — Approve / Change: ___ / Keep open
+9. Receiver object — Approve / Change: ___ / Keep open
+10. Reply contract — Approve / Change: ___ / Keep open
+11. Receiver ending — Approve / Change: ___ / Keep open
+12. Cabinet — Approve / Change: ___ / Keep open
+13. Firefly and symbols — Approve / Change: ___ / Keep open
+14. Pitch demo — Approve / Change: ___ / Keep open
 ```
 
-Approval means the team accepts these as the next prototype conditions. It does not turn the hypotheses into findings. After approval, update the canonical spec and decision log first, then reconcile the current HTML scaffold into the first approved product draft.
+## Still not decided by approving this sheet
+
+- final audience or ICP;
+- which causal tension is strongest;
+- whether the experience changes sender hesitation or receiver pressure;
+- real data, identity, expiry, revocation, deletion, forwarding, moderation, and abuse policies;
+- final name, logo, mascot, product palette, or deck branding;
+- final media limits and editor complexity;
+- whether a physical letter, voice note, text, or simpler ritual performs better;
+- any claim of demand, impact, or validation.
+
+After review, update the conceptual spec and decision log before implementation begins.

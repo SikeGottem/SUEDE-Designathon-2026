@@ -67,6 +67,15 @@ The published timeline is more specific: background research began around 12:00,
 - Limitation: the mono recording has no reliable speaker attribution, and this entry records a working team discussion rather than an approved pitch script.
 - What this changes for us: test the problem explanation on a non-specialist; keep any joke only if removing it makes the problem or mechanism harder to understand.
 
+## Complete transcript ingest: product intent versus decision status
+
+- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 27 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
+- Strong repeated observation: the later team discussion describes a custom, scrapbook-like digital artifact containing the sender's own words and selected photographs, voice, music, video, drawing, or personal marks. Creative arrangement is treated as part of the expression, not decoration.
+- Strong repeated observation: the desired receiver experience includes a deliberate opening, attention away from chat, ownership, and possible year-later replay inside a private cabinet or memory surface.
+- Boundary: the transcript set is evidence of team intent, not evidence of demand, impact, prevalence, safety, or a universal friendship norm.
+- Current direct prototype condition: reject the field-by-field wizard; use one white creator studio, then cross into a deep-navy receiver object at opening; use Ugly Handwriting and coherent human-drawn linework without copying `grug` identity.
+- What this changes for us: the [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md) must express the rich creator and receiver experience while keeping vessel, media limits, archive permanence, and causal outcomes open for review and testing.
+
 ## Initial ideation reality checks: unwritten rules
 
 These checks answer factual questions raised in [Recording 15](TRANSCRIPTS/2026-09-04-new-recording-15.md), [Recording 16](TRANSCRIPTS/2026-09-04-new-recording-16.md), [Recording 17](TRANSCRIPTS/2026-09-04-new-recording-17.md), [Recording 19](TRANSCRIPTS/2026-09-04-new-recording-19.md), and [Recording 20](TRANSCRIPTS/2026-09-04-new-recording-20.md). The recordings repeatedly revisit early sport, social-friction, and later appreciation/friendship threads, so repetition across them is not independent corroboration.
@@ -138,7 +147,7 @@ These checks answer factual questions raised in [Recording 15](TRANSCRIPTS/2026-
 - Source: [Hall and Baym on mobile maintenance expectations](https://doi.org/10.1177/1461444811415047).
 - Confirmed observation: the study examines how mobile-phone use in close friendship shapes expectations, dependence, overdependence, entrapment, and friendship satisfaction. The relevant tension is mixed rather than simply harmful: maintenance can support friendship and can also become burdensome.
 - Unsupported claim: “instant messaging caused people to stop appreciating friends” or “high-contact friendship is inauthentic.”
-- What this changes for us: test deliberate craft, delay, chosen delivery, and a clear “no reply needed” option against an ordinary message. Treat low-contact friendship as one legitimate pattern to investigate, not a preference to impose.
+- What this changes for us: test deliberate craft, chosen delivery, structural closure, and a clear “no reply needed” variant against an ordinary message. Forced delay is only a historical comparison branch, not a current sincerity mechanism. Treat low-contact friendship as one legitimate pattern to investigate, not a preference to impose.
 
 ### Masculinity is a context to investigate, not a target stereotype
 

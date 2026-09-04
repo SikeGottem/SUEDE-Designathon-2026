@@ -366,6 +366,53 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: separate sender and receiver reactions to the same specific appreciation delivered through ordinary chat, a physical/crafted control and a rough digital artefact.
 - Recommendation: treat this as a chosen investigation, not a chosen product, and use the next cycle to make the rule and medium earn commitment.
 
+## 2026-09-05 - Replace the narrow prototype control with a review-first rich concept
+
+- Status: current
+- Decision: rebuild the next reversible friendship-appreciation prototype around one authored digital care package / sendable scrapbook, using a single white creator studio, private handoff, deliberate opening into a deep-navy receiver object, and a receiver-owned ending; complete and review the conceptual specification before restarting UI implementation.
+- Reason: Ethan rejected the first field-by-field prototype as the boring version of the idea and required a complete transcript ingest. The late recordings repeatedly describe creative composition, mixed media, intentional opening, receiver ownership, and later replay, while keeping exact vessel, media limits, and persistence unresolved.
+- Evidence: [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), [conceptual prototype specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md), and Ethan's direct 5 September instructions selecting the transcript-first restart, real coded product, white-then-navy sequence, Ugly Handwriting, and supplied handmade visual grammar without `grug` identity.
+- Consequence: the previous wizard is no longer a design source. WIKI synthesis and human review may proceed now. Fresh UI implementation begins only after Ethan/team approval; it must remain a labelled stimulus, use one coherent creator surface and object treatment, preserve open decisions, and pass post-build judge and authenticity review before becoming selected direction.
+- Revisit when: Ethan or the team changes any of the fourteen approval decisions, a rendered prototype exposes a conceptual failure, or sender/receiver testing changes the problem or medium.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | A finite object and receiver-owned ending attempt to redesign the conditions around an ordinary-day friendship rule rather than merely explain it. | The official 2026 wording and rubric still need organiser verification; a beautiful object could still only decorate the existing rule. |
+| Problem identification | strengthens | The direction retains one specific moment: a person has an appreciative thought, predicts ambiguity, chooses a channel, and considers the receiver's response burden. | Frequency, affected group, primary cause, and receiver interpretation have not been established outside the team. |
+| Solution approach | strengthens | One living creator studio better expresses personal effort than the rejected form wizard, while the opening and ending make the receiving contract visible. | Rich authoring, no-reply structure, and archive are several mechanisms at once; the prototype alone cannot identify which one causes any response. |
+| Design innovation | strengthens | The combination of authored mixed-media object, white-to-navy threshold, and receiver-controlled ending is more distinct than a digital card or scrapbook editor alone. | Digital cards, scrapbook tools, letters, and private archives all exist; distinctiveness depends on the whole interaction rather than feature novelty. |
+| Visual communication | strengthens | White making/unopened states and a navy receiver state give colour a legible narrative job. Sparse handwriting and human-drawn marks support authorship. | Handmade styling can become an authenticity costume or reduce legibility if it is not tied to real content and interaction. |
+| Presentation skills | strengthens | The experience has a concise before/after story and a memorable working QR/link demonstration centred on the opening threshold. | A theatrical reveal could overshadow the rule, evidence, and receiver outcome. |
+| Evidence quality | unknown | The complete transcript ingest accurately reconstructs team intent and labels direct instructions, convergence, proposals, and open branches separately. | No external participant has validated the need, medium, no-reply effect, or cabinet; transcript conviction is not user evidence. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if appreciation needs no object, or a reply is part of care rather than debt? | Text, voice, physical letters, action, and doing nothing remain valid controls; the object is a reversible test condition. | Receiver comparison is needed before closure can be claimed as beneficial. |
+| Behaviour and context | Does a separate creator studio live too far from the moment where the thought occurs? | The private link lets the artifact travel through existing channels while preserving a distinct receiving space. | Whether senders will leave chat and invest in composition remains untested. |
+| Medium necessity | Is this just a worse physical letter or overbuilt message? | Voice, image, music, motion, replay, distance, and accessible alternatives are credible digital contributions identified repeatedly by the team. | Which one is necessary rather than decorative has not been established. |
+| Alternatives | Could a voice note, card, letter, shared album, or simple chat label solve the same problem? | The conceptual spec explicitly keeps them as controls and does not claim universal superiority. | A matched sender/receiver comparison is still required. |
+| Human specificity | Will a flexible maker surface serve people who are not designers or comfortable with sentiment? | Optional cues and a constrained material palette can support creation without writing for the person. | The right balance between freedom and guidance needs observation with real makers. |
+| Inclusion and accessibility | Can handwriting, freeform layout, sound, motion, and colour remain usable? | The concept requires readable critical copy, text alternatives, manual playback, receiver-controlled pacing, and a direct reduced-motion path. | The actual render and assistive-technology path do not exist yet. |
+| Trust, safety and privacy | Could a private artifact enable unwanted, coercive, romantic, or crisis-coded contact? | V0 is scoped to known intact relationships; sender identity, leave/remove, no public surface, and no telemetry are structural boundaries. | A real service still needs identity, blocking, expiry, revocation, forwarding, deletion, and abuse policies. |
+| Failure and recovery | What if the link is wrong, media fails, or opening increases alarm? | The conceptual spec leaves the receiver free to leave and keeps content private until opening; technical recovery remains outside this conceptual review. | Wrong-recipient handling, media fallback, and interpretation repair need later specification and testing. |
+| Feasibility and demo truth | Can the rich studio and mixed-media object be made credibly in the event time? | The concept can be demonstrated through one realistic authored object while leaving full editor breadth simulated and labelled. | The approved media set determines build scope; simulated behaviour must not be presented as complete. |
+| Incentives and second-order effects | Could artifacts create an effort arms race, storage burden, or a new expectation to reciprocate? | No scores, prompts, public comparison, or sender state exist; keep, close, and remove are private options. | Repeated-use effects and whether the cabinet itself creates pressure are unknown. |
+| Simplicity and retellability | Does “mixed-media care package with closure” contain too many ideas? | The one-sentence concept centres making, giving, receiving, and receiver ownership; media are expressive ingredients rather than the headline. | The first outsider retell test may still reduce it to “digital scrapbook.” |
+| Authorship and distinctiveness | Can AI-generated UI and handwriting still look synthetic? | Ethan selected the source anchors, rejected the first generated layout, required a fresh ingest, and set a specific white-to-navy signature move; intimate content stays human-authored. | Only the rendered artifact plus material team edits can pass the post-build authenticity gate. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: complete, sync, and share the transcript ingest and conceptual specification for human review. After explicit approval, build one fresh reversible coded prototype from that specification.
+- Blocking conditions: no UI implementation before review; no inheritance from the old wizard; no validation claims; keep media limits, object vessel, firefly, acknowledgement, and persistence visibly editable; do not generate intimate copy; use one declared visual lead and one coherent v0 object; run full post-build judge, accessibility, and authenticity reviews.
+- Weakest judging angle: evidence quality, because the record supports team intent but no participant has confirmed the problem or the proposed mechanism.
+- Main trade-off: the richer concept finally expresses the team's ambition and digital-medium thesis, but combines enough mechanisms that later testing must carefully separate what caused any reaction.
+- Next evidence that could change the verdict: Ethan/team review of the fourteen conceptual decisions, followed by one consented sender/receiver walkthrough compared with an ordinary message.
+- Recommendation: review the conceptual spec now, select the v0 vessel/material/ending choices, then build a single complete maker-to-receiver experience without repairing the old layout.
+- Revisit when: the review or first walkthrough materially changes the concept.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

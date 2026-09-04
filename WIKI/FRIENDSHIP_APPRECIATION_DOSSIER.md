@@ -623,7 +623,7 @@ Avoid “social media made us less human,” “men cannot communicate” and �
 
 ## Current recommendation
 
-Keep this as a serious contender, but do not lead with a scrapbook app, daily appreciation prompt or “no reply needed” feature. Those already exist as products or familiar patterns.
+Keep this as a serious contender, but do not lead with a generic scrapbook app, daily appreciation prompt, or “no reply needed” label. Those already exist as products or familiar patterns. Ethan's current prototype direction deliberately restores the richer scrapbook/care-package authoring experience described in the later transcripts; its differentiated claim still needs to be the complete authored object, receiving threshold, and receiver-owned ending rather than scrapbooking alone. See the [complete transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md) and [conceptual specification](FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md).
 
 The highest-value next move is a **receiver-first paired test** of three candidate mechanisms:
 
@@ -631,7 +631,7 @@ The highest-value next move is a **receiver-first paired test** of three candida
 2. ordinary-day appreciation versus occasion-authorised appreciation;
 3. normal reply, labelled no-reply and structurally closed receipt.
 
-That test can tell us which problem, if any, deserves a product. Until then, the strongest design output is a rough social experiment, not polished screens.
+That test can tell us which problem, if any, deserves a product. Until then, the conceptual and coded prototype remain reviewable stimuli rather than validated final screens.
 
 ## Source index
 
