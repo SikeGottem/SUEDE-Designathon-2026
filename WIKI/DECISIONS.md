@@ -182,6 +182,52 @@ Only record choices that change direction, investment or the story. Every conseq
 - Next evidence that could change the verdict: the official 2026 rules and one observed concept-to-prototype cycle using the gate.
 - Recommendation: activate the gate now and treat any skipped material review as incomplete work.
 
+## 2026-09-04 - Defer the permanent visual-skill choice and use a bounded hybrid
+
+- Status: current
+- Decision: keep Impeccable, Anthropic `frontend-design` and the current `design-taste-frontend` installed until the real 2026 concept exists. They may produce separate options or critiques, but each implemented artifact must declare one visual lead; humans may selectively combine individual decisions after review, not stack all three instruction sets. Defer Figma OAuth until Ethan is ready.
+- Reason: the Relay comparison produced useful but task-specific evidence. Ethan wants to preserve optionality and make the final taste judgment against the real product rather than permanently selecting from a fictional benchmark.
+- Evidence: identical candidates completed the fixed Relay flow and Playwright verification. The blind review provisionally preferred C/current `design-taste-frontend`; A/Impeccable had 38px demo controls; B/Anthropic lost focus after most transitions and had a 39px control; C preserved focus and ≥44px controls but showed an unfinished heading outline and was operating outside the skill's stated ideal scope. Full evidence is under `benchmarks/design-skills/`.
+- Consequence: no candidate is archived now. `WIKI/TOOLCHAIN.md` controls the hybrid: separate exploration, one visual lead per artifact, deliberate human synthesis and post-render audit. The official Figma plugin remains installed but unverified until OAuth and native Design/Slides tests are completed.
+- Revisit when: the official brief produces a real concept and representative product or presentation surface, or after Figma authentication is connected.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | unknown | Deferral avoids hard-coding a tool choice before the 2026 task is known. | The eventual surface may expose a capability gap too late if the decision is postponed indefinitely. |
+| Problem identification | neutral | Visual skills do not establish user evidence or choose the problem. | Attractive output could still pull the team toward a weak problem. |
+| Solution approach | strengthens | Different candidates can challenge the same mechanism before implementation is locked. | Unbounded comparison would consume build and test time. |
+| Design innovation | strengthens | Separate visual voices increase the chance of escaping one model's defaults. | Combining every direction would average the work back toward generic compromise. |
+| Visual communication | mixed | One declared lead preserves coherence while optional comparison preserves choice. | The final lead is not selected, and the three skills contain conflicting visual defaults. |
+| Presentation skills | strengthens | The team can select the language that best supports the real story rather than a fictional test. | Late selection could create deck inconsistency without an early design contract. |
+| Evidence quality | strengthens | The provisional result, defects and limits remain recorded instead of being inflated into a universal ranking. | One benchmark cannot prove performance across product UI, campaign pages and slides. |
+
+### Challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Why not permanently keep the blind winner now? | C won this task, but its own instructions identify multi-step product UI as a scope mismatch; a real-concept check is more representative. | The actual 2026 artifact type is unknown. |
+| Behaviour and context | Will three installed skills be invoked accidentally together? | `TOOLCHAIN.md` requires one named visual lead in `DESIGN.md` before implementation. | Agent routing still needs human attention until one default is chosen. |
+| Medium necessity | Does this need another selection app or scoring system? | No; labelled outputs, pairwise review and a written lead are sufficient. | None. |
+| Alternatives | Could the team simply choose based on reputation? | The controlled test exposed concrete defects that stars and README examples did not. | Future tool updates could change the result. |
+| Human specificity | Does deferral preserve Ethan's taste? | Ethan makes the final choice against the actual concept and may deliberately integrate a specific decision. | The team still needs concept-specific references. |
+| Inclusion and accessibility | Could the visually strongest option hide interaction defects? | Playwright exposed focus and touch-target failures, and post-build verification remains mandatory. | Real assistive-technology testing remains artifact-specific. |
+| Trust, safety and privacy | Could a hybrid obscure who made what? | Outputs remain labelled and the AI contribution record captures tools and material human changes. | Official 2026 disclosure rules are not published. |
+| Failure and recovery | What happens if the chosen lead fails on the real surface? | Stop, record the failure and compare a second candidate against the same evidence without mixing live rules. | The event timetable may limit a second pass. |
+| Feasibility and demo truth | Does Figma work end to end now? | The plugin is installed, but `USER_NOT_LOGGED_IN` is explicitly recorded; no native write is claimed. | OAuth and editable Design/Slides verification remain pending. |
+| Incentives and second-order effects | Could optionality become aesthetic procrastination? | Permit one bounded comparison round, then require a human selection and implementation. | The real brief determines the timebox. |
+| Simplicity and retellability | Is “hybrid” too vague? | The operational rule is simple: separate options, one lead, deliberate borrowing, audit the render. | None. |
+| Authorship and distinctiveness | Could synthesis erase each direction's character? | Humans must name every imported decision and reject incoherent compromise. | Only the final artifact can prove distinctiveness. |
+
+- Verdict: Proceed with conditions
+- Work permitted by this verdict: retain all three candidates, use them separately for bounded exploration or critique, document one visual lead per built artifact and leave Figma authentication for later.
+- Blocking conditions: never invoke the three broad visual skills together during implementation; do not treat Relay's result as the real concept's answer; complete SUEDE preflight and post-build reviews; label simulated behaviour; verify Figma before retiring local fallbacks.
+- Weakest judging angle: visual communication, because permanent art direction remains intentionally unsettled.
+- Main trade-off: preserves choice and Ethan's taste judgment at the cost of temporary routing complexity.
+- Next evidence that could change the decision: the official 2026 brief plus one representative real screen or deck section reviewed by Ethan.
+- Recommendation: keep the bounded hybrid now, then choose quickly from real evidence once the concept exists.
+
 ## Decision template
 
 ### YYYY-MM-DD - Decision title

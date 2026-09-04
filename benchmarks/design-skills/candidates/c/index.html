@@ -1,0 +1,816 @@
+<!-- Offline Relay benchmark implementation for candidate C. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Relay journey demo</title>
+  <style>
+    :root {
+      --canvas: #eef0ea;
+      --surface: #f8f9f5;
+      --surface-quiet: #e3e6de;
+      --ink: #18201d;
+      --muted: #5f6a65;
+      --line: #c6ccc4;
+      --accent: #176c52;
+      --accent-ink: #f7fff9;
+      --focus: #0d5fca;
+      --shadow: 0 24px 70px rgb(35 48 42 / 0.12);
+      --radius-large: 28px;
+      --radius-medium: 18px;
+      --radius-small: 10px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --canvas: #111714;
+        --surface: #18201d;
+        --surface-quiet: #222c28;
+        --ink: #edf3ee;
+        --muted: #aab7b0;
+        --line: #3c4943;
+        --accent: #9ad8b7;
+        --accent-ink: #10251c;
+        --focus: #8fbcff;
+        --shadow: 0 24px 70px rgb(0 0 0 / 0.28);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--canvas);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    [tabindex="-1"]:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 4px;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .page {
+      width: min(100% - 48px, 1280px);
+      margin: 0 auto;
+      padding: 28px 0 42px;
+    }
+
+    .topbar {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    .brand {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .demo-disclosure {
+      max-width: 420px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .app-shell {
+      min-height: 790px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-large);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .story {
+      min-width: 0;
+      padding: clamp(46px, 6vw, 88px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 48px;
+      border-right: 1px solid var(--line);
+    }
+
+    .state-copy {
+      max-width: 650px;
+    }
+
+    .time-label {
+      margin: 0 0 34px;
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(2.8rem, 5.8vw, 5.35rem);
+      font-weight: 620;
+      letter-spacing: -0.06em;
+      line-height: 0.98;
+      text-wrap: balance;
+    }
+
+    .supporting {
+      max-width: 34rem;
+      margin: 26px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.06rem, 1.5vw, 1.28rem);
+      line-height: 1.55;
+    }
+
+    .privacy-line {
+      max-width: 34rem;
+      margin: 20px 0 0;
+      padding-left: 18px;
+      border-left: 3px solid var(--accent);
+      color: var(--ink);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .button {
+      min-height: 52px;
+      padding: 13px 20px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-small);
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: transform 120ms ease-out, filter 160ms ease-out, background-color 160ms ease-out;
+    }
+
+    .button:hover {
+      filter: brightness(0.94);
+    }
+
+    .button-secondary {
+      border-color: var(--line);
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .button-secondary:hover {
+      background: var(--surface-quiet);
+      filter: none;
+    }
+
+    .feedback {
+      min-height: 29px;
+      margin: 16px 0 0;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .story-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .journey {
+      min-width: 0;
+      padding: clamp(36px, 4.5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      background-color: var(--surface-quiet);
+      background-image: linear-gradient(90deg, transparent 49.8%, color-mix(in srgb, var(--line) 48%, transparent) 50%, transparent 50.2%);
+      background-size: 38px 100%;
+    }
+
+    .journey-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .journey-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .connection {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: right;
+    }
+
+    .relay-visual {
+      position: relative;
+      flex: 1;
+      min-height: 390px;
+      margin: 38px 0 34px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      justify-items: center;
+    }
+
+    .person {
+      position: relative;
+      z-index: 2;
+      min-width: 118px;
+      padding: 13px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-medium);
+      background: var(--surface);
+      text-align: center;
+      box-shadow: 0 10px 30px rgb(30 45 38 / 0.08);
+    }
+
+    .person strong,
+    .person span {
+      display: block;
+    }
+
+    .person strong {
+      font-size: 0.96rem;
+    }
+
+    .person span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.74rem;
+    }
+
+    .thread {
+      position: relative;
+      width: 4px;
+      height: 100%;
+      min-height: 230px;
+      background: var(--line);
+    }
+
+    .thread-fill {
+      position: absolute;
+      inset: 0 0 auto;
+      height: var(--thread-progress, 0%);
+      background: var(--accent);
+      transition: height 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .thread-marker {
+      position: absolute;
+      z-index: 3;
+      top: max(0px, calc(var(--thread-progress, 0%) - 9px));
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      border: 4px solid var(--surface-quiet);
+      border-radius: 50%;
+      background: var(--accent);
+      transform: translateX(-50%);
+      opacity: var(--marker-opacity, 0);
+      transition: top 520ms cubic-bezier(0.16, 1, 0.3, 1), opacity 160ms ease-out;
+    }
+
+    .checkpoint {
+      position: absolute;
+      left: 20px;
+      top: 43%;
+      width: 168px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .checkpoint::before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: -25px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--surface-quiet);
+    }
+
+    .checkpoint strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--ink);
+      font-size: 0.84rem;
+    }
+
+    .journey-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .fact {
+      margin: 0;
+    }
+
+    .fact dt {
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .fact dd {
+      margin: 0;
+      font-size: 0.92rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .demo-controls {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .demo-controls-title {
+      margin: 0 0 4px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .demo-controls-note {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .demo-button {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-small);
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 650;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 120ms ease-out, background-color 160ms ease-out;
+    }
+
+    .demo-button:hover {
+      background: color-mix(in srgb, var(--surface) 68%, var(--accent));
+    }
+
+    .known-block {
+      max-width: 36rem;
+      margin-top: 30px;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .known-block h2 {
+      margin: 0 0 14px;
+      font-size: 0.9rem;
+    }
+
+    .known-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin: 0;
+    }
+
+    .known-grid div {
+      min-width: 0;
+    }
+
+    .known-grid dt {
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .known-grid dd {
+      margin: 0;
+      font-size: 0.88rem;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .stage {
+      animation: stage-in 320ms ease-out both;
+    }
+
+    @keyframes stage-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .page {
+        width: min(100% - 28px, 680px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        margin-bottom: 14px;
+      }
+
+      .demo-disclosure {
+        max-width: 230px;
+        font-size: 0.74rem;
+      }
+
+      .app-shell {
+        min-height: 0;
+        grid-template-columns: 1fr;
+      }
+
+      .story {
+        min-height: 610px;
+        padding: 36px 26px 28px;
+        gap: 36px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1 {
+        font-size: clamp(2.55rem, 12vw, 4rem);
+      }
+
+      .journey {
+        padding: 30px 26px 34px;
+      }
+
+      .known-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .topbar {
+        min-height: 74px;
+        margin: 0;
+        padding: 15px 18px;
+      }
+
+      .demo-disclosure {
+        max-width: 210px;
+      }
+
+      .app-shell {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .story {
+        min-height: 590px;
+        padding: 38px 20px 24px;
+      }
+
+      .time-label {
+        margin-bottom: 28px;
+      }
+
+      .supporting {
+        margin-top: 20px;
+        font-size: 1rem;
+      }
+
+      .privacy-line {
+        font-size: 0.9rem;
+      }
+
+      .actions {
+        align-items: stretch;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .story-footer {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .journey {
+        padding: 30px 20px 34px;
+      }
+
+      .relay-visual {
+        min-height: 350px;
+      }
+
+      .journey-facts {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <p class="brand">Relay</p>
+      <p class="demo-disclosure">Interactive demo. No real tracking, network check or message is connected.</p>
+    </header>
+
+    <main class="app-shell" id="app" data-mode="ready" style="--thread-progress: 0%; --marker-opacity: 0;">
+      <section class="story" aria-labelledby="state-title">
+        <div id="state-panel"></div>
+        <footer class="story-footer">
+          <span>Maya and Jo</span>
+          <span>Route 430, then an 8-minute walk</span>
+        </footer>
+      </section>
+
+      <aside class="journey" aria-labelledby="journey-title">
+        <div class="journey-head">
+          <h2 class="journey-title" id="journey-title">Tonight's relay</h2>
+          <p class="connection" id="connection-label">Ready when Maya is</p>
+        </div>
+
+        <div class="relay-visual" role="img" aria-label="Relay checkpoint path from Maya to Jo">
+          <div class="person"><strong>Maya</strong><span>Rider</span></div>
+          <div class="thread" aria-hidden="true">
+            <span class="thread-fill"></span>
+            <span class="thread-marker"></span>
+            <span class="checkpoint"><strong>Riverside</strong>Next checkpoint at 11:56 PM</span>
+          </div>
+          <div class="person"><strong>Jo</strong><span>Trusted contact</span></div>
+        </div>
+
+        <dl class="journey-facts">
+          <div class="fact"><dt>Destination</dt><dd>Home</dd></div>
+          <div class="fact"><dt>Expected arrival</dt><dd>12:08 AM</dd></div>
+        </dl>
+
+        <div class="demo-controls" id="demo-controls"></div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const app = document.getElementById("app");
+    const statePanel = document.getElementById("state-panel");
+    const demoControls = document.getElementById("demo-controls");
+    const connectionLabel = document.getElementById("connection-label");
+    const announcer = document.getElementById("announcer");
+
+    const journey = {
+      mode: "ready",
+      checkedIn: false,
+      smsQueued: false,
+      recovered: false
+    };
+
+    function button(label, action, secondary = false) {
+      return `<button class="button${secondary ? " button-secondary" : ""}" type="button" data-action="${action}">${label}</button>`;
+    }
+
+    function setVisual(progress, markerVisible) {
+      app.style.setProperty("--thread-progress", progress);
+      app.style.setProperty("--marker-opacity", markerVisible ? "1" : "0");
+    }
+
+    function announce(message) {
+      announcer.textContent = "";
+      window.setTimeout(() => { announcer.textContent = message; }, 20);
+    }
+
+    function readyView() {
+      connectionLabel.textContent = "Ready when Maya is";
+      setVisual("0%", false);
+      statePanel.innerHTML = `
+        <div class="state-copy stage">
+          <p class="time-label">11:42 PM / Home by 12:08 AM</p>
+          <h1 id="state-title" tabindex="-1">Stay connected without staying on your phone.</h1>
+          <p class="supporting">Relay shares the moments that matter, then gets out of the way.</p>
+          <p class="privacy-line">Jo gets meaningful checkpoints instead of a live map.</p>
+          <div class="actions">${button("Start relay with Jo", "start")}</div>
+        </div>`;
+      demoControls.innerHTML = `
+        <p class="demo-controls-title">Demo controls</p>
+        <p class="demo-controls-note">Start the fictional journey to unlock the signal simulation.</p>`;
+    }
+
+    function activeView() {
+      connectionLabel.textContent = "Connection strong";
+      setVisual(journey.recovered ? "58%" : "38%", true);
+      const feedback = journey.checkedIn
+        ? "Demo check-in recorded for Jo. No message was sent."
+        : journey.recovered
+          ? "Connection restored in this demo."
+          : "";
+      statePanel.innerHTML = `
+        <div class="state-copy stage">
+          <p class="time-label">11:42 PM / Relay active</p>
+          <h1 id="state-title" tabindex="-1">On the 430</h1>
+          <p class="supporting">Connection strong</p>
+          <p class="privacy-line">Relay is waiting for the next meaningful moment. Jo is not watching a live map.</p>
+          <div class="actions">
+            ${button("I'm okay", "checkin")}
+            ${button("I've arrived", "arrive", true)}
+          </div>
+          <p class="feedback" id="action-feedback" aria-live="polite">${feedback}</p>
+        </div>`;
+      demoControls.innerHTML = `
+        <p class="demo-controls-title">Demo controls</p>
+        <p class="demo-controls-note">This changes only the fictional interface state.</p>
+        <button class="demo-button" type="button" data-action="lose-signal">Demo: simulate signal loss</button>`;
+    }
+
+    function lossView() {
+      connectionLabel.textContent = "Connection paused";
+      setVisual("38%", true);
+      const feedback = journey.smsQueued ? "SMS queued to Jo" : "";
+      statePanel.innerHTML = `
+        <div class="state-copy stage">
+          <p class="time-label">Demo signal loss / Last update 11:42 PM</p>
+          <h1 id="state-title" tabindex="-1">Signal paused. You still have a plan.</h1>
+          <p class="supporting">Relay saved your last checkpoint and will retry automatically.</p>
+          <div class="known-block">
+            <h2>What is known</h2>
+            <dl class="known-grid">
+              <div><dt>Last checkpoint</dt><dd>Journey started at 11:42 PM</dd></div>
+              <div><dt>Next checkpoint</dt><dd>Riverside at 11:56 PM</dd></div>
+              <div><dt>Relay will</dt><dd>Retry automatically</dd></div>
+            </dl>
+          </div>
+          <div class="actions">${button("Use SMS fallback", "sms")}</div>
+          <p class="feedback" id="action-feedback" aria-live="polite">${feedback}</p>
+        </div>`;
+      demoControls.innerHTML = `
+        <p class="demo-controls-title">Demo controls</p>
+        <p class="demo-controls-note">No network check or SMS is occurring.</p>
+        <button class="demo-button" type="button" data-action="restore">Demo: restore connection</button>`;
+    }
+
+    function completeView() {
+      connectionLabel.textContent = "Relay off";
+      setVisual("100%", true);
+      statePanel.innerHTML = `
+        <div class="state-copy stage">
+          <p class="time-label">Journey complete / Relay off</p>
+          <h1 id="state-title" tabindex="-1">Made it.</h1>
+          <p class="supporting">Jo knows you're home. Relay is off.</p>
+          <p class="privacy-line">The demo journey has ended. No tracking continues.</p>
+          <div class="actions">${button("Replay journey", "reset")}</div>
+        </div>`;
+      demoControls.innerHTML = `
+        <p class="demo-controls-title">Demo complete</p>
+        <p class="demo-controls-note">This was a local simulation. No data or messages left this page.</p>`;
+    }
+
+    function render(focusTitle = false) {
+      app.dataset.mode = journey.mode;
+      if (journey.mode === "ready") readyView();
+      if (journey.mode === "active") activeView();
+      if (journey.mode === "loss") lossView();
+      if (journey.mode === "complete") completeView();
+      if (focusTitle) document.getElementById("state-title").focus({ preventScroll: true });
+    }
+
+    app.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-action]");
+      if (!target) return;
+      const action = target.dataset.action;
+
+      if (action === "start") {
+        journey.mode = "active";
+        announce("Relay demo started with Jo. Connection strong.");
+        render(true);
+      }
+
+      if (action === "checkin") {
+        journey.checkedIn = true;
+        announce("Demo check-in recorded for Jo. No message was sent.");
+        render(false);
+        document.querySelector('[data-action="checkin"]').focus();
+      }
+
+      if (action === "lose-signal") {
+        journey.mode = "loss";
+        announce("Demo signal paused. The last checkpoint is saved and Relay will retry automatically.");
+        render(true);
+      }
+
+      if (action === "sms") {
+        journey.smsQueued = true;
+        announce("Demo only. SMS queued to Jo. No message was sent.");
+        render(false);
+        document.querySelector('[data-action="sms"]').focus();
+      }
+
+      if (action === "restore") {
+        journey.mode = "active";
+        journey.recovered = true;
+        announce("Connection restored in this demo.");
+        render(true);
+      }
+
+      if (action === "arrive") {
+        journey.mode = "complete";
+        announce("Made it. Relay is off.");
+        render(true);
+      }
+
+      if (action === "reset") {
+        journey.mode = "ready";
+        journey.checkedIn = false;
+        journey.smsQueued = false;
+        journey.recovered = false;
+        announce("Journey reset. Ready to replay.");
+        render(true);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

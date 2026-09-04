@@ -1,0 +1,141 @@
+<!-- Relay benchmark candidate A: an offline, accessible proof of the complete safety-checkpoint journey. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Relay — journey check-ins, not live tracking</title>
+  <style>
+    :root { --ink:#f5f0e8; --muted:#b8b2aa; --paper:#121413; --field:#1a1d1a; --line:#3d433d; --green:#b8ee77; --green-deep:#284021; --amber:#ffc766; --danger:#ff9b73; --focus:#fff1a9; --sans:ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing:border-box; }
+    html { background:var(--paper); }
+    body { margin:0; min-width:320px; color:var(--ink); background:var(--paper); font-family:var(--sans); font-size:16px; line-height:1.45; }
+    button { font:inherit; }
+    button:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:4px; }
+    ::selection { color:#14170f; background:var(--green); }
+    .skip { position:absolute; z-index:5; top:0; left:1rem; transform:translateY(-120%); padding:.65rem .9rem; color:#121413; background:var(--focus); }
+    .skip:focus { transform:translateY(0); }
+    .shell { width:min(1280px, calc(100% - 3rem)); min-height:1000px; margin:auto; display:grid; grid-template-columns:minmax(0, .87fr) minmax(440px, 1.13fr); gap:clamp(3rem, 8vw, 10rem); align-items:center; padding:3.5rem 0; }
+    .intro { max-width:35rem; }
+    .wordmark { display:flex; align-items:center; gap:.6rem; margin-bottom:clamp(2.8rem, 8vh, 6rem); letter-spacing:.12em; font-size:.76rem; font-weight:760; text-transform:uppercase; }
+    .mark { width:1.4rem; height:1.4rem; display:grid; place-items:center; border:1px solid var(--green); border-radius:50%; }
+    .mark i { width:.42rem; height:.42rem; display:block; background:var(--green); border-radius:50%; }
+    h1 { max-width:8.7ch; margin:0; font-size:clamp(3.35rem, 6.5vw, 6.8rem); font-weight:720; line-height:.91; letter-spacing:-.055em; text-wrap:balance; }
+    .lede { max-width:33ch; margin:1.55rem 0 0; color:var(--muted); font-size:clamp(1rem, 1.2vw, 1.18rem); }
+    .principle { margin:3.3rem 0 0; padding:1rem 0 0 1.1rem; max-width:28rem; border-left:1px solid var(--green); color:var(--ink); font-size:.97rem; }
+    .principle strong { display:block; margin-bottom:.25rem; font-size:.77rem; color:var(--green); letter-spacing:.1em; text-transform:uppercase; }
+    .demo-note { margin-top:1.25rem; color:var(--muted); font-size:.82rem; }
+    .phone { position:relative; overflow:hidden; width:min(100%, 570px); min-height:730px; padding:clamp(1.3rem, 3.2vw, 2.3rem); background:var(--field); border:1px solid var(--line); border-radius:22px; box-shadow:0 22px 50px rgba(0,0,0,.28); }
+    .phone::before { content:""; position:absolute; inset:0 auto 0 32%; width:1px; background:linear-gradient(transparent 3%, rgba(184,238,119,.38) 18%, rgba(184,238,119,.38) 78%, transparent 94%); pointer-events:none; }
+    .phone-head, .state, .privacy, .journey, .actions { position:relative; z-index:1; }
+    .phone-head { display:flex; justify-content:space-between; align-items:center; padding-bottom:1.3rem; border-bottom:1px solid var(--line); color:var(--muted); font-size:.84rem; }
+    .phone-head time { font-variant-numeric:tabular-nums; }
+    .privacy { display:flex; align-items:center; gap:.55rem; margin-top:1.4rem; color:var(--muted); font-size:.78rem; }
+    .privacy svg { flex:none; width:18px; stroke:var(--green); }
+    .state { min-height:172px; padding:3rem 0 1.7rem; }
+    .state h2 { max-width:10ch; margin:0; font-size:clamp(2rem, 3.6vw, 3.25rem); font-weight:690; letter-spacing:-.045em; line-height:.97; text-wrap:balance; }
+    .state p { max-width:34ch; margin:.85rem 0 0; color:var(--muted); }
+    .journey { margin:0; padding:0; list-style:none; border-top:1px solid var(--line); }
+    .journey li { position:relative; display:grid; grid-template-columns:1.05rem 1fr auto; gap:.9rem; align-items:start; min-height:78px; padding:1.15rem 0; border-bottom:1px solid var(--line); }
+    .journey li::after { content:""; position:absolute; left:.48rem; top:2rem; height:calc(100% - .8rem); border-left:1px solid var(--line); }
+    .journey li:last-child::after { display:none; }
+    .dot { position:relative; z-index:1; width:1rem; height:1rem; margin-top:.14rem; border:2px solid var(--line); border-radius:50%; background:var(--field); }
+    .done .dot, .current .dot { border-color:var(--green); background:var(--green); box-shadow:0 0 0 4px var(--green-deep); }
+    .current .dot { animation:signal 2.3s ease-out infinite; }
+    .journey strong { display:block; font-size:.95rem; font-weight:680; }
+    .journey small { display:block; margin-top:.18rem; color:var(--muted); }
+    .journey time { color:var(--muted); font-size:.8rem; font-variant-numeric:tabular-nums; }
+    .actions { display:grid; gap:.7rem; margin-top:1.4rem; }
+    .button { min-height:52px; display:inline-flex; align-items:center; justify-content:center; gap:.55rem; width:100%; padding:.75rem 1rem; border:1px solid var(--green); border-radius:12px; color:#12160e; background:var(--green); cursor:pointer; font-weight:750; letter-spacing:-.01em; transition:background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease; }
+    .button:hover { background:#d1ff96; transform:translateY(-1px); }
+    .button:active { transform:translateY(0); }
+    .button.alt { color:var(--ink); background:transparent; border-color:var(--line); }
+    .button.alt:hover { border-color:var(--ink); background:#20231f; }
+    .button.warn { color:#25140e; background:var(--danger); border-color:var(--danger); }
+    .button[hidden], .only-active[hidden], .only-lost[hidden], .only-complete[hidden], .ready-only[hidden] { display:none; }
+    .checkin { min-height:1.4rem; color:var(--green); font-size:.88rem; }
+    .demo-controls { display:flex; flex-wrap:wrap; gap:.55rem; margin-top:1.15rem; }
+    .demo-controls button { min-height:38px; padding:.4rem .65rem; color:var(--muted); background:transparent; border:1px solid var(--line); border-radius:9px; cursor:pointer; font-size:.77rem; }
+    .demo-controls button:hover { color:var(--ink); border-color:var(--muted); }
+    .loss { padding:1rem 1.05rem; border:1px solid rgba(255,155,115,.65); border-radius:12px; color:var(--ink); background:#291d19; }
+    .loss strong { display:block; margin-bottom:.35rem; }
+    .loss p { margin:0; color:#e5b9a8; font-size:.88rem; }
+    .status-line { display:flex; gap:.5rem; align-items:center; color:var(--green); font-size:.82rem; }
+    .status-line i { display:block; width:.55rem; height:.55rem; border-radius:50%; background:currentColor; }
+    @keyframes signal { 0%, 100% { box-shadow:0 0 0 4px var(--green-deep); } 50% { box-shadow:0 0 0 9px rgba(184,238,119,.07); } }
+    @media (prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+    @media (max-width:860px) { .shell { grid-template-columns:1fr; min-height:0; gap:3rem; padding:2rem 0 3rem; } .intro { max-width:42rem; } .wordmark { margin-bottom:2.6rem; } h1 { max-width:12ch; } .principle { margin-top:2rem; } .phone { width:100%; min-height:0; } }
+    @media (max-width:480px) { .shell { width:min(100% - 1.5rem, 1280px); gap:2.2rem; } h1 { font-size:3.25rem; } .phone { padding:1.15rem; border-radius:16px; } .phone::before { left:29px; } .state { padding-top:2.2rem; } .state h2 { font-size:2.25rem; } .journey li { grid-template-columns:1.05rem 1fr; gap:.75rem; } .journey time { grid-column:2; } .journey li::after { left:.48rem; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#relay">Skip to Relay demo</a>
+  <main class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="wordmark"><span class="mark" aria-hidden="true"><i></i></span> Relay</div>
+      <h1 id="page-title">Stay connected without staying on your phone.</h1>
+      <p class="lede">Relay shares the moments that matter, then gets out of the way.</p>
+      <div class="principle"><strong>Not a live map</strong>Jo receives agreed checkpoints, not a minute-by-minute view of Maya.</div>
+      <p class="demo-note">Interactive prototype · all signal and SMS controls below are simulated for this demo.</p>
+    </section>
+
+    <section class="phone" id="relay" aria-label="Relay journey demo">
+      <div class="phone-head"><span>Relay with Jo</span><time datetime="23:42">11:42 PM</time></div>
+      <div class="privacy"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.9 8.5 7 10 4.1-1.5 7-5.5 7-10V6l-7-3Z"/><path d="M9.5 12 11 13.5l3.5-4"/></svg><span>Only the checkpoints you choose are shared.</span></div>
+      <div class="state" aria-live="polite" aria-atomic="true">
+        <div class="ready-only" id="readyState"><h2>Ready when you are.</h2><p>Route 430, then an 8-minute walk to Home. Jo will hear from you at the moments that matter.</p></div>
+        <div class="only-active" id="activeState" hidden><div class="status-line"><i aria-hidden="true"></i>Connection strong</div><h2>On the 430</h2><p>Next checkpoint: Riverside at 11:56 PM.</p></div>
+        <div class="only-lost" id="lostState" hidden><h2>Signal paused. You still have a plan.</h2><p>Relay saved your last checkpoint and will retry automatically.</p></div>
+        <div class="only-complete" id="completeState" hidden><h2>Made it.</h2><p>Jo knows you’re home. Relay is off.</p></div>
+      </div>
+      <ol class="journey" aria-label="Journey checkpoints">
+        <li class="done"><span class="dot" aria-hidden="true"></span><span><strong>Relay begins with Jo</strong><small>Jo knows you started your journey.</small></span><time>11:42</time></li>
+        <li class="current" id="riverside"><span class="dot" aria-hidden="true"></span><span><strong>Riverside</strong><small id="checkpointCopy">Your next agreed checkpoint.</small></span><time>11:56</time></li>
+        <li id="home"><span class="dot" aria-hidden="true"></span><span><strong>Home</strong><small>Expected arrival.</small></span><time>12:08</time></li>
+      </ol>
+      <div class="actions">
+        <button class="button ready-only" id="start">Start relay with Jo</button>
+        <button class="button only-active" id="okay" hidden>I’m okay</button>
+        <p class="checkin" id="checkin" aria-live="polite"></p>
+        <div class="loss only-lost" id="lossInfo" hidden><strong>Last known: on Route 430.</strong><p>Relay will retry when signal returns. You can queue an SMS to Jo now.</p></div>
+        <button class="button warn only-lost" id="sms" hidden>Use SMS fallback</button>
+        <p class="checkin only-lost" id="smsConfirmation" aria-live="polite" hidden></p>
+        <button class="button only-active" id="arrive" hidden>I’ve arrived</button>
+        <button class="button alt only-complete" id="replay" hidden>Replay journey</button>
+      </div>
+      <div class="demo-controls" aria-label="Demo simulation controls">
+        <button id="lose" type="button">Demo: simulate signal loss</button>
+        <button id="restore" type="button" hidden>Demo: restore connection</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const blocks = { ready: $('readyState'), active: $('activeState'), lost: $('lostState'), complete: $('completeState') };
+      const controls = { start:$('start'), okay:$('okay'), arrive:$('arrive'), sms:$('sms'), replay:$('replay'), lose:$('lose'), restore:$('restore') };
+      const announcement = $('checkin'), smsConfirmation = $('smsConfirmation'), checkpoint = $('checkpointCopy'), riverside = $('riverside'), home = $('home');
+      let state = 'ready';
+      function show(el, yes) { el.hidden = !yes; }
+      function setState(next) {
+        state = next;
+        Object.entries(blocks).forEach(([name, el]) => show(el, name === next));
+        show(controls.start, next === 'ready'); show(controls.okay, next === 'active'); show(controls.arrive, next === 'active');
+        show(controls.sms, next === 'lost'); show(smsConfirmation, next === 'lost'); show(controls.replay, next === 'complete');
+        show(controls.lose, next === 'active'); show(controls.restore, next === 'lost');
+        if (next !== 'lost') smsConfirmation.textContent = '';
+        if (next === 'complete') { home.className = 'done'; riverside.className = 'done'; checkpoint.textContent = 'Checkpoint shared with Jo.'; }
+        if (next === 'ready') { home.className = ''; riverside.className = 'current'; checkpoint.textContent = 'Your next agreed checkpoint.'; announcement.textContent = ''; }
+      }
+      controls.start.addEventListener('click', () => { setState('active'); announcement.textContent = 'Relay started with Jo. Connection strong.'; controls.okay.focus(); });
+      controls.okay.addEventListener('click', () => { announcement.textContent = 'Check-in shared with Jo: I’m okay.'; checkpoint.textContent = 'Manual check-in shared with Jo.'; });
+      controls.lose.addEventListener('click', () => { setState('lost'); announcement.textContent = 'Demo signal loss simulated. Last checkpoint saved.'; controls.sms.focus(); });
+      controls.sms.addEventListener('click', () => { smsConfirmation.textContent = 'SMS queued to Jo — demo only.'; });
+      controls.restore.addEventListener('click', () => { setState('active'); announcement.textContent = 'Demo connection restored. Relay will continue to the next checkpoint.'; controls.arrive.focus(); });
+      controls.arrive.addEventListener('click', () => { setState('complete'); announcement.textContent = 'Journey complete. Relay is off.'; controls.replay.focus(); });
+      controls.replay.addEventListener('click', () => { setState('ready'); announcement.textContent = 'Journey reset to ready state.'; controls.start.focus(); });
+    })();
+  </script>
+</body>
+</html>

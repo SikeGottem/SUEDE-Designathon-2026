@@ -7,6 +7,8 @@ We are preparing how the team thinks and uses time before the 2026 brief lands. 
 
 Every consequential decision must now pass the judging review in `WIKI/JUDGING.md` before it is approved or implemented.
 
+The design toolchain is installed and documented in `WIKI/TOOLCHAIN.md`. The three broad visual skills remain available for separate exploration, but each real artifact must declare one visual lead. Figma account connection and the permanent visual-skill choice are intentionally deferred until Ethan is ready and the real 2026 concept exists.
+
 The central belief is:
 
 > The idea and execution are equally important. Choose within 4-6 hours, then protect enough time to make, test and explain the idea properly.
@@ -34,6 +36,9 @@ The central belief is:
 - [[TESTS]] - what we tried, what happened and what changed
 - [[DECISIONS]] - choices with reasons and consequences
 - [[TACTICAL_PLAN]] - timing, AI workflows, judging checks and pitch structure
+- [[TOOLCHAIN]] - installed tools, hybrid routing and deferred setup
+- [[DESIGN_SKILLS]] - research and evidence behind the tool choices
+- [[FRETO_REFERENCE]] - verified anatomy and lessons from the 2024 winning deck
 - [[TEMPLATES]] - copyable structures for fast updates
 
 ## Next update

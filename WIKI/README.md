@@ -11,9 +11,11 @@ This folder is the team's working memory. The presentation explains the shared a
 4. Put observations, links and quotes in [EVIDENCE.md](EVIDENCE.md).
 5. Record quick learning loops in [TESTS.md](TESTS.md).
 6. Log settled decisions and their completed judge reviews in [DECISIONS.md](DECISIONS.md).
-7. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the approved AI design workflow and skill-stack recommendation.
-8. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
-9. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
+7. Use [TOOLCHAIN.md](TOOLCHAIN.md) for the installed workflow, safe hybrid rule and deferred Figma setup.
+8. Use [DESIGN_SKILLS.md](DESIGN_SKILLS.md) for the research behind the tool choices.
+9. Use [FRETO_REFERENCE.md](FRETO_REFERENCE.md) for the verified structure of the 2024 winner's public Canva deck and case study.
+10. Update [BRIEF.md](BRIEF.md) when the official 2026 question lands.
+11. Read complete meeting sources in [TRANSCRIPTS/](TRANSCRIPTS/README.md); Chronicle imports these automatically and syncs the search database.
 
 ## Working rule
 

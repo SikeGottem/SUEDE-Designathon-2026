@@ -2,5 +2,7 @@
 .DS_Store
 .wiki/
 output/
+.playwright-cli/
+.impeccable/
 __pycache__/
 *.py[cod]

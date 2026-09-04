@@ -4,7 +4,9 @@
 - **Prepared:** 4 September 2026
 - **Decision:** which agent skills and design tools should govern the designathon workflow
 - **Scope:** research synthesis, ideation, UX strategy, art direction, Figma, coded UI, critique, accessibility, motion and the pitch deck
-- **Current status:** recommendation only; no additional candidate skills have been installed or removed
+- **Current status:** core tools installed; comparison completed; permanent visual-skill choice and Figma OAuth intentionally deferred
+
+> This page preserves the research and rationale. [TOOLCHAIN.md](TOOLCHAIN.md) is the current operating record, including the safe hybrid rule, installed versions, benchmark outcome and deferred setup.
 
 ## Verdict
 
@@ -16,13 +18,13 @@ The best-supported system is:
 2. Real evidence and a short `DESIGN.md` establish the product's point of view before visual generation.
 3. Selected Intent methods challenge the problem, medium and assumptions.
 4. gstack creates the design language and one genuinely divergent visual round.
-5. One broad coded-interface skill produces and refines the visual implementation. Choose it through a controlled benchmark; do not load competing broad skills together.
+5. Broad coded-interface skills may contribute separate options or critiques, but each artifact declares one visual lead before implementation so contradictory defaults are not stacked.
 6. The official Figma plugin owns native, editable product screens and Figma Slides.
 7. OpenAI Product Design plus Playwright inspect rendered flows, states and responsiveness.
 8. Emil Kowalski's skills own interaction motion; Remotion is optional for one rendered hero clip.
 9. Humans own framing, selection, taste, material editing, testing, approval and disclosure throughout.
 
-There is no credible common benchmark showing that one visual-design skill universally creates the “best output.” GitHub stars show adoption, not taste or result quality. The visual-skill decision therefore needs a blind test in our actual runtime.
+There is no credible common benchmark showing that one visual-design skill universally creates the “best output.” GitHub stars show adoption, not taste or result quality. Our controlled Relay test produced a provisional result, but Ethan chose to wait for the real 2026 concept before making a permanent selection.
 
 ## AI design rule
 
@@ -49,10 +51,10 @@ This is also where current product practice is moving. Figma describes AI as wor
 | Visual divergence | One gstack `design-shotgun` round | Keep selectively | Produces competing visual directions early, when disagreement is cheap. It should not become endless option generation. |
 | Native UI and components | Official OpenAI Figma plugin | Keep | Writes editable Figma objects and supports design-system-aware reconstruction rather than treating a screenshot as the final source. |
 | Native pitch deck | Official `figma-use-slides` workflow | Keep | Best current path to custom, editable Figma Slides. Text, layout and media remain directly adjustable by the team. |
-| Coded interface craft | One of Impeccable, Anthropic `frontend-design`, or current `design-taste-frontend` | Benchmark first | These overlap. One should own the broad visual rules; loading all three creates conflicting defaults. |
-| Flow and artifact audit | OpenAI Product Design `audit` | Add after review | Screenshot-grounded inspection of actual product steps with explicit limits on what visual evidence can prove. |
+| Coded interface craft | Impeccable, Anthropic `frontend-design`, and current `design-taste-frontend` | Installed; select per artifact | They may generate separate options, but only one may lead an implementation pass. The permanent default is deferred until a real concept exists. |
+| Flow and artifact audit | OpenAI Product Design `audit` | Installed | Screenshot-grounded inspection of actual product steps with explicit limits on what visual evidence can prove. |
 | Browser behaviour and accessibility | Playwright plus keyboard and automated checks | Keep | Verifies responsive layouts, interaction, errors and behaviour that a static design critique cannot prove. |
-| Interaction motion | [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Add after review | Treats motion as purposeful feedback, covers variants and review, and includes reduced-motion and performance concerns. |
+| Interaction motion | [Emil Kowalski's skills](https://github.com/emilkowalski/skills) | Installed | Treats motion as purposeful feedback, covers variants and review, and includes reduced-motion and performance concerns. |
 | Cinematic demo asset | [Remotion skills](https://github.com/remotion-dev/remotion/tree/main/packages/skills) | Conditional | Useful for a polished 10–20 second hero clip or offline demo. It should not own the deck or product UI. |
 | Original raster imagery | System `imagegen` | Keep | Useful for concept imagery, textures, key art and visual assets when inspected and edited at delivery scale. |
 
@@ -227,41 +229,33 @@ Canva is useful for quick templates and team familiarity, but it gives this Code
 
 ## Controlled visual-skill benchmark
 
-Before choosing the primary coded-interface skill:
+The benchmark is complete. Impeccable, Anthropic `frontend-design` and the installed `design-taste-frontend` each received the same fictional Relay brief, fixed copy, required interaction path, offline constraint, model class, reasoning level and one-turn delivery limit. Playwright exercised the same desktop/mobile path, focus, target sizes, reduced motion, resource requests and errors. Reviewers compared anonymous A/B/C evidence without numeric scoring.
 
-1. Use one designathon-like hero-flow brief with the same product context, references, copy and assets.
-2. Keep the model, reasoning level, timebox and number of correction passes identical.
-3. Test Impeccable, Anthropic `frontend-design` and the installed `design-taste-frontend` separately.
-4. Export anonymous screenshots and interaction recordings so reviewers do not know which skill produced which result.
-5. Compare them using pairwise SUEDE verdicts, not invented numeric scores.
-6. Review problem-to-mechanism clarity, human specificity, distinctiveness, hierarchy, critical states, responsiveness, accessibility, edit burden and how much manual de-slopping remains.
-7. Keep one broad winner. Preserve a losing skill only if it has a clearly separate use case.
+The blind result was **C, the current `design-taste-frontend`, with moderate confidence**. A was strong and operational but had undersized demo controls. B had the strongest editorial failure state but lost focus after most state transitions. C made the most coherent full product argument and preserved focus and touch sizes, but its heading focus outline needed visual refinement and the skill is narrower than this product-flow use case.
 
-This test will answer the real question—best output in our environment—more reliably than stars, README examples or online enthusiasm.
+This is evidence about one constrained task, not proof of a universal winner. Ethan chose to keep all three available until a real 2026 concept reveals the relevant surface and lets the team make a taste judgment. The non-conflicting rule is: compare separate outputs if useful, then declare one visual lead per artifact. Full protocol and evidence live in [`benchmarks/design-skills/`](../benchmarks/design-skills/); the current routing rule lives in [TOOLCHAIN.md](TOOLCHAIN.md).
 
 ## Existing skill cleanup
 
 | Existing skill | Decision | Condition |
 | --- | --- | --- |
-| Official Figma plugin v2.0.21 | Keep | Restart, authenticate and verify a native Figma Design and Slides write. |
+| Official Figma plugin v2.0.21 | Keep | Installed. Authenticate later and verify a native Figma Design and Slides write. |
 | Older local Figma skill copies | Retire later | Remove only after the official plugin test passes; duplicate names create routing ambiguity. |
 | gstack design skills | Keep selectively | One consultation, one divergence round and targeted review. |
-| `design-taste-frontend` | Benchmark / limit | Use for expressive campaign surfaces unless it proves best for the actual product flow. |
-| `make-interfaces-feel-better` | Replace later | Retire if Emil's maintained motion skills pass the comparison. |
+| Impeccable, Anthropic `frontend-design`, `design-taste-frontend` | Keep pending real-concept choice | Explore separately; declare one visual lead before each implementation. Do not stack their full rules. |
+| `make-interfaces-feel-better` | Keep as a bounded polish reference | Emil's maintained skills own motion; do not let this reference establish a competing visual direction. |
 | `redesign-existing-projects` | Retire | No unique value in the proposed chain. |
 | Playwright | Keep | Behavioural, responsive and screenshot verification. |
 | System `imagegen` | Keep | Original raster assets with human selection and delivery-scale inspection. |
 
-## Proposed changes after review
+## Implementation status
 
-Nothing below should be installed or removed until Ethan approves this report.
-
-1. Restart Codex and verify Figma authentication plus native Design and Slides writes.
-2. Retire the duplicate local Figma copies after that verification.
-3. Add project-scoped versions of selected Intent methods, Anthropic research synthesis, OpenAI Product Design audit and Emil's motion skills.
-4. Run the three-way blind visual benchmark.
-5. Choose one primary coded-interface skill and document the result in `DESIGN.md`.
-6. Keep Remotion uninstalled unless the selected pitch explicitly needs a rendered hero clip.
+1. Selected Intent strategy/philosopher methods, OpenAI Product Design and Emil's motion skills are installed.
+2. One gstack design-language and visual-divergence round is complete.
+3. The three-way blind visual benchmark is complete; permanent selection is deferred by Ethan.
+4. The official Figma plugin is installed; OAuth and native Design/Slides write verification are deferred until Ethan connects the account.
+5. Duplicate local Figma skills remain in place until the official write test succeeds.
+6. Remotion remains uninstalled unless the selected pitch explicitly needs a rendered hero clip.
 
 ## Evidence quality and limits
 
