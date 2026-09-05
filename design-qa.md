@@ -170,3 +170,37 @@ passed for rehearsal; the QR still needs a physical-phone scan at presentation d
 - Cecelia's original firefly PNG remains the source asset, but its alpha is used as a mask so every visible pixel renders in the exact deck ink `#081F4D`.
 - Post-build check: all three circle sizes remain distinct in `/tmp/suede-slide5-markerfix-step4.png` at 1600 × 900, and the firefly now carries the exact same navy as the surrounding title.
 - Authenticity verdict: **Pass**. The circle size remains an information encoding rather than decoration, the Cecelia mascot stays the subject-specific signature, and the user-directed contrast correction is the material human change.
+
+---
+
+# Design QA — social-script diagram, compressed psychology map and icon-led findings ledger
+
+## Target and capture conditions
+
+- Implementation: slides 4–7 at `http://127.0.0.1:4176/deck/pitch-prototype/index.html`, rendered at the native 1600 × 900 canvas.
+- Final captures: `/tmp/suede-slide4-science-step4.png`, `/tmp/suede-slide4-science-step5.png`, `/tmp/suede-slide5-final-step2.png`, `/tmp/suede-slide5-final-step3.png`, `/tmp/suede-slide5-final-step4.png`, `/tmp/suede-slide6-final-step4.png` and `/tmp/suede-slide7-after-rebalance.png`.
+- Browser console: zero errors after the final page-4, page-5 and page-6 builds.
+
+## Findings and fixes
+
+1. Page 4's four equal empty cards made an ordinary Tuesday read like a fourth occasion and presented the occasion rule as fact. Three hand-drawn occasion icons now form one connected social-script cluster; a dashed break isolates an ordinary Tuesday, and the adjacent research is labelled as support for testing rather than proof.
+2. Page 5's paper summaries were too small and too long for live delivery. Each active channel now reveals one large mechanism statement with one visible author-year trail; the detailed methods remain in the report and Q&A.
+3. Page 5's axes were too faint at presentation size. Both labels now use 25-pixel deep navy text and three-pixel rules.
+4. Page 6's repeated metric labels created a dense table. A single shared header, 48-pixel channel icons and larger values turn it into one scan path while preserving the three-stage reveal and fourth-click rings.
+5. Page 7's right ring crossed its constraint copy. The rings were reweighted and repositioned, and the centre hierarchy was strengthened without changing the message.
+
+## Evidence and authenticity boundaries
+
+- Kumar and Epley support sender miscalibration around awkwardness, while Givi and Galak support testing whether non-occasion care can be welcome; neither proves a universal occasion rule or crisis interpretation.
+- The page-5 studies support only `Tone can be misread`, `Voice can feel closer`, and `Thoughtfulness matters more than price` as bounded psychological mechanisms.
+- The studies do not validate the map positions, point sizes, paired-channel equivalence, Goldilocks target, audience groups, rehearsal percentages or ratings.
+- Communication job: show credible psychological grounding in roughly 25 seconds without turning the map into a literature review.
+- Rejected defaults: paper-summary cards, a separate literature slide, repeated dashboard headers and decorative icons unrelated to the channel forms.
+- Content-native signature: each channel's hand-drawn icon appears with its own active mechanism, while Cecelia's firefly marks the product target.
+- Material human-directed change: Ethan requested less explanatory copy, clearer axes, larger icons and a more polished findings composition.
+- Strongest remaining AI tell: `psychology-informed` can read like a generic credibility badge; the adjacent citations and explicit working-hypothesis footer keep it informational rather than decorative.
+- Authenticity verdict: **Pass for rehearsal**.
+
+## Final result
+
+passed; the next evidence step is a timed 25-second first-listener recall test and replacement of every rehearsal value before judged delivery.

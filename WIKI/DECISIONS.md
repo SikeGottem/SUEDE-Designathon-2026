@@ -1260,3 +1260,52 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Material human-directed change: Ethan supplied the ring composition, replaced green with blue, demanded the mascot, simplified the side copy, reduced the centre hierarchy and merged the QR into page 10.
 - Next corrective action: replace temporary data and perform a physical projector/phone rehearsal; no further visual correction is required before that evidence arrives.
 - Verdict: **Pass for rehearsal**.
+
+## 2026-09-05 - Make the problem and research sequence visual, bounded and pitchable
+
+- Status: current rehearsal direction, selected after Ethan's delivery-size review.
+- Decision: page 4 replaces four equal empty cards with one connected occasion-script diagram and treats ordinary-day permission as a working hypothesis. Page 5 reveals one large psychological mechanism and author-year citation per active channel, uses higher-contrast axes and receives 25 seconds of narration. Page 6 uses one shared metric header, large channel icons and the existing fourth-click selection rings. Page 7 keeps the oversized Goldilocks structure with the ring geometry moved clear of the copy.
+- Page-4 research boundary: Kumar and Epley support sender miscalibration around awkwardness; Givi and Galak support testing whether non-occasion care may be welcome. Neither establishes that appreciation universally requires an occasion, that an ordinary message signals crisis, or how prevalent the proposed social script is.
+- Evidence boundary: published studies support only the adjacent mechanism labels. They do not prove the plotted positions, circle sizes, paired-form equivalence, Goldilocks product target, audience groups, percentages or score values.
+- Timing trade-off: the live story loses paper-method detail but gains scanability, recall and roughly 35 seconds. Methods and full references remain available in notes, the psychology report and Q&A.
+
+### Mandatory judge review
+
+- Verdict: **Proceed with conditions**.
+- Weakest judging angle: **evidence quality**, because the psychology is adjacent and bounded while the primary figures, map geometry and audience remain unvalidated rehearsal material.
+- Main trade-off: stronger live comprehension in exchange for less methodological detail on screen.
+- Next evidence: test whether a first-time listener can recall the three mechanisms and Goldilocks inference after the 25-second delivery, then run the matched-format comparison and replace all temporary values.
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The rule-to-mechanism-to-product chain is faster to understand. | The exact 2026 rubric remains unverified. |
+| Problem identification | strengthens conditionally | Page 4 now labels the occasion idea as a working social script and shows the adjacent prediction-gap evidence before the channel map. | Prevalence, causality and segment boundaries remain unknown. |
+| Solution approach | strengthens | The three useful channel qualities resolve directly into the Goldilocks target. | No matched-format result proves the product reaches it. |
+| Design innovation | neutral | The firefly and authored-keepsake logic remain distinctive. | Judges may still read the idea as a decorated digital letter. |
+| Visual communication | strengthens | Large mechanisms, stronger axes, icons and a shared ledger header survive projection size. | The footer still requires a real-projector check. |
+| Presentation skills | strengthens | The evidence synthesis fits a rehearsable 25-second beat. | The presenter must resist explaining study methods unless asked. |
+| Evidence quality | strengthens in boundary, remains weak overall | Author-year trails and explicit limitations are visible. | Rehearsal percentages, ratings, positions and audience are not findings. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Text may already be sufficient. | The deck says tone can be misread, not that text is inherently bad. | Frequency and severity in ordinary-day appreciation. |
+| Behaviour and context | Voice closeness may not transfer to asynchronous voice notes. | The slide uses the bounded phrase `can feel closer`. | A direct async voice-note comparison. |
+| Medium necessity | A new app may be unnecessary. | Existing formats remain visible controls, not straw men. | Whether a non-app ritual performs as well. |
+| Alternatives | Letters and gifts may succeed for reasons other than thoughtfulness. | The claim separates thoughtfulness from price. | Which properties carry across formats. |
+| Human specificity | Included groups may not share one need. | They remain illustrative contexts, not validated segments. | Segment-specific sender and receiver evidence. |
+| Inclusion and accessibility | Physical and digital friction vary by ability and access. | Friction stays a working dimension rather than a universal score. | Accessible matched-format testing. |
+| Trust, safety and privacy | A keepsake could create pressure or exposure. | No reply is required and personalisation remains optional. | Repeated-use and forwarding behaviour. |
+| Failure and recovery | The compressed claim may be misremembered as proof. | Each mechanism has a citation and the slide has a visible hypothesis footer. | First-listener recall under pitch conditions. |
+| Feasibility and demo truth | A plotted target can look validated. | The footer names positions, sizes and Goldilocks zone as working hypotheses. | Product-versus-control evidence. |
+| Incentives and second-order effects | More prompts may create obligation. | The current proposition is receiver-controlled and non-reciprocal. | Effects across repeated use. |
+| Simplicity and retellability | Three channels and measures may still overload. | One active mechanism appears at a time; page 6 reuses one shared header. | Timed audience recall. |
+| Authorship and distinctiveness | Evidence labels could become generic academic decoration. | Hand-drawn channel icons and Cecelia's firefly make the evidence native to this exact problem. | Whether the team delivers it in its own voice. |
+
+### AI and authorship check
+
+- Ethan directed the compression, axis contrast, icon scale and layout polish; agents supplied critique, bounded wording, implementation and verification.
+- Rejected directions: cumulative evidence paragraphs, another literature slide, repeated mini-headings and generic dashboard cards.
+- No research findings or assets were fabricated in this revision; the existing rehearsal numbers remain explicitly disclosed as temporary.
+- Recommendation: use the compressed slides for rehearsal, answer methodological detail in Q&A, and do not use the temporary figures in judged delivery.

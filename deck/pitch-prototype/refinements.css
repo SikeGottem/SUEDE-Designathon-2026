@@ -1,57 +1,248 @@
 /* Targeted visual refinements for the research, audience, and handoff slides. */
 
+/* Slide 04 — occasions form one social-script system; an ordinary day is the exception. */
+.occasion-slide .rule-layout {
+  gap: 24px;
+  padding: 22px 72px 48px;
+}
+
+.occasion-slide .rule-kicker {
+  margin-bottom: 12px;
+}
+
+.occasion-slide .rule-layout h2 {
+  max-width: 1410px;
+  font-size: 82px;
+  line-height: .84;
+}
+
+.permission-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px 410px;
+  gap: 32px;
+  align-items: center;
+  min-height: 390px;
+}
+
+.permission-label {
+  margin: 0 0 28px 14px;
+  color: var(--accent-ink);
+  font-size: 22px;
+  letter-spacing: .055em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.occasion-sequence {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.occasion-sequence::before {
+  content: "";
+  position: absolute;
+  top: 58px;
+  left: 15%;
+  right: 15%;
+  height: 3px;
+  background: rgb(8 31 77 / .28);
+}
+
+.occasion-token {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.occasion-mark,
+.empty-occasion {
+  position: relative;
+  z-index: 1;
+  width: 118px;
+  height: 118px;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+}
+
+.occasion-mark svg {
+  width: 61px;
+  height: 61px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.7px;
+}
+
+.occasion-token strong,
+.ordinary-day strong {
+  color: var(--ink);
+  font-size: 39px;
+  font-weight: 400;
+  line-height: .86;
+}
+
+.permission-break {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 11px;
+  align-items: center;
+  color: var(--accent-ink);
+  font-size: 17px;
+  letter-spacing: .045em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.permission-break::before,
+.permission-break::after {
+  content: "";
+  height: 2px;
+  background: rgb(8 31 77 / .3);
+}
+
+.ordinary-day {
+  display: grid;
+  grid-template-columns: 126px 1fr;
+  gap: 24px;
+  align-items: center;
+  min-height: 240px;
+  padding: 30px 0 30px 28px;
+  border-left: 3px dashed rgb(8 31 77 / .45);
+}
+
+.empty-occasion {
+  width: 126px;
+  height: 126px;
+  border-style: dashed;
+  background: color-mix(in srgb, var(--accent-on-ink) 18%, var(--paper));
+}
+
+.empty-occasion b {
+  color: var(--ink);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.ordinary-day small {
+  display: block;
+  margin-top: 13px;
+  color: var(--accent-ink);
+  font-size: 24px;
+  line-height: .9;
+}
+
+.ordinary-day p {
+  margin-top: 24px;
+  color: var(--ink);
+  font-size: 23px;
+  line-height: .96;
+}
+
+.occasion-slide .hmw-bar {
+  padding: 16px 0 12px;
+  border-top: 3px solid var(--ink);
+  font-size: 36px;
+}
+
+.occasion-slide .occasion-source {
+  bottom: 19px;
+  max-width: 1320px;
+}
+
 /* Slide 06 — a handwritten comparison ledger, not a dashboard table. */
 .research-story {
-  grid-template-columns: .95fr .95fr 1.25fr;
-  gap: 42px;
+  grid-template-columns: .8fr .8fr 1.42fr;
+  gap: 30px;
+}
+
+.research-job:not(.has-ledger) {
+  padding: 28px 12px 96px;
+}
+
+.research-job strong.research-number {
+  color: var(--ink);
+  font-size: 158px;
+  line-height: .72;
+}
+
+.research-answer {
+  max-width: 320px;
+  margin-top: 32px;
+  font-size: 38px;
+  line-height: .91;
 }
 
 .research-job.has-ledger {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 34px 0 22px 14px;
+  padding: 24px 0 22px 4px;
 }
 
 .comparison-ledger {
   width: 100%;
-  max-width: 555px;
+  max-width: 630px;
 }
 
 .ledger-kicker {
-  margin: 0 0 34px;
+  margin: 0 0 24px;
   color: var(--accent-ink);
-  font-size: 31px;
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: -.01em;
-  line-height: .9;
+  line-height: .88;
 }
+
+.ledger-header {
+  display: grid;
+  grid-template-columns: 210px repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 0 13px;
+  color: var(--accent-ink);
+  font-size: 14px;
+  letter-spacing: .045em;
+  line-height: .95;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ledger-header span:first-child { text-align: left; }
 
 .ledger-row {
   display: grid;
-  grid-template-columns: 176px minmax(0, 1fr);
-  gap: 17px;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
-  min-height: 124px;
-  border-top: 1.5px solid rgb(8 31 77 / .28);
+  min-height: 108px;
+  border-top: 1.5px solid rgb(8 31 77 / .25);
 }
 
 .ledger-row:last-child { border-bottom: 1.5px solid rgb(8 31 77 / .28); }
-.ledger-row.voice { margin-left: 18px; }
+.ledger-row.voice { margin-left: 0; }
 
 .ledger-form {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   color: var(--ink);
-  font-size: 27px;
-  line-height: .82;
+  font-size: 26px;
+  line-height: .84;
 }
 
 .ledger-icon {
-  flex: 0 0 31px;
-  width: 31px;
-  height: 31px;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
   color: var(--accent-ink);
 }
 
@@ -62,26 +253,21 @@
 .ledger-scores {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 9px;
+  gap: 10px;
   text-align: center;
 }
 
 .ledger-scores small {
-  display: block;
-  color: var(--accent-ink);
-  font-size: 14px;
-  letter-spacing: .04em;
-  line-height: .9;
-  text-transform: uppercase;
+  display: none;
 }
 
 .ledger-scores strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 0;
   color: var(--ink);
-  font-size: 34px;
+  font-size: 38px;
   font-weight: 400;
-  line-height: .75;
+  line-height: .8;
 }
 
 .ledger-scores .target-score {

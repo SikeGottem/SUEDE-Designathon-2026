@@ -22,7 +22,7 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 1. Warm & Fuzzies logo
 2. Sender-framed audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
-4. Occasion-based permission and How Might We
+4. Working social-script diagram and How Might We, with adjacent sender-miscalibration evidence and an explicit hypothesis boundary
 5. Impact / friction / frequency map across three illustrated presentation families, with bounded paper evidence and Cecelia's firefly marking the unboxed Goldilocks target; numeric ratings stay off this slide
 6. Evidence-first research findings: 82%, 71%, and a hand-drawn three-row trade-off ledger, followed by a fourth-click highlight pass
 7. Two oversized cropped Goldilocks rings dividing the full slide into blunt text and letter/gift constraints, with one quieter need-state statement between them
@@ -58,7 +58,7 @@ The QR opens a generic public demo. It is not a personalised thank-you, particip
 
 ## Visual contract
 
-- **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
+- **Communication job:** make the proposed occasion script clear without presenting it as fact, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
 - **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the channel map's published evidence; honest hypothesis labels; the public demo and its verified QR.
 - **Rejected defaults:** no mentor-quote theatre, demographic persona card, boxed research panel, fake QR, process diary, feature cards, screenshot carousel or second ending.
 - **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the next slide circles the three qualities the team will combine; the later synthesis keeps If / And / Then and adds one Therefore requirement.
@@ -71,12 +71,12 @@ The QR opens a generic public demo. It is not a personalised thank-you, particip
 
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
-| Brief fit | strengthens | The live story names and redesigns the occasion-based unwritten rule. | Exact 2026 wording remains unconfirmed. |
-| Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, direct research findings and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
+| Brief fit | strengthens | The live story names and redesigns a possible occasion-based social script. | Exact 2026 wording remains unconfirmed. |
+| Problem identification | strengthens | A plain problem statement, bounded occasion hypothesis, corrected map, direct research findings and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
 | Solution approach | strengthens | The live maker-to-receiver flow shows the mechanism and receiver-controlled ending directly. | The medium has not beaten any control in a completed matched-format test. |
 | Design innovation | strengthens | Making, sealing, giving and receiver-led opening form a clearer ritual than a static feature tour. | Without participant evidence, the experience may still be read as a decorated digital letter. |
 | Visual communication | strengthens | Ten slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The rehearsal findings still look unfinished until real evidence replaces them. |
-| Presentation skills | strengthens | The map receives 60 seconds of evidence-led narration, followed by one focused 100-second public demo with optional audience access. | The evidence sequence and QR handoff must be rehearsed so they clarify rather than interrupt the story. |
+| Presentation skills | strengthens | The map receives 25 seconds of psychology-backed synthesis, followed by one focused 100-second public demo with optional audience access. | The compressed evidence sentence and QR handoff must be rehearsed so they clarify rather than interrupt the story. |
 | Evidence quality | weak | Unknowns are left blank and the live demo is not mislabelled as outcome evidence. | No completed primary evidence currently supports the gap, rule, audience or impact. |
 
 ### Challenge review

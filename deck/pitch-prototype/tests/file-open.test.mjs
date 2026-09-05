@@ -86,7 +86,13 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /When was the last time someone showed you appreciation/);
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
-  assert.match(source, /Is everything okay\?/);
+  assert.match(source, /Care this explicit can feel like it needs a reason\./);
+  assert.match(source, /occasions provide a ready-made script/);
+  assert.match(source, /Senders can overestimate awkwardness\./);
+  assert.match(source, /Ordinary-day care can still be welcome\./);
+  assert.match(source, /Kumar &amp; Epley, 2018 · Givi &amp; Galak, 2022/);
+  assert.equal((source.match(/class="occasion-mark"/g) ?? []).length, 3);
+  assert.doesNotMatch(source, /Is everything okay\?/);
   assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
   assert.match(source, /data-title="Research synthesis" data-steps="4"/);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
@@ -97,6 +103,8 @@ test('the latest review uses a problem-first opener and preserves the full synth
 });
 
 test('the channel map reveals local evidence with disclosed rehearsal ratings', () => {
+  const mapSlide = source.match(/<article class="slide matrix-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+
   assert.equal((source.match(/class="plot-evidence"/g) ?? []).length, 3);
   assert.match(source, /data-title="The channel gap" data-steps="4"/);
   assert.match(source, /voice note \/ video call/);
@@ -109,12 +117,18 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.match(source, /\.plot\.target \.plot-marker::before[\s\S]*?background:var\(--ink\)[\s\S]*?mask:url\('\.\.\/\.\.\/prototype\/public\/assets\/illustrations\/cecilia\/firefly-brand-mark\.png'\)/);
   assert.doesNotMatch(source, /class="evidence-dock"/);
   assert.match(source, /Kumar &amp; Epley, 2021/);
-  assert.match(source, /Kumar &amp; Epley, 2018/);
+  assert.doesNotMatch(mapSlide, /Kumar &amp; Epley, 2018/);
   assert.match(source, /Algoe et al., 2008/);
-  assert.match(source, /Temporary grouped positions—not findings/);
+  assert.match(source, /Tone can be misread\./);
+  assert.match(source, /Voice can feel closer\./);
+  assert.match(source, /Thoughtfulness matters more than price\./);
+  assert.match(source, /psychology-informed/);
+  assert.match(source, /font-size:25px[\s\S]*?color:var\(--ink\)/);
+  assert.match(source, /Published studies support the mechanism labels/);
   assert.doesNotMatch(source, /class="practice-ratings"/);
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
+  assert.match(source, /class="ledger-header"[\s\S]*?impact \/ 5[\s\S]*?friction \/ 5[\s\S]*?frequency \/ 5/);
   assert.match(source, /--accent:#081f4d/);
   assert.match(source, /--accent-ink:#254878/);
   assert.match(source, /--accent-on-ink:#a8c5ee/);
