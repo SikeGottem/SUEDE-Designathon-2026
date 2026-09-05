@@ -2,7 +2,7 @@
 import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
-test("a new keepsake asks who it is for before opening the paper", async ({ page }) => {
+test("a new keepsake asks who it is for and carries that name to the receiver", async ({ page, context }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "make it for them" }).click();
   await page.getByRole("button", { name: "create something" }).click();
@@ -20,6 +20,22 @@ test("a new keepsake asks who it is for before opening the paper", async ({ page
   await expect(page.getByRole("button", { name: "for Chloe Wu" })).toBeVisible();
   await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "false");
   await expect(page.locator(".keepsake-app > .mobile-scroll")).toHaveJSProperty("scrollTop", 0);
+
+  await page.getByRole("button", { name: "edit" }).click();
+  await page.getByLabel(/Write directly on the paper/).fill("You made today feel lighter.");
+  await page.getByRole("button", { name: "done writing" }).click();
+  await page.getByRole("button", { name: /Next: fold and decorate the envelope/ }).click();
+  await page.getByRole("button", { name: "choose how it travels" }).click();
+  await page.getByRole("button", { name: "see it ready to give" }).click();
+  await page.getByRole("button", { name: "give this privately" }).click();
+  await expect(page.getByRole("heading", { name: "give this to Chloe Wu." })).toBeVisible();
+
+  const receiverLink = await page.locator(".private-link span").innerText();
+  const receiver = await context.newPage();
+  await receiver.emulateMedia({ reducedMotion: "reduce" });
+  await receiver.goto(receiverLink);
+  await expect(receiver.getByText("for Chloe Wu", { exact: true })).toBeVisible();
+  await receiver.close();
 });
 
 test("the folded envelope always advances to carrier choice", async ({ page }) => {

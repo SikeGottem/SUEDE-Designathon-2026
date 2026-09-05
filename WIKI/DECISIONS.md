@@ -984,3 +984,65 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Main trade-off: the graph becomes more credible and explainable, but gains more verbal and visual density.
 - Next evidence that could change the verdict: one matched-content receiver comparison across ordinary text, voice or video, a physical/crafted control and Warm & Fuzzies.
 - Recommendation: use the progressive evidence map as the live baseline, then replace only the team-hypothesis coordinates or conclusion that the matched-format test genuinely changes.
+
+## 2026-09-05 - Ask for the recipient before opening a new keepsake
+
+- Status: current exploratory prototype direction; explicitly settled by Ethan, not participant-validated or final.
+- Decision: every `create something`, cabinet `+`, and `make another` action starts with one sparse `who is this for?` name step. A new draft never inherits Maya or another sample identity. A non-blank maker-entered name is required, trimmed without imposing legal-name formatting, remains editable on the paper, and travels with the same object through its envelope, exact link/QR, receiver view, and cabinet.
+- Reason: the existing implementation exposed an editable recipient only after entering the creator and silently began with Maya. Asking first makes the object deliberately about a chosen person and prevents sample copy from leaking into a real demo.
+- Evidence: Ethan's direct 5 September correction; the existing snapshot serializer already treats `recipient` as object data; the rendered iPhone flow and an automated maker-to-receiver round trip confirm that a chosen name survives creation and the exact bearer link. This is implementation evidence, not evidence that the extra step improves completion or emotional response.
+- Consequence: keep the step singular, keyboard-operable, non-scrolling, and visually inside the existing white/navy/Gaegu system. Preserve the inline recipient editor and the intentional Maya public sample, but never use Maya as a new-draft default.
+- Revisit when: an unaided maker misses the name field, the extra step harms completion, a group or nickname cannot be represented naturally, or a real receiver test shows the visible name creates an unwanted privacy or social signal.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | Choosing one person makes the ordinary-day act of appreciation specific before the maker starts. | A named recipient alone does not prove the experience changes the unwritten rule. |
+| Problem identification | strengthens | It identifies who the maker is thinking about rather than beginning from a generic sample. | The reason the maker hesitates and the relationship context remain unstated. |
+| Solution approach | strengthens | The same chosen identity now anchors authoring, giving, receiving, and keeping. | One more required screen may add friction before writing. |
+| Design innovation | neutral | This is necessary flow coherence rather than a novel mechanism. | It must not be presented as innovation in the pitch. |
+| Visual communication | strengthens | `who is this for?` gives the new-object path one clear job and removes misleading pre-filled copy. | Long names require truncation in compact controls while remaining available to assistive technology. |
+| Presentation skills | strengthens | A live demo can be addressed to an actual teammate and the QR opens that same named object. | A presenter still needs to rehearse entry and QR scanning. |
+| Evidence quality | strengthens with limits | The end-to-end coded path and exact QR round trip are verified. | No participant has compared an upfront name step with inline-only naming. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if naming should happen while writing instead? | The inline editor remains, so the upfront choice establishes intent without making it irreversible. | Whether the upfront step improves or harms momentum. |
+| Behaviour and context | Does this match how someone starts an act of appreciation? | It begins from the person already on the maker's mind, before tools or decoration. | Makers who begin from a memory rather than a person may respond differently. |
+| Medium necessity | Does a name field justify a separate screen? | In this prototype it prevents a false sample identity from propagating across a digitally serialized object. | Whether production could ask just as clearly inside the paper header. |
+| Alternatives | Could the creator open blank and ask inline? | That remains the main alternative and the existing inline control stays available. | Comparative task completion and preference. |
+| Human specificity | Can nicknames, groups, and non-Western names work? | The input accepts ordinary Unicode text and does not enforce first/last-name structure. | Real multilingual and group-name testing. |
+| Inclusion and accessibility | Can the step be completed without touch or motion? | It uses the protected keyboard input, semantic heading, visible focus, Enter submission, labelled disabled state, and no required animation. | Screen-reader and external-keyboard testing on real devices. |
+| Trust, safety and privacy | Where does the name go? | It stays in the local draft and exact bearer-link payload; the prototype makes no account or encryption claim. | Forwarding, wrong-recipient handling, retention, and production privacy. |
+| Failure and recovery | What if the maker mistypes or changes their mind? | The name is normalized on continue, can be changed on the paper, and the maker can return to the hub. | Draft recovery after refresh remains outside the prototype. |
+| Feasibility and demo truth | Does the chosen name genuinely reach the receiver? | The automated maker-to-receiver test opens the exact link and renders the entered name. | Server-backed media and delivery remain unimplemented. |
+| Incentives and second-order effects | Could naming intensify social pressure? | It personalises a private object without adding reminders, replies, read states, or tracking. | Relationship contexts where a visible name feels too formal or exposing. |
+| Simplicity and retellability | Does the step complicate the demo? | It is one question, one field, and one action: choose the person, then make the object. | Whether the hub plus name step feels like two gates in practice. |
+| Authorship and distinctiveness | Is this generic onboarding chrome? | The entered person becomes object data across the handmade paper, envelope, courier, QR, receiver, and cabinet rather than profile setup. | The interaction still needs real human use to prove it feels personal rather than procedural. |
+
+### AI and authorship check
+
+- Ethan identified the incorrect Maya default and selected the new upfront question.
+- AI traced the existing state and serializer, implemented the bounded screen, and automated verification; it did not invent the recipient or personal message.
+- The rendered screen keeps Ethan and Cecelia's selected white field, deep ink, Gaegu type, underlined action, and no-scroll composition.
+- Rejected defaults: no onboarding card, avatar picker, progress bar, account setup, decorative mascot, or AI-suggested name.
+- Human-authored change after render: the primary action was revised so a long chosen name truncates without hiding its arrow; the full name remains in the input and accessible label.
+
+### Design-authenticity post-build review
+
+- Communication job: establish the real person before the maker sees creative tools.
+- Content-native signature: the entered name becomes the repeated `for …` thread across the physical-object metaphor and exact receiver artifact.
+- Strongest remaining AI tell: the helper sentence is conventional form copy and should be removed if team review finds the edit affordance already obvious.
+- Logo-swap test: passes because the name is structurally carried through this project's authored-object, courier, and cabinet sequence.
+- Team-voice test: passes; `who is this for?` and `make it for …` match the product's existing language.
+- Authenticity verdict: **Pass for exploratory review, not final visual authority**.
+
+- Verdict: **Proceed with conditions**.
+- Blocking conditions: preserve name edit/recovery, Unicode input, keyboard access, no-scroll composition, exact receiver serialization, and honest bearer-link privacy limits; do not add contacts, profiles, account claims, or relationship metadata.
+- Weakest judging angle: **evidence quality**, because this is a direct team correction with no unaided participant comparison.
+- Main trade-off: stronger personal intent and demo correctness in exchange for one extra required action before writing.
+- Next evidence that could change the verdict: ask one teammate to start a new object unaided on a real phone and observe whether naming feels clarifying or like a gate.
+- Recommendation: keep the upfront recipient step in the exploratory prototype and test its effect on creation momentum before treating it as final.

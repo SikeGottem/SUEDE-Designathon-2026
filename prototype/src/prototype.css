@@ -365,7 +365,7 @@
 }
 
 .recipient-name-line input::placeholder {
-  color: color-mix(in srgb, var(--navy) 48%, white);
+  color: color-mix(in srgb, var(--navy) 65%, white);
   opacity: 1;
 }
 
@@ -380,6 +380,11 @@
   margin-top: auto;
   overflow: hidden;
   font-size: clamp(20px, 6.5vw, 26px) !important;
+}
+
+.recipient-start-label {
+  min-width: 0;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

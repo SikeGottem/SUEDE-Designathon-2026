@@ -730,8 +730,8 @@ function RecipientStart({ recipient, onRecipient, onBack, onContinue }: { recipi
           />
         </label>
         <p>you can change it later on the paper.</p>
-        <button className="drawn-action recipient-start-action" type="submit" disabled={!cleanedName} aria-label={cleanedName ? `Start making for ${cleanedName}` : "Enter their name to start making"}>
-          {cleanedName ? `make it for ${cleanedName}` : "make it for them"} <Mark />
+        <button className="drawn-action recipient-start-action" type="submit" disabled={!cleanedName} aria-label={cleanedName ? `Start making for ${cleanedName}` : "Enter their name to start making"} onPointerDown={(event) => event.preventDefault()}>
+          <span className="recipient-start-label">{cleanedName ? `make it for ${cleanedName}` : "make it for them"}</span> <Mark />
         </button>
       </form>
     </Page>
