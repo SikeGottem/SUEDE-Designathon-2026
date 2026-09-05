@@ -1,7 +1,7 @@
 <!-- Orientation: judge-facing review and proposed next-level narrative/visual direction for the Warm & Fuzzies live pitch. -->
 # Warm & Fuzzies presentation review and proposed changes
 
-Date: 2026-09-05  
+Date: 2026-09-05
 Status: proposal for team review; the broader rebuild has not been applied.
 
 ## Executive verdict
