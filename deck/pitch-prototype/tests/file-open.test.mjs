@@ -68,8 +68,10 @@ test('the channel map reveals bounded research instead of an invented gap statis
   assert.match(source, /Kumar &amp; Epley, 2018/);
   assert.match(source, /Algoe, Haidt &amp; Gable, 2008/);
   assert.match(source, /Team hypothesis · not a participant finding/);
+  assert.match(source, /<strong>goldilocks zone<\/strong><small>authored \+ revisitable<\/small>/);
   assert.doesNotMatch(source, /find digital channels too slight/);
   assert.doesNotMatch(source, /highest friction · occasion-coded/);
+  assert.doesNotMatch(source, /hypothesis to test/i);
 });
 
 test('every local image reference resolves from the standalone deck file', async () => {

@@ -108,7 +108,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 - **Artifact inspected:** all 11 HTML slides at 1600 × 900, plus the map's first and final builds at presentation, tablet and phone viewport sizes.
 - **Strongest remaining AI tell:** the five plotted coordinates are visually precise even though they remain team hypotheses; the spoken boundary must make that status unmistakable.
 - **Content-native signature:** one changing evidence panel follows the channel map point-by-point, then hands off to the team's highlighted test area rather than decorating the slide with static citations.
-- **Material human change:** Ethan made the graph the longest narrative slide and required every spoken channel claim to appear beside its research support; unsupported labels and the extra blank statistic were removed.
+- **Material human change:** Ethan made the graph the longest narrative slide and required every spoken channel claim to appear beside its research support; unsupported labels, the extra blank statistic and the oval around the final opportunity were removed, then he named the unboxed marker the `goldilocks zone`.
 - **Verdict:** Revise before final use.
 - **Exact next action:** rehearse the 11-slide deck and full live demo on the presentation projector before promoting the overall deck to Pass.
 

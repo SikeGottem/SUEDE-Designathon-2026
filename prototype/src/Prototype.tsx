@@ -20,6 +20,7 @@ import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } 
 type Phase =
   | "home"
   | "menu"
+  | "recipient"
   | "studio"
   | "envelope"
   | "carrier"
@@ -380,25 +381,27 @@ const publicDemoSnapshot: KeepsakeSnapshot = {
 function phaseFromQuery(): Phase | null {
   if (typeof window === "undefined") return null;
   const value = new URLSearchParams(window.location.search).get("screen");
-  const phases: Phase[] = ["home", "menu", "studio", "envelope", "carrier", "preview", "handoff", "sent", "arrival", "deferred", "unavailable", "opening", "reveal", "cabinet", "removed"];
+  const phases: Phase[] = ["home", "menu", "recipient", "studio", "envelope", "carrier", "preview", "handoff", "sent", "arrival", "deferred", "unavailable", "opening", "reveal", "cabinet", "removed"];
   return phases.includes(value as Phase) ? (value as Phase) : null;
 }
 
 export default function Prototype() {
+  const requestedPhase = phaseFromQuery();
   const hashPresent = typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
   const linkedSnapshot = snapshotFromHash() ?? (!hashPresent && typeof window !== "undefined" && window.location.pathname === "/demo" ? publicDemoSnapshot : null);
+  const seededPreview = Boolean(requestedPhase && !["home", "menu", "recipient"].includes(requestedPhase));
   // A fragment link always wins over the capture route and is immutable for the receiving demo.
-  const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : phaseFromQuery() ?? "home"));
+  const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
-  const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? "Maya");
-  const [words, setWords] = useState(() => linkedSnapshot?.words ?? "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.");
+  const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? (seededPreview ? "Maya" : ""));
+  const [words, setWords] = useState(() => linkedSnapshot?.words ?? (seededPreview ? "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask." : ""));
   const [crossedOut, setCrossedOut] = useState<CrossOut[]>(() => linkedSnapshot?.crossedOut ?? []);
   const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "dotted");
   const [envelope, setEnvelope] = useState<EnvelopeId>(() => linkedSnapshot?.envelope ?? "mail");
   const [seal, setSeal] = useState<DoodleStroke[]>(() => linkedSnapshot?.seal ?? []);
   const [sealWeight, setSealWeight] = useState<SealWeight>(() => linkedSnapshot?.sealWeight ?? "bold");
   const [savedSeal, setSavedSeal] = useState<PersonalStamp | null>(loadPersonalStamp);
-  const [pieces, setPieces] = useState<PieceId[]>(() => linkedSnapshot?.pieces ?? ["photo"]);
+  const [pieces, setPieces] = useState<PieceId[]>(() => linkedSnapshot?.pieces ?? (seededPreview ? ["photo"] : []));
   const [cuesOpen, setCuesOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareFailed, setShareFailed] = useState(false);
@@ -408,7 +411,7 @@ export default function Prototype() {
   const [removeOpen, setRemoveOpen] = useState(false);
   const [cabinetRemovingId, setCabinetRemovingId] = useState<string | null>(null);
   const [studioMode, setStudioMode] = useState<StudioMode>("compose");
-  const [captureAsset, setCaptureAsset] = useState<CaptureAsset | null>(() => linkedSnapshot?.capture ?? (phaseFromQuery() ? { kind: "sample" } : null));
+  const [captureAsset, setCaptureAsset] = useState<CaptureAsset | null>(() => linkedSnapshot?.capture ?? (seededPreview ? { kind: "sample" } : null));
   const [voiceAsset, setVoiceAsset] = useState<AudioAsset | null>(() => linkedSnapshot?.voice ?? null);
   const [songAsset, setSongAsset] = useState<AudioAsset | null>(() => linkedSnapshot?.song ?? null);
   const [doodleStrokes, setDoodleStrokes] = useState<DoodleStroke[]>(() => linkedSnapshot?.doodles ?? []);
@@ -485,7 +488,7 @@ export default function Prototype() {
   };
 
   const resetDraft = () => {
-    setRecipient("Maya");
+    setRecipient("");
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setWords("");
     setCrossedOut([]);
@@ -507,7 +510,7 @@ export default function Prototype() {
     setCopied(false);
     setShareFailed(false);
     setActiveSnapshot(null);
-    go("studio");
+    go("recipient");
   };
 
   const returnToMenu = () => go("menu");
@@ -574,6 +577,7 @@ export default function Prototype() {
               <Home key="home" onEnter={() => go("menu")} />
             )}
             {phase === "menu" && <Menu key="menu" reduceMotion={Boolean(reduceMotion)} onCreate={resetDraft} onLetters={() => go("cabinet")} />}
+            {phase === "recipient" && <RecipientStart key="recipient" recipient={recipient} onRecipient={setRecipient} onBack={returnToMenu} onContinue={(name) => { setRecipient(name); go("studio"); }} />}
             {phase === "carrier" && (
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
@@ -692,6 +696,44 @@ function Menu({ reduceMotion, onCreate, onLetters }: { reduceMotion: boolean; on
         <motion.button className="drawn-action" type="button" onClick={onCreate} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .72, duration: .26 }}>create something <Mark /></motion.button>
         <motion.button className="drawn-action" type="button" onClick={onLetters} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .88, duration: .26 }}>look in your box <Mark /></motion.button>
       </div>
+    </Page>
+  );
+}
+
+function RecipientStart({ recipient, onRecipient, onBack, onContinue }: { recipient: string; onRecipient: (value: string) => void; onBack: () => void; onContinue: (name: string) => void }) {
+  const keyboard = useKeyboard();
+  const cleanedName = recipient.trim().replace(/\s+/g, " ");
+  const submit = () => {
+    if (!cleanedName) return;
+    keyboard.hide();
+    onContinue(cleanedName);
+  };
+
+  return (
+    <Page className="recipient-page">
+      <TopLine onBack={onBack} label="back" />
+      <form className="recipient-start-form" onSubmit={(event) => { event.preventDefault(); submit(); }}>
+        <h1>who is this for?</h1>
+        <label className="recipient-name-line">
+          <span>for</span>
+          <KeyboardInput
+            autoFocus
+            aria-label="Who is this for?"
+            autoComplete="off"
+            enterKeyHint="next"
+            maxLength={60}
+            placeholder="their name"
+            spellCheck={false}
+            value={recipient}
+            onBlur={() => keyboard.hide()}
+            onChange={(event) => onRecipient(event.target.value)}
+          />
+        </label>
+        <p>you can change it later on the paper.</p>
+        <button className="drawn-action recipient-start-action" type="submit" disabled={!cleanedName} aria-label={cleanedName ? `Start making for ${cleanedName}` : "Enter their name to start making"}>
+          {cleanedName ? `make it for ${cleanedName}` : "make it for them"} <Mark />
+        </button>
+      </form>
     </Page>
   );
 }

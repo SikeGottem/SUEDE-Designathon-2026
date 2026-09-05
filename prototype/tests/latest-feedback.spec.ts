@@ -2,6 +2,26 @@
 import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
+test("a new keepsake asks who it is for before opening the paper", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "make it for them" }).click();
+  await page.getByRole("button", { name: "create something" }).click();
+
+  await expect(page.getByRole("heading", { name: "who is this for?" })).toBeVisible();
+  const name = page.getByLabel("Who is this for?");
+  const continueButton = page.getByRole("button", { name: "Enter their name to start making" });
+  await expect(name).toHaveValue("");
+  await expect(continueButton).toBeDisabled();
+
+  await name.fill("  Chloe Wu  ");
+  await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "true");
+  await page.getByRole("button", { name: "Start making for Chloe Wu" }).click();
+
+  await expect(page.getByRole("button", { name: "for Chloe Wu" })).toBeVisible();
+  await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "false");
+  await expect(page.locator(".keepsake-app > .mobile-scroll")).toHaveJSProperty("scrollTop", 0);
+});
+
 test("the folded envelope always advances to carrier choice", async ({ page }) => {
   await page.goto("/?screen=envelope");
 

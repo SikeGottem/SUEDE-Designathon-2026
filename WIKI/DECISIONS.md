@@ -918,7 +918,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 ## 2026-09-05 - Make the channel map the main evidence moment
 
 - Status: current live-pitch direction; secondary evidence is bounded and the plotted opportunity remains unvalidated.
-- Decision: give the opportunity map 60 seconds, the longest narrative-slide allocation. Reveal text, voice, video, handwritten letter and physical gift one at a time with one visible published finding and its limitation. Remove the unsupported fourth percentage and unsupported absolute labels. End on an `authored + revisitable` zone explicitly labelled as a team hypothesis requiring a matched-format receiver test.
+- Decision: give the opportunity map 60 seconds, the longest narrative-slide allocation. Reveal text, voice, video, handwritten letter and physical gift one at a time with one visible published finding and its limitation. Remove the unsupported fourth percentage and unsupported absolute labels. End on an unboxed `goldilocks zone` marker with `authored + revisitable` underneath; Ethan will explain aloud that it remains a team hypothesis requiring a matched-format receiver test.
 - Reason: Ethan required every spoken graph claim to be visibly backed while he explains what the cited research found. A changing evidence panel preserves the map's pacing without turning the slide into a static literature grid.
 - Evidence: Ethan's direct 5 September presentation direction; the transcript-derived channel comparison in [the latest presentation findings](../deck/TRANSCRIPT_PRESENTATION_FINDINGS.md); and the cited psychology synthesis in [Psychology evidence for the Warm & Fuzzies pitch](RESEARCH/FRIENDSHIP_APPRECIATION/PSYCHOLOGY_PITCH/report-source.md). These sources support bounded mechanisms, not the plotted coordinates, an Australian prevalence rate, or the product's superiority.
 - Consequence: the What / Why / How slide remains reserved for the team's primary results. Secondary studies may explain why channel form could matter, but cannot fill primary-research blanks or validate the highlighted gap.
@@ -969,7 +969,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Structural direction B: use one changing evidence panel tied to the active point. It preserves sequence and makes the current claim scannable. Selected by Ethan's instruction to explain each paper while the point appears.
 - Structural direction C: split the map into five separate channel slides. It creates room for methods but breaks the comparison and pitch timing.
 - Rejected defaults: no grid of equal research cards; no decorative percentage; no oversized quotation; no invented effect size; no generic journal-page screenshot.
-- Content-native signature: the evidence panel changes with the plotted channel, then becomes the team's explicitly bounded synthesis on the final click.
+- Content-native signature: the evidence panel changes with the plotted channel, then becomes the team's bounded synthesis on the final click without an oval or defensive graph label.
 - Restraint: show one paper conclusion and one limitation at a time; keep detailed methods and ownership literature out of the live slide.
 - Render inspection: all six builds were checked at the 1600 × 900 canvas with no evidence overflow or console errors; final-state scaling was also checked at 768 × 1024 and 375 × 812.
 - Strongest remaining AI tell: the coordinates retain diagrammatic precision despite being hypotheses.

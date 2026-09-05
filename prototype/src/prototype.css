@@ -322,6 +322,84 @@
   width: 48px;
 }
 
+/* A new object starts with one person, so every later object and handoff is named rather than pre-filled. */
+.recipient-page {
+  min-height: 0;
+}
+
+.recipient-start-form {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  padding: 108px 8px 4px;
+}
+
+.recipient-start-form h1 {
+  max-width: 310px;
+  font-size: 53px;
+  font-weight: 400;
+  line-height: 0.9;
+  text-wrap: balance;
+  -webkit-text-stroke: 0.55px currentColor;
+}
+
+.recipient-name-line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 58px;
+  padding: 0 3px 7px;
+  border-bottom: 2px solid currentColor;
+  font-size: 25px;
+}
+
+.recipient-name-line input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  caret-color: var(--navy);
+  font-size: 39px;
+  line-height: 1;
+}
+
+.recipient-name-line input::placeholder {
+  color: color-mix(in srgb, var(--navy) 48%, white);
+  opacity: 1;
+}
+
+.recipient-start-form > p {
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--navy) 66%, white);
+  font-size: 16px;
+}
+
+.recipient-start-action {
+  max-width: 100%;
+  margin-top: auto;
+  overflow: hidden;
+  font-size: clamp(20px, 6.5vw, 26px) !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recipient-start-action .line-mark {
+  flex: 0 0 auto;
+}
+
+.mobile-page[data-keyboard-visible="true"] .recipient-start-form {
+  padding-top: 34px;
+}
+
+.mobile-page[data-keyboard-visible="true"] .recipient-start-form h1 {
+  font-size: 42px;
+}
+
+.mobile-page[data-keyboard-visible="true"] .recipient-name-line {
+  margin-top: 32px;
+}
+
 /* Carrier selection */
 .carrier-page {
   min-height: 700px;
