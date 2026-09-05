@@ -3,6 +3,8 @@
 
 This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 4:35, leaving 1:25 inside the six-minute heat limit. The product is shown through a shared live maker-to-receiver demo, not a video or static product walkthrough.
 
+The full judge review, 2025 winner comparison and proposed next-level narrative are in [`NEXT_LEVEL_REVIEW.md`](NEXT_LEVEL_REVIEW.md). The proposal is not yet the live implementation.
+
 Open `index.html` directly, or serve the repository locally:
 
 ```sh
