@@ -23,8 +23,8 @@ test('CSS centres the fixed canvas before JavaScript enhances its scale', () => 
   );
 });
 
-test('the revised deck opens on a visible logo page and contains 10 live slides', () => {
-  assert.equal((source.match(/<article class="slide/g) ?? []).length, 10);
+test('the revised deck opens on a visible logo page and contains 11 live slides', () => {
+  assert.equal((source.match(/<article class="slide/g) ?? []).length, 11);
   assert.match(
     source,
     /<article class="slide logo-slide active"[^>]*>[\s\S]*?<div class="brand-lockup">/,
@@ -47,6 +47,18 @@ test('the newest follow-up simplifies research, restores personas and clears the
   assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?<h2>Let us show you\.<\/h2>/);
   assert.doesNotMatch(source, /demo-sequence/);
   assert.doesNotMatch(source, /Live prototype · no video/);
+});
+
+test('the latest review uses a problem-first opener and adds the synthesis bridge', () => {
+  assert.match(source, /When was the last time someone showed you appreciation or gratitude\?/);
+  assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
+  assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
+  assert.match(source, /Is everything okay\?/);
+  assert.match(source, /different time zones/);
+  assert.match(source, /data-title="Research synthesis"[\s\S]*<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>/);
+  assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
+  assert.match(source, /11 \/ 11/);
+  assert.doesNotMatch(source, />75%</);
 });
 
 test('every local image reference resolves from the standalone deck file', async () => {

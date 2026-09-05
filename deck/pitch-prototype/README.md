@@ -1,7 +1,7 @@
-<!-- Orientation: usage, evidence boundaries and review status for the 10-slide Warm & Fuzzies HTML live deck. -->
+<!-- Orientation: usage, evidence boundaries and review status for the 11-slide Warm & Fuzzies HTML live deck. -->
 # Warm & Fuzzies live pitch
 
-This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 5:40, leaving 20 seconds inside the six-minute heat limit. The product is shown through a live maker-to-receiver demo, not a video or static product walkthrough.
+This is an HTML-only 11-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 5:50, leaving 10 seconds inside the six-minute heat limit. The product is shown through a live maker-to-receiver demo, not a video or static product walkthrough.
 
 Open `index.html` directly, or serve the repository locally:
 
@@ -20,19 +20,20 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 ## Live sequence
 
 1. Warm & Fuzzies logo
-2. Audience letter question, with no counterpoint
+2. Audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
 4. Occasion-based permission and How Might We
 5. Corrected channel map: no digital card; text and voice share a cost level; handwritten letter precedes physical gift; the gap remains unmeasured
 6. High-contrast What / Why / How findings with blank evidence placeholders and no small subtext
-7. The grandmother-granddaughter personas as the **when** scenario
-8. Warm & Fuzzies solution reveal
-9. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
-10. Real team thank-you object, real team photo and verified QR handoff
+7. The grandmother-granddaughter personas as the **when** scenario, including different time zones
+8. An If / And / Then synthesis connecting the research results to everyday normalisation
+9. Warm & Fuzzies solution reveal
+10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
+11. Real team thank-you object, real team photo and verified QR handoff
 
-There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or standalone conclusion. Process is woven into the causal story: the problem creates the occasion question; the map exposes a possible gap; What / Why / How must prove and explain it; the personas locate the moment; the live product demonstrates the resulting ritual.
+There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map exposes a possible gap; What / Why / How must prove and explain it; the personas locate the moment; the If / And / Then slide turns those findings into an everyday-normalisation requirement; the live product demonstrates the resulting ritual and its design decisions.
 
-The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. University students are not pitched as a target market. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
+The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students are not pitched as a target market. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
 ## Evidence contract
 
@@ -41,11 +42,13 @@ The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` 
 - **Why** investigates the occasion rule, awkwardness, channel mismatch and exceptions.
 - **How** compares the perceived impact, effort and frequency of text, voice, video call, handwritten letter and physical gift using the same appreciation scenario. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
 - Team opinion, mentor reaction, published secondary research and prototype polish cannot fill primary-evidence placeholders.
+- The latest follow-up fixes the primary instrument at the three visible What / Why / How questions. Further survey explanation belongs in the appendix.
+- Psychology on text meaningfulness, ownership or keepability, and perceived effort may support the rationale in the appendix; it cannot replace the primary percentages or qualitative themes.
 - The live demo proves only that the prototype can complete the demonstrated flow. It does not prove demand, sincerity, reduced awkwardness or social change.
 
 ## Handoff blocker
 
-Slide 10 is not final until all three inputs are real:
+Slide 11 is not final until all three inputs are real:
 
 1. A team-approved photograph of the actual team.
 2. The actual thank-you object the team made for the judges and organisers.
@@ -55,12 +58,12 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 
 ## Visual contract
 
-- **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, and then let the working product demonstrate one complete act of appreciation.
+- **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
 - **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the corrected channel order; blank evidence placeholders; the actual live handoff; the team's real thank-you object and photo.
 - **Rejected defaults:** no mentor-quote theatre, demographic persona card, secondary-research grid, fake percentage, fake QR, process diary, feature cards or screenshot carousel.
-- **Signature move:** the transition slide says only “Let us show you.” Then the deck deliberately disappears for 105 seconds so the object can be made, given, opened and left under receiver control in real time.
+- **Signature move:** a sparse If / And / Then slide makes the evidence-to-solution deduction visible before the product appears. The transition then says only “Let us show you,” and the deck disappears for 105 seconds while the presenter explains process through the live decisions.
 - **Restraint:** no opener counterpoint, product-feature recap or second conclusion after the thank-you handoff.
-- **Human decision:** the 21-minute team review cut the earlier 14-slide structure. The newest seven-minute follow-up then removed slide 6's small subtext, restored the grandmother-granddaughter personas as **when**, and reduced the demo transition to one sentence.
+- **Human decision:** the 21-minute review cut the earlier 14-slide structure; the seven-minute follow-up simplified research and restored personas; the newest 11-minute review replaces the solution-first letter opener and inserts a synthesis slide between persona and product.
 
 ## Judge review
 

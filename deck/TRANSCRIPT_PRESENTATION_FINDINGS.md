@@ -5,7 +5,8 @@
 
 - All 25 transcript captures available in `WIKI/TRANSCRIPTS/` at the 4 September 2026 review cut-off were read in full, plus the folder README.
 - This pass also applied the two newest presentation-specific captures: [9ddc…](../WIKI/TRANSCRIPTS/2026-09-04-9ddc0551-abce-5be0-8dcd-faf67accd863.md) for the page-by-page deck review and [e0acf…](../WIKI/TRANSCRIPTS/2026-09-04-e0acf8d3-60e2-5585-bc2d-25087f016ae9.md) for the later problem and solution correction.
-- The 21-minute presentation review, [b390…](../WIKI/TRANSCRIPTS/2026-09-05-b39036cd-1c5b-5437-a7ed-197d5a750ae7.md), established the ten-slide structure. The newest seven-minute follow-up, [15b784…](../WIKI/TRANSCRIPTS/2026-09-05-15b784ca-bb36-57e8-9df7-4424c1fef65d.md), is now the controlling refinement source: slide 6 loses all small subtext, slide 7 restores the grandmother-granddaughter personas, and slide 9 becomes only “Let us show you.”
+- The 21-minute presentation review, [b390…](../WIKI/TRANSCRIPTS/2026-09-05-b39036cd-1c5b-5437-a7ed-197d5a750ae7.md), established the compact structure. The seven-minute follow-up, [15b784…](../WIKI/TRANSCRIPTS/2026-09-05-15b784ca-bb36-57e8-9df7-4424c1fef65d.md), simplified research, restored the personas and reduced the demo transition. The newest 11-minute review, [358f1…](../WIKI/TRANSCRIPTS/2026-09-05-358f1cfb-7704-52f2-8abb-ba7c89de9b05.md), now controls: it removes the solution-first letter opener, adds the ordinary-Tuesday interpretation, sharpens the channel narration, adds different time zones to the persona and inserts a synthesis slide before the product reveal.
+- The two-minute research follow-up, [ba43f…](../WIKI/TRANSCRIPTS/2026-09-05-ba43f3af-350e-57bf-9d8f-931b5c09b9c0.md), does not change the live sequence. It confirms the three visible What / Why / How questions as the primary-research instrument and routes psychology on text meaningfulness, ownership and visible effort to supporting evidence or the appendix.
 - The preceding 33-minute mentor meeting, [ca9d…](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md), remains the source for the full Chloe quote, research challenge and mentor advice. It is not participant research.
 - The review covered direct mentions of decks and pitches as well as indirect decisions about the opening, evidence, humour, visual comparisons, demo choreography, audience participation, Q&A and what the team rejected.
 - Several Discord captures compress long discussions into a single timestamped line. Local recordings 14–20 also contain unattributed machine transcription. File and timestamp references are reliable retrieval pointers; uncertain speaker identity is not inferred.
@@ -31,24 +32,27 @@ The controlling b390 review removes Chloe attribution and quotation from the liv
 
 Both remain evidence-informed working framings rather than universal population facts.
 
-## Controlling b390 structure with 15b784 refinements applied
+## Controlling structure with 358f1 synthesis applied
 
 1. **Logo — 5 seconds.** Keep only product identity and required team details.
-2. **Letter question — 20 seconds.** Ask when the room last genuinely sent or received a letter outside a birthday or special event, just out of appreciation. Do not ask for raised hands and remove “we have never had more ways to talk.” Source: 02:52.
-3. **Plain problem — 15 seconds.** Replace the live Chloe quote with: “We appreciate our friends and family. We just do not always show it.” Keep the exact quote in this source record and the appendix only. Source: 02:52–04:20.
-4. **Occasion rule and HMW — 25 seconds.** Use “Appreciation needs an occasion,” show the social permission supplied by birthdays, farewells and milestones, then ask: “How might we create that permission on an ordinary day?” Source: 04:20–05:18.
-5. **Corrected opportunity map — 40 seconds.** Remove digital card; keep quick text and voice note on the same low-cost baseline; retain video call; swap the prior physical gift and handwritten-letter positions; correct the x and y axes; and leave `___%` blank. Every channel position and the highlighted ordinary-day gap remain team hypotheses. Source: 05:18–08:18.
+2. **Appreciation question — 20 seconds.** Show only: “When was the last time someone showed you appreciation or gratitude?” Then clarify birthdays and events aloud. Remove the letter reference because the team now identifies it as solution-first. Do not ask for raised hands or add “we have never had more ways to talk.” Source: 358f1 00:01 plus Ethan's direct follow-up.
+3. **Plain problem — 10 seconds.** Use: “We appreciate our friends and family. We just do not always show it.” Keep the exact Chloe quote in this source record and appendix only. Sources: b390 02:52–04:20; 358f1 00:01.
+4. **Occasion rule and HMW — 25 seconds.** Use “Appreciation needs an occasion,” show the social permission supplied by birthdays, farewells and milestones, then contrast an ordinary Tuesday where an unexpected appreciation text can trigger “Is everything okay?” Close with: “How might we create that permission on an ordinary day?” Sources: b390 04:20–05:18; 358f1 00:01.
+5. **Corrected opportunity map — 40 seconds.** Text is frictionless and easily lost; voice adds effort but remains ordinary messaging; video is live connection and not keepable; letters and gifts are meaningful but high-friction and occasion-coded. Leave `meaning + effort` in place because `personal touch` was tentative. Leave `___%` blank and treat every placement as a team hypothesis. Sources: b390 05:18–08:18; 358f1 00:01.
 6. **What / Why / How — 45 seconds.** Merge the separate secondary- and primary-research slides. Remove the headline, bridge, source footer and all small explanatory copy. Make the actual What, Why and How answer the dominant high-contrast content, with the percentage especially large and “feel they do not fully show the appreciation they feel” promoted to main text. All result slots remain blank because neither transcript records completed primary research. Sources: b390 08:18–17:21; 15b784 00:01.
-7. **Persona-based when — 30 seconds.** Remove university-student and market language, but restore the grandmother–granddaughter personas because the newest follow-up explicitly says “the when should be the personas” and “don't remove that.” Use their relationship to show an ordinary-day, asynchronous moment without presenting them as research-derived people or demand evidence. Sources: b390 17:39–18:59; 15b784 00:01.
-8. **Solution reveal — 20 seconds.** Introduce Warm & Fuzzies and the one-sentence link-based ritual only. Remove the process strip, feature inventory and anti-doomscroll direction from the main pitch. Source: 18:33–19:16.
-9. **One live demo — 105 seconds.** The transition slide contains only “Let us show you.” Remove the make/seal/give sequence and instructional sentence, then switch immediately to one real sender-to-receiver walkthrough. Do not show a product video as well; static captures are emergency fallback or appendix material only. Sources: b390 19:16–20:12; 15b784 00:01.
-10. **Team thank-you handoff — 35 seconds.** End with a real team-authored thank-you object, a consented team photo or selfie of its creation, the verified QR and URL, and a no-device fallback. A generic placeholder is not the final asset, and audience reaction is not validation. Source: 20:15.
+7. **Persona-based when — 30 seconds.** Use the grandmother–granddaughter personas to show an ordinary-day, asynchronous moment. The newest review adds that they live apart in different time zones, making a live call harder. Do not present them as research-derived people or demand evidence. Sources: b390 17:39–18:59; 15b784 00:01; 358f1 00:01.
+8. **Research synthesis — 15 seconds.** Insert a high-contrast If / And / Then slide between persona and product. `IF · ___%` feel they do not fully show the appreciation they feel; `AND · ___%` say the barrier is that it feels out of place; `THEN` make showing appreciation feel normal on an ordinary day. Both numbers and the barrier remain blank until supported. This is the requested logical bridge, not evidence that the need is validated. Source: 358f1 10:08 plus Ethan's direct follow-up.
+9. **Solution reveal — 20 seconds.** Introduce Warm & Fuzzies and the one-sentence link-based ritual only. Remove the process strip, feature inventory and anti-doomscroll direction from the main pitch. Source: b390 18:33–19:16.
+10. **One live demo — 105 seconds.** The transition slide contains only “Let us show you.” Switch immediately to one real sender-to-receiver walkthrough and explain relevant process reasoning as each design decision appears. Do not add a separate process slide or show a product video as well. Sources: b390 19:16–20:12; 15b784 00:01; 358f1 10:08.
+11. **Team thank-you handoff — 35 seconds.** End with a real team-authored thank-you object, a consented team photo or selfie of its creation, the verified QR and URL, and a no-device fallback. A generic placeholder is not the final asset, and audience reaction is not validation. Source: b390 20:15.
 
-The live plan totals 340 seconds, leaving 20 seconds inside the six-minute heat limit.
+The live plan totals 350 seconds, leaving 10 seconds inside the six-minute heat limit.
 
 ## Work the deck cannot complete
 
 - Run the What / Why / How research before replacing any placeholder: document recruitment, sample, questions, method, exact results, exceptions and limitations.
+- Keep the primary instrument focused on the three visible What / Why / How questions. Put survey explanation and unused questions in the appendix rather than expanding the live deck.
+- Find authoritative psychology research on text meaningfulness, ownership or keepability, and the relationship between visible effort and perceived appreciation. Treat it as supporting evidence, not proof of the team's primary claims.
 - Treat every example number spoken in b390—including 40, 100, 70 percent and 95 percent—as brainstorming, never data.
 - Compare the same appreciation through ordinary text, voice or video, a physical note or gift and Warm & Fuzzies before claiming that the highlighted gap exists or the product occupies it.
 - Interview senders and receivers separately about warmth, awkwardness, obligation, alarm, cultural context and when appreciation already works without a designed product.
@@ -138,15 +142,16 @@ The directions below remain useful only where they do not conflict with b390's t
 The controlling live deck now contains exactly:
 
 1. Logo and required team details.
-2. The unprompted-letter question, with no raise-hands request or communication-abundance counterpoint.
+2. The unprompted-appreciation question, with no letter reference, raise-hands request or communication-abundance counterpoint.
 3. One plain appreciation-versus-expression problem statement.
 4. The occasion-based unwritten rule and one How Might We.
 5. The corrected five-channel hypothesis map and blank matched-format result.
 6. One high-contrast What / Why / How evidence structure with no small explanatory subtext.
-7. The grandmother-granddaughter personas answering when the experience applies.
-8. One concise Warm & Fuzzies reveal.
-9. “Let us show you.” followed by one live sender-to-receiver demo.
-10. One real, team-authored thank-you handoff with a verified QR and no-device fallback.
+7. The grandmother-granddaughter personas answering when the experience applies, including different time zones.
+8. One If / And / Then synthesis connecting real research values to everyday normalisation.
+9. One concise Warm & Fuzzies reveal.
+10. “Let us show you.” followed by one live sender-to-receiver demo with process explained inside the walkthrough.
+11. One real, team-authored thank-you handoff with a verified QR and no-device fallback.
 
 Chloe's full quote, secondary evidence, process artifacts, static walkthrough states, fuller trust and feasibility caveats, AI or third-party disclosure and demo backups remain in the appendix or supporting materials.
 
@@ -155,7 +160,7 @@ The transcripts do not request a market-size slide, business model, roadmap, tec
 ## Changes of mind resolved for the deck
 
 - **Dedicated Chloe slide versus plain problem statement:** the plain team-authored statement wins in the live pitch; the exact quote remains in source notes and the appendix.
-- **Communication counterpoint versus direct opening:** the direct letter question wins; “we have never had more ways to talk” is removed.
+- **Letter-led opening versus problem-first opening:** the broader unprompted-appreciation question wins because it does not reveal a solution format before the problem; “we have never had more ways to talk” remains removed.
 - **Secondary plus primary research slides versus What / Why / How:** one What / Why / How structure wins; it remains blocked until real results exist.
 - **Market versus moment versus personas:** answer when the experience applies through the grandmother-granddaughter personas; do not pitch university students or another market segment in the live deck, and do not present the personas as participant evidence.
 - **Process and screenshot walkthrough versus live demo:** one live demo wins; process and static states move to the appendix or fallback.
@@ -182,12 +187,13 @@ The transcripts do not request a market-size slide, business model, roadmap, tec
 ## Strongest transcript-led narrative
 
 ```text
-Remember an unprompted letter
+Remember an unprompted act of appreciation
 → name the appreciation-expression gap
 → reveal the occasion rule
 → map the possible channel gap
 → show the What / Why / How evidence still required
 → locate one ordinary-day moment through the grandmother-granddaughter personas
+→ connect the What and Why findings to the need to normalise everyday appreciation
 → reveal Warm & Fuzzies
 → say “Let us show you” and demonstrate the complete ritual live
 → give the room a real team-authored thank-you
