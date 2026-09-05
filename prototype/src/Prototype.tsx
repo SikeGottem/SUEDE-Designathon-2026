@@ -19,6 +19,7 @@ import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } 
 
 type Phase =
   | "home"
+  | "menu"
   | "studio"
   | "envelope"
   | "carrier"
@@ -37,7 +38,7 @@ type CarrierId = "bottle" | "firefly" | "plane";
 type PieceId = "photo" | "voice" | "song" | "drawing";
 type StickerId = "burst" | "ribbon" | "stamp";
 type InkColor = "navy" | "forest" | "rust" | "plum" | "ochre";
-type PaperId = "plain" | "ruled" | "note";
+type PaperId = "plain" | "dotted" | "grid" | "ruled" | "note";
 type CrossOut = { start: number; end: number };
 type EnvelopeId = "mail" | "night" | "rust";
 type StudioMode = "capture" | "compose";
@@ -48,6 +49,8 @@ type CaptureAsset = {
 };
 type DoodlePoint = { x: number; y: number };
 type DoodleStroke = { id: string; points: DoodlePoint[] };
+type SealWeight = "soft" | "bold";
+type PersonalStamp = { strokes: DoodleStroke[]; weight: SealWeight };
 type AudioAsset = { url: string; name: string; durationSeconds?: number };
 type LayerId = "words" | Exclude<PieceId, "drawing"> | StickerId;
 type LayerLayout = {
@@ -68,6 +71,7 @@ type KeepsakeSnapshot = {
   carrier: CarrierId;
   envelope: EnvelopeId;
   seal: DoodleStroke[];
+  sealWeight?: SealWeight;
   pieces: PieceId[];
   capture: CaptureAsset | null;
   voice: AudioAsset | null;
@@ -80,11 +84,11 @@ type KeepsakeSnapshot = {
 
 const CECILIA = "/assets/illustrations/cecilia/";
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
-const RETURNING_KEY = "warm-fuzzies-returning-v1";
+const PERSONAL_STAMP_KEY = "warm-fuzzies-personal-stamp-v1";
 const LINK_MAX = 12_000;
 const QR_MAX = 620;
 const carrierIds: CarrierId[] = ["bottle", "firefly", "plane"];
-const paperIds: PaperId[] = ["plain", "ruled", "note"];
+const paperIds: PaperId[] = ["plain", "dotted", "grid", "ruled", "note"];
 const envelopeIds: EnvelopeId[] = ["mail", "night", "rust"];
 const pieceIds: PieceId[] = ["photo", "voice", "song", "drawing"];
 const stickerIds: StickerId[] = ["burst", "ribbon", "stamp"];
@@ -163,12 +167,13 @@ function encodeSnapshot(snapshot: KeepsakeSnapshot) {
       const layout = snapshot.layouts[layer];
       return [layout.x, layout.y, layout.rotation, layout.scale];
     }),
+    snapshot.sealWeight ?? "bold",
   ];
   return compressToEncodedURIComponent(JSON.stringify(compact));
 }
 
 function expandCompactSnapshot(value: unknown): unknown {
-  if (!Array.isArray(value) || value.length !== 18 || !Array.isArray(value[17]) || value[17].length !== layerIds.length) return null;
+  if (!Array.isArray(value) || (value.length !== 18 && value.length !== 19) || !Array.isArray(value[17]) || value[17].length !== layerIds.length) return null;
   const layouts = Object.fromEntries(layerIds.map((layer, index) => {
     const layout = value[17][index];
     return [layer, Array.isArray(layout) && layout.length === 4
@@ -186,6 +191,7 @@ function expandCompactSnapshot(value: unknown): unknown {
     carrier: value[7],
     envelope: value[8],
     seal: unpackStrokes(value[9]),
+    sealWeight: value.length === 19 ? value[18] : "bold",
     pieces: value[10],
     capture: value[11],
     voice: value[12],
@@ -249,6 +255,7 @@ function isSafeSnapshot(value: unknown): value is KeepsakeSnapshot {
     || !paperIds.includes(value.paper as PaperId)
     || !carrierIds.includes(value.carrier as CarrierId)
     || !envelopeIds.includes(value.envelope as EnvelopeId)
+    || (value.sealWeight !== undefined && value.sealWeight !== "soft" && value.sealWeight !== "bold")
     || !inkColors.includes(value.inkColor as InkColor)
     || !Array.isArray(value.pieces) || value.pieces.length > pieceIds.length || !value.pieces.every((piece) => pieceIds.includes(piece as PieceId))
     || !Array.isArray(value.stickers) || value.stickers.length > stickerIds.length || !value.stickers.every((sticker) => stickerIds.includes(sticker as StickerId))
@@ -293,11 +300,14 @@ function loadCabinet() {
   } catch { return [] as KeepsakeSnapshot[]; }
 }
 
-function loadReturningState() {
-  if (typeof window === "undefined") return false;
+function loadPersonalStamp(): PersonalStamp | null {
+  if (typeof window === "undefined") return null;
   try {
-    return window.localStorage.getItem(RETURNING_KEY) === "true" || loadCabinet().length > 0;
-  } catch { return false; }
+    const parsed: unknown = JSON.parse(window.localStorage.getItem(PERSONAL_STAMP_KEY) ?? "[]");
+    if (isStrokeList(parsed)) return { strokes: parsed as DoodleStroke[], weight: "bold" };
+    if (isRecord(parsed) && isStrokeList(parsed.strokes) && (parsed.weight === "soft" || parsed.weight === "bold")) return { strokes: parsed.strokes as DoodleStroke[], weight: parsed.weight };
+    return null;
+  } catch { return null; }
 }
 
 type Carrier = {
@@ -370,7 +380,7 @@ const publicDemoSnapshot: KeepsakeSnapshot = {
 function phaseFromQuery(): Phase | null {
   if (typeof window === "undefined") return null;
   const value = new URLSearchParams(window.location.search).get("screen");
-  const phases: Phase[] = ["home", "studio", "envelope", "carrier", "preview", "handoff", "sent", "arrival", "deferred", "unavailable", "opening", "reveal", "cabinet", "removed"];
+  const phases: Phase[] = ["home", "menu", "studio", "envelope", "carrier", "preview", "handoff", "sent", "arrival", "deferred", "unavailable", "opening", "reveal", "cabinet", "removed"];
   return phases.includes(value as Phase) ? (value as Phase) : null;
 }
 
@@ -379,14 +389,15 @@ export default function Prototype() {
   const linkedSnapshot = snapshotFromHash() ?? (!hashPresent && typeof window !== "undefined" && window.location.pathname === "/demo" ? publicDemoSnapshot : null);
   // A fragment link always wins over the capture route and is immutable for the receiving demo.
   const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : phaseFromQuery() ?? "home"));
-  const [isReturning, setIsReturning] = useState(loadReturningState);
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
   const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? "Maya");
   const [words, setWords] = useState(() => linkedSnapshot?.words ?? "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.");
   const [crossedOut, setCrossedOut] = useState<CrossOut[]>(() => linkedSnapshot?.crossedOut ?? []);
-  const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "plain");
+  const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "dotted");
   const [envelope, setEnvelope] = useState<EnvelopeId>(() => linkedSnapshot?.envelope ?? "mail");
   const [seal, setSeal] = useState<DoodleStroke[]>(() => linkedSnapshot?.seal ?? []);
+  const [sealWeight, setSealWeight] = useState<SealWeight>(() => linkedSnapshot?.sealWeight ?? "bold");
+  const [savedSeal, setSavedSeal] = useState<PersonalStamp | null>(loadPersonalStamp);
   const [pieces, setPieces] = useState<PieceId[]>(() => linkedSnapshot?.pieces ?? ["photo"]);
   const [cuesOpen, setCuesOpen] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -413,11 +424,11 @@ export default function Prototype() {
   const carrier = carriers.find((item) => item.id === carrierId) ?? carriers[0];
 
   const currentSnapshot = useMemo<KeepsakeSnapshot>(() => ({
-    v: 1, id: draftId, sender, recipient, words, crossedOut, paper, carrier: carrierId, envelope, seal, pieces, capture: captureAsset, voice: voiceAsset, song: songAsset, doodles: doodleStrokes, stickers, inkColor, layouts: layerLayouts,
-  }), [captureAsset, carrierId, crossedOut, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, songAsset, stickers, voiceAsset, words]);
+    v: 1, id: draftId, sender, recipient, words, crossedOut, paper, carrier: carrierId, envelope, seal, sealWeight, pieces, capture: captureAsset, voice: voiceAsset, song: songAsset, doodles: doodleStrokes, stickers, inkColor, layouts: layerLayouts,
+  }), [captureAsset, carrierId, crossedOut, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, sealWeight, songAsset, stickers, voiceAsset, words]);
 
   const applySnapshot = useCallback((snapshot: KeepsakeSnapshot) => {
-    setActiveSnapshot(snapshot); setDraftId(snapshot.id); setRecipient(snapshot.recipient); setWords(snapshot.words); setCrossedOut(snapshot.crossedOut); setPaper(snapshot.paper); setCarrierId(snapshot.carrier); setEnvelope(snapshot.envelope); setSeal(snapshot.seal); setPieces(snapshot.pieces); setCaptureAsset(snapshot.capture); setVoiceAsset(snapshot.voice); setSongAsset(snapshot.song); setDoodleStrokes(snapshot.doodles); setStickers(snapshot.stickers); setInkColor(snapshot.inkColor); setLayerLayouts(snapshot.layouts); captureAssetRef.current = snapshot.capture; voiceAssetRef.current = snapshot.voice; songAssetRef.current = snapshot.song;
+    setActiveSnapshot(snapshot); setDraftId(snapshot.id); setRecipient(snapshot.recipient); setWords(snapshot.words); setCrossedOut(snapshot.crossedOut); setPaper(snapshot.paper); setCarrierId(snapshot.carrier); setEnvelope(snapshot.envelope); setSeal(snapshot.seal); setSealWeight(snapshot.sealWeight ?? "bold"); setPieces(snapshot.pieces); setCaptureAsset(snapshot.capture); setVoiceAsset(snapshot.voice); setSongAsset(snapshot.song); setDoodleStrokes(snapshot.doodles); setStickers(snapshot.stickers); setInkColor(snapshot.inkColor); setLayerLayouts(snapshot.layouts); captureAssetRef.current = snapshot.capture; voiceAssetRef.current = snapshot.voice; songAssetRef.current = snapshot.song;
   }, []);
 
   const replaceCapture = useCallback((next: CaptureAsset | null) => {
@@ -465,11 +476,6 @@ export default function Prototype() {
     });
   }, []);
 
-  useEffect(() => {
-    if (!isReturning) return;
-    try { window.localStorage.setItem(RETURNING_KEY, "true"); } catch { /* Local storage is optional in the prototype. */ }
-  }, [isReturning]);
-
   const togglePiece = (piece: PieceId) => {
     setPieces((current) =>
       current.includes(piece)
@@ -479,14 +485,14 @@ export default function Prototype() {
   };
 
   const resetDraft = () => {
-    setIsReturning(true);
     setRecipient("Maya");
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setWords("");
     setCrossedOut([]);
-    setPaper("plain");
+    setPaper("dotted");
     setEnvelope("mail");
     setSeal([]);
+    setSealWeight("bold");
     setCarrierId("bottle");
     setPieces([]);
     replaceCapture(null);
@@ -504,7 +510,15 @@ export default function Prototype() {
     go("studio");
   };
 
-  const returnHome = () => go("home");
+  const returnToMenu = () => go("menu");
+
+  const savePersonalStamp = (nextSeal: DoodleStroke[], weight: SealWeight) => {
+    if (!nextSeal.length) return;
+    const saved = nextSeal.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }));
+    const personalStamp = { strokes: saved, weight };
+    try { window.localStorage.setItem(PERSONAL_STAMP_KEY, JSON.stringify(personalStamp)); } catch { /* Reuse remains optional when storage is unavailable. */ }
+    setSavedSeal(personalStamp);
+  };
 
   const saveToCabinet = (snapshot: KeepsakeSnapshot) => {
     if (containsBlobMedia(snapshot)) return false;
@@ -512,7 +526,6 @@ export default function Prototype() {
     try {
       window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
     } catch { return false; }
-    setIsReturning(true);
     setCabinet(next);
     return true;
   };
@@ -558,15 +571,16 @@ export default function Prototype() {
         <main className="keepsake-shell" aria-label="Friendship keepsake exploratory prototype">
           <AnimatePresence mode="wait" initial={false}>
             {phase === "home" && (
-              <Home key="home" returning={isReturning} onMake={resetDraft} onLetters={() => go("cabinet")} />
+              <Home key="home" onEnter={() => go("menu")} />
             )}
+            {phase === "menu" && <Menu key="menu" reduceMotion={Boolean(reduceMotion)} onCreate={resetDraft} onLetters={() => go("cabinet")} />}
             {phase === "carrier" && (
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} words={words} crossedOut={crossedOut} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onWords={setWords} onCrossedOut={setCrossedOut} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnHome} onPreview={() => go("envelope")} />
+              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} words={words} crossedOut={crossedOut} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onWords={setWords} onCrossedOut={setCrossedOut} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
             )}
-            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} onNext={() => go("carrier")} />}
+            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
             {phase === "preview" && (
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
@@ -574,23 +588,23 @@ export default function Prototype() {
               <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
-              <Sent key="sent" recipient={recipient} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnHome} />
+              <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnToMenu} />
             )}
             {phase === "arrival" && (
               <Arrival key="arrival" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onUnavailable={() => go("unavailable")} />
             )}
             {phase === "deferred" && (
-              <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={returnHome} />
+              <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={() => go("home")} />
             )}
             {phase === "unavailable" && (
-              <QuietExit key="unavailable" title="this one cannot be opened." body="No private content has been shown. The link may have expired or reached the wrong person." action="back to the sample" onAction={() => go("arrival")} onLeave={returnHome} />
+              <QuietExit key="unavailable" title="this one cannot be opened." body="No private content has been shown. The link may have expired or reached the wrong person." action="back to the sample" onAction={() => go("arrival")} onLeave={() => go("home")} />
             )}
             {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />}
             {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(activeSnapshot.id); go("removed"); }} />}
             {phase === "cabinet" && (
-              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onMake={resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
+              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onHome={returnToMenu} onMake={resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
             )}
-            {phase === "removed" && <Removed key="removed" onLeave={returnHome} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
+            {phase === "removed" && <Removed key="removed" onLeave={returnToMenu} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
           </AnimatePresence>
         </main>
       </MobileScroll>
@@ -628,13 +642,16 @@ function RotateMark() {
   return <svg className="control-mark control-mark-rotate" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 11c-4-6-14-5-17 2-4 9 6 17 14 12 3-2 4-4 5-7M20 6l5 5 2-7" /></svg>;
 }
 
-function AppBottomNav({ lettersCurrent = false, onMake, onLetters }: { lettersCurrent?: boolean; onMake: () => void; onLetters: () => void }) {
-  return <nav className="return-nav" aria-label="Warm and fuzzies"><span className="return-nav-spacer" aria-hidden="true" /><button className="return-nav-make" type="button" onClick={onMake} aria-label="Make a new letter"><span aria-hidden="true">+</span><small>make</small></button><button className="return-nav-letters" type="button" aria-current={lettersCurrent ? "page" : undefined} onClick={onLetters}>your letters</button></nav>;
+function AppBottomNav({ lettersCurrent = false, onHome, onMake, onLetters }: { lettersCurrent?: boolean; onHome: () => void; onMake: () => void; onLetters: () => void }) {
+  return <nav className="return-nav" aria-label="Warm and fuzzies"><button className="return-nav-home" type="button" onClick={onHome}>home</button><button className="return-nav-make" type="button" onClick={onMake} aria-label="Make a new letter"><span aria-hidden="true">+</span><small>make</small></button><button className="return-nav-letters" type="button" aria-current={lettersCurrent ? "page" : undefined} onClick={onLetters}>your letters</button></nav>;
 }
 
-function Home({ returning, onMake, onLetters }: { returning: boolean; onMake: () => void; onLetters: () => void }) {
+function Home({ onEnter }: { onEnter: () => void }) {
   return (
     <Page className="home-page">
+      <div className="home-copy">
+        <h1 className="working-wordmark"><span>warm &amp;</span><span>fuzzies</span></h1>
+      </div>
       <div className="home-bee-mark" aria-hidden="true">
         <motion.img
           src={`${CECILIA}firefly-brand-mark.png`}
@@ -643,14 +660,38 @@ function Home({ returning, onMake, onLetters }: { returning: boolean; onMake: ()
           data-asset-slot="home-bee"
           initial={{ opacity: 0, y: -8, rotate: -4 }}
           animate={{ opacity: 1, y: 0, rotate: 0 }}
-          transition={{ delay: 0.28, duration: 0.72, ease: [0.23, 1, 0.32, 1] }}
+          transition={{ delay: 0.08, duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
         />
       </div>
-      <div className="home-copy">
-        <h1 className="working-wordmark">warm &amp;<br />fuzzies</h1>
-        <p>something good<br />on your mind?</p>
+      <p className="home-question">something good<br />on your mind?</p>
+      <div className="home-invitation"><button className="drawn-action" type="button" onClick={onEnter}>make it for them <Mark /></button></div>
+    </Page>
+  );
+}
+
+function Menu({ reduceMotion, onCreate, onLetters }: { reduceMotion: boolean; onCreate: () => void; onLetters: () => void }) {
+  const flyIn = reduceMotion
+    ? { opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }
+    : {
+      opacity: [0, 1, 1, 1],
+      transform: [
+        "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)",
+        "translate3d(34px, -22px, 0) rotate(7deg) scale(1.05)",
+        "translate3d(-8px, 8px, 0) rotate(-3deg) scale(.98)",
+        "translate3d(0, 0, 0) rotate(0deg) scale(1)",
+      ],
+    };
+  return (
+    <Page className="menu-page">
+      <header><span>warm &amp; fuzzies</span></header>
+      <motion.div className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : 3.6, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
+        <img className="menu-firefly-frame menu-firefly-frame-one" src={`${CECILIA}firefly-filled-f1.png`} alt="" draggable={false} />
+        {!reduceMotion && <motion.img className="menu-firefly-frame menu-firefly-frame-two" src={`${CECILIA}firefly-filled-f2.png`} alt="" draggable={false} initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0, 1, 0, 1, 0, 1, 0] }} transition={{ duration: 3.6, times: [0, .12, .24, .36, .48, .6, .72, .84, 1], ease: "linear" }} />}
+      </motion.div>
+      <div className="menu-actions">
+        <motion.button className="drawn-action" type="button" onClick={onCreate} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .72, duration: .26 }}>create something <Mark /></motion.button>
+        <motion.button className="drawn-action" type="button" onClick={onLetters} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .88, duration: .26 }}>look in your box <Mark /></motion.button>
       </div>
-      {returning ? <AppBottomNav onMake={onMake} onLetters={onLetters} /> : <div className="home-invitation"><button className="drawn-action" type="button" onClick={onMake}>make it for them <Mark /></button></div>}
     </Page>
   );
 }
@@ -1281,8 +1322,8 @@ function AuthoredPaper({ snapshot, className = "", receiver = false }: { snapsho
   </article>;
 }
 
-function SealSurface({ strokes, onChange, onDone }: { strokes: DoodleStroke[]; onChange: (strokes: DoodleStroke[]) => void; onDone: () => void }) {
-  return <div className="seal-surface"><DoodleSurface label="Draw your personal stamp" strokes={strokes} onStroke={(stroke) => onChange([...strokes, stroke])} /><div className="seal-controls"><button type="button" onClick={() => onChange(strokes.slice(0, -1))} disabled={!strokes.length}>undo stroke</button><button type="button" onClick={() => onChange([])} disabled={!strokes.length}>clear</button><button className="seal-apply" type="button" onClick={onDone} disabled={!strokes.length}>apply stamp <Mark /></button></div></div>;
+function SealSurface({ strokes, weight, onWeight, onChange, onDone }: { strokes: DoodleStroke[]; weight: "soft" | "bold"; onWeight: (weight: "soft" | "bold") => void; onChange: (strokes: DoodleStroke[]) => void; onDone: () => void }) {
+  return <div className={`seal-surface seal-weight-${weight}`}><DoodleSurface label="Draw your personal stamp" strokes={strokes} onStroke={(stroke) => onChange([...strokes, stroke])} /><div className="seal-controls"><div className="seal-weight-choice" role="group" aria-label="Stamp line weight"><span>line</span><button type="button" aria-pressed={weight === "soft"} onClick={() => onWeight("soft")}>soft</button><button type="button" aria-pressed={weight === "bold"} onClick={() => onWeight("bold")}>bold</button></div><div className="seal-edit-actions"><button type="button" onClick={() => onChange(strokes.slice(0, -1))} disabled={!strokes.length}>undo stroke</button><button type="button" onClick={() => onChange([])} disabled={!strokes.length}>clear</button><button className="seal-apply" type="button" onClick={onDone} disabled={!strokes.length}>apply stamp <Mark /></button></div></div></div>;
 }
 
 function EnvelopeFoldLines() {
@@ -1292,7 +1333,7 @@ function EnvelopeFoldLines() {
   </svg>;
 }
 
-function EnvelopeStudio({ snapshot, seal, onSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; onSeal: (value: DoodleStroke[]) => void; onBack: () => void; onNext: () => void }) {
+function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealWeight, onSaveSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; sealWeight: SealWeight; savedSeal: PersonalStamp | null; onSeal: (value: DoodleStroke[]) => void; onSealWeight: (weight: SealWeight) => void; onSaveSeal: (value: DoodleStroke[], weight: SealWeight) => void; onBack: () => void; onNext: () => void }) {
   const reduced = useReducedMotion();
   const [folded, setFolded] = useState(Boolean(reduced));
   const [sealOpen, setSealOpen] = useState(false);
@@ -1337,9 +1378,12 @@ function EnvelopeStudio({ snapshot, seal, onSeal, onBack, onNext }: { snapshot: 
             <header><h1>leave your mark.</h1><p>The envelope stays simple. The stamp is yours.</p></header>
             <div className="envelope-canvas">
               <img className="envelope-canvas-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />
-              <button className={`seal-stamp ${seal.length ? "has-seal" : ""}`} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
+              <button className={`seal-stamp seal-weight-${sealWeight} ${seal.length ? "has-seal" : ""}`} data-seal-weight={sealWeight} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
             </div>
-            <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : "add a stamp, or keep it simple."}</p>
+            <div className="envelope-stamp-choice">
+              <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : savedSeal?.strokes.length ? "your stamp is ready when you want it." : "add a stamp, or keep it simple."}</p>
+              {!seal.length && savedSeal?.strokes.length && <div><button type="button" onClick={() => { onSeal(savedSeal.strokes.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }))); onSealWeight(savedSeal.weight); }}>use my stamp</button><button type="button" onClick={() => { onSeal([]); setSealOpen(true); }}>draw a new one</button></div>}
+            </div>
           </motion.section>
         )}
       </AnimatePresence>
@@ -1349,7 +1393,7 @@ function EnvelopeStudio({ snapshot, seal, onSeal, onBack, onNext }: { snapshot: 
           <motion.section className="seal-editor" role="dialog" aria-modal="true" aria-label="Draw your personal stamp" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: .24, ease: [0.23, 1, .32, 1] }}>
             <button className="seal-editor-close" type="button" onClick={() => setSealOpen(false)} aria-label="Close stamp editor"><CloseMark /></button>
             <header><span>one mark, made by you</span><h1>draw your stamp.</h1><p>It will be stamped onto the envelope exactly like this.</p></header>
-            <SealSurface strokes={seal} onChange={onSeal} onDone={() => setSealOpen(false)} />
+            <SealSurface strokes={seal} weight={sealWeight} onWeight={onSealWeight} onChange={onSeal} onDone={() => { onSaveSeal(seal, sealWeight); setSealOpen(false); }} />
           </motion.section>
         )}
       </AnimatePresence>
@@ -1429,7 +1473,7 @@ function StoryToolRail({ words, paper, capture, voice, song, pieces, stickers, i
   return (
     <div className="story-tool-dock">
       <AnimatePresence>
-        {!editingText && !drawingActive && addOpen && <motion.div className="story-add-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}><div className="paper-choice" role="group" aria-label="Paper character">{(["plain", "ruled", "note"] as PaperId[]).map((choice) => <button key={choice} type="button" aria-pressed={paper === choice} onClick={() => onPaper(choice)}>{choice === "note" ? "postcard" : choice}</button>)}</div><Carousel ariaLabel="Creative materials" contentClassName="story-tool-rail"><button type="button" aria-pressed={Boolean(capture)} onClick={() => { setAddOpen(false); onCamera(); }}><CameraMark /><span>photo</span></button><button type="button" aria-pressed={Boolean(voice && pieces.includes("voice"))} onClick={() => { setAddOpen(false); onVoice(); }}><MaterialIcon id="voice" /><span>{voice ? "new voice" : "voice"}</span></button><button type="button" aria-pressed={Boolean(song && pieces.includes("song"))} onClick={() => songInputRef.current?.click()}><MaterialIcon id="song" /><span>{song ? "new song" : "song"}</span></button></Carousel><div className="story-authored-tools" aria-label="Colour and hand-drawn mark tools"><div className="story-colour-palette" role="group" aria-label="Ink colour"><span>ink</span>{(["navy", "forest", "rust", "plum", "ochre"] as InkColor[]).map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={inkColor === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onInkColor(color)}><span /></button>)}</div><Carousel ariaLabel="Hand-drawn marks" contentClassName="story-sticker-rail">{(["burst", "ribbon", "stamp"] as StickerId[]).map((sticker) => { const placed = stickers.includes(sticker); return <button key={sticker} type="button" data-placed={placed || undefined} aria-label={placed ? `Select ${sticker} mark on paper` : `Add ${sticker} mark`} onClick={() => onAddSticker(sticker)}><StickerMark id={sticker} /><span>{sticker}</span></button>; })}</Carousel></div></motion.div>}
+        {!editingText && !drawingActive && addOpen && <motion.div className="story-add-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}><div className="paper-choice" role="group" aria-label="Paper character">{(["plain", "dotted", "grid"] as PaperId[]).map((choice) => <button key={choice} type="button" aria-pressed={paper === choice} onClick={() => onPaper(choice)}>{choice}</button>)}</div><Carousel ariaLabel="Creative materials" contentClassName="story-tool-rail"><button type="button" aria-pressed={Boolean(capture)} onClick={() => { setAddOpen(false); onCamera(); }}><CameraMark /><span>photo</span></button><button type="button" aria-pressed={Boolean(voice && pieces.includes("voice"))} onClick={() => { setAddOpen(false); onVoice(); }}><MaterialIcon id="voice" /><span>{voice ? "new voice" : "voice"}</span></button><button type="button" aria-pressed={Boolean(song && pieces.includes("song"))} onClick={() => songInputRef.current?.click()}><MaterialIcon id="song" /><span>{song ? "new song" : "song"}</span></button></Carousel><div className="story-authored-tools" aria-label="Colour and hand-drawn mark tools"><div className="story-colour-palette" role="group" aria-label="Ink colour"><span>ink</span>{(["navy", "forest", "rust", "plum", "ochre"] as InkColor[]).map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={inkColor === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onInkColor(color)}><span /></button>)}</div><Carousel ariaLabel="Hand-drawn marks" contentClassName="story-sticker-rail">{(["burst", "ribbon", "stamp"] as StickerId[]).map((sticker) => { const placed = stickers.includes(sticker); return <button key={sticker} type="button" data-placed={placed || undefined} aria-label={placed ? `Select ${sticker} mark on paper` : `Add ${sticker} mark`} onClick={() => onAddSticker(sticker)}><StickerMark id={sticker} /><span>{sticker}</span></button>; })}</Carousel></div></motion.div>}
         {editingText && cuesOpen && <motion.div className="story-add-tray story-prompt-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }}><Carousel ariaLabel="Writing prompts" contentClassName="story-prompt-rail">{prompts.map((prompt) => <button key={prompt} className={prompt === activePrompt ? "is-current" : ""} type="button" onClick={() => onPrompt(prompt)}>{prompt}</button>)}</Carousel></motion.div>}
       </AnimatePresence>
       {editingText ? <div className="story-primary-tools story-context-tools"><button type="button" aria-expanded={cuesOpen} onClick={onToggleCues}><span>{cuesOpen ? "hide nudges" : "need a nudge?"}</span></button><button type="button" onClick={onFinishText}><span>done writing</span><Mark /></button></div> : drawingActive ? <div className="story-primary-tools story-context-tools"><button type="button" disabled={!canUndoDoodle} onClick={onUndoDoodle}>undo stroke</button><span className="drawing-now"><MaterialIcon id="drawing" /> draw anywhere</span><button type="button" onClick={onDoneDrawing}>done</button></div> : <div className="story-primary-tools">
@@ -1494,7 +1538,8 @@ function CapturedMedia({ capture, className = "", interactive = false }: { captu
 
 function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: KeepsakeSnapshot; className?: string }) {
   const label = `A hand-drawn envelope for ${snapshot.recipient} from ${snapshot.sender}${snapshot.seal.length ? ", finished with their personal stamp" : ""}`;
-  return <div className={`sealed-envelope-artwork ${className}`} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
+  const sealWeight = snapshot.sealWeight ?? "bold";
+  return <div className={`sealed-envelope-artwork seal-weight-${sealWeight} ${className}`} data-seal-weight={sealWeight} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
 function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
@@ -1552,24 +1597,17 @@ function DeliveryMascot({ className = "" }: { className?: string }) {
   return <span className={`delivery-mascot ${className}`}><img className="delivery-mascot-letter" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} /><img className="delivery-mascot-firefly" src={`${CECILIA}firefly-carrying-envelope.png`} alt="" draggable={false} /></span>;
 }
 
-function Sent({ recipient, reduceMotion, onAgain, onLeave }: { recipient: string; reduceMotion: boolean; onAgain: () => void; onLeave: () => void }) {
-  const [deliveryLoop, setDeliveryLoop] = useState(reduceMotion);
-  const [pickupStarted, setPickupStarted] = useState(false);
+function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onAgain: () => void; onLeave: () => void }) {
+  const [departureStarted, setDepartureStarted] = useState(reduceMotion);
   useEffect(() => {
-    if (reduceMotion) { setDeliveryLoop(true); return; }
-    let timer = 0;
-    const frame = window.requestAnimationFrame(() => {
-      setPickupStarted(true);
-      timer = window.setTimeout(() => setDeliveryLoop(true), 4_800);
-    });
-    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer); };
+    if (reduceMotion) { setDepartureStarted(true); return; }
+    const frame = window.requestAnimationFrame(() => setDepartureStarted(true));
+    return () => window.cancelAnimationFrame(frame);
   }, [reduceMotion]);
   return (
     <Page className="sent-page">
-      <div className="sent-delivery-stage" data-delivery-stage={reduceMotion ? "still" : deliveryLoop ? "flying" : "pickup"} aria-hidden="true">
-        {reduceMotion ? <DeliveryMascot className="sent-delivery-still" /> : deliveryLoop ? (
-          <div className="sent-delivery-loop"><DeliveryMascot /></div>
-        ) : (
+      <div className="sent-delivery-stage" data-carrier={carrier.id} data-delivery-stage={reduceMotion ? "still" : "departing"} aria-hidden="true">
+        {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src="/assets/illustrations/generated/water-departure-v1.png" alt="" draggable={false} /><CarrierIcon id={carrier.id} size="sealed" /></> : <CarrierIcon id={carrier.id} size="sealed" /> : carrier.id === "firefly" ? (
           <>
             <motion.img
               className="sent-letter-object"
@@ -1577,24 +1615,27 @@ function Sent({ recipient, reduceMotion, onAgain, onLeave }: { recipient: string
               alt=""
               draggable={false}
               initial={false}
-              animate={pickupStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(0, -2px, 0) rotate(0deg) scale(.96)", "translate3d(0, -8px, 0) rotate(2deg) scale(.78)"] } : { opacity: 1, transform: "translate3d(0, 0, 0) rotate(-1deg) scale(1)" }}
-              transition={{ duration: 4.8, times: [0, .46, .56, .7], ease: [0.77, 0, 0.175, 1] }}
+              animate={departureStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(-3px, 1px, 0) rotate(-1.5deg) scale(1.01)", "translate3d(0, -2px, 0) rotate(0deg) scale(.96)", "translate3d(0, -8px, 0) rotate(2deg) scale(.78)"] } : { opacity: 1, transform: "translate3d(0, 0, 0) rotate(-1deg) scale(1)" }}
+              transition={{ duration: 5.2, times: [0, .36, .52, .68], ease: [0.77, 0, 0.175, 1] }}
             />
             <motion.div
               className="sent-pickup-courier"
               initial={false}
-              animate={pickupStarted ? { opacity: [0, 1, 1, 1, 0], transform: ["translate3d(356px, -48px, 0) rotate(16deg) scale(.68)", "translate3d(258px, 62px, 0) rotate(7deg) scale(.76)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(410px, -76px, 0) rotate(14deg) scale(.66)"] } : { opacity: 0, transform: "translate3d(356px, -48px, 0) rotate(16deg) scale(.68)" }}
-              transition={{ duration: 4.8, times: [0, .23, .47, .61, 1], ease: [0.77, 0, 0.175, 1] }}
+              animate={departureStarted ? { opacity: [0, 1, 1, 1, 1, 0], transform: ["translate3d(356px, -48px, 0) rotate(16deg) scale(.68)", "translate3d(258px, 62px, 0) rotate(7deg) scale(.76)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(118px, 171px, 0) rotate(-7deg) scale(.83)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(410px, -76px, 0) rotate(14deg) scale(.66)"] } : { opacity: 0, transform: "translate3d(356px, -48px, 0) rotate(16deg) scale(.68)" }}
+              transition={{ duration: 5.2, times: [0, .22, .45, .52, .61, 1], ease: [0.77, 0, 0.175, 1] }}
             >
-              <motion.img className="sent-firefly-empty" src={`${CECILIA}firefly-brand-mark.png`} alt="" draggable={false} initial={false} animate={pickupStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 4.8, times: [0, .46, .54, 1], ease: [0.23, 1, 0.32, 1] }} />
-              <motion.span className="sent-firefly-carrying" initial={false} animate={pickupStarted ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: 4.8, times: [0, .47, .55, 1], ease: [0.23, 1, 0.32, 1] }}><DeliveryMascot /></motion.span>
+              <motion.span className="sent-firefly-empty" initial={false} animate={departureStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 5.2, times: [0, .45, .53, 1], ease: [0.23, 1, 0.32, 1] }}><img className="sent-firefly-wing-frame sent-firefly-wing-one" src={`${CECILIA}firefly-wing-w1.png`} alt="" draggable={false} /><img className="sent-firefly-wing-frame sent-firefly-wing-two" src={`${CECILIA}firefly-wing-w2.png`} alt="" draggable={false} /></motion.span>
+              <motion.span className="sent-firefly-carrying" initial={false} animate={departureStarted ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: 5.2, times: [0, .47, .55, 1], ease: [0.23, 1, 0.32, 1] }}><DeliveryMascot /></motion.span>
             </motion.div>
           </>
-        )}
+        ) : carrier.id === "bottle" ? <>
+          <motion.img className="sent-water-departure" src="/assets/illustrations/generated/water-departure-v1.png" alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [0, 1, 1, .96, 0], transform: ["translate3d(-118px, 148px, 0) scale(1.08)", "translate3d(-58px, 142px, 0) scale(1.08)", "translate3d(46px, 148px, 0) scale(1.08)", "translate3d(172px, 138px, 0) scale(1.08)", "translate3d(290px, 142px, 0) scale(1.08)"] } : { opacity: 0, transform: "translate3d(-118px, 148px, 0) scale(1.08)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
+          <motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, .95, 0], transform: ["translate3d(24px, 116px, 0) rotate(-8deg) scale(.82)", "translate3d(62px, 104px, 0) rotate(4deg) scale(1)", "translate3d(158px, 114px, 0) rotate(-4deg) scale(.96)", "translate3d(276px, 94px, 0) rotate(6deg) scale(.9)", "translate3d(440px, 76px, 0) rotate(-3deg) scale(.76)"] } : { opacity: 1, transform: "translate3d(24px, 116px, 0) rotate(-8deg) scale(.82)" }} transition={{ duration: 5.8, times: [0, .2, .48, .72, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
+        </> : <motion.div className="sent-carrier-departure sent-carrier-departure-plane" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(24px, 210px, 0) rotate(-18deg) scale(.78)", "translate3d(108px, 154px, 0) rotate(-5deg) scale(1)", "translate3d(228px, 78px, 0) rotate(9deg) scale(.94)", "translate3d(458px, -54px, 0) rotate(18deg) scale(.72)"] } : { opacity: 1, transform: "translate3d(24px, 210px, 0) rotate(-18deg) scale(.78)" }} transition={{ duration: 4.8, times: [0, .12, .78, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>}
       </div>
       <div className="sent-copy"><h1>that&apos;s it from you.</h1></div>
       <div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another</button><button className="quiet-link" type="button" onClick={onLeave}>leave</button></div>
-      <p className="sr-only" role="status">Your firefly has the letter for {recipient}.</p>
+      <p className="sr-only" role="status">Your {carrier.shortLabel} is taking the letter to {recipient}.</p>
     </Page>
   );
 }
@@ -1709,7 +1750,7 @@ function Reveal(props: ReceiverObjectProps) {
   return <Page className="reveal-page"><ReceiverObject {...props} /></Page>;
 }
 
-function Cabinet({ items, removingId, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onMake: () => void; onOpen: (item: KeepsakeSnapshot) => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
+function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onHome: () => void; onMake: () => void; onOpen: (item: KeepsakeSnapshot) => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const returnToLetters = () => {
     headingRef.current?.focus();
@@ -1721,7 +1762,7 @@ function Cabinet({ items, removingId, onMake, onOpen, onRemove, onCancelRemove, 
       <div className="cabinet-field">
         {items.length ? items.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
-      <AppBottomNav lettersCurrent onMake={onMake} onLetters={returnToLetters} />
+      <AppBottomNav lettersCurrent onHome={onHome} onMake={onMake} onLetters={returnToLetters} />
     </Page>
   );
 }
