@@ -1439,3 +1439,4 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Main trade-off: a dependable, concise demo gives up live proof of spontaneous creation.
 - Next evidence that could change the verdict: one second-device rehearsal on the deployed event-like network.
 - Recommendation: proceed only after that rehearsal passes; otherwise use the no-device fallback and fix the fixture without changing normal product routes.
+- Post-build result: ten focused route checks pass; `https://warm-and-fuzzies.vercel.app/demo/create` and `https://warm-and-fuzzies.vercel.app/demo/receive` both return successfully from the production alias, while accidental trailing slashes redirect to the canonical URLs. The remaining condition is the physical second-device rehearsal, not deployment.

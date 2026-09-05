@@ -72,8 +72,8 @@ A test exists to change confidence, not to perform a research ritual.
 - Observable supporting signal: the QR and both fixed URLs remain stable; the receiver replays; the presenter shows the familiar flow without live composition; existing visual language remains unchanged.
 - Observable weakening signal: event-network, cross-device, cache, route, or visual-chrome failure; an audience member mistakes the demo link for a private keepsake delivery.
 - Decision rule applied: preserve the two-link rehearsal fixture only; edit the canonical preset and redeploy for content changes, never add a new demo UI or alter normal product behaviour.
-- Automated result: ten focused browser checks pass for the locked canonical creator, fixed presenter handoff URL, deterministic reload, two-context receiver replay, exact creator/receiver content match, legacy/trailing-slash hardening, receiver-flow containment, ephemeral cabinet isolation, and unchanged normal root. The existing three recipient/link/QR regression checks also pass.
-- What changes next: deploy, verify both public routes directly, then complete the remaining physical second-device rehearsal before placing the QR into the judged deck.
+- Automated result: ten focused browser checks pass for the locked canonical creator, fixed presenter handoff URL, deterministic reload, two-context receiver replay, exact creator/receiver content match, legacy/trailing-slash hardening, receiver-flow containment, ephemeral cabinet isolation, and unchanged normal root. The existing three recipient/link/QR regression checks also pass. Production checks return `200` for both canonical URLs, and accidental trailing slashes redirect to them.
+- What changes next: encode `https://warm-and-fuzzies.vercel.app/demo/receive` in the judged-deck QR, then scan and replay it on a second physical device before the pitch.
 
 ## Completed
 
