@@ -30,7 +30,7 @@ This is the lead problem statement, but it remains an evidence-informed working 
 
 ## Mentor actionables applied to the presentation
 
-1. **Lead with the social rule, not the app.** The pitch now gives Chloe's complete 30:02 machine-transcribed framing its own slide, preserves `birthday brief` verbatim, then compresses it into the central occasion-based permission rule on the following slide.
+1. **Lead with the social rule, not the app.** The pitch now gives Chloe's shortest exact central clause—“there's no expectation or norm to show appreciation for friends and family”—its own slide, then compresses it into the occasion-based permission rule on the following slide. The complete machine-transcribed wording, including `birthday brief`, remains preserved in this source record and the speaker notes.
 2. **Open with the letter question.** Ask when the audience last sent and received a letter, then use its rarity to introduce the question rather than claim proof.
 3. **Use one direct How Might We.** “How might we create that permission on an ordinary day?” Keep reply pressure as a receiver-side requirement rather than diluting the central social-rule framing.
 4. **Make the why dominate.** The first nine slides establish the rule, alternatives, evidence, missing evidence, target context and design reasoning before the product reveal. The mentor's “80 percent problem” comment is treated as direction, not a literal rubric weight.

@@ -31,10 +31,11 @@ test('the revised deck opens on a visible logo page and contains 14 slides', () 
   );
 });
 
-test('the problem is prefaced by Chloe\'s exact transcript framing', () => {
+test('the problem is prefaced by Chloe\'s concise direct excerpt', () => {
   assert.match(source, /Chloe put the problem this way/);
   assert.match(source, /there's no expectation or norm to show appreciation for friends and family/);
-  assert.match(source, /birthday brief/);
+  assert.doesNotMatch(source, /I think I think the unwritten rule/);
+  assert.match(source, /Direct excerpt from the machine transcript/);
 });
 
 test('every local image reference resolves from the standalone deck file', async () => {

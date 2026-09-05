@@ -1,7 +1,7 @@
 <!-- Orientation: working notes, evidence boundaries and review gates for the exploratory Warm & Fuzzies HTML pitch. -->
 # Exploratory Warm & Fuzzies pitch
 
-This is an HTML-only 14-slide presentation draft. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. It is not a validated product claim or completed research record. It exists so the team can review the revised story before finalising evidence, persona details and the audience handoff. The speaker-note cadence is 5:53, leaving seven seconds inside the six-minute limit.
+This is an HTML-only 14-slide presentation draft. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. It is not a validated product claim or completed research record. It exists so the team can review the revised story before finalising evidence, persona details and the audience handoff. The speaker-note cadence is 5:43, leaving 17 seconds inside the six-minute limit.
 
 Open `index.html` directly, or serve the repository locally:
 
@@ -21,7 +21,7 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 
 1. Warm & Fuzzies logo
 2. Audience letter question and communication contradiction
-3. Chloe’s exact 30:02 machine-transcribed problem framing
+3. Chloe’s shortest direct 30:02 excerpt containing the core problem
 4. Mentor-endorsed unwritten rule and bounded How Might We
 5. Hypothesis map across text, voice, video, cards, gifts and letters, with the gap highlighted and `___%` intentionally blank
 6. Published research and existing-solution scan
@@ -39,12 +39,12 @@ The first market is university students maintaining long-distance connections wi
 ## Visual contract
 
 - **Communication job:** make the occasion-only social rule legible, show how evidence sharpened it, then demonstrate one authored object moving from sender to receiver.
-- **Source anchors:** Chloe's exact mentor framing; Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the clearly labelled illustrative relationship scenario; the make → seal → travel → receive object journey.
+- **Source anchors:** Chloe's direct mentor excerpt; Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the clearly labelled illustrative relationship scenario; the make → seal → travel → receive object journey.
 - **Reference delta:** the earlier Jobs-style deck still contributes diagnostic pacing, but the revised deck replaces the ring-led structure with the team's requested research, relationship and process arc.
 - **Rejected defaults:** no persona card, stock portrait, decorative affinity board, invented percentage, fake QR, feature-card grid or process diary. The visible `___%` is an explicit research debt, not decorative data.
-- **Signature move:** Chloe's exact language becomes the compressed rule, then each conclusion causes the next decision: unwritten rule → opportunity hypothesis → external evidence → unanswered primary questions → selected first market → relationship requirement → authored object → optional room handoff.
+- **Signature move:** Chloe's exact central clause becomes the compressed rule, then each conclusion causes the next decision: unwritten rule → opportunity hypothesis → external evidence → unanswered primary questions → selected first market → relationship requirement → authored object → optional room handoff.
 - **Restraint:** accents appear only when they identify the opportunity, relationship thread or product handoff; most slides remain ink on white paper.
-- **Human decision:** Ethan directly requested the logo-first sequence, letter opener, Chloe's exact quote on its own slide, problem/HMW, x/y opportunity map, research, relationship lens, process, product detail, audience card and conclusion. The latest mentor review made cause-and-effect reasoning and the ordinary-day social-permission rule the controlling story choices.
+- **Human decision:** Ethan directly requested the logo-first sequence, letter opener, Chloe's direct quote on its own slide, problem/HMW, x/y opportunity map, research, relationship lens, process, product detail, audience card and conclusion. He then cut the quote to its exact central clause so the audience receives the point immediately.
 
 ## Structural divergence considered
 
@@ -58,12 +58,12 @@ For the latest pass, three process treatments were considered: one isolated proc
 
 ## Judge review
 
-**Decision:** revise the exploratory pitch into a 14-slide causal sequence where Chloe's exact framing is allowed to land before the team compresses the rule, and where each research or design conclusion explains the next decision.
+**Decision:** revise the exploratory pitch into a 14-slide causal sequence where Chloe's concise direct excerpt lands before the team compresses the rule, and where each research or design conclusion explains the next decision.
 
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
 | Brief fit | strengthens | The problem and solution both name the unwritten ordinary-day appreciation rule. | Exact 2026 wording remains unconfirmed. |
-| Problem identification | strengthens | The deck now gives Chloe's exact framing its own slide, compresses it into the occasion-permission rule and selects one first market and relationship context. | Primary evidence has not established prevalence, affected groups, demand or exceptions. |
+| Problem identification | strengthens | The deck now gives Chloe's exact central clause its own slide, compresses it into the occasion-permission rule and selects one first market and relationship context. | Primary evidence has not established prevalence, affected groups, demand or exceptions. |
 | Solution approach | strengthens | Make, seal, travel, receive and keep/close/remove connect directly to authorship and receiver agency. The future context-aware prompt is explicitly secondary. | The medium has not beaten chat or a physical note in a completed test, and the prompt branch is unbuilt and untested. |
 | Design innovation | strengthens | One authored object and a receiver-controlled ending are clearer than a generic gratitude app. | Carrier and envelope theatre could still read as decoration without user evidence. |
 | Visual communication | strengthens | One dominant composition per slide, real states and restrained brand accents replace the earlier abstract ring repetition. | Some source labels are intentionally small and need projector review. |
@@ -99,7 +99,7 @@ For the latest pass, three process treatments were considered: one isolated proc
 - **Artifact inspected:** all 14 HTML slides at 1600 × 900, including the dedicated Chloe quote, revised causal headlines, highlighted evidence gap, relationship requirement, prototype evolution and ordinary-day framing.
 - **Strongest remaining AI tell:** the research plan and illustrative persona will still feel generic until participant evidence supplies real language, exceptions and observed behaviour.
 - **Content-native signature:** one appreciative thought moves through a visible chain of human decisions before becoming a made, sealed, carried and receiver-controlled object.
-- **Material human change:** Ethan asked for the process to explain how the team reached each conclusion and then required Chloe's exact wording to stand on its own. The latest mentor session supplied the occasion-permission framing and required the map, research, audience, cadence and receiver journey to be explicit; Cecelia's supplied identity still governs the deck.
+- **Material human change:** Ethan asked for the process to explain how the team reached each conclusion, required Chloe's wording to stand on its own, then shortened the slide to the exact central clause. The latest mentor session supplied the occasion-permission framing; Cecelia's supplied identity still governs the deck.
 - **Logo-swap test:** pass for the product and object-journey slides; the research slides depend on the final interview language to pass fully.
 - **Team-voice test:** pass for the problem, process, product and close; primary-research language still needs participant wording.
 - **Subtraction pass:** removed the repeated top metadata, decorative ring system, fake optimum implication, feature-grid treatment and unverified QR.
