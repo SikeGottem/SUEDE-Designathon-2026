@@ -86,7 +86,7 @@ const CECILIA = "/assets/illustrations/cecilia/";
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
 const PERSONAL_STAMP_KEY = "warm-fuzzies-personal-stamp-v1";
 const LINK_MAX = 12_000;
-const QR_MAX = 620;
+const QR_MAX = 1_200;
 const carrierIds: CarrierId[] = ["bottle", "firefly", "plane"];
 const paperIds: PaperId[] = ["plain", "dotted", "grid", "ruled", "note"];
 const envelopeIds: EnvelopeId[] = ["mail", "night", "rust"];
@@ -1337,6 +1337,7 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealW
   const reduced = useReducedMotion();
   const [folded, setFolded] = useState(Boolean(reduced));
   const [sealOpen, setSealOpen] = useState(false);
+  const canReuseStamp = seal.length === 0 && Boolean(savedSeal?.strokes.length);
   useEffect(() => { if (reduced) return; const timer = window.setTimeout(() => setFolded(true), 1480); return () => window.clearTimeout(timer); }, [reduced]);
   useEffect(() => {
     if (!sealOpen) return;
@@ -1382,7 +1383,7 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealW
             </div>
             <div className="envelope-stamp-choice">
               <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : savedSeal?.strokes.length ? "your stamp is ready when you want it." : "add a stamp, or keep it simple."}</p>
-              {!seal.length && savedSeal?.strokes.length && <div><button type="button" onClick={() => { onSeal(savedSeal.strokes.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }))); onSealWeight(savedSeal.weight); }}>use my stamp</button><button type="button" onClick={() => { onSeal([]); setSealOpen(true); }}>draw a new one</button></div>}
+              {canReuseStamp && savedSeal && <div><button type="button" onClick={() => { onSeal(savedSeal.strokes.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }))); onSealWeight(savedSeal.weight); }}>use my stamp</button><button type="button" onClick={() => { onSeal([]); setSealOpen(true); }}>draw a new one</button></div>}
             </div>
           </motion.section>
         )}
@@ -1565,30 +1566,49 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
 
 function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
+  const qrDialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!qrOpen) return;
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const handleKeys = (event: KeyboardEvent) => {
       if (event.key === "Escape") { event.preventDefault(); setQrOpen(false); }
-      if (event.key === "Tab") { event.preventDefault(); document.querySelector<HTMLButtonElement>(".qr-dialog-close")?.focus(); }
+      if (event.key !== "Tab") return;
+      const controls = Array.from(qrDialogRef.current?.querySelectorAll<HTMLButtonElement>("button:not(:disabled)") ?? []);
+      if (!controls.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     document.addEventListener("keydown", handleKeys);
     return () => { document.removeEventListener("keydown", handleKeys); previous?.focus(); };
   }, [qrOpen]);
   const encoded = containsBlobMedia(snapshot) ? "" : encodeSnapshot(snapshot);
   const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v3.${encoded}` : "";
-  const fallbackQrUrl = `${typeof window === "undefined" ? "" : window.location.origin}/demo`;
   const qrIsExact = Boolean(url) && url.length <= QR_MAX;
-  const qrUrl = qrIsExact ? url : fallbackQrUrl;
+  const saveQr = () => {
+    const svg = qrDialogRef.current?.querySelector(":scope > svg");
+    if (!svg || !qrIsExact) return;
+    const source = new XMLSerializer().serializeToString(svg);
+    const file = new Blob([`<?xml version="1.0" encoding="UTF-8"?>\n${source}`], { type: "image/svg+xml;charset=utf-8" });
+    const fileUrl = URL.createObjectURL(file);
+    const download = document.createElement("a");
+    download.href = fileUrl;
+    download.download = `warm-and-fuzzies-${snapshot.id}-qr.svg`;
+    document.body.append(download);
+    download.click();
+    download.remove();
+    window.setTimeout(() => URL.revokeObjectURL(fileUrl), 0);
+  };
   return (
     <Page className="handoff-page">
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1>{failed && <p>Nothing left this screen. Your object is still here.</p>}</header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
-      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label={qrIsExact ? "Open receiver QR for this keepsake" : "Open scannable generic receiver demo QR"}><QRCodeSVG value={qrUrl} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title={qrIsExact ? "Receiver QR for this keepsake" : "Generic receiver demo QR"} /><span>{qrIsExact ? "scan it" : "demo QR"}</span></button>}</div>
+      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}</div>
       {copied ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
       <p className="system-note">This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected.</p>
-      {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && <motion.div className="qr-dialog" role="dialog" aria-modal="true" aria-label={qrIsExact ? "Receiver QR for this keepsake" : "Generic receiver demo QR"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={qrUrl} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title={qrIsExact ? "Scan to open this keepsake" : "Scan to open the generic receiver demo"} /><p>{qrIsExact ? `scan to give this to ${recipient}.` : "scan to open a generic receiver demo."}</p><small>{qrIsExact ? "This code opens the same sealed object as the copied private link." : "This object is too detailed for a reliable QR. The copied link above still keeps it exact."}</small></motion.div>}</AnimatePresence>, document.body)}
+      {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && qrIsExact && <motion.div ref={qrDialogRef} className="qr-dialog" role="dialog" aria-modal="true" aria-label="Receiver QR for this keepsake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={url} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title="Scan to open this keepsake" /><p>scan to give this to {recipient}.</p><small>This code belongs to this keepsake. Anyone who scans it opens the same sealed object—no account needed.</small><button className="quiet-link qr-save" type="button" onClick={saveQr}>save this QR</button></motion.div>}</AnimatePresence>, document.body)}
     </Page>
   );
 }

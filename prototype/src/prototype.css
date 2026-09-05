@@ -2108,22 +2108,41 @@
 }
 
 .qr-dialog {
+  --navy: #081f4d;
+  --mobile-safe-area-height: 0px;
   position: fixed;
   z-index: 40;
   inset: 0;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 48px 28px calc(var(--mobile-safe-area-height) + 28px);
-  background: var(--paper);
+  background: #ffffff;
   color: var(--navy);
+  font-family: "Gaegu", "Ugly Handwriting", cursive;
   text-align: center;
+}
+
+.qr-dialog *,
+.qr-dialog *::before,
+.qr-dialog *::after {
+  box-sizing: border-box;
+}
+
+.qr-dialog button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  touch-action: manipulation;
 }
 
 .qr-dialog > svg {
   display: block;
-  width: min(350px, 92vw);
+  width: min(350px, calc(100vw - 56px));
   height: auto;
   border: 1px solid color-mix(in srgb, var(--navy) 14%, transparent);
 }
@@ -2148,8 +2167,30 @@
 .qr-dialog > small {
   max-width: 250px;
   margin-top: 9px;
-  color: color-mix(in srgb, var(--navy) 58%, white);
+  color: rgba(8, 31, 77, 0.62);
   font-size: 14px;
+}
+
+.qr-save {
+  margin-top: 18px;
+  font-size: 17px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.handoff-qr-limit {
+  display: grid;
+  width: 96px;
+  gap: 3px;
+  color: var(--muted-ink);
+  font-size: 14px;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.handoff-qr-limit small {
+  font-size: 11px;
+  line-height: 1;
 }
 
 /* Sender completion */
@@ -3459,7 +3500,7 @@
 }
 
 .seal-stamp.has-seal {
-  background: var(--butter) !important;
+  background: var(--warm-white) !important;
 }
 
 .seal-stamp .seal-artwork {
@@ -3913,7 +3954,7 @@
   aspect-ratio: 1;
   border: 1.7px solid currentColor;
   border-radius: 50%;
-  background: var(--butter);
+  background: var(--warm-white);
   place-items: center;
   transform: rotate(4deg);
 }
