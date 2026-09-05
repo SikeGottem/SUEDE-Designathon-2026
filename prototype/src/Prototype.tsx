@@ -1691,6 +1691,7 @@ type ReceiverObjectProps = {
 function Opening({ snapshot, removeOpen, reduceMotion, onKeep, onClose, onRemove, onCancelRemove, onConfirmRemove }: { snapshot: KeepsakeSnapshot; removeOpen: boolean; reduceMotion: boolean; onKeep: () => boolean; onClose: () => void; onRemove: () => void; onCancelRemove: () => void; onConfirmRemove: () => void }) {
   const moveEase = [0.77, 0, 0.175, 1] as const;
   const [opened, setOpened] = useState(reduceMotion);
+  const [actionsOpen, setActionsOpen] = useState(false);
   const [keepFailed, setKeepFailed] = useState(false);
   useEffect(() => {
     if (reduceMotion) return;
@@ -1712,7 +1713,7 @@ function Opening({ snapshot, removeOpen, reduceMotion, onKeep, onClose, onRemove
             <motion.div className="receiver-fold-segment receiver-fold-segment-bottom" initial={{ transform: "rotateX(-178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: .72, duration: .56, ease: moveEase }}><AuthoredPaper snapshot={snapshot} /></motion.div>
           </motion.div>}
         </div>
-        <AnimatePresence initial={false}>{opened && <motion.div className="receiver-actions-reveal" initial={{ opacity: 0, transform: "translate3d(0, 14px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: .28, ease: [0.23, 1, 0.32, 1] }}><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></motion.div>}</AnimatePresence>
+        <AnimatePresence initial={false}>{opened && <motion.div className={`receiver-actions-reveal ${actionsOpen ? "is-expanded" : "is-collapsed"}`} initial={{ opacity: 0, transform: "translate3d(0, 14px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: .28, ease: [0.23, 1, 0.32, 1] }}>{actionsOpen ? <><button className="receiver-actions-back" type="button" onClick={() => { setActionsOpen(false); onCancelRemove(); }}><Mark direction="left" /> back to the letter</button><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></> : <button className="receiver-actions-trigger" type="button" onClick={() => setActionsOpen(true)}>what should this become? <Mark /></button>}</motion.div>}</AnimatePresence>
       </div>
       {!opened && <motion.p className="receiver-opening-status" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ delay: .22, duration: 1.08, times: [0, .18, .74, 1], ease: [0.23, 1, 0.32, 1] }}>unfolding what {snapshot.sender} made.</motion.p>}
     </motion.section>
@@ -1752,16 +1753,24 @@ function Reveal(props: ReceiverObjectProps) {
 
 function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onHome: () => void; onMake: () => void; onOpen: (item: KeepsakeSnapshot) => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const [page, setPage] = useState(0);
+  const pageSize = 4;
+  const pageCount = Math.max(1, Math.ceil(items.length / pageSize));
+  const visibleItems = items.slice(page * pageSize, (page + 1) * pageSize);
+  useEffect(() => {
+    setPage((current) => Math.min(current, pageCount - 1));
+  }, [pageCount]);
   const returnToLetters = () => {
+    setPage(0);
     headingRef.current?.focus();
-    headingRef.current?.scrollIntoView({ block: "start", behavior: "auto" });
   };
   return (
     <Page className="cabinet-page">
       <header><h1 ref={headingRef} tabIndex={-1}>things you kept.</h1></header>
       <div className="cabinet-field">
-        {items.length ? items.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
+        {items.length ? visibleItems.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
+      {pageCount > 1 && <nav className="cabinet-pagination" aria-label="Kept letter pages"><button type="button" onClick={() => setPage((current) => Math.max(0, current - 1))} disabled={page === 0}>previous</button><span aria-live="polite">{page + 1} of {pageCount}</span><button type="button" onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))} disabled={page === pageCount - 1}>next</button></nav>}
       <AppBottomNav lettersCurrent onHome={onHome} onMake={onMake} onLetters={returnToLetters} />
     </Page>
   );

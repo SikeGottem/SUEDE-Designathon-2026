@@ -4560,6 +4560,35 @@
   font-size: 16px !important;
 }
 
+.cabinet-pagination {
+  display: grid;
+  min-height: 44px;
+  flex: 0 0 44px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.cabinet-pagination button {
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cabinet-pagination button:first-child {
+  justify-self: start;
+}
+
+.cabinet-pagination button:last-child {
+  justify-self: end;
+}
+
+.cabinet-pagination span {
+  color: color-mix(in srgb, var(--navy) 62%, white);
+}
+
 .story-canvas {
   background: var(--paper);
 }
@@ -4638,4 +4667,131 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Every state is one deliberate phone composition: collections page instead of scrolling. */
+.keepsake-app > .mobile-scroll {
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.keepsake-app > .mobile-scroll > .mobile-scroll-content {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.keepsake-app > .mobile-scrollbar {
+  display: none;
+}
+
+.keepsake-app .keepsake-shell,
+.keepsake-app .experience-page,
+.keepsake-app .opening-page,
+.keepsake-app .opening-page.is-open,
+.keepsake-app .opening-object-content,
+.keepsake-app .receiver-paper-stage {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.keepsake-app .receiver-paper-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.keepsake-app .receiver-actions-reveal {
+  position: absolute;
+  z-index: 12;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 24px calc(var(--mobile-safe-area-height) + 12px);
+  border-top: 1.5px solid color-mix(in srgb, var(--navy) 44%, transparent);
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  color: var(--navy);
+}
+
+.keepsake-app .receiver-actions-reveal.is-collapsed {
+  display: grid;
+  padding-top: 2px;
+  padding-bottom: calc(var(--mobile-safe-area-height) + 5px);
+  place-items: center;
+}
+
+.receiver-actions-trigger,
+.receiver-actions-back {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 2px !important;
+  border-bottom: 1.5px solid currentColor !important;
+  font-size: 17px !important;
+}
+
+.receiver-actions-trigger .line-mark {
+  width: 30px;
+}
+
+.receiver-actions-back {
+  min-height: 36px !important;
+  margin-bottom: 2px;
+  border-bottom: 0 !important;
+  font-size: 14px !important;
+}
+
+.receiver-actions-back .line-mark {
+  width: 24px;
+}
+
+.keepsake-app .receiver-actions-reveal .receiver-ending {
+  padding: 0;
+  border-top: 0;
+}
+
+.keepsake-app .receiver-actions-reveal .receiver-ending h2 {
+  font-size: 20px;
+}
+
+.keepsake-app .receiver-actions-reveal .ending-actions {
+  margin-top: 5px;
+}
+
+.keepsake-app .receiver-actions-reveal .ending-actions button {
+  min-height: 44px;
+  flex-direction: row;
+  justify-content: center;
+  gap: 7px;
+  font-size: 15px;
+}
+
+.keepsake-app .receiver-actions-reveal .ending-actions .material-icon,
+.keepsake-app .receiver-actions-reveal .ending-x,
+.keepsake-app .receiver-actions-reveal .ending-remove {
+  width: 25px;
+  height: 25px;
+}
+
+.keepsake-app.phase-cabinet .cabinet-field:has(.cabinet-item) {
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.keepsake-app.phase-cabinet .cabinet-item.cabinet-object,
+.keepsake-app.phase-cabinet .cabinet-item.cabinet-object > button:first-child {
+  min-height: 0;
+}
+
+.keepsake-app.phase-cabinet .cabinet-item .carrier-icon {
+  width: 88px;
+  height: 96px;
+}
+
+.keepsake-app.phase-cabinet .cabinet-remove-link {
+  margin-top: 2px;
 }
