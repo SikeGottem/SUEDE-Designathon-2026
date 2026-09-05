@@ -52,7 +52,7 @@ async function startStaticServer() {
   };
 }
 
-test('appendix is a separate 15-page route and cannot change the live deck count', async () => {
+test('appendix is a separate 13-page route and cannot change the live deck count', async () => {
   await access(appendixPath);
   const [mainDeck, appendix] = await Promise.all([readFile(mainDeckPath, 'utf8'), readFile(appendixPath, 'utf8')]);
 
@@ -61,14 +61,15 @@ test('appendix is a separate 15-page route and cannot change the live deck count
   assert.doesNotMatch(mainDeck, /<article class="appendix-slide/);
   assert.doesNotMatch(mainDeck, /appendix\.html/);
 
-  assert.equal((appendix.match(/<article class="appendix-slide/g) ?? []).length, 15, 'appendix contains 15 separately numbered pages');
+  const expectedPageIds = Array.from({ length: 13 }, (_, index) => `A${index + 1}`);
+  assert.equal((appendix.match(/<article class="appendix-slide/g) ?? []).length, 13, 'appendix contains 13 separately numbered pages');
   assert.deepEqual(
     [...appendix.matchAll(/<article class="appendix-slide[^>]*\sid="(A\d+)"/g)].map((match) => match[1]),
-    Array.from({ length: 15 }, (_, index) => `A${index + 1}`),
+    expectedPageIds,
     'appendix page IDs should be complete and sequential',
   );
-  assert.match(appendix, /A1\s*\/\s*A15/);
-  assert.match(appendix, /A7\s*\/\s*A15/);
+  assert.match(appendix, /A1\s*\/\s*A13/);
+  assert.match(appendix, /A7\s*\/\s*A13/);
   assert.match(appendix, /new URLSearchParams\(location\.search\)/);
   assert.match(appendix, /params\.get\(['"]slide['"]\)/);
   assert.match(appendix, /(?:index\.html\?slide=11(?:&|&amp;)step=0|index\.html\?slide=11)/);
@@ -123,7 +124,7 @@ test('main deck hard-stops at slide 11 while appendix deep-links to A7 and retur
     }
 
     await page.goto(`${staticServer.origin}/deck/pitch-prototype/appendix.html?slide=A7`, { waitUntil: 'networkidle' });
-    await assertPageLabel(page, '.page-counter', 'A7 / A15');
+    await assertPageLabel(page, '.page-counter', 'A7 / A13');
     assert.match(page.url(), /appendix\.html\?slide=A7$/);
 
     await page.keyboard.press('Tab');
@@ -134,18 +135,27 @@ test('main deck hard-stops at slide 11 while appendix deep-links to A7 and retur
     await page.keyboard.press('i');
     assert.equal(await page.locator('#appendix-index').getAttribute('aria-hidden'), 'false');
     assert.equal(await page.locator('.index-button').getAttribute('aria-expanded'), 'true');
+    assert.deepEqual(
+      await page.locator('[data-jump]').evaluateAll((buttons) => buttons.map((button) => button.dataset.jump)),
+      Array.from({ length: 13 }, (_, index) => `A${index + 1}`),
+      'index jump IDs should exactly match appendix page IDs in order',
+    );
     assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('data-jump')), 'A7', 'index should focus the current page');
     await page.keyboard.press('Escape');
     assert.equal(await page.locator('#appendix-index').getAttribute('aria-hidden'), 'true');
 
     await page.keyboard.press('ArrowRight');
-    await assertPageLabel(page, '.page-counter', 'A8 / A15');
+    await assertPageLabel(page, '.page-counter', 'A8 / A13');
     await page.keyboard.press('Home');
-    await assertPageLabel(page, '.page-counter', 'A1 / A15');
+    await assertPageLabel(page, '.page-counter', 'A1 / A13');
     await page.keyboard.press('End');
-    await assertPageLabel(page, '.page-counter', 'A15 / A15');
+    await assertPageLabel(page, '.page-counter', 'A13 / A13');
     await page.keyboard.press('ArrowRight');
-    await assertPageLabel(page, '.page-counter', 'A15 / A15');
+    await assertPageLabel(page, '.page-counter', 'A13 / A13');
+
+    await page.emulateMedia({ media: 'print' });
+    assert.equal(await page.locator('.appendix-slide').evaluateAll((slides) => slides.filter((slide) => getComputedStyle(slide).display !== 'none').length), 13, 'print media should expose every appendix page');
+    await page.emulateMedia({ media: 'screen' });
 
     const returnLink = page.locator('a[href*="index.html?slide=11"]');
     assert.equal(await returnLink.count(), 1, 'appendix should expose exactly one deterministic return-to-main link');
@@ -186,7 +196,7 @@ test('appendix remains complete when opened directly from the filesystem', async
     page.on('requestfailed', (request) => errors.push(`requestfailed: ${request.url()}`));
 
     await page.goto(`${pathToFileURL(appendixPath).href}?slide=A7`, { waitUntil: 'load' });
-    await assertPageLabel(page, '.page-counter', 'A7 / A15');
+    await assertPageLabel(page, '.page-counter', 'A7 / A13');
     await page.waitForFunction(() => [...document.images].every((image) => image.complete));
     const brokenImages = await page.locator('img').evaluateAll((images) => images.filter((image) => image.naturalWidth === 0).map((image) => image.src));
     assert.deepEqual(brokenImages, [], `all direct-file appendix images should load:\n${brokenImages.join('\n')}`);

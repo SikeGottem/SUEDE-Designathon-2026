@@ -190,35 +190,32 @@
   ],
   "appendix_contract": {
     "route": "deck/pitch-prototype/appendix.html",
-    "page_count": 15,
+    "page_count": 13,
     "separate_from_live_deck": true,
-    "purpose": "Give judges a fast, inspectable evidence and Q&A layer without adding to the 11-slide live pitch.",
-    "winner_benchmark": "Borrow the 2025 winner's separation between a sparse live story and a detailed research appendix, including raw-method visibility and references, without copying its visual identity.",
-    "navigation": "Deep links use ?slide=A1 through ?slide=A15; I opens the index; F toggles fullscreen; the single return control goes to live slide 11.",
-    "evidence_statuses": ["2024 criteria fallback", "transcript provenance—not research", "secondary evidence", "primary evidence pending", "working hypothesis", "test next", "working prototype", "open risks"],
+    "purpose": "Give judges a concise, inspectable research and process appendix without adding to the 11-slide live pitch.",
+    "winner_benchmark": "Mirror the 2025 winner's repeated editorial research-slide grammar: a large title, sparse source material or raw artifact, and clear blank templates where evidence is not yet complete. Retain Warm & Fuzzies identity; do not copy the winner's wording or artwork.",
+    "navigation": "Deep links use ?slide=A1 through ?slide=A13; I opens the index; F toggles fullscreen; the single return control goes to live slide 11.",
+    "evidence_statuses": ["secondary evidence", "blank research template", "working prototype", "illustrative process artifact"],
     "non_negotiable_boundaries": [
       "No completed primary study currently validates the expression gap, occasion rule, market, audience, product outcome or superiority.",
-      "The 82%, 71%, 72%, 78%, 1–5 ratings, chart positions and dot sizes are quarantined rehearsal placeholders.",
       "Published studies support adjacent mechanisms only; no study directly validates Warm & Fuzzies.",
       "Prototype screenshots and the live flow prove implemented behaviour only, not desirability or social change.",
-      "Unknown team metadata, consent and 2026 disclosure requirements remain visibly incomplete rather than invented."
+      "Uncollected interview, survey and task-based evidence remains visibly blank rather than invented."
     ]
   },
   "appendix": [
-    "brief-and-deliverables",
-    "team-details-and-photo-consent",
-    "machine-transcript-team-framing-source-with-speaker-unverified",
-    "secondary-psychology-and-product-scan",
-    "research-methods-sample-and-limitations",
-    "what-why-how-raw-results-and-exceptions",
-    "psychology-of-text-ownership-effort-and-appreciation",
-    "opportunity-map-method-and-hypothesis-status",
-    "matched-format-test",
-    "process-evolution-artifacts",
-    "prototype-truth-table",
-    "trust-privacy-retention-and-recovery",
-    "feasibility-and-scope",
-    "ai-third-party-credits",
-    "live-demo-backup-and-qa"
+    "appendix-divider",
+    "unpacking-the-brief",
+    "secondary-research-i",
+    "secondary-research-ii",
+    "research-questions-and-problem-statement",
+    "interview-question-structure-blank",
+    "interview-findings-blank",
+    "survey-findings-i-blank",
+    "survey-findings-ii-blank",
+    "task-based-interview-findings-blank",
+    "wireframing-and-process-artifacts",
+    "visual-direction-and-current-prototype",
+    "references-credits-and-disclosure-blanks"
   ]
 }

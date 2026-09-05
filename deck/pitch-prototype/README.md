@@ -31,33 +31,31 @@ Visit `http://127.0.0.1:4176/deck/pitch-prototype/`. Arrow keys, Space, Enter, c
 
 ## Standalone evidence appendix
 
-`appendix.html` is a separate 15-page judge-facing dossier. It is intentionally absent from `index.html`, so the judged route remains exactly 11 slides and hard-stops at the live demo. Open it directly at:
+`appendix.html` is a separate 13-page judge-facing appendix. It is intentionally absent from `index.html`, so the judged route remains exactly 11 slides and hard-stops at the live demo. Open it directly at:
 
 ```text
 http://127.0.0.1:4176/deck/pitch-prototype/appendix.html?slide=A1
 ```
 
-Use Left / Right, Page Up / Page Down, Home / End, or the on-screen controls to move. Press `I` for a complete appendix index and `F` for fullscreen. Every page has a deterministic deep link such as `?slide=A7`; the one return control goes back to live slide 11. Print exposes all 15 pages as separate 16:9 sheets.
+Use Left / Right, Page Up / Page Down, Home / End, or the on-screen controls to move. Press `I` for a complete appendix index and `F` for fullscreen. Every page has a deterministic deep link such as `?slide=A7`; the one return control goes back to live slide 11. Print exposes all 13 pages as separate 16:9 sheets.
 
-The appendix follows the strongest transferable pattern from the 2025 winner: keep the spoken story sparse, then retain raw research structure, methods, sources, process artifacts, prototype truth and limitations in an inspectable Q&A layer. It does not copy the winner's visual style. Its pages are:
+The appendix mirrors the 2025 winner's repeated editorial research-slide grammar: a large title, a small amount of legible source material or a raw artifact, and intentionally blank research templates where work has not yet been completed. It retains Warm & Fuzzies' identity; it does not copy the winner's wording, palette or illustrations. Its pages are:
 
-1. current brief and latest explicit public judging criteria
-2. team metadata and consent blanks that must be closed before submission
-3. full machine-transcribed team framing, with speaker identity explicitly unverified, and the team's distilled reframe
-4. secondary psychology and alternative-product scan
-5. primary method, sample and limitation requirements
-6. What / Why / How result template, exceptions and quarantined rehearsal figures
-7. paper-by-paper psychology ledger with counterevidence and claim boundaries
-8. opportunity-map method and explicit hypothesis status
-9. matched-message receiver test with proposed continue / revise / stop rules to finalise and time-stamp before recruitment
-10. process artifacts connected to the decisions they changed
-11. working / limited / not-claimed prototype truth table with real screenshots
-12. trust, privacy, retention, access and recovery obligations
-13. built / evidence-dependent / deliberately excluded scope
-14. authorship, AI assistance, third-party references and unresolved disclosure wording
-15. exact live path, stable receiver fallback, recovery ladder and four short Q&A answers
+1. Appendix divider
+2. Unpacking the brief
+3. Secondary research I
+4. Secondary research II
+5. Research questions and problem statement
+6. Interview question structure — blank template
+7. Interview findings — blank template
+8. Survey findings I — blank template
+9. Survey findings II — blank template
+10. Task-based interview findings — blank template
+11. Wireframing and process artifacts
+12. Visual direction and current prototype
+13. References, credits and disclosure blanks
 
-Evidence-status labels are part of the content contract: `secondary evidence`, `working hypothesis`, `primary evidence pending`, `working prototype` and `open risks` cannot be softened for visual polish. The appendix deliberately exposes that no completed primary study currently validates the market gap, prevalence, rehearsal percentages or emotional outcome.
+No completed primary study currently validates the expression gap, occasion rule, market, audience, product outcome or superiority. The blank templates are intentional: no interview, survey or task-based finding is fabricated for presentation polish. Published studies support adjacent mechanisms only, and prototype screenshots prove implemented behaviour only.
 
 Run the standalone regression check with:
 
