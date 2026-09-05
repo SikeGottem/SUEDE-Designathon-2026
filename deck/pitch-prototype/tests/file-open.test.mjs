@@ -61,6 +61,17 @@ test('the latest review uses a problem-first opener and adds the synthesis bridg
   assert.doesNotMatch(source, />75%</);
 });
 
+test('the channel map reveals bounded research instead of an invented gap statistic', () => {
+  assert.equal((source.match(/class="map-evidence"/g) ?? []).length, 6);
+  assert.match(source, /Sheldon &amp; Yu, 2022/);
+  assert.match(source, /Kumar &amp; Epley, 2021/);
+  assert.match(source, /Kumar &amp; Epley, 2018/);
+  assert.match(source, /Algoe, Haidt &amp; Gable, 2008/);
+  assert.match(source, /Team hypothesis · not a participant finding/);
+  assert.doesNotMatch(source, /find digital channels too slight/);
+  assert.doesNotMatch(source, /highest friction · occasion-coded/);
+});
+
 test('every local image reference resolves from the standalone deck file', async () => {
   const paths = [...source.matchAll(/<img[^>]+src="([^"]+)"/g)].map((match) => match[1]);
   assert.ok(paths.length > 0, 'expected image references in the deck');

@@ -914,3 +914,73 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Next evidence that could change the verdict: one real-phone maker-to-receiver walkthrough comparing the animated ending with a quiet confirmation, followed by a five-second recall question about what the carrier meant.
 - Recommendation: keep the refined departures and heavier stamp in the exploratory build, but spend the next product test on helping a maker surface one specific appreciative thought.
 - Revisit when: the team reviews the final cadence and water artwork, or participant testing shows the ritual feels decorative, slow, or harder than sending a normal message.
+
+## 2026-09-05 - Make the channel map the main evidence moment
+
+- Status: current live-pitch direction; secondary evidence is bounded and the plotted opportunity remains unvalidated.
+- Decision: give the opportunity map 60 seconds, the longest narrative-slide allocation. Reveal text, voice, video, handwritten letter and physical gift one at a time with one visible published finding and its limitation. Remove the unsupported fourth percentage and unsupported absolute labels. End on an `authored + revisitable` zone explicitly labelled as a team hypothesis requiring a matched-format receiver test.
+- Reason: Ethan required every spoken graph claim to be visibly backed while he explains what the cited research found. A changing evidence panel preserves the map's pacing without turning the slide into a static literature grid.
+- Evidence: Ethan's direct 5 September presentation direction; the transcript-derived channel comparison in [the latest presentation findings](../deck/TRANSCRIPT_PRESENTATION_FINDINGS.md); and the cited psychology synthesis in [Psychology evidence for the Warm & Fuzzies pitch](RESEARCH/FRIENDSHIP_APPRECIATION/PSYCHOLOGY_PITCH/report-source.md). These sources support bounded mechanisms, not the plotted coordinates, an Australian prevalence rate, or the product's superiority.
+- Consequence: the What / Why / How slide remains reserved for the team's primary results. Secondary studies may explain why channel form could matter, but cannot fill primary-research blanks or validate the highlighted gap.
+- Revisit when: a source is corrected or withdrawn; rehearsal shows the study sequence overwhelms the problem; or the matched-format receiver comparison changes the position, axes or opportunity.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The map makes the channel conventions surrounding ordinary-day appreciation visible before the team proposes a redesigned ritual. | The studies do not prove the occasion rule itself. |
+| Problem identification | strengthens | Each channel claim now has a named evidence boundary instead of relying on team intuition. | Primary prevalence, audience and local context remain unknown. |
+| Solution approach | strengthens | The final synthesis identifies the mechanisms the prototype attempts to combine: digital ease, authorship, revisitation and receiver control. | No comparison shows that this combination improves the receiving experience. |
+| Design innovation | neutral | Evidence makes the mechanism more credible but does not make the individual ingredients novel. | Judges may still describe the concept as a decorated digital letter. |
+| Visual communication | strengthens | One active evidence panel follows the point being discussed and disappears when the next channel appears. | Five precise coordinates can still look more measured than they are. |
+| Presentation skills | strengthens | The presenter can explain one paper at a time while the source and limitation remain visible. | Sixty seconds of literature can feel academic without rehearsal. |
+| Evidence quality | strengthens with limits | The displayed statements track the cited studies and include counterclaims and population/task boundaries. | The evidence is adjacent: no paper directly compares all five channels with the same appreciation content. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if ordinary text already works? | The map now says text can carry genuine gratitude and does not call it shallow or invalid. | Which receivers benefit from another format. |
+| Behaviour and context | Do laboratory exchanges match ordinary-day appreciation? | Every panel names when a study used synchronous conversation, email, letters or gifts. | Australian everyday use and relationship differences. |
+| Medium necessity | Do the studies justify another app? | They suggest cues, authorship and receiver control worth testing; the slide calls the product area a hypothesis. | Whether the digital artifact beats text, voice or a physical note. |
+| Alternatives | Are voice notes or physical gestures enough? | They remain visible, credible controls with their own supported strengths. | Same-content comparative evidence. |
+| Human specificity | Could channel meaning vary by culture or relationship? | The presentation avoids a universal hierarchy and retains study boundaries. | The team's intended audience and exceptions. |
+| Inclusion and accessibility | Can the active evidence panel be read at distance? | The panel uses large high-contrast copy and one source line, verified at the 1600 × 900 presentation canvas. | Actual room distance and projector contrast. |
+| Trust, safety and privacy | Does the evidence imply the product is private or safe? | No privacy, identity or permanence claim is added. | Production trust remains outside this slide. |
+| Failure and recovery | What if a citation is challenged? | The full report records source links, counterevidence and limits for Q&A. | The presenting team must know which claims are adjacent rather than direct. |
+| Feasibility and demo truth | Does the map imply a tested product position? | The footer and final panel state that coordinates and the gap remain team hypotheses. | Whether that spoken boundary survives a rushed delivery. |
+| Incentives and second-order effects | Could visible effort encourage performative labour? | The gift panel says thoughtfulness, not price or raw effort, carries the supported relationship. | Repeated product use may still create performance pressure. |
+| Simplicity and retellability | Do five studies bury the core story? | Only one finding appears at a time and the final synthesis compresses them into authored, revisitable care. | Timed rehearsal with a first-time listener. |
+| Authorship and distinctiveness | Does this become a generic citation-card slide? | The evidence changes inside the team's existing hand-drawn opportunity map and culminates in its specific gap. | Team delivery and later primary findings must remain the dominant authorship. |
+
+### AI and authorship check
+
+- Ethan selected the graph as the main evidence moment and required research to appear alongside every spoken channel claim.
+- The team selected the current map, axes, channel set and narrative sequence through recorded reviews.
+- AI mapped the already-cited report into bounded display copy and implemented the HTML transition; AI did not create participant findings.
+- Human-authored inputs remain Cecelia's visual system, the team's problem framing and the final spoken explanation.
+- Required disclosure: cite the external papers and disclose AI-assisted deck implementation according to the event's final rules.
+
+### Design-authenticity preflight and post-build review
+
+- Communication job: let judges see the support and boundary for the exact channel being discussed, then recognise the gap as the team's deduction rather than a measured fact.
+- Specific source anchors: the team-selected five-channel map; the hand-drawn Gaegu and navy/rust palette; Ethan's point-by-point narration; the report's counterclaim that text can work.
+- Structural direction A: attach a permanent citation label to every plotted point. It preserves locality but creates unreadable clutter.
+- Structural direction B: use one changing evidence panel tied to the active point. It preserves sequence and makes the current claim scannable. Selected by Ethan's instruction to explain each paper while the point appears.
+- Structural direction C: split the map into five separate channel slides. It creates room for methods but breaks the comparison and pitch timing.
+- Rejected defaults: no grid of equal research cards; no decorative percentage; no oversized quotation; no invented effect size; no generic journal-page screenshot.
+- Content-native signature: the evidence panel changes with the plotted channel, then becomes the team's explicitly bounded synthesis on the final click.
+- Restraint: show one paper conclusion and one limitation at a time; keep detailed methods and ownership literature out of the live slide.
+- Render inspection: all six builds were checked at the 1600 × 900 canvas with no evidence overflow or console errors; final-state scaling was also checked at 768 × 1024 and 375 × 812.
+- Strongest remaining AI tell: the coordinates retain diagrammatic precision despite being hypotheses.
+- Material human change: Ethan changed the slide's priority and evidence requirement; unsupported labels and the extra blank statistic were removed in response.
+- Logo-swap test: passes because the channel sequence, ordinary-day gap and authored/revisitable synthesis depend on this specific problem.
+- Team-voice test: passes conditionally; the team must rehearse the five findings and remove any line they cannot explain naturally.
+- Authenticity verdict: **Pass for the evidence-map implementation; the unfinished primary-research and handoff slides remain blocked.**
+
+- Verdict: **Proceed with conditions**.
+- Blocking conditions: keep each display claim within its cited study; retain the counterclaim that text can work; never describe coordinates as measured; do not add percentages without real primary data; rehearse the 60-second sequence; keep detailed methods and limitations available in the appendix or Q&A source.
+- Weakest judging angle: **evidence quality**, because the literature is adjacent and no matched-content receiver study validates the graph or product position.
+- Main trade-off: the graph becomes more credible and explainable, but gains more verbal and visual density.
+- Next evidence that could change the verdict: one matched-content receiver comparison across ordinary text, voice or video, a physical/crafted control and Warm & Fuzzies.
+- Recommendation: use the progressive evidence map as the live baseline, then replace only the team-hypothesis coordinates or conclusion that the matched-format test genuinely changes.
