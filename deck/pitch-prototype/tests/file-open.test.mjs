@@ -29,6 +29,7 @@ test('the revised deck opens on a visible logo page and contains 10 live slides'
     source,
     /<article class="slide logo-slide active"[^>]*>[\s\S]*?<div class="brand-lockup">/,
   );
+  assert.match(source, /class="cover-thesis">Rethinking when we show appreciation\.<\/p>/);
   assert.doesNotMatch(source, /11\s*\/\s*\d+/);
   assert.doesNotMatch(source, /data-title="(?:Team|Thank you|Thanks)"/i);
 });
@@ -44,6 +45,8 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   const researchSlide = source.match(/<article class="slide research-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
 
   assert.match(source, /data-title="Research findings" data-steps="4"/);
+  assert.match(source, /class="research-title">Survey results<\/h2>/);
+  assert.match(source, /class="research-dimension">what<\/span>[\s\S]*?class="research-dimension">why<\/span>[\s\S]*?class="research-dimension">how<\/span>/);
   assert.match(source, /class="research-number">82%/);
   assert.match(source, /class="research-number">71%/);
   assert.doesNotMatch(source, /Does the expression gap exist\?|Why does it stay unspoken\?|How do the forms compare\?/);
@@ -88,11 +91,14 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
   assert.match(source, /Care this explicit can feel like it needs a reason\./);
   assert.match(source, /occasions provide a ready-made script/);
-  assert.match(source, /Senders can overestimate awkwardness\./);
-  assert.match(source, /Ordinary-day care can still be welcome\./);
+  assert.match(source, /<strong>ordinary day<\/strong><ul><li>awkward<\/li><li>too much<\/li><li>intense<\/li><\/ul>/);
   assert.match(source, /Kumar &amp; Epley, 2018 · Givi &amp; Galak, 2022/);
   assert.equal((source.match(/class="occasion-mark"/g) ?? []).length, 3);
   assert.doesNotMatch(source, /Is everything okay\?/);
+  assert.doesNotMatch(source, /ordinary Tuesday/);
+  assert.doesNotMatch(source, /no ready-made script/);
+  assert.doesNotMatch(source, /Senders can overestimate awkwardness\./);
+  assert.doesNotMatch(source, /Ordinary-day care can still be welcome\./);
   assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
   assert.match(source, /data-title="Research synthesis" data-steps="4"/);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
@@ -129,6 +135,7 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
   assert.match(source, /class="ledger-header"[\s\S]*?impact \/ 5[\s\S]*?friction \/ 5[\s\S]*?frequency \/ 5/);
+  assert.match(source, /Temporary rehearsal figures—not survey findings\. Replace before judging\./);
   assert.match(source, /--accent:#081f4d/);
   assert.match(source, /--accent-ink:#254878/);
   assert.match(source, /--accent-on-ink:#a8c5ee/);

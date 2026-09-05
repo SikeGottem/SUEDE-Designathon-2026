@@ -204,3 +204,66 @@ passed for rehearsal; the QR still needs a physical-phone scan at presentation d
 ## Final result
 
 passed; the next evidence step is a timed 25-second first-listener recall test and replacement of every rehearsal value before judged delivery.
+
+---
+
+# Design QA — ordinary-day friction list and What / Why / How survey orientation
+
+## Target and capture conditions
+
+- Implementation: page 4 build 5 and page 6 build 4 at the native 1600 × 900 canvas.
+- Final captures: `/tmp/suede-slide4-ordinary-list.png` and `/tmp/suede-slide6-what-why-how.png`.
+- Full current-deck contact sheet: `/tmp/suede-full-review-2026-09-05/contact-sheet.png`.
+- Browser console: zero errors in the final page-4 and page-6 states.
+
+## Findings and fixes
+
+1. The ordinary-day state carried an icon, two explanatory layers and paper-derived claims that competed with the presenter. It now contains only `ordinary day` and the three requested prompts: `awkward`, `too much`, `intense`.
+2. The research slide had lost the team's What / Why / How model. Small orientation labels and the `Survey results` title now restore that model without bringing back the three large questions.
+3. Both slides preserve progressive builds and the existing deep-blue, white and hand-drawn visual language.
+
+## Review boundary
+
+- Visual result: **Pass for rehearsal**.
+- Judged-delivery result: **Test first**. The page-6 figures remain invented rehearsal data; the title and visual precision make the disclosure footer insufficient for external judging.
+- Strongest remaining AI tell: convenient precision across the two percentages, nine ratings and plotted channel positions.
+- Next corrective action: replace the rehearsal data with documented participant evidence or remove the quantitative treatment before judging.
+
+---
+
+# Design QA — 2025 winner-deck benchmark
+
+## Capture conditions
+
+- Supplied source: Canva design `DAG0ItHkuQo`, 32 pages.
+- Browser capture: all pages at 1280 × 720 under `/tmp/suede-winner-2025/`.
+- Contact sheet: `/tmp/suede-winner-2025/contact-sheet.png`; key-page comparison: `/tmp/suede-winner-2025/key-pages.png`.
+
+## Comparative findings
+
+1. The winner's live story alternates sparse claims, first-person motivations, a named user, a single clear HMW and product states; Warm & Fuzzies currently clusters four abstract evidence slides in the middle.
+2. The winner's appendix visibly contains research instruments, interview and survey findings, task-based findings, wireframes, colour work and references. Warm & Fuzzies currently has strong internal documentation but no equivalent judge-facing appendix.
+3. The winner's product intervention is named and shown immediately where the target behaviour occurs. Warm & Fuzzies should foreground the receiver-controlled ending and no-reply contract rather than only the generic letter-plus-text comparison.
+4. Warm & Fuzzies has the more distinctive authored visual identity and a shorter live spine. It should borrow the winner's specificity and evidence trail, not its styling or 32-page length.
+
+## Final result
+
+The benchmark reinforces the review verdict: visual polish is no longer the limiting factor; participant evidence, one specific user context and a visible research-to-product decision trail are.
+
+---
+
+# Design QA — strategic cover title
+
+## Target and capture conditions
+
+- Implementation: page 1 at the native 1600 × 900 canvas.
+- Final capture: `/tmp/suede-slide1-strategic-title.png`.
+- Browser console: zero errors and zero warnings.
+
+## Finding and correction
+
+The original cover only named the product, so a judge received no project territory before the opening question. The revised cover reads `Rethinking when we show appreciation.` first, then reveals Cecelia's firefly and the Warm & Fuzzies wordmark in the existing centred composition.
+
+## Final result
+
+passed; the title creates a clear first reading without adding a second explanatory paragraph or copying the winner deck's visual style.

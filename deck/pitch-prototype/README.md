@@ -1,7 +1,7 @@
 <!-- Orientation: usage, evidence boundaries and review status for the 10-slide Warm & Fuzzies HTML live deck. -->
 # Warm & Fuzzies live pitch
 
-This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 5:15, leaving 45 seconds inside the six-minute heat limit. The product is shown through a shared live maker-to-receiver demo, not a video or static product walkthrough.
+This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 4:35, leaving 1:25 inside the six-minute heat limit. The product is shown through a shared live maker-to-receiver demo, not a video or static product walkthrough.
 
 Open `index.html` directly, or serve the repository locally:
 
@@ -19,12 +19,12 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 
 ## Live sequence
 
-1. Warm & Fuzzies logo
+1. `Rethinking when we show appreciation.` above the Warm & Fuzzies logo lockup
 2. Sender-framed audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
-4. Working social-script diagram and How Might We, with adjacent sender-miscalibration evidence and an explicit hypothesis boundary
+4. Working social-script diagram and How Might We, contrasting occasion prompts with `ordinary day — awkward / too much / intense` and retaining an explicit hypothesis boundary
 5. Impact / friction / frequency map across three illustrated presentation families, with bounded paper evidence and Cecelia's firefly marking the unboxed Goldilocks target; numeric ratings stay off this slide
-6. Evidence-first research findings: 82%, 71%, and a hand-drawn three-row trade-off ledger, followed by a fourth-click highlight pass
+6. `Survey results` rehearsal slide with small What / Why / How orientation labels, 82%, 71%, and a hand-drawn three-row trade-off ledger, followed by a fourth-click highlight pass
 7. Two oversized cropped Goldilocks rings dividing the full slide into blunt text and letter/gift constraints, with one quieter need-state statement between them
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
@@ -42,7 +42,7 @@ The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` 
 - **Why** investigates the occasion rule, awkwardness, channel mismatch and exceptions.
 - **How** groups quick text, voice/video and letter/gift for pitch clarity while retaining the individual forms as controls for the real matched-content study. The displayed group values do not prove equivalence. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
 - Team opinion, mentor reaction, published secondary research, practice values and prototype polish cannot become final primary evidence.
-- The primary instrument still uses the What / Why / How questions, but the live slide now removes those prompts and presents only the resulting figures and comparison. Further survey explanation belongs in the appendix.
+- The primary instrument still uses the What / Why / How questions. The live slide keeps only small What / Why / How orientation labels, not the full prompts, and presents the current rehearsal figures and comparison. Further survey explanation belongs in the appendix.
 - Psychology on text, voice, gratitude letters and perceived gift effort supports the map's channel-by-channel mechanism narration. Detailed methods, ownership evidence and limitations still belong in the appendix, and none can replace the primary percentages or qualitative themes.
 - The live demo proves only that the prototype can complete the demonstrated flow. It does not prove demand, sincerity, reduced awkwardness or social change.
 

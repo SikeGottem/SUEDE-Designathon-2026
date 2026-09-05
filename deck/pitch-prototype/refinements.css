@@ -18,7 +18,7 @@
 
 .permission-map {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 128px 410px;
+  grid-template-columns: minmax(0, 1fr) 128px 330px;
   gap: 32px;
   align-items: center;
   min-height: 390px;
@@ -58,8 +58,7 @@
   text-align: center;
 }
 
-.occasion-mark,
-.empty-occasion {
+.occasion-mark {
   position: relative;
   z-index: 1;
   width: 118px;
@@ -111,41 +110,45 @@
 
 .ordinary-day {
   display: grid;
-  grid-template-columns: 126px 1fr;
-  gap: 24px;
-  align-items: center;
-  min-height: 240px;
-  padding: 30px 0 30px 28px;
+  align-content: center;
+  justify-items: start;
+  gap: 23px;
+  min-height: 232px;
+  padding: 28px 0 28px 38px;
   border-left: 3px dashed rgb(8 31 77 / .45);
 }
 
-.empty-occasion {
-  width: 126px;
-  height: 126px;
-  border-style: dashed;
-  background: color-mix(in srgb, var(--accent-on-ink) 18%, var(--paper));
-}
-
-.empty-occasion b {
+.ordinary-day strong {
   color: var(--ink);
-  font-size: 36px;
+  font-size: 54px;
   font-weight: 400;
-  line-height: 1;
+  line-height: .8;
 }
 
-.ordinary-day small {
-  display: block;
-  margin-top: 13px;
+.ordinary-day ul {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   color: var(--accent-ink);
-  font-size: 24px;
-  line-height: .9;
+  font-size: 29px;
+  line-height: .92;
 }
 
-.ordinary-day p {
-  margin-top: 24px;
-  color: var(--ink);
-  font-size: 23px;
-  line-height: .96;
+.ordinary-day li {
+  display: grid;
+  grid-template-columns: 14px auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.ordinary-day li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--accent-ink);
+  border-radius: 50%;
 }
 
 .occasion-slide .hmw-bar {
@@ -160,9 +163,31 @@
 }
 
 /* Slide 06 — a handwritten comparison ledger, not a dashboard table. */
+.research-title {
+  position: absolute;
+  left: 95px;
+  top: 74px;
+  color: var(--ink);
+  font-size: 58px;
+  font-weight: 400;
+  line-height: .82;
+}
+
 .research-story {
+  top: 165px;
   grid-template-columns: .8fr .8fr 1.42fr;
   gap: 30px;
+}
+
+.research-dimension {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  color: var(--accent-ink);
+  font-size: 19px;
+  letter-spacing: .065em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .research-job:not(.has-ledger) {
@@ -187,6 +212,14 @@
   align-items: center;
   justify-content: flex-start;
   padding: 24px 0 22px 4px;
+}
+
+.research-job.has-ledger .research-dimension {
+  left: 4px;
+}
+
+.research-job.has-ledger .comparison-ledger {
+  margin-top: 44px;
 }
 
 .comparison-ledger {

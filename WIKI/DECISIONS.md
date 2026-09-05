@@ -1309,3 +1309,36 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Rejected directions: cumulative evidence paragraphs, another literature slide, repeated mini-headings and generic dashboard cards.
 - No research findings or assets were fabricated in this revision; the existing rehearsal numbers remain explicitly disclosed as temporary.
 - Recommendation: use the compressed slides for rehearsal, answer methodological detail in Q&A, and do not use the temporary figures in judged delivery.
+
+## 2026-09-05 - Simplify the ordinary-day contrast and restore What / Why / How orientation
+
+- Status: current rehearsal-deck direction, selected directly by Ethan.
+- Page 4: replace the ordinary-Tuesday badge and research prose with one `ordinary day` heading and the three requested prompts: `awkward`, `too much`, `intense`. Keep the occasion icons, related-evidence footer and working-hypothesis boundary.
+- Page 6: title the slide `Survey results` and restore small `What`, `Why` and `How` labels as orientation only. Keep the existing progressive reveal, comparison ledger and fourth-click rings.
+- Timing source of truth: 4:35, leaving 1:25 inside the working six-minute limit.
+- Evidence boundary: this is a rehearsal artifact. The `82%`, `71%`, ratings, map positions and circle sizes are invented practice values and must not appear as findings in judged delivery.
+
+### Full-deck judge and authenticity review
+
+- Verdict: **Test first** for judged delivery; **Pass for rehearsal** visually.
+- Weakest judging angle: **evidence quality**. Small footers cannot neutralise the authority of a slide titled `Survey results` or the precision of percentages, decimal scores and plotted geometry.
+- Strongest judging angles: a coherent authored visual system, a compact 10-slide spine, a complete maker-to-receiver demo and a receiver-controlled ending with no required reply.
+- Main narrative conflict: the live story currently sells a Goldilocks communication medium, while the more distinctive product mechanism is a finite object whose receiver controls the ending. The team must choose one primary thesis after testing.
+- Required next evidence: use the same genuine ordinary-day appreciation across quick text, voice, Warm & Fuzzies and one non-digital control; record sender prediction before delivery and receiver interpretation and reply pressure privately afterwards.
+- Required judged-pitch corrections: replace or remove every rehearsal figure; add verified team metadata to page 1; select one evidenced first context; distinguish finding, inference and design choice; avoid calling a forwardable bearer link `private`; finish the demo verbally with `The message can be complete when it arrives.`
+
+### 2025 winner benchmark — HotTakers
+
+- Source: the 32-page Canva deck supplied by Ethan and the first-place account published by team member Mihika Kothari.
+- Directly observed structure: team/title; broad social-media context; primary result; first-person motivations; user groups; a named 24-year-old passive observer on Instagram Reels and TikTok; one How Might We; a named core interaction; product states; Q&A; then an appendix containing brief unpacking, secondary research, research questions, interview structure, interview findings, survey findings, task-based findings, wireframes, colour exploration and references.
+- Structural lesson to borrow: move from broad context to one specific person and behaviour, show one legible intervention where that behaviour occurs, and preserve a visible evidence trail showing how research changed the product.
+- What not to imitate: the 32-page length, orange-purple aesthetic, generic persona-card format or social-feed UI. Warm & Fuzzies should retain its own paper-and-ink identity and shorter live spine.
+- Inference, not a recorded judge rationale: the winner likely benefited from specificity, immediate product legibility and visible task-based validation. The current deck is cleaner and more ownable visually, but is materially weaker on validated research and process proof.
+
+## 2026-09-05 - Give the cover a project title as well as a product name
+
+- Status: current live-deck direction, selected after comparing the cover with the 2025 winner deck.
+- Decision: add `Rethinking when we show appreciation.` above Cecelia's firefly and the Warm & Fuzzies wordmark.
+- Reason: `rethinking social norms of how we show appreciation` names the right territory but is long and academic. The selected line makes the timing rule legible in ordinary language, does not claim the hypothesis is already proven and does not reveal the solution mechanism.
+- Hierarchy: the project title is read first, then the firefly and product name. Do not add a subtitle, feature statement or second thesis.
+- Remaining blocker: add the verified team number and member names once supplied.
