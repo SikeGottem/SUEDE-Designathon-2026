@@ -785,3 +785,132 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Main trade-off: a consistent emotional Home and clearer physical handoff in exchange for one extra tap to reach the cabinet, local-state limitations, and more visible delivery theatre.
 - Next evidence that could change the verdict: compare the current blank creator against one private memory-retrieval scaffold, then run one repeat maker-to-receiver flow on a real phone.
 - Recommendation: keep this navigation/stamp/delivery correction, but treat the creation mechanism—not additional decoration—as the next product test.
+
+## 2026-09-05 - Use the landing screen as an entry to a two-path hub, then keep creation and collecting distinct
+
+- Status: current exploratory prototype direction; settled by the team in Chronicle, not participant-validated or final.
+- Decision: retain the supplied `warm & fuzzies` landing screen as the root entry. Its CTA opens a sparse animated hub with two deliberate paths: **create something** and **look in your box**. The box path opens the kept-object cabinet, which retains a central `+` for starting another creation. Creation offers plain, dotted, and grid paper grounds, beginning with dotted. A personal stamp can be reused or redrawn before sending. The chosen bottle, firefly, or plane changes the departure animation, which resolves to `that's it from you.`
+- Supersedes: the adaptive lower-navigation rule in `Keep Home as the entry, add cabinet navigation, reduce outer authorship to a stamp, and show delivery`. Root no longer becomes a returning-user dashboard; the cabinet is reached through the hub and remains its own collection space.
+- Reason: the landing screen should preserve the emotional first impression; creation and keeping are separate intentions, so they need a simple choice rather than competing navigation. Paper, a reusable or redrawable stamp, and carrier-specific motion make the digital object feel authored without making decoration the product.
+- Evidence: direct team direction in [the create/look menu capture](TRANSCRIPTS/2026-09-05-aa8e2e8e-d941-5e71-99b8-4d261be1011b.md) and [the paper, stamp, container, and departure capture](TRANSCRIPTS/2026-09-05-be0d1955-63fe-50d6-8841-e056c927469a.md); the prior longer captures confirm paper choice, handwritten behaviour, folding, personal seal, and carrier selection. This is team and prototype evidence, not user validation.
+- Consequence: do not turn the root into a generic dashboard, feed, or persistent bottom-nav home. The hub stays sparse and its firefly enters once rather than looping. Paper, stamp, and carrier choices must visibly survive where relevant into the received object.
+- Revisit when: an unaided maker cannot choose between creating and revisiting, the paper or stamp choices feel like cosmetic labour, or a real maker-to-receiver test shows the carrier ritual is not meaningful.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The flow redesigns the awkward ordinary-day act of expressing appreciation into making, giving, receiving, and keeping. | It still needs to show that it changes participation, not merely makes a digital letter attractive. |
+| Problem identification | neutral | Separating making from revisiting clarifies two real moments in the proposed experience. | The core hesitation, what to say and whether it will be misread, remains unvalidated. |
+| Solution approach | strengthens | The hub gives a clear first decision; paper, seal, and carrier make an authored object rather than a generic message. | More steps could add friction before the important words are written. |
+| Design innovation | strengthens | The delivery carrier is chosen as part of the object's meaning and changes the transition, rather than being a static theme. | It could still read as a polished digital-card app without a stronger creation scaffold. |
+| Visual communication | strengthens | Landing, hub, cabinet, maker, and delivery have distinct jobs and sparse hierarchy. | The hub needs actual phone-size inspection so the two choices are immediately legible. |
+| Presentation skills | strengthens | The demo becomes retellable: enter, choose make or revisit, make an object, send it its own way, then leave it with them. | The pitch must explain why these rituals lower social awkwardness, not just show them. |
+| Evidence quality | weak | The direction reflects explicit team decisions and transcript anchors. | No participant has compared this to texting, a physical note, or the previous flow. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if users should create immediately, without a hub? | The landing remains emotionally direct while the hub only separates the two recurrent intentions. | Whether one extra choice improves or harms first-use completion. |
+| Behaviour and context | Does this help in the actual moment someone notices care? | `create something` remains the shortest path from the menu into creation. | Whether users need memory prompts more than navigation clarity. |
+| Medium necessity | Why use a digital object instead of a text or physical letter? | The medium can combine authored paper, image or voice materials, carrier-specific delivery, and a revisitable private collection. | Whether that combination feels meaningfully more valuable than existing channels. |
+| Alternatives | Would a physical note, shared ritual, or simple compose screen work better? | Those remain credible alternatives; this direction tests a lower-friction digital ritual, not a claim that it replaces them. | Comparative response, effort, and perceived care. |
+| Human specificity | Could paper and stamps suit only visually expressive users? | The written message stays primary; personalisation is optional and can be minimal. | Different relationship norms, cultures, writing confidence, and motor ability. |
+| Inclusion and accessibility | Can handwriting-style interfaces and motion obstruct use? | Semantic labels, high contrast, direct controls, and reduced-motion equivalents remain required. | Real screen-reader, low-vision, motor, and outdoor-device testing. |
+| Trust, safety and privacy | Does an old box imply durable or private storage? | The prototype states local/demo limits and avoids claims of secure delivery or accounts. | Authentication, forwarding, expiry, deletion, retention, and wrong-recipient handling. |
+| Failure and recovery | What if a maker changes their mind about paper, stamp, carrier, or sending? | Each choice remains revisable before giving; leave and close routes return safely without pretending delivery occurred. | Draft persistence and data-loss recovery outside the prototype. |
+| Feasibility and demo truth | Are carrier-specific outcomes genuinely functional? | The prototype visibly branches bottle, firefly, and plane departure motion and lands on the same honest sent state. | Production delivery, persistence, and media transport are not proven. |
+| Incentives and second-order effects | Could a cabinet become a scorecard or create reply pressure? | It stays private, count-free, ranking-free, prompt-free, and receiver-controlled. | Long-term emotional burden and reciprocity expectations. |
+| Simplicity and retellability | Is landing → hub → maker → seal → carrier → sent too much? | The hierarchy has one sentence: make something for them, or look after what you kept. | Whether an outsider can repeat the full value without calling it a cute letter app. |
+| Authorship and distinctiveness | Could the handmade visual system be interchangeable AI styling? | Team-directed interaction structure, Cecelia's authored assets, selected paper, maker-authored words and stamp, and carrier-linked motion create subject-specific continuity. | Final visual execution still needs direct team selection and render review. |
+
+### AI and authorship check
+
+- Humans framed the unwritten rule, selected the landing, hub, and collection structure, rejected a dashboard-like root, and chose the paper, stamp, and carrier rituals.
+- AI may accelerate implementation and alternatives, but does not count as evidence that users want the flow.
+- Human-made inputs include Cecelia's assets and the team's Chronicle-recorded structural decisions.
+- Rejected defaults: a generic returning-user dashboard; card-grid cabinet; a permanent mascot; motion with no narrative job; decorative paper styling detached from the authored object.
+- Required disclosure: list any AI coding/design tools, generated assets, and third-party materials used in the final submission.
+- Current conclusion: this is a human-directed exploratory flow, not a validated or final visual constitution.
+
+### Design authenticity preflight
+
+- Artifact and communication job: make the first decision legible, create care now or revisit a care object, while preserving the feeling of an authored object rather than an app dashboard.
+- Specific source anchors: the supplied `warm & fuzzies` landing frame; Cecelia's hand-drawn firefly and carrier assets; the team's emphasis on ordinary-day appreciation; the old-box or cabinet memory metaphor.
+- Reference delta: borrow the hand-drawn warmth and sparse hierarchy, but do not imitate FreTo, scrapbook cards, or generic stationery UI.
+- Rejected model defaults and reasons: a dashboard or feed because it turns care into content; equal feature cards because they dilute the emotional choice; a constant floating mascot or path lines because they make motion decorative.
+- Structural direction A: landing CTA goes directly to the maker. First impression: immediate action. Risk: collection and repeat use become muddy.
+- Structural direction B: landing becomes the cabinet or dashboard. First impression: utility and history. Risk: loses the emotional entry and reads like a generic app.
+- Structural direction C: landing CTA enters a sparse animated two-path hub. First impression: a small choice between giving care and revisiting care. Risk: an extra tap can become needless friction.
+- Selected direction and human decision behind it: C; it preserves the supplied landing screen and explicitly separates the two intentions named by the team.
+- Content-native signature: the same letter is authored on selected paper, sealed with a personal mark, carried differently, and later encountered as a kept object.
+- Deliberate restraint: no app-wide mascot, route line, delivery tracking, points, streaks, or card-grid archive.
+- Declared visual lead: the team's supplied frames and Cecelia's assets; AI implementation follows rather than defines them.
+- Verdict: Pass for exploratory build only.
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: implement and inspect the landing → hub → cabinet/create routes, paper selection, stamp reuse or redraw, and carrier-specific delivery states as a reversible prototype.
+- Blocking conditions: preserve a direct creation path; keep personalisation optional; make all three carrier branches visibly distinct but equally honest; preserve reduced motion, receiver agency, error and recovery paths, and truthful prototype/privacy limitations; do not claim participant validation.
+- Weakest judging angle: **evidence quality**, because the mechanism is based on team direction rather than observed user behaviour.
+- Main trade-off: more meaningful authored ritual and clearer intent separation in exchange for another decision point and possible creation friction.
+- Next evidence that could change the verdict: one unaided real-phone walkthrough comparing direct-to-maker against landing-to-hub, followed by a maker-to-receiver test of paper, stamp, carrier, opening, and keeping.
+- Recommendation: build the sparse hub as the next reversible prototype pass, then test whether it helps users act on appreciation rather than merely making the experience look richer.
+- Revisit when: the walkthrough shows confusion, the two hub paths collapse into one user intention, or the team changes the creation mechanism itself.
+
+## 2026-09-05 - Make the chosen carrier cause its own departure and strengthen the personal stamp
+
+- Status: current exploratory implementation refinement; team-directed, not participant-validated or final.
+- Decision: keep the bottle, firefly, and paper-plane carrier set, but make the ending show three causally different departures. Water washes the bottle away; the firefly visibly anticipates, flutters, collects the envelope, and leaves; the paper plane flies itself out. Increase the stamp's rendered weight and smoothness, and expose only a bounded soft/bold mark choice that survives into the given object. Keep navy as the active palette. Treat a saved-seal collection as an unselected future question, not a collection mechanic.
+- Refines: `Use the landing screen as an entry to a two-path hub, then keep creation and collecting distinct`. It replaces only the generic bottle float with a water-led departure and sharpens the firefly pickup and stamp craft. It does not add tracking, a permanent mascot, ambient motion, a stamp marketplace, counts, rewards, or green as a selected palette.
+- Reason: in the later team review, the empty-space bottle movement was judged incomplete, the firefly handoff needed readable flutter polish, and the stamp needed heavier, smoother and more personal output. The same review retained navy and praised the separate paper-plane treatment.
+- Evidence: direct team critique in [the later prototype and demo review](TRANSCRIPTS/2026-09-05-5697c82d-2e9b-52ae-9644-e8133a703b83.md), the supplied team doodle sheet, Cecelia's carrier and wing-state raster assets, and the rendered local prototype. This is internal direction and artifact evidence, not evidence of desirability or impact.
+- Consequence: the sender ending must remain usable immediately while the short animation resolves. Reduced motion shows the selected carrier and its meaningful context at rest. Stamp choices remain optional, locally stored, backwards-compatible, and subordinate to the maker's words.
+- Revisit when: water or flutter competes with the ending copy; a maker cannot understand or skip stamp controls; saved seals create completion pressure; or the team supplies a direct hand-drawn water master.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The carrier now makes the redesigned giving ritual visible rather than acting as a static skin. | Motion still cannot prove that the experience changes the unwritten rule. |
+| Problem identification | neutral | The problem remains an expression barrier: care exists, but people may not know how to show it naturally. | No participant evidence establishes when, for whom, or why that barrier occurs. |
+| Solution approach | strengthens | A personal mark and legible transfer make the authored object and act of giving easier to understand. | These craft details may not help someone retrieve a specific appreciative thought. |
+| Design innovation | strengthens | Each carrier now behaves according to its own material logic instead of sharing a generic animation. | Carrier theatre can still become novelty detached from the problem. |
+| Visual communication | strengthens | Water explains why the bottle moves; anticipation explains the firefly pickup; heavier stamp lines survive reduction. | The water asset and motion cadence still need team review on the presentation device. |
+| Presentation skills | strengthens | The ending becomes a concise, visible demo beat that can be narrated with one sentence. | A polished departure could overstate delivery completeness. |
+| Evidence quality | weak | The change follows timestamped team critique and is functional in the prototype. | No maker or receiver has evaluated comprehension, emotional effect, or preference. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if the best ending has no animation? | Actions and closure copy remain visible immediately, and reduced motion keeps a static equivalent. | Whether the animated version adds meaning or only spectacle. |
+| Behaviour and context | Does departure help in the real moment of giving? | It marks the point where control passes from maker to receiver without showing read status. | Whether makers need confidence about what to say more than transfer theatre. |
+| Medium necessity | Does animation justify another digital product? | It can preserve one authored object and express transfer across distance. | A physical note or ordinary message may remain clearer or more valued. |
+| Alternatives | Would one quiet confirmation be enough? | It remains the control condition for testing; the current pass makes the chosen carrier legible. | Comparative completion and emotional response. |
+| Human specificity | Is the stamp merely prescribed decoration? | It contains the maker's own stroke, has only a bounded line choice, and can be skipped. | Cultural meaning, writing confidence, and motor differences. |
+| Inclusion and accessibility | Can motion or drawing exclude people? | Reduced motion is static; stamp controls are semantic; progression never requires drawing. | Screen-reader, low-vision, vestibular, and real-touch testing. |
+| Trust, safety and privacy | Could animation imply tracked delivery? | The copy makes no delivered, seen, opened, or receiver-activity claim. | Production identity, forwarding, expiry, and retention remain unresolved. |
+| Failure and recovery | What happens if motion or local storage fails? | Sender actions remain available; the object can proceed without a stamp; old local stamp data remains readable. | Production offline, draft, and failed-share recovery. |
+| Feasibility and demo truth | Are all three departures actually different? | The coded prototype branches bottle water, firefly pickup, and plane flight and supplies reduced-motion states. | It demonstrates local choreography, not real delivery. |
+| Incentives and second-order effects | Could reusable stamps become a collection score? | This decision keeps one local reusable mark and explicitly parks the collection mechanic. | Long-term desire and pressure if a collection is later added. |
+| Simplicity and retellability | Does extra craft muddy the four-verb story? | The story remains make, seal, choose travel, give; the carrier supplies one payoff. | Whether stamp weight controls are worth any extra decision. |
+| Authorship and distinctiveness | Is the water treatment another AI-styled flourish? | The movement job and visual language came from direct team feedback and a supplied human doodle sheet; Cecelia's carrier frames remain the main objects. | The temporary water strip is AI-assisted and still requires explicit team selection or replacement before final visual lock. |
+
+### AI and authorship check
+
+- Humans selected the carrier set, specified the water-wash and flutter behaviours, retained navy, and required heavier stamp marks.
+- AI implemented the interaction and generated `prototype/public/assets/illustrations/generated/water-departure-v1.png` from the supplied doodle sheet as a temporary transparent prototype asset.
+- The generated water strip is not attributed to Cecelia and is not final evidence of authorship or quality.
+- Human-authored carrier, envelope, and firefly frame assets remain independently swappable.
+- Required disclosure: include the generated water strip and AI-assisted code in the submission's AI/third-party record if they survive into the submitted artifact.
+- Required human action before visual lock: approve the strip at delivery scale, redraw it directly, or replace it with a supplied team master.
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: implement and inspect the water-led bottle departure, bounded firefly anticipation/flutter, persistent soft/bold stamp output, and static reduced-motion states in the reversible prototype.
+- Blocking conditions: keep motion one-shot and non-blocking; keep stamp creation optional; preserve older links and local data; make no delivery, account, privacy, or impact claim; do not promote the generated water strip to final team-authored artwork without human approval or replacement.
+- Weakest judging angle: **evidence quality**, because this is a team craft correction and the core expression mechanism remains untested.
+- Main trade-off: clearer, more memorable material behaviour in exchange for greater polish cost and a risk that ceremony distracts from the words.
+- Next evidence that could change the verdict: one real-phone maker-to-receiver walkthrough comparing the animated ending with a quiet confirmation, followed by a five-second recall question about what the carrier meant.
+- Recommendation: keep the refined departures and heavier stamp in the exploratory build, but spend the next product test on helping a maker surface one specific appreciative thought.
+- Revisit when: the team reviews the final cadence and water artwork, or participant testing shows the ritual feels decorative, slow, or harder than sending a normal message.

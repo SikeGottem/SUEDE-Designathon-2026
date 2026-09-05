@@ -1,80 +1,95 @@
-<!-- This report records matched visual and interaction QA for the 5 September Home, cabinet, stamp, and delivery-motion redesign. -->
-# Design QA — Home navigation, cabinet, stamp, and delivery motion
+<!-- This report records matched visual, motion, and interaction QA for the latest transcript-led Warm & Fuzzies prototype pass. -->
+# Design QA — latest transcript pass
 
 ## Target and capture conditions
 
-- Source references:
-  - `/var/folders/r9/vz8tpfxn03l3g57fvpf5bbfr0000gn/T/codex-clipboard-WKtpke.png` — Studio.
-  - `/var/folders/r9/vz8tpfxn03l3g57fvpf5bbfr0000gn/T/codex-clipboard-RkAvCf.png` — Preview, Handoff, and Sent.
-  - `/var/folders/r9/vz8tpfxn03l3g57fvpf5bbfr0000gn/T/codex-clipboard-wPS3hy.png` — Cabinet.
-  - `prototype/public/assets/illustrations/cecilia/envelope-mail-02.png` — clean outer-envelope source.
-  - `prototype/public/assets/illustrations/cecilia/firefly-carrying-envelope.png` — delivery-courier source.
-- Browser viewport: 1100 × 1100 for the base redraw pass and 1400 × 1200 for the latest navigation/motion pass, both at device scale factor 1.
-- Captured app surface: `[data-testid="device-screen"]`, 393/394 × 852 CSS pixels at scale 1. The one-pixel width difference is browser rounding.
-- Runtime-owned iPhone status and home chrome were excluded from mismatch severity.
-- Exact Figma spacing was not treated as a tracing requirement because Ethan explicitly supplied the frames as layout/colour direction rather than final spacing.
+- Visual source of truth: `output/design-qa/entry-dashboard-2026-09-05/source-entry.png`, a normalized 394 × 852 crop of Ethan's supplied Home frame.
+- Behaviour sources: `WIKI/TRANSCRIPTS/2026-09-05-aa8e2e8e-d941-5e71-99b8-4d261be1011b.md` for the separate Create/Look menu and `WIKI/TRANSCRIPTS/2026-09-05-be0d1955-63fe-50d6-8841-e056c927469a.md` for dotted/grid paper, reusable or new stamps, sender order, and carrier-specific departure.
+- Asset sources: Cecelia's `firefly-brand-mark.png`, `firefly-filled-f1.png`, `firefly-filled-f2.png`, `firefly-carrying-envelope.png`, `envelope-mail-02.png`, `bottle-intact.png`, and `carrier-plane.png` in `prototype/public/assets/illustrations/cecilia/`.
+- Browser viewport: 1400 × 1200 at device scale factor 1.
+- iPhone app surface: `[data-testid="device-screen"]`, 393 CSS pixels by 852 CSS pixels; PNG output rounds to 394 × 852.
+- Pixel 10 app surface: 427 × 952 CSS pixels at device scale factor 1.
+- Runtime-owned status bar, bezel, camera cutout, home indicator, and Android navigation were excluded from app-content mismatch severity.
 
-## Final comparison evidence
+## Full-view comparison evidence
 
-| State | Normalized source | Final implementation | Side-by-side comparison |
+| State | Source | Implementation | Combined evidence |
 | --- | --- | --- | --- |
-| Studio | `output/design-qa/redesign-2026-09-05/source-studio.png` | `output/design-qa/redesign-2026-09-05/implementation-studio-02.png` | `output/design-qa/redesign-2026-09-05/comparison-studio-02.png` |
-| Preview | `output/design-qa/redesign-2026-09-05/source-preview.png` | `output/design-qa/redesign-2026-09-05/implementation-preview-final.png` | `output/design-qa/redesign-2026-09-05/comparison-preview-final.png` |
-| Handoff | `output/design-qa/redesign-2026-09-05/source-handoff.png` | `output/design-qa/redesign-2026-09-05/implementation-handoff-02.png` | `output/design-qa/redesign-2026-09-05/comparison-handoff-02.png` |
-| Sent | `output/design-qa/redesign-2026-09-05/source-sent.png` | `output/design-qa/redesign-2026-09-05/implementation-sent-02.png` | `output/design-qa/redesign-2026-09-05/comparison-sent-02.png` |
-| Cabinet | `output/design-qa/redesign-2026-09-05/source-cabinet.png` | `output/design-qa/redesign-2026-09-05/implementation-cabinet-02.png` | `output/design-qa/redesign-2026-09-05/comparison-cabinet-02.png` |
+| Landing | `output/design-qa/entry-dashboard-2026-09-05/source-entry.png` | `output/design-qa/latest-transcript-2026-09-05/landing-final.png` | `output/design-qa/latest-transcript-2026-09-05/comparison-landing.png` |
 
-The full 393/394 × 852 views were sufficient to inspect hierarchy, Gaegu typography, line weight, object imagery, labels, controls, and colour. No additional crop was needed.
+The 788 × 852 combined image places equal-density 394 × 852 source and implementation captures side by side. The app-owned wordmark, firefly, invitation, bottom action, white field, Gaegu typography, and deep-ink hierarchy match. The visible status bar and home indicator on the implementation are protected runtime chrome rather than design drift.
 
-### Latest changed-state evidence
+## Supporting changed-state evidence
 
-| State | Source truth | Final implementation | Combined or supporting evidence |
-| --- | --- | --- | --- |
-| Returning Home | `output/design-qa/home-source-393x852.png` (393 × 852), intentionally extended by Ethan's bottom-navigation requirement | `output/design-qa/motion-nav-2026-09-05/home-returning-final.png` (394 × 852) | `output/design-qa/motion-nav-2026-09-05/comparison-home-returning-final.png` (787 × 852) |
-| Preview | `output/design-qa/redesign-2026-09-05/source-preview.png` (394 × 852) | `output/design-qa/motion-nav-2026-09-05/preview.png` (394 × 852) | `output/design-qa/motion-nav-2026-09-05/comparison-preview.png` (788 × 852) |
-| Optional stamp stage | Cecelia's 1000 × 1000 `envelope-mail-02.png` plus Ethan's explicit clean-image/stamp-only correction | `output/design-qa/motion-nav-2026-09-05/envelope-stamp-final.png` (394 × 852) | The full view keeps the unmodified hand-drawn silhouette readable at delivery scale; a detail crop was unnecessary. |
-| Sent delivery | `output/design-qa/redesign-2026-09-05/source-sent.png` (394 × 852), intentionally extended by Ethan's courier requirement | `output/design-qa/motion-nav-2026-09-05/sent-device-final.png` (394 × 852) | `output/design-qa/motion-nav-2026-09-05/comparison-sent-final.png` (788 × 852) |
-| Returning cabinet | `output/design-qa/redesign-2026-09-05/source-cabinet.png` (394 × 852), intentionally extended by Ethan's bottom-navigation requirement | `output/design-qa/motion-nav-2026-09-05/cabinet-returning-final.png` (394 × 852) | `output/design-qa/motion-nav-2026-09-05/comparison-cabinet-final.png` (788 × 852) |
-| Reduced motion | Same Sent composition and Cecelia assets | `output/design-qa/motion-nav-2026-09-05/sent-reduced-motion-final.png` (394 × 852) | Static carrying pose verifies an equivalent non-travelling state. |
+| State | Implementation evidence | What it verifies |
+| --- | --- | --- |
+| Hub in motion | `output/design-qa/latest-transcript-2026-09-05/menu-motion-final.png` | The firefly enters from outside the composition as a one-shot spatial transition; it has no visible route line. |
+| Hub settled | `output/design-qa/latest-transcript-2026-09-05/menu-final.png` | Exactly two paths remain: `create something` and `look in your box`; no dashboard cards, feed, helper copy, or persistent navigation compete. |
+| Cabinet | `output/design-qa/latest-transcript-2026-09-05/cabinet-final.png` | The collection remains a separate sparse object field with `home`, central `+`, and `your letters` return controls. |
+| Dotted paper | `output/design-qa/latest-transcript-2026-09-05/studio-dotted-final.png` | Dotted paper is the full-screen starting canvas and reads as a ground, not an inset editor card. |
+| Grid paper | `output/design-qa/latest-transcript-2026-09-05/studio-grid-final.png` | Grid is a selectable alternative and remains within the same direct-manipulation canvas. |
+| Reused stamp | `output/design-qa/latest-transcript-2026-09-05/stamp-reuse-final.png` | A locally saved personal stamp can be applied to the single clean envelope without blocking progression. |
+| Bold stamp editor | `output/design-qa/latest-transcript-2026-09-05/stamp-bold-latest.png` | Bold is the visible default, the soft/bold choice remains inside the focused editor, and the thicker stroke stays rounded rather than becoming a fake marker outline. |
+| Soft stamp round trip | `output/design-qa/latest-transcript-2026-09-05/stamp-soft-preview-persisted.png` | The selected soft weight survives application and renders on the exterior preview instead of reverting to the default. |
+| Bottle departure | `output/design-qa/latest-transcript-2026-09-05/sent-bottle-isolated.png` | The selected bottle is visible and slowly floats away. |
+| Bottle with moving tide | `output/design-qa/latest-transcript-2026-09-05/sent-bottle-water-mid.png` | The tide visibly reaches and carries the bottle, so the selected travel method causes the departure rather than decorating it afterward. |
+| Firefly departure | `output/design-qa/latest-transcript-2026-09-05/sent-firefly-final.png` | The firefly visibly collects and carries the envelope away. |
+| Firefly handoff detail | `output/design-qa/latest-transcript-2026-09-05/sent-firefly-flutter-mid.png` | A bounded wing beat and small anticipation/backflutter make the pickup readable without adding a trajectory line or ambient loop. |
+| Plane departure | `output/design-qa/latest-transcript-2026-09-05/sent-plane-final.png` | The selected plane remains readable while flying away rather than disappearing immediately. |
+| Reduced-motion hub | `output/design-qa/latest-transcript-2026-09-05/menu-reduced-motion.png` | The same two choices and central firefly remain without positional motion. |
+| Pixel 10 hub | `output/design-qa/latest-transcript-2026-09-05/menu-pixel.png` | The sparse composition and both controls remain inside the 427 × 952 Android app viewport. |
 
-## Iteration history
+No focused crop was needed. The source and implementation are already at delivery size, the type and source illustrations are legible in the full view, and motion was inspected through time-separated full-screen captures plus computed bounding-box and opacity checks.
 
-1. First implementation comparison found three material differences: Studio inherited pale cream instead of white; Preview used a thin code-built envelope; and Handoff's carrier was visually too small.
-2. The second pass made plain paper white, used Cecelia's hand-drawn envelope master, enlarged the handoff object, changed Cabinet from deep navy to white, and removed extra Sent/cabinet actions.
-3. Functional review found that a fixed Preview PNG discarded the selected envelope template and personal seal. Preview was rebuilt around the real Cecelia envelope master while retaining the authored template and seal state.
-4. Interaction review found the selected message's `edit words` action beneath the bottom tool dock. It moved above the selected layer, retains a 44-pixel target, remains inside the canvas at the maximum upward drag bound, and was re-tested successfully.
-5. A sequential Envelope → Carrier → Preview check exposed browser focus scrolling the outer emulated phone screen. Route changes now reset both the product scroller and phone-screen container; the same sequence finishes at scroll position zero.
-6. The next review found that Home had no cabinet route and the cabinet had no persistent creation route, while outer-envelope templates added low-value decoration. A browser-local returning marker now changes Home's lower action area from the first-use invitation to a central create action plus `your letters`; Cabinet repeats that navigation. The root still always opens on Home. A clean Cecelia envelope and optional stamp-only stage replaced the template chooser.
-7. The first delivery-motion pass made the courier visible but did not communicate possession of the letter clearly enough in every frame. The final pass layers Cecelia's courier with the clean envelope, stages a slow pickup before departure, continues one calm flight loop, and starts correctly even on the direct Sent capture route.
-8. The final equal-size Home, Preview, Sent, and Cabinet comparisons found no actionable P0/P1/P2 differences. The intentional additions are the requested returning navigation and delivery courier, not design drift. Reduced-motion emulation changes the courier to a static carrying pose without moving the copy or actions.
+## Findings and iteration history
 
-## Surface review
+1. The prior returning-user Home treatment changed the supplied landing into navigation. It was replaced by the exact sparse landing, and its one action now enters a separate hub. The post-fix evidence is `comparison-landing.png` plus `menu-final.png`.
+2. The first transcript pass did not expose dotted/grid paper or reusable stamp behaviour. The maker now defaults to dotted paper, offers plain/dotted/grid, stores an applied personal stamp locally, and presents `use my stamp` or `draw a new one`. Post-fix evidence is `studio-dotted-final.png`, `studio-grid-final.png`, and `stamp-reuse-final.png`.
+3. The first carrier-specific pass used a front-loaded exit curve. At roughly one second the plane had already left the phone and the bottle was near the edge, which was a P2 motion-legibility mismatch. Both now begin fully visible and use a deliberate transform/opacity path; the plane uses a 4.8-second strong ease-in-out and the bottle retains a 5.4-second float. Post-fix evidence is `sent-plane-final.png` and `sent-bottle-isolated.png`.
+4. The first hub entrance completed in 1.4 seconds, too quickly to satisfy the explicit slow-firefly direction. The final motion separates a 0.5-second opacity entrance from a 3.6-second ease-in-out flight and one-shot wing sequence. Actions appear independently, so the motion does not block navigation. Post-fix evidence is `menu-motion-final.png` and `menu-final.png`.
+5. The first bottle departure moved the correct object but did not give the tide causal force. A transparent hand-drawn water strip now crosses the stage with the bottle over 5.8 seconds. It is a temporary AI-assisted derivative of the supplied team doodle sheet, not a Cecelia-authored asset, and remains explicitly replaceable before final lock.
+6. The firefly pickup was legible but mechanically smooth. The final one-shot adds the requested small anticipation/backflutter and alternates Cecelia's two supplied wing frames for seven bounded beats; it does not become a looping mascot animation.
+7. The personal stamp line was still too thin and its appearance was not part of transported state. Bold is now the default, soft remains selectable, and the selected weight persists through preview, the compressed receiver link, the cabinet, and later reuse. Legacy stamps and 18-field links migrate to bold.
 
-- Typography: Gaegu remains the visible type system. The hierarchy follows the supplied frames without adding generic display/sans pairings.
-- Layout: each state has one dominant physical object or message; Studio is full bleed, Sent is deliberately sparse, and Cabinet is a two-column object field.
-- Colour: system chrome is white and deep navy. The broader Cecelia palette remains available only for authored paper choices, the personal stamp, and restrained identity accents.
-- Assets: Preview, stamp, carrier, delivery, and cabinet states use Cecelia's source PNGs. The delivery composite keeps the envelope independently legible instead of implying it with a path or caption, and Cabinet preserves the actual carrier chosen for each object.
-- Copy: helper paragraphs, decorative captions, receiver-demo copy, and envelope-template labels were removed. Link limitations and broken-state recovery remain; `your letters`, `make`, and stamp copy describe real controls.
-- Authenticity: the resulting composition follows Ethan's redraw and Cecelia's linework. It does not introduce cards, gradients, shadows, decorative flight paths, particles, or unrelated AI-generated ornament.
+No actionable P0, P1, or P2 finding remains. A P3 research question remains: test whether `look in your box` is clearer than `your collection` without changing it from transcript-backed wording before that comparison.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Gaegu remains the only visible product family, with the locally bundled file loading successfully. The landing hierarchy, line-height, wrapping, and handwritten control labels match the supplied frame; no generic display/sans pairing was introduced.
+- Spacing and layout rhythm: Landing and hub use one focal illustration and large intentional gaps. Studio fills the app viewport. Cabinet navigation clears the iOS home indicator and the Pixel menu preserves 42-pixel side clearance.
+- Colors and tokens: literal white and deep ink `#081F4D` govern the shell. Dots and grid use low-opacity ink, so they read as paper choices rather than a second interface system. The optional stamp uses the existing authored accent token.
+- Image quality and asset fidelity: every visible firefly, envelope, bottle, and plane in the changed states uses Cecelia's source PNGs. No emoji, CSS illustration, inline-SVG substitute, decorative blob, or generic image placeholder replaces those targets.
+- Copy and content: landing copy remains exactly `warm & fuzzies`, `something good on your mind?`, and `make it for them`. The hub has only the two team-selected verbs. Sender completion stays `that's it from you.` and never reports receiver activity.
+- States and accessibility: all actions are semantic buttons; the menu and carrier groups are keyboard reachable; route changes dismiss the simulated keyboard; the stamp is optional; reduced motion removes positional hub flight; and the static carrier state preserves meaning.
+- Responsive behaviour: iPhone and Pixel 10 captures show no clipping, collision, hidden primary action, or offscreen persistent control.
+- AI-shortcut check: no card grid, gradient, faux paper texture, animated route line, generic mascot loop, or unreviewed decorative UI entered the changed screens.
 
 ## Interaction and console QA
 
-- Studio: blank paper, in-place text editing, selected-layer edit, doodling, Add tray, and Next gating work.
-- Envelope and Preview: the paper folds, the clean source envelope appears without a template chooser or address collision, progression does not require a stamp, the stamp editor is keyboard-labelled, and an applied personal stamp survives into Preview.
-- Preview: carrier-change and private-give actions route correctly; the clean envelope and optional personal stamp survive.
-- Handoff: receiver link, exact QR modal, Escape close, copy state, finish action, and broken-link state work. The draft remains available through the back route.
-- Sent: the firefly enters, collects the letter, visibly leaves with it, then continues a slow upper-screen flight while the confirmation/actions remain still. `make another` resets to an empty Studio and `leave` returns Home.
-- Home and Cabinet: `/` opens Home in both first-use and returning states. Clearing storage shows `make it for them`; beginning once sets local return state; reloading `/` still shows Home but adds the central `+` creation action and `your letters` route. Cabinet keep/open/remove/cancel/confirm, empty state, central `+`, and current-destination control work.
-- Reduced motion: the Sent state renders the same firefly-and-letter object at rest with `data-delivery-stage="still"`; no path, pickup, or loop motion runs.
-- Browser console: zero errors across the inspected flow. Motion's development-only reduced-motion notice was the sole warning during explicit media emulation.
-- Focused continuity evidence: `output/design-qa/motion-nav-2026-09-05/preview-stamped-final.png` verifies that the optional personal stamp reaches the clean Preview; the final zero-scroll Envelope → Carrier → Preview sequence was re-tested.
+- `/` always opens the supplied landing, regardless of saved cabinet or stamp state.
+- `make it for them` opens the two-path hub.
+- `create something` opens a fresh dotted maker; `look in your box` opens the cabinet.
+- Cabinet `home` returns to the hub; its central `+` opens a fresh maker; `your letters` retains the collection context.
+- Plain, dotted, and grid paper controls change the full-screen paper class and keep the maker functional.
+- A saved stamp survives reload, applies through `use my stamp`, and does not block `choose how it travels`.
+- Bottle, firefly, and plane each complete Carrier → Preview → Handoff → Sent and expose the correct carrier-specific live-region copy.
+- The bottle Sent state requests the real generated water PNG and moves both tide and bottle; the firefly Sent state uses Cecelia's real W1/W2 raster frames; the plane remains visibly on-screen at the early sample point instead of exiting too quickly.
+- A compact v3 link with the new nineteenth stamp-weight field round-trips the selected value, while an older eighteen-field link still opens with a safe bold default.
+- `leave` on Sent returns to the hub.
+- A real Studio text edit showed the simulated keyboard before Next and verified it was hidden after the Envelope transition.
+- Reduced-motion emulation produced a static hub firefly with `transform: matrix(1, 0, 0, 1, 0, 0)` and unchanged actions.
+- Browser console: zero errors in the fresh prototype walkthrough. The only warning occurred while explicitly emulating reduced motion and came from Motion's development notice.
+- The settled `ca9dfe1e` transcript was checked separately and contains no direct visual, navigation, or feature supersession for this build. Its actionable prototype request is to test this existing flow with the intended segment before adding more.
+- Deck browser check: slides 1–6, 8, 10, and 11 rendered at 1600 × 900 with zero console errors after the transcript-led copy and hierarchy cleanup; contact sheet at `output/design-qa/deck-latest-2026-09-05/contact-sheet.png`.
 
 ## Verification
 
+- `npm run check:runtime` — passed, 28 protected files.
 - `npm run build` — passed.
 - `npm run test:sites` — 4 passed.
 - `npx playwright test tests/mobile-runtime.spec.ts` — 8 passed.
-- Final targeted first-use/returning Home navigation, Home → Cabinet, Envelope → Carrier → Preview, Handoff → Sent, delivery-loop, and reduced-motion checks — passed.
+- `python3 deck/validate_deck_spec.py deck/deck-spec.json` — passed.
+- `node --test deck/pitch-prototype/tests/file-open.test.mjs` — 4 passed.
 
 ## Final result
 

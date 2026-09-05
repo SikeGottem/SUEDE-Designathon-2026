@@ -69,7 +69,7 @@ The published timeline is more specific: background research began around 12:00,
 
 ## Complete transcript ingest: product intent versus decision status
 
-- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 39 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
+- Source: [Friendship appreciation transcript ingest](FRIENDSHIP_APPRECIATION_TRANSCRIPT_INGEST.md), covering all 47 raw captures currently in `WIKI/TRANSCRIPTS/` and weighting later conversations when they explicitly refine earlier proposals.
 - Strong repeated observation: the later team discussion describes a custom, scrapbook-like digital artifact containing the sender's own words and selected photographs, voice, music, video, drawing, or personal marks. Creative arrangement is treated as part of the expression, not decoration.
 - Strong repeated observation: the desired receiver experience includes a deliberate opening, attention away from chat, ownership, and possible year-later replay inside a private cabinet or memory surface.
 - Boundary: the transcript set is evidence of team intent, not evidence of demand, impact, prevalence, safety, or a universal friendship norm.

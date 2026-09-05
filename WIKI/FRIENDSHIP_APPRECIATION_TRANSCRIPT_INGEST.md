@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 39 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 47 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -360,3 +360,17 @@ This is direct internal prototype direction only. It does not establish that cus
 - The sources do not prescribe what those designs are, how many exist, whether they are pages or modes, or a multi-page sequence. They do not authorise a public template gallery, popularity ranking, marketplace, or a return to a dense editor.
 
 These are latest internal prototype directions, not user research or proof that a firefly, page variation, or more customisation improves authenticity, expression, comprehension, or receiver experience.
+
+## 5 September hub, pitch, and carrier-polish addendum
+
+**Sources:** [create/look hub capture](TRANSCRIPTS/2026-09-05-aa8e2e8e-d941-5e71-99b8-4d261be1011b.md), [paper, stamp, and carrier-order capture](TRANSCRIPTS/2026-09-05-be0d1955-63fe-50d6-8841-e056c927469a.md), [pitch review](TRANSCRIPTS/2026-09-05-36abc9a9-4368-56af-9d56-cc91795ba5c7.md), and [prototype and demo review](TRANSCRIPTS/2026-09-05-5697c82d-2e9b-52ae-9644-e8133a703b83.md). The one-minute [coordination capture](TRANSCRIPTS/2026-09-05-cb6dcf78-9106-590a-9c97-716f33a30a19.md) and the prior one-word capture were checked but contain no product decision.
+
+- The supplied landing remains the root, then opens a sparse hub with exactly two intentions: create something or look in the old box. This replaces the adaptive returning-user dashboard interpretation.
+- The maker starts on dotted paper and can choose plain, dotted, or grid. The working order is make the paper, draw or reuse a personal stamp, choose bottle/firefly/plane, give, then leave the sender on the quiet ending.
+- Carrier-specific departure is now more exact: water must wash the bottle away; the firefly handoff needs a readable flutter/anticipation beat; the paper plane retains its own flight. Motion remains one-shot and non-blocking, with a static reduced-motion equivalent.
+- The personal stamp should render with heavier, smoother marks and remain a deliberately small authorship tool. A possible collection or stack of saved seals was liked, but its mechanics and value remain exploratory; do not turn it into completion, ranking, or marketplace behaviour.
+- Navy remains the current selected direction. Green was raised only as a reversible visual experiment.
+- The deck must eventually use a verified live receiver QR and a real team photo in a bespoke team layout. Neither asset may be fabricated; the QR remains blocked until a public URL works on a second device, and the team layout remains blocked until the team supplies and approves the photograph and names.
+- The pitch problem is the expression barrier: people may care but not know how to show appreciation naturally. This is team framing, not a prevalence or impact finding.
+
+These captures refine the current exploratory build and pitch. They do not prove that the hub, paper choice, stamp, carrier theatre, cabinet, or digital medium solves the expression barrier.

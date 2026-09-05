@@ -788,3 +788,48 @@ Before any implementation becomes the chosen direction:
 - inspect the rendered mobile experience at full size;
 - run the judge, challenge, accessibility, and design-authenticity post-build gates;
 - record what Ethan or the team materially changed after seeing it.
+
+## 29. Latest interaction delta — create/look hub, paper grounds, reusable stamp, and distinct departures
+
+**Status:** Current for the exploratory prototype as of 5 September 2026. It comes from direct team decisions, not participant research or validation.
+
+The supplied landing screen remains the ordinary app root. Its single `make it for them` action now enters a separate, sparse menu rather than the creator or cabinet directly. The menu contains one short, non-looping firefly entrance and exactly two paths:
+
+- **Create something** opens the maker.
+- **Look in your box** opens the private local cabinet.
+
+This supersedes the earlier adaptive returning-user Home and any reading that makes `things you kept` the default page. It does not authorise a dashboard, feed, permanent mascot, activity loop, or account claim. The cabinet may retain its own `home / + / your letters` return controls because they belong to that collection context, not the landing or menu.
+
+The current creator paper test is deliberately bounded to **plain, dotted, and grid**, with dotted as the default. This narrowly supersedes the earlier prohibition on editor-like ruling. The dots and grid must remain subtle enough to feel like chosen paper rather than design-software chrome, and they must survive into preview, receiver opening, and the kept object. Faux fibres, noise, and paper texture remain excluded.
+
+The current sender sequence is:
+
+1. write and compose the object;
+2. draw a personal stamp or reuse the locally saved stamp;
+3. choose the bounded travel container;
+4. give or ship the object;
+5. arrive at `that's it from you.` without receiver telemetry.
+
+The stamp is optional. Saving it is browser-local convenience, not verified identity, an account, or durable cloud storage. A maker can reuse the saved mark or replace it by drawing another.
+
+Departure must visibly follow the chosen travel method rather than reuse one generic courier treatment: the bottle floats away, the firefly picks up and carries the envelope, and the paper plane flies away. Each is one-shot, slow enough to read, free of visible trajectory lines, and paired with an equivalent static reduced-motion state.
+
+Primary sources: [create/look menu capture](TRANSCRIPTS/2026-09-05-aa8e2e8e-d941-5e71-99b8-4d261be1011b.md) and [paper, stamp, container, and departure capture](TRANSCRIPTS/2026-09-05-be0d1955-63fe-50d6-8841-e056c927469a.md).
+
+## 30. Latest polish delta — water-led bottle travel, readable firefly pickup, and heavier stamps
+
+**Status:** Current for the exploratory prototype as of the later 5 September review. These are team-directed craft corrections, not participant evidence.
+
+The three carriers keep the same bounded choice and sender ending, but their departure jobs are now more specific:
+
+- **Bottle:** water enters as the cause of movement and visibly washes the bottle out of the frame. A bottle merely translating or bobbing across empty space is superseded.
+- **Firefly:** the pickup gains a small anticipation shake and readable wing/backflutter beat before the envelope leaves. It still resolves once, never becomes ambient mascot motion, and never delays the sender's actions.
+- **Plane:** retain the separate paper-plane flight already selected by the team.
+
+The stamp editor must render the maker's line with more weight and smoother joins. It may expose one or two restrained mark controls only when they change the maker's own output; it must remain optional, quick, and locally stored. The liked idea of a saved-seal stack is still exploratory until the team specifies whether collecting seals helps authorship or merely adds completion pressure.
+
+Navy remains the active visual direction. Green is an unselected experiment, not a palette change.
+
+For the pitch, the intended audience handoff is a real receiver URL encoded in a real QR and checked on a second device. The intended team introduction uses a real, approved team photograph and a bespoke composition. Until those inputs exist, both remain explicitly blocked placeholders rather than invented assets.
+
+Primary sources: [later prototype and presentation review](TRANSCRIPTS/2026-09-05-5697c82d-2e9b-52ae-9644-e8133a703b83.md) and [pitch-edit review](TRANSCRIPTS/2026-09-05-36abc9a9-4368-56af-9d56-cc91795ba5c7.md).

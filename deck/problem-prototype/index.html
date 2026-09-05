@@ -1,0 +1,864 @@
+<!-- This file is the interactive two-slide visual spike for the SUEDE pitch's evidence-bounded problem opening. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exploratory two-slide problem opening for the SUEDE 2026 friendship-appreciation pitch.">
+  <link rel="icon" href="data:,">
+  <title>SUEDE 2026 · problem visual spike</title>
+  <style>
+    @font-face {
+      font-family: "Ugly Handwriting";
+      src: url("../../prototype/public/assets/fonts/uglyhandwriting.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+
+    :root {
+      --ink: #151515;
+      --soft: #625e56;
+      --paper: #f2ead5;
+      --sage: #9aa99b;
+      --olive: #73744e;
+      --blue: #183b49;
+      --oxblood: #651d25;
+      --rust: #9e5a24;
+      --stage-scale: 1;
+      color-scheme: only light;
+      font-synthesis: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    body {
+      color: var(--ink);
+      font-family: "Ugly Handwriting", cursive;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    .stage-anchor {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+
+    .deck {
+      position: absolute;
+      top: -450px;
+      left: -800px;
+      width: 1600px;
+      height: 900px;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.36);
+      transform: scale(var(--stage-scale));
+      transform-origin: center;
+      isolation: isolate;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      padding: 62px 68px 54px;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease, visibility 260ms step-end;
+    }
+
+    .slide.is-active {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 260ms ease, visibility 0ms step-start;
+    }
+
+    .sequence-mark,
+    .system-copy,
+    .evidence-boundary,
+    .object-label,
+    .viewer-help,
+    .context-kicker,
+    .hypothesis-tag {
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .sequence-mark {
+      position: absolute;
+      top: 38px;
+      left: 68px;
+      margin: 0;
+      color: var(--soft);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .slide-one {
+      grid-template-columns: minmax(0, 1.4fr) minmax(430px, 0.6fr);
+      align-items: center;
+      column-gap: 58px;
+      background: var(--paper);
+    }
+
+    .opening-copy {
+      align-self: center;
+      max-width: 920px;
+      padding: 26px 0 0 28px;
+    }
+
+    .opening-copy h1 {
+      max-width: 905px;
+      min-height: 385px;
+      margin: 0;
+      color: var(--ink);
+      font-size: 96px;
+      font-weight: 500;
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+      text-wrap: balance;
+    }
+
+    .opening-copy .system-copy {
+      margin: 38px 0 0 5px;
+      color: var(--soft);
+      font-size: 21px;
+      line-height: 1.4;
+    }
+
+    .object-figure {
+      position: relative;
+      width: 430px;
+      margin: 22px 24px 0 0;
+      justify-self: end;
+      transform: rotate(0.85deg);
+    }
+
+    .object-field {
+      position: relative;
+      display: grid;
+      width: 418px;
+      height: 538px;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--blue);
+      color: var(--paper);
+      box-shadow: 9px 12px 0 rgba(21, 21, 21, 0.14);
+    }
+
+    .object-field::before,
+    .object-field::after {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      content: "";
+      opacity: 0.72;
+    }
+
+    .object-field::before {
+      top: 24px;
+      left: 24px;
+      border-top: 1.5px solid var(--paper);
+      border-left: 1.5px solid var(--paper);
+    }
+
+    .object-field::after {
+      right: 24px;
+      bottom: 24px;
+      border-right: 1.5px solid var(--paper);
+      border-bottom: 1.5px solid var(--paper);
+    }
+
+    .empty-object {
+      position: relative;
+      display: flex;
+      width: 286px;
+      height: 342px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 31px 28px 28px;
+      border: 1.5px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 5px 7px 14px rgba(21, 21, 21, 0.2);
+      transform: rotate(-2.1deg);
+    }
+
+    .empty-object::after {
+      position: absolute;
+      top: 91px;
+      right: 27px;
+      left: 27px;
+      border-top: 1.5px solid currentColor;
+      content: "";
+      opacity: 0.34;
+    }
+
+    .object-label {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .empty-object strong {
+      align-self: center;
+      max-width: 205px;
+      margin-top: 52px;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      text-align: center;
+    }
+
+    .empty-object small {
+      color: var(--soft);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .slide-one.is-active .object-figure {
+      animation: object-arrives 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes object-arrives {
+      from {
+        opacity: 0;
+        transform: translateY(18px) rotate(0.1deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(0.85deg);
+      }
+    }
+
+    .context-slide {
+      --context-background: var(--olive);
+      --context-foreground: var(--paper);
+      display: block;
+      padding: 0;
+      background: var(--context-background);
+      color: var(--context-foreground);
+      transition: opacity 260ms ease, visibility 260ms step-end, background-color 460ms cubic-bezier(0.22, 1, 0.36, 1), color 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .context-slide.is-active {
+      transition: opacity 260ms ease, visibility 0ms step-start, background-color 460ms cubic-bezier(0.22, 1, 0.36, 1), color 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .context-slide.is-tuesday {
+      --context-background: var(--paper);
+      --context-foreground: var(--ink);
+    }
+
+    .context-header {
+      position: absolute;
+      top: 52px;
+      left: 68px;
+      z-index: 3;
+      display: flex;
+      align-items: baseline;
+      gap: 26px;
+    }
+
+    .context-kicker {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.78;
+    }
+
+    .context-name {
+      min-width: 520px;
+      margin: 0;
+      font-size: 69px;
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+    }
+
+    .hypothesis-tag {
+      position: absolute;
+      top: 68px;
+      right: 68px;
+      z-index: 4;
+      margin: 0;
+      padding: 8px 12px 7px;
+      border: 1px solid currentColor;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .message-object {
+      position: absolute;
+      top: 256px;
+      left: 50%;
+      z-index: 5;
+      display: grid;
+      width: 632px;
+      height: 280px;
+      place-items: center;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 8px 11px 18px rgba(21, 21, 21, 0.21);
+      transform: translateX(-50%) rotate(-0.45deg);
+      transition: box-shadow 460ms cubic-bezier(0.22, 1, 0.36, 1), transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .message-object p {
+      margin: 0;
+      font-size: 79px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .context-slide.is-tuesday .message-object {
+      box-shadow: 4px 6px 0 rgba(21, 21, 21, 0.1);
+      transform: translateX(-50%) rotate(0.35deg);
+    }
+
+    .occasion-explains {
+      position: absolute;
+      top: 584px;
+      left: 50%;
+      width: 550px;
+      margin: 0;
+      color: var(--paper);
+      font-size: 37px;
+      line-height: 1.1;
+      text-align: center;
+      transform: translateX(-50%);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    .context-slide.is-tuesday .occasion-explains {
+      opacity: 0;
+      transform: translate(-50%, 10px);
+    }
+
+    .interpretation {
+      position: absolute;
+      z-index: 2;
+      max-width: 245px;
+      margin: 0;
+      color: var(--oxblood);
+      font-size: 31px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(9px);
+      transition: opacity 250ms ease, transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .interpretation::after {
+      position: absolute;
+      height: 1.5px;
+      background: currentColor;
+      content: "";
+      transform-origin: left center;
+      opacity: 0.7;
+    }
+
+    .interpretation-one {
+      top: 205px;
+      right: 76px;
+      transform: rotate(1.2deg) translateY(9px);
+    }
+
+    .interpretation-one::after {
+      top: 69px;
+      right: 174px;
+      width: 185px;
+      transform: rotate(164deg);
+    }
+
+    .interpretation-two {
+      bottom: 201px;
+      left: 83px;
+      transform: rotate(-1.4deg) translateY(9px);
+    }
+
+    .interpretation-two::after {
+      top: -27px;
+      left: 180px;
+      width: 195px;
+      transform: rotate(-18deg);
+    }
+
+    .interpretation-three {
+      right: 83px;
+      bottom: 203px;
+      transform: rotate(0.8deg) translateY(9px);
+    }
+
+    .interpretation-three::after {
+      top: -27px;
+      right: 179px;
+      width: 170px;
+      transform: rotate(199deg);
+    }
+
+    .context-slide.is-tuesday .interpretation {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .context-slide.is-tuesday .interpretation-one {
+      transform: rotate(1.2deg) translateY(0);
+      transition-delay: 90ms;
+    }
+
+    .context-slide.is-tuesday .interpretation-two {
+      transform: rotate(-1.4deg) translateY(0);
+      transition-delay: 150ms;
+    }
+
+    .context-slide.is-tuesday .interpretation-three {
+      transform: rotate(0.8deg) translateY(0);
+      transition-delay: 210ms;
+    }
+
+    .problem-question {
+      position: absolute;
+      right: 172px;
+      bottom: 95px;
+      left: 172px;
+      z-index: 4;
+      margin: 0;
+      color: var(--ink);
+      font-size: 45px;
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 270ms ease 180ms, transform 340ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+    }
+
+    .context-slide.is-tuesday .problem-question {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .evidence-boundary {
+      position: absolute;
+      right: 68px;
+      bottom: 35px;
+      left: 68px;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0;
+      color: var(--soft);
+      font-size: 14px;
+      line-height: 1.3;
+      opacity: 0;
+      transition: opacity 250ms ease 240ms;
+    }
+
+    .context-slide.is-tuesday .evidence-boundary {
+      opacity: 1;
+    }
+
+    .advance-cue {
+      position: absolute;
+      right: 68px;
+      bottom: 42px;
+      z-index: 7;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 0;
+      color: var(--paper);
+      font-size: 23px;
+      transition: opacity 180ms ease;
+    }
+
+    .advance-cue .arrow {
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 28px;
+    }
+
+    .context-slide.is-tuesday .advance-cue {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .click-zone {
+      position: absolute;
+      top: 0;
+      z-index: 20;
+      width: 50%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    .click-zone.previous {
+      left: 0;
+      cursor: w-resize;
+    }
+
+    .click-zone.next {
+      right: 0;
+      cursor: e-resize;
+    }
+
+    .click-zone:focus-visible {
+      outline: 4px solid var(--rust);
+      outline-offset: -8px;
+    }
+
+    .viewer-help {
+      position: fixed;
+      right: 18px;
+      bottom: 15px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 8px 11px;
+      border: 1px solid rgba(242, 234, 213, 0.35);
+      background: rgba(21, 21, 21, 0.9);
+      color: var(--paper);
+      font-size: 12px;
+      line-height: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+    }
+
+    body.controls-visible .viewer-help {
+      opacity: 1;
+    }
+
+    .viewer-help kbd {
+      min-width: 23px;
+      padding: 3px 5px;
+      border: 1px solid currentColor;
+      background: transparent;
+      font: inherit;
+      text-align: center;
+    }
+
+    .screen-reader-status {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+    }
+
+    @media print {
+      html,
+      body {
+        height: auto;
+        overflow: visible;
+        background: white;
+      }
+
+      .stage-anchor {
+        position: static;
+        width: auto;
+        height: auto;
+      }
+
+      .deck {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 1600px;
+        height: 1800px;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .slide {
+        position: relative;
+        width: 1600px;
+        height: 900px;
+        visibility: visible;
+        opacity: 1;
+        page-break-after: always;
+      }
+
+      .context-slide {
+        --context-background: var(--paper);
+        --context-foreground: var(--ink);
+      }
+
+      .context-slide .occasion-explains,
+      .context-slide .advance-cue {
+        display: none;
+      }
+
+      .context-slide .interpretation,
+      .context-slide .problem-question,
+      .context-slide .evidence-boundary {
+        opacity: 1;
+        transform: none;
+      }
+
+      .click-zone,
+      .viewer-help {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="controls-visible">
+  <div class="stage-anchor">
+    <main class="deck" id="deck" aria-label="SUEDE 2026 problem visual spike">
+      <section class="slide slide-one is-active" id="lived-moment" role="group" aria-roledescription="slide" aria-label="Problem slide 1 of 2">
+        <p class="sequence-mark">problem · 1 of 2</p>
+
+        <div class="opening-copy">
+          <h1 data-pretext>When did you last receive something made deliberately to show appreciation?</h1>
+          <p class="system-copy">Don’t answer out loud. Just picture the first thing that came to mind.</p>
+        </div>
+
+        <figure class="object-figure" aria-label="An unresolved production slot for one real team-owned object or photograph, to be added after consent">
+          <div class="object-field" aria-label="Placeholder for one real team-owned object or photograph">
+            <div class="empty-object">
+              <p class="object-label">one real object</p>
+              <strong>the thing someone kept</strong>
+              <small>replace with a team-owned object or photograph after consent</small>
+            </div>
+          </div>
+        </figure>
+
+        <button class="click-zone previous" type="button" data-action="previous" aria-label="Previous presentation beat"></button>
+        <button class="click-zone next" type="button" data-action="next" aria-label="Next presentation beat"></button>
+      </section>
+
+      <section class="slide context-slide" id="unwritten-rule" role="group" aria-roledescription="slide" aria-label="Problem slide 2 of 2, birthday context" aria-hidden="true">
+        <header class="context-header">
+          <p class="context-kicker">the same sincere words</p>
+          <h2 class="context-name" aria-live="polite">on a birthday</h2>
+        </header>
+
+        <p class="hypothesis-tag">working hypothesis</p>
+
+        <div class="message-object" aria-label="A note reading I appreciate you">
+          <p>I appreciate you.</p>
+        </div>
+
+        <p class="occasion-explains">The occasion does some of the explaining.</p>
+
+        <p class="interpretation interpretation-one" aria-hidden="true">Is something wrong?</p>
+        <p class="interpretation interpretation-two" aria-hidden="true">Are you saying goodbye?</p>
+        <p class="interpretation interpretation-three" aria-hidden="true">Do I need to say it back?</p>
+
+        <p class="problem-question" data-pretext>Why can this feel natural on a birthday, but sound like goodbye on an ordinary Tuesday?</p>
+
+        <footer class="evidence-boundary">
+          <span>Research supports a narrower sender prediction gap; local sender and receiver evidence is still pending.</span>
+        </footer>
+
+        <p class="advance-cue" aria-hidden="true"><span>remove the occasion</span><span class="arrow">→</span></p>
+
+        <button class="click-zone previous" type="button" data-action="previous" aria-label="Previous presentation beat"></button>
+        <button class="click-zone next" type="button" data-action="next" aria-label="Next presentation beat"></button>
+      </section>
+    </main>
+  </div>
+
+  <aside class="viewer-help" aria-hidden="true">
+    <span><kbd>←</kbd> <kbd>→</kbd> move</span>
+    <span><kbd>F</kbd> fullscreen</span>
+  </aside>
+  <p class="screen-reader-status" id="screen-reader-status" role="status" aria-live="polite"></p>
+
+  <script type="module">
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const contextSlide = document.querySelector(".context-slide");
+    const contextName = contextSlide.querySelector(".context-name");
+    const liveStatus = document.querySelector("#screen-reader-status");
+    let slideIndex = 0;
+    let isTuesday = false;
+    let controlsTimer;
+
+    const fitStage = () => {
+      const scale = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+      document.documentElement.style.setProperty("--stage-scale", String(scale));
+    };
+
+    const describeState = () => {
+      if (slideIndex === 0) return "Problem slide 1 of 2. Opening question and consented object placeholder.";
+      if (isTuesday) return "Problem slide 2 of 2. Ordinary Tuesday context and three possible interpretations.";
+      return "Problem slide 2 of 2. Birthday context. Advance once more to remove the occasion.";
+    };
+
+    const render = () => {
+      slides.forEach((slide, index) => {
+        const active = index === slideIndex;
+        slide.classList.toggle("is-active", active);
+        slide.toggleAttribute("inert", !active);
+        slide.setAttribute("aria-hidden", String(!active));
+      });
+
+      contextSlide.classList.toggle("is-tuesday", isTuesday);
+      contextName.textContent = isTuesday ? "on an ordinary Tuesday" : "on a birthday";
+      contextSlide.setAttribute(
+        "aria-label",
+        isTuesday
+          ? "Problem slide 2 of 2, ordinary Tuesday context"
+          : "Problem slide 2 of 2, birthday context"
+      );
+      contextSlide.querySelectorAll(".interpretation, .problem-question, .evidence-boundary").forEach((element) => {
+        element.setAttribute("aria-hidden", String(!isTuesday));
+      });
+      contextSlide.querySelector(".occasion-explains").setAttribute("aria-hidden", String(isTuesday));
+      liveStatus.textContent = describeState();
+    };
+
+    const next = () => {
+      if (slideIndex === 0) {
+        slideIndex = 1;
+        isTuesday = false;
+      } else if (!isTuesday) {
+        isTuesday = true;
+      }
+      render();
+    };
+
+    const previous = () => {
+      if (slideIndex === 1 && isTuesday) {
+        isTuesday = false;
+      } else if (slideIndex === 1) {
+        slideIndex = 0;
+      }
+      render();
+    };
+
+    const showControls = () => {
+      document.body.classList.add("controls-visible");
+      window.clearTimeout(controlsTimer);
+      controlsTimer = window.setTimeout(() => document.body.classList.remove("controls-visible"), 1400);
+    };
+
+    const toggleFullscreen = async () => {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await document.documentElement.requestFullscreen();
+      } catch {
+        liveStatus.textContent = "Fullscreen is unavailable in this browser.";
+      }
+    };
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", "Enter", " "].includes(event.key)) {
+        event.preventDefault();
+        next();
+      } else if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+        event.preventDefault();
+        previous();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        slideIndex = 0;
+        isTuesday = false;
+        render();
+      } else if (event.key === "End") {
+        event.preventDefault();
+        slideIndex = 1;
+        isTuesday = true;
+        render();
+      } else if (event.key.toLowerCase() === "f") {
+        event.preventDefault();
+        toggleFullscreen();
+      }
+      showControls();
+    });
+
+    document.querySelectorAll("[data-action='next']").forEach((button) => button.addEventListener("click", next));
+    document.querySelectorAll("[data-action='previous']").forEach((button) => button.addEventListener("click", previous));
+    window.addEventListener("resize", fitStage);
+    window.addEventListener("mousemove", showControls, { passive: true });
+    window.addEventListener("pointerdown", showControls, { passive: true });
+
+    const initialisePretext = async () => {
+      try {
+        const { prepare, layout } = await import("https://esm.sh/@chenglou/pretext");
+        await document.fonts.ready;
+        const prepared = new Map();
+        const textBlocks = document.querySelectorAll("[data-pretext]");
+
+        for (const element of textBlocks) {
+          prepared.set(element, prepare(element.textContent, getComputedStyle(element).font));
+        }
+
+        const relayout = () => {
+          for (const [element, handle] of prepared) {
+            const style = getComputedStyle(element);
+            const lineHeight = Number.parseFloat(style.lineHeight);
+            const result = layout(handle, element.clientWidth, lineHeight);
+            element.style.setProperty("--pretext-height", `${result.height}px`);
+          }
+        };
+
+        new ResizeObserver(relayout).observe(document.querySelector("#deck"));
+        relayout();
+        document.documentElement.dataset.pretext = "ready";
+      } catch {
+        document.documentElement.dataset.pretext = "css-fallback";
+      }
+    };
+
+    fitStage();
+    render();
+    showControls();
+    initialisePretext();
+  </script>
+</body>
+</html>
