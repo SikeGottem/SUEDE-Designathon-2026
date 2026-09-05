@@ -23,12 +23,14 @@ test('CSS centres the fixed canvas before JavaScript enhances its scale', () => 
   );
 });
 
-test('the revised deck opens on a visible logo page and contains 11 live slides', () => {
-  assert.equal((source.match(/<article class="slide/g) ?? []).length, 11);
+test('the revised deck opens on a visible logo page and contains 10 live slides', () => {
+  assert.equal((source.match(/<article class="slide/g) ?? []).length, 10);
   assert.match(
     source,
     /<article class="slide logo-slide active"[^>]*>[\s\S]*?<div class="brand-lockup">/,
   );
+  assert.doesNotMatch(source, /11\s*\/\s*\d+/);
+  assert.doesNotMatch(source, /data-title="(?:Team|Thank you|Thanks)"/i);
 });
 
 test('the latest meeting framing replaces attribution and unsupported market claims', () => {
@@ -38,7 +40,9 @@ test('the latest meeting framing replaces attribution and unsupported market cla
   assert.doesNotMatch(source, /digital card/);
 });
 
-test('the newest follow-up simplifies research, defines the need-state audience and clears the demo slide', () => {
+test('the final research, audience, and demo markup keeps the agreed presentation structure', () => {
+  const researchSlide = source.match(/<article class="slide research-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+
   assert.match(source, /data-title="Research findings" data-steps="4"/);
   assert.match(source, /class="research-number">82%/);
   assert.match(source, /class="research-number">71%/);
@@ -47,19 +51,29 @@ test('the newest follow-up simplifies research, defines the need-state audience 
   assert.doesNotMatch(source, /\.research-job \{[^}]*border-top/);
   assert.doesNotMatch(source, /\.research-answer \{[^}]*border-top/);
   assert.match(source, /feel they do not fully show the appreciation they feel/);
-  assert.match(source, /class="mini-ratings-table"[\s\S]*impact \/5[\s\S]*friction \/5[\s\S]*frequency \/5/);
-  assert.match(source, /\.mini-ratings-table \{[^}]*min-height:590px[^}]*flex:1 1 auto/);
-  assert.match(source, /quick text[\s\S]*voice note \/[\s\S]*video call[\s\S]*handwritten letter \/[\s\S]*physical gift/);
+  assert.match(researchSlide, /class="research-job has-ledger build"/);
+  assert.match(researchSlide, /class="comparison-ledger"/);
+  assert.equal((researchSlide.match(/class="ledger-row/g) ?? []).length, 3);
+  assert.doesNotMatch(researchSlide, /mini-ratings-table|has-table/);
+  for (const score of ['2.2', '1.0', '4.7', '3.5', '2.1', '3.6', '4.3', '1.2']) {
+    assert.match(source, new RegExp(`>${score.replace('.', '\\.')}(?:<|$)`));
+  }
+  assert.equal((source.match(/>4\.7</g) ?? []).length, 2, 'frequency and impact ratings retain both 4.7 values');
   assert.equal((source.match(/class="target-score"/g) ?? []).length, 3);
   assert.doesNotMatch(source, /class="practice-flag"/);
   assert.doesNotMatch(source, /research-bridge/);
   assert.match(source, /Who sits in the gap\?/);
-  assert.match(source, /People caught between the formats/);
+  assert.match(source, /<span>text<\/span>[\s\S]*?too awkward[\s\S]*?too casual/);
+  assert.match(source, /<span>letter \/ gift<\/span>[\s\S]*?too much[\s\S]*?high friction · inaccessible/);
+  assert.match(source, /<h2>They care\.<\/h2>[\s\S]*?appreciation[\s\S]*?stays unspoken/);
   assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
   assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-zone left[\s\S]*class="audience-zone center[\s\S]*class="audience-zone right/);
   assert.doesNotMatch(source, /class="audience-target/);
   assert.doesNotMatch(source, /Grandmother|Granddaughter/);
-  assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?<h2>Let us show you\.<\/h2>/);
+  assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?class="demo-follow"/);
+  assert.match(source, /assets\/live-demo-qr\.svg/);
+  assert.match(source, /warm-and-fuzzies\.vercel\.app\/demo/);
+  assert.match(source, /10\s*\/\s*10/);
   assert.doesNotMatch(source, /demo-sequence/);
   assert.doesNotMatch(source, /Live prototype · no video/);
   assert.match(source, /Warm &amp; Fuzzies is a private digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
@@ -78,7 +92,7 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
   assert.match(source, /Create the impact of gift-giving, with the low friction and repeatability of everyday digital contact\./);
-  assert.match(source, /11 \/ 11/);
+  assert.match(source, /10 \/ 10/);
   assert.doesNotMatch(source, />75%</);
 });
 
@@ -87,6 +101,10 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.match(source, /data-title="The channel gap" data-steps="4"/);
   assert.match(source, /voice note \/ video call/);
   assert.match(source, /handwritten letter \/ physical gift/);
+  assert.match(source, /assets\/channel-quick-text\.svg/);
+  assert.match(source, /assets\/channel-voice-video\.svg/);
+  assert.match(source, /assets\/illustrations\/cecilia\/envelope-mail-02\.png/);
+  assert.match(source, /class="plot target build"[\s\S]*?assets\/illustrations\/cecilia\/firefly-brand-mark\.png/);
   assert.doesNotMatch(source, /class="evidence-dock"/);
   assert.match(source, /Kumar &amp; Epley, 2021/);
   assert.match(source, /Kumar &amp; Epley, 2018/);

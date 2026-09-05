@@ -1,0 +1,9 @@
+<!-- Hand-drawn chart icon for the voice-note and video-call appreciation channel. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+  <path d="M24.8 30.3C24.8 24.1 29.1 20.1 34.9 20.1C40.7 20.1 45 24.1 45 30.3V45.7C45 52.2 40.8 56.1 34.9 56.1C29 56.1 24.8 52.2 24.8 45.7V30.3Z" stroke="#081f4d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18.2 42.9C18.4 54.4 24.5 61.2 34.9 61.2C43.3 61.2 49.5 56.8 51 48.8" stroke="#081f4d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M34.9 61.3V72.2M25.7 72.2H44.3" stroke="#081f4d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M55.2 27.8C61.8 23.8 69.5 24.4 74.7 29.7M57.5 38.3C61.8 35.7 66.3 36 69.7 39.2" stroke="#081f4d" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M58.7 51.6H78C81 51.6 83 53.2 83 56.2V69.1C83 72.1 81 73.8 78 73.8H58.7C55.7 73.8 53.7 72.1 53.7 69.1V56.2C53.7 53.2 55.7 51.6 58.7 51.6Z" stroke="#081f4d" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M65.3 57.7L73.3 62.7L65.3 67.7V57.7Z" fill="#081f4d" stroke="#081f4d" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

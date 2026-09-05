@@ -1,0 +1,223 @@
+/* Targeted visual refinements for the research, audience, and handoff slides. */
+
+/* Slide 06 — a handwritten comparison ledger, not a dashboard table. */
+.research-story {
+  grid-template-columns: .95fr .95fr 1.25fr;
+  gap: 42px;
+}
+
+.research-job.has-ledger {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 34px 0 22px 14px;
+}
+
+.comparison-ledger {
+  width: 100%;
+  max-width: 555px;
+}
+
+.ledger-kicker {
+  margin: 0 0 34px;
+  color: var(--accent-ink);
+  font-size: 31px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: .9;
+}
+
+.ledger-row {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 17px;
+  align-items: center;
+  min-height: 124px;
+  border-top: 1.5px solid rgb(8 31 77 / .28);
+}
+
+.ledger-row:last-child { border-bottom: 1.5px solid rgb(8 31 77 / .28); }
+.ledger-row.voice { margin-left: 18px; }
+
+.ledger-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 27px;
+  line-height: .82;
+}
+
+.ledger-icon {
+  flex: 0 0 31px;
+  width: 31px;
+  height: 31px;
+  color: var(--accent-ink);
+}
+
+.ledger-icon.envelope {
+  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(2200%) hue-rotate(184deg) brightness(77%) contrast(107%);
+}
+
+.ledger-scores {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  text-align: center;
+}
+
+.ledger-scores small {
+  display: block;
+  color: var(--accent-ink);
+  font-size: 14px;
+  letter-spacing: .04em;
+  line-height: .9;
+  text-transform: uppercase;
+}
+
+.ledger-scores strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: .75;
+}
+
+.ledger-scores .target-score {
+  min-width: 42px;
+  min-height: 34px;
+}
+
+.ledger-scores .target-score::after {
+  border-color: var(--accent);
+  inset: -6px -10px -5px;
+}
+
+/* Slide 07 — uncluttered Goldilocks zones, with the text held inside its ring. */
+.audience-zone > span {
+  display: block;
+  margin-bottom: 16px;
+  color: var(--accent-ink);
+  font-size: 21px;
+  letter-spacing: .06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.audience-zone.left {
+  left: 112px;
+  top: 454px;
+  width: 350px;
+}
+
+.audience-zone.center {
+  left: 625px;
+  top: 386px;
+  width: 470px;
+}
+
+.audience-zone.right {
+  left: 1215px;
+  top: 450px;
+  width: 294px;
+}
+
+.audience-zone strong {
+  color: var(--ink);
+  font-size: 52px;
+  line-height: .86;
+  font-weight: 400;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+}
+
+.audience-zone.right small {
+  display: block;
+  margin-top: 17px;
+  color: var(--accent-ink);
+  font-size: 26px;
+  line-height: .9;
+}
+
+.audience-zone.center h2 {
+  color: var(--ink);
+  font-size: 58px;
+  line-height: .82;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.audience-groups {
+  margin-top: 28px;
+  color: var(--accent-ink);
+  font-size: 27px;
+  line-height: .96;
+  text-wrap: balance;
+}
+
+.audience-consequence {
+  margin-top: 27px;
+  color: var(--ink);
+  font-size: 34px;
+  line-height: .88;
+  text-wrap: balance;
+}
+
+/* Slide 10 — one final invitation beside a QR, without a product-card shell. */
+.demo-follow {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 94px;
+  align-items: center;
+  padding: 70px 105px 45px;
+  color: var(--paper);
+}
+
+.demo-follow-copy { max-width: 840px; }
+
+.demo-follow-copy h2 {
+  font-size: 104px;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: .79;
+  text-wrap: balance;
+}
+
+.demo-follow-copy p {
+  max-width: 630px;
+  margin-top: 34px;
+  color: var(--accent-on-ink);
+  font-size: 35px;
+  line-height: .91;
+}
+
+.demo-follow-qr {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.demo-qr {
+  display: block;
+  width: 268px;
+  height: 268px;
+  padding: 12px;
+  background: var(--paper);
+}
+
+.demo-url {
+  color: var(--paper);
+  font-size: 30px;
+  line-height: .9;
+}
+
+.demo-fallback {
+  max-width: 310px;
+  color: rgb(255 255 255 / .68);
+  font-size: 19px;
+  line-height: 1;
+}

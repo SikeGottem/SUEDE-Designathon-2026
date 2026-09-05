@@ -95,8 +95,6 @@ No actionable P0, P1, or P2 finding remains. A P3 research question remains: tes
 
 passed
 
----
-
 # Design QA — page 7 oversized Goldilocks rings
 
 ## Target and capture conditions
@@ -136,3 +134,31 @@ No focused crop was needed because the slide contains no raster assets or icons,
 ## Final result
 
 passed
+
+---
+
+# Design QA — illustrated map, research ledger, simplified audience, and QR demo
+
+## Target and capture conditions
+
+- Implementation: `http://127.0.0.1:4176/deck/pitch-prototype/index.html` at the native 1600 × 900 canvas.
+- Captured states: all four page-5 builds, page 6 build 4, page 7 build 3 and page 10.
+- Evidence: `/tmp/map-steps-v2.png`, `/tmp/suede-slide6-step4-v2.png`, `/tmp/suede-slide7-simple-v2.png` and `/tmp/suede-slide10-qr-v3.png`.
+
+## Findings and fixes
+
+1. Abstract page-5 dots did not distinguish the channels or connect the target to the product identity. Two small navy doodle SVGs and Cecelia's envelope now sit over the translucent frequency marks; Cecelia's firefly marks the Goldilocks target. All four reveals remain clear of their evidence annotations.
+2. Page 6 read like a compressed spreadsheet. The right column is now a loose handwritten ledger with repeated quiet metric labels, large values, channel doodles and only horizontal separators. The fourth click still circles exactly the three qualities carried into the brief.
+3. Page 7 had three competing centre messages and verbose side sentences. It now reads as `text — too awkward or too casual`, `They care. But appreciation stays unspoken.`, and `letter / gift — too much; high friction; inaccessible`, with the four audience examples visually subordinate.
+4. The first page-10 capture showed a broken QR image because the generated root SVG lacked its namespace. Adding the namespace restored browser rendering. OpenCV decoded the final 1600 × 900 slide capture as exactly `https://warm-and-fuzzies.vercel.app/demo`.
+
+## Required fidelity surfaces
+
+- Branding: deep ink, white, pale blue, Gaegu and Cecelia's firefly/envelope remain the visual system; no stock icon set, gradient, card grid or dashboard styling was introduced.
+- Legibility: page 6 keeps the percentages dominant, page 7 leaves the ring geometry dominant, and page 10 gives the QR a 268-pixel square with an intact white quiet zone.
+- Evidence boundary: rehearsal values and audience examples retain their visible disclosures. The public QR is an optional generic demo route, not validation.
+- Interaction: page 5 still uses four clicks, page 6 still uses three reveals plus a fourth selection pass, page 7 still uses three reveals, and the deck now ends on page 10.
+
+## Final result
+
+passed for rehearsal; the QR still needs a physical-phone scan at presentation distance on the event network.

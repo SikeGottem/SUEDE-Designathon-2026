@@ -1192,3 +1192,71 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Audience examples: university students, long-distance connections, close friends and close family remain illustrative contexts inside the need-state, not validated segments or market sizing.
 - Reveal order: text constraint, letter-or-gift constraint, then the people and consequence between them.
 - Evidence boundary: `awkward`, `friction` and `inaccessible` remain working hypotheses until primary research establishes prevalence, context and exceptions.
+
+## 2026-09-05 - Illustrate the gap, simplify the findings, and merge the live ending
+
+- Status: current rehearsal-deck direction, selected directly by Ethan after reviewing the rendered HTML slides.
+- Page 5: retain frequency as a translucent dot-size encoding, add hand-drawn channel icons, and use Cecelia's firefly mascot as the Goldilocks target rather than an abstract diamond.
+- Page 6: preserve 82%, 71%, the nine grouped scores and the fourth-click rings, but replace the literal table with a loose handwritten trade-off ledger headed `each form gets one thing right`.
+- Page 7: reduce the outer bands to `text — too awkward or too casual` and `letter / gift — too much; high friction; inaccessible`. The centre now leads with `They care. But appreciation stays unspoken.`, followed by university students, long-distance connections, close friends and close family as quiet examples.
+- Ending: remove the separate page 11 thank-you handoff. Page 10 now says `Follow along.` and shows a real QR for the deployed generic demo at `https://warm-and-fuzzies.vercel.app/demo`, plus the readable URL and a no-phone fallback.
+- Timing: the deck drops from eleven slides and 350 planned seconds to ten slides and 315 planned seconds, leaving 45 seconds inside the six-minute limit.
+- Evidence boundary: the channel positions, percentages and scores remain rehearsal-only. The public-demo QR is optional access to a generic prototype, not a personalised thank-you, participant task or validation result. It still requires projector-distance, event-network and second-device verification.
+
+### Mandatory judge review
+
+- Decision: use the illustrated map, loose findings ledger, simplified Goldilocks audience and merged QR/live-demo ending as the ten-slide rehearsal baseline.
+- Status: approved for rehearsal, conditional for judged delivery.
+- Reason: the revision removes one full slide and several explanatory layers while keeping the problem, evidence boundary, audience tension and working product visible.
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The deck still reveals and proposes a redesign of the occasion-only appreciation rule while staying below the captured 15-slide and six-minute limits. | The exact 2026 wording and rubric remain unverified. |
+| Problem identification | strengthens | The ring slide now states the two format constraints and the unspoken-appreciation consequence in one glance. | The need-state and included groups have not been validated with participants. |
+| Solution approach | strengthens conditionally | The highlighted impact, friction and frequency qualities lead directly into one product sentence and one working demo. | No matched-format study shows that Warm & Fuzzies achieves the intended balance. |
+| Design innovation | neutral | The firefly and authored-object logic make the target memorable, but the underlying digital-keepsake category remains familiar. | Judges may still read the product as a decorated digital letter. |
+| Visual communication | strengthens | Channel doodles replace abstract dots, the score ledger removes spreadsheet chrome, and the shortened audience copy preserves a single hierarchy. | Small study citations and the QR still require projector-distance checks. |
+| Presentation skills | strengthens | Ten slides and 315 planned seconds create 45 seconds of buffer; the final slide gives the room one optional action during the demo. | A room scanning at once could interrupt the presenter or event network. |
+| Evidence quality | weak | Published mechanism claims remain bounded and temporary figures remain disclosed. | The 82%, 71%, all ratings, chart positions and audience boundaries are still unvalidated rehearsal material. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Existing text, voice or physical gestures may already be sufficient. | All remain visible controls and the deck describes a possible gap rather than declaring each medium deficient. | Which people actually experience the gap and when. |
+| Behaviour and context | The audience examples may not share one ordinary-day behaviour. | They are visually subordinate examples inside a need-state, not four demographic markets. | Whether those contexts produce the same hesitation or need different responses. |
+| Medium necessity | The QR and app may add unnecessary screen dependence. | The product is framed as one test of authored meaning with link-level access; the short URL and presenter screen are no-scan routes. | Whether an existing channel or non-app ritual performs as well with less overhead. |
+| Alternatives | A note, call or ordinary message may solve the problem without a new product. | The map and matched-format research plan retain those alternatives as controls. | Completed comparison including a non-app ritual. |
+| Human specificity | `uni students`, `close friends` and `close family` are broad. | The slide leads with the format tension and consequence, not an invented persona or market-size claim. | A real first segment supported by sender and receiver evidence. |
+| Inclusion and accessibility | QR access excludes some devices and abilities. | The slide includes the readable URL and an explicit on-screen fallback. | Physical phone, assistive-technology and projector-distance tests. |
+| Trust, safety and privacy | Scanning may imply privacy, identity or safe delivery guarantees. | The QR is labelled a generic public demo and the speaker notes prohibit production-level claims. | Real forwarding, retention, identity and deletion behaviour. |
+| Failure and recovery | The network or QR can fail during the pitch. | The presenter screen and pre-opened route remain the recovery path. | Event-network reliability and a second-device rehearsal. |
+| Feasibility and demo truth | A polished demo can be mistaken for validated impact. | The deck separates working interaction from emotional or market proof and keeps temporary-data footers. | Whether the team maintains that boundary under time pressure and Q&A. |
+| Incentives and second-order effects | Room-wide scanning may become compulsory participation or performance. | The invitation is optional, requires no personal disclosure and asks for no reply. | Whether the presenter communicates optionality clearly. |
+| Simplicity and retellability | Three measures and three grouped channels may still overload listeners. | The ledger headline says each form gets one thing right, and the fourth click circles only the three borrowed qualities. | First-listener recall after a timed rehearsal. |
+| Authorship and distinctiveness | Hand-drawn styling could become generic scrapbook decoration. | Cecelia's actual firefly and envelope, Ethan's ring composition and the team-selected format tension determine the visual system. | Final team review at projection size. |
+
+- Additional domain lens: evidence ethics.
+- Why it is material: the deck currently uses invented rehearsal percentages and ratings.
+- Challenge, evidence-backed answer and unknown: every temporary value remains disclosed and replaceable, but judged delivery stays blocked until documented participant results replace them.
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: use the ten-slide HTML sequence for rehearsal and presentation-design iteration.
+- Blocking conditions: replace every rehearsal figure before judged delivery; physically verify the QR and public route at presentation distance on the event network; retain optionality and the no-scan route; do not present the demo or audience reaction as validation.
+- Weakest judging angle: **evidence quality**, because the clearer visual story still rests on temporary primary figures and an unvalidated audience boundary.
+- Main trade-off: the pitch gains speed, clarity and live participation while losing the separate personal thank-you ending and taking on QR/network risk.
+- Next evidence that could change the verdict: a timed first-listener rehearsal using documented What / Why / How results and a second-phone QR scan from projector distance.
+- Recommendation: keep the merged ten-slide ending and ledger, then spend the saved time validating the figures and rehearsing the live handoff.
+- Revisit when: the real results change the grouped comparison, the audience examples split into different needs, or the QR interrupts rather than supports the demo.
+
+### Design authenticity post-build
+
+- Artifact or screenshot inspected: all four page-5 builds, page 6 build 4, page 7 build 3 and page 10 at 1600 × 900, recorded in `design-qa.md`.
+- Strongest remaining AI tell: the nine rehearsal scores form an unusually convenient pattern even after the visual treatment becomes more human.
+- Logo-swap test: pass; the firefly target, text-versus-letter tension, unspoken appreciation consequence and authored keepsake logic would not fit an unrelated product after a simple rename.
+- Team-voice test: pass conditionally; the visible lines come directly from Ethan's corrections and are short enough to say naturally, but must survive timed team rehearsal.
+- Labels, containers, accents or copy removed: the table headers/grid, verbose audience sentences, `too slight`, `People caught between the formats`, abstract target diamond and separate thank-you slide.
+- Content-native signature still visible: the channel map resolves into Cecelia's firefly as the Goldilocks target, and page 6 circles one useful quality from each existing medium.
+- Material human-directed change: Ethan supplied the ring composition, replaced green with blue, demanded the mascot, simplified the side copy, reduced the centre hierarchy and merged the QR into page 10.
+- Next corrective action: replace temporary data and perform a physical projector/phone rehearsal; no further visual correction is required before that evidence arrives.
+- Verdict: **Pass for rehearsal**.

@@ -1,7 +1,7 @@
-<!-- Orientation: usage, evidence boundaries and review status for the 11-slide Warm & Fuzzies HTML live deck. -->
+<!-- Orientation: usage, evidence boundaries and review status for the 10-slide Warm & Fuzzies HTML live deck. -->
 # Warm & Fuzzies live pitch
 
-This is an HTML-only 11-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 5:50, leaving 10 seconds inside the six-minute heat limit. The product is shown through a live maker-to-receiver demo, not a video or static product walkthrough.
+This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 5:15, leaving 45 seconds inside the six-minute heat limit. The product is shown through a shared live maker-to-receiver demo, not a video or static product walkthrough.
 
 Open `index.html` directly, or serve the repository locally:
 
@@ -23,15 +23,14 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 2. Sender-framed audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
 4. Occasion-based permission and How Might We
-5. Impact / friction / frequency map across three presentation families, with bounded paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
-6. Evidence-first research findings: 82%, 71%, and a full-height three-row grouped ratings table, followed by a fourth-click highlight pass
-7. Two oversized cropped Goldilocks rings dividing the full slide into a text constraint, the people caught in between, and a letter-or-gift constraint
+5. Impact / friction / frequency map across three illustrated presentation families, with bounded paper evidence and Cecelia's firefly marking the unboxed Goldilocks target; numeric ratings stay off this slide
+6. Evidence-first research findings: 82%, 71%, and a hand-drawn three-row trade-off ledger, followed by a fourth-click highlight pass
+7. Two oversized cropped Goldilocks rings dividing the full slide into blunt text and letter/gift constraints, with one quieter need-state statement between them
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
-10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
-11. Real team thank-you object, real team photo and verified QR handoff
+10. “Follow along.” with a verified public-demo QR, followed immediately by one continuous live sender-to-receiver demonstration
 
-There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
+There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot, thank-you slide or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the public QR and live product share the proposed ritual with the room.
 
 The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students, long-distance connections, close friends and close family appear inside the centre band between two oversized need-state rings rather than as exclusive demographic markets. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
@@ -47,28 +46,28 @@ The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` 
 - Psychology on text, voice, gratitude letters and perceived gift effort supports the map's channel-by-channel mechanism narration. Detailed methods, ownership evidence and limitations still belong in the appendix, and none can replace the primary percentages or qualitative themes.
 - The live demo proves only that the prototype can complete the demonstrated flow. It does not prove demand, sincerity, reduced awkwardness or social change.
 
-## Handoff blocker
+## Live-demo QR
 
-Slide 11 is not final until all three inputs are real:
+Slide 10 includes a real QR encoding `https://warm-and-fuzzies.vercel.app/demo`. The SVG has been machine-decoded back to the same URL. Before presenting, the team must still:
 
-1. A team-approved photograph of the actual team.
-2. The actual thank-you object the team made for the judges and organisers.
-3. A deployed receiver route with a QR verified on a second device.
+1. Scan it from the projected slide on a second physical phone.
+2. Confirm the event network can load the public route.
+3. Keep the short URL and the presenter screen as equivalent no-scan routes.
 
-If any input is missing, keep the slide visibly blocked. Do not use stock people, a fabricated object, a placeholder URL or a decorative QR.
+The QR opens a generic public demo. It is not a personalised thank-you, participant task or validation result.
 
 ## Visual contract
 
 - **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
-- **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the channel map's published evidence; honest hypothesis labels; the actual live handoff; the team's real thank-you object and photo.
-- **Rejected defaults:** no mentor-quote theatre, demographic persona card, boxed research panel, fake QR, process diary, feature cards or screenshot carousel.
+- **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the channel map's published evidence; honest hypothesis labels; the public demo and its verified QR.
+- **Rejected defaults:** no mentor-quote theatre, demographic persona card, boxed research panel, fake QR, process diary, feature cards, screenshot carousel or second ending.
 - **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the next slide circles the three qualities the team will combine; the later synthesis keeps If / And / Then and adds one Therefore requirement.
-- **Restraint:** no opener counterpoint, product-feature recap or second conclusion after the thank-you handoff.
+- **Restraint:** no opener counterpoint, product-feature recap, separate thank-you slide or second conclusion after the live demo.
 - **Human decision:** the latest captures make the graph a three-variable practice instrument and preserve If / And / Then while adding one Therefore design requirement beneath it. Ethan's newest direct correction supersedes the earlier green choice and sets deep blue as the live-deck accent.
 
 ## Judge review
 
-**Decision:** use the newest team review as the controlling live-pitch direction and keep the HTML deck to 11 slides centred on bounded evidence and a live demonstration.
+**Decision:** use the newest team review as the controlling live-pitch direction and keep the HTML deck to 10 slides centred on bounded evidence and a shared live demonstration.
 
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
@@ -76,8 +75,8 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, direct research findings and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
 | Solution approach | strengthens | The live maker-to-receiver flow shows the mechanism and receiver-controlled ending directly. | The medium has not beaten any control in a completed matched-format test. |
 | Design innovation | strengthens | Making, sealing, giving and receiver-led opening form a clearer ritual than a static feature tour. | Without participant evidence, the experience may still be read as a decorated digital letter. |
-| Visual communication | strengthens | Eleven slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The rehearsal findings and handoff blockers can look unfinished until real evidence and assets arrive. |
-| Presentation skills | strengthens | The map receives 60 seconds of evidence-led narration, followed by a focused 100-second live demonstration and one real thank-you ending. | The evidence sequence must be rehearsed so the studies clarify rather than overwhelm the story. |
+| Visual communication | strengthens | Ten slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The rehearsal findings still look unfinished until real evidence replaces them. |
+| Presentation skills | strengthens | The map receives 60 seconds of evidence-led narration, followed by one focused 100-second public demo with optional audience access. | The evidence sequence and QR handoff must be rehearsed so they clarify rather than interrupt the story. |
 | Evidence quality | weak | Unknowns are left blank and the live demo is not mislabelled as outcome evidence. | No completed primary evidence currently supports the gap, rule, audience or impact. |
 
 ### Challenge review
@@ -98,20 +97,20 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Authorship and distinctiveness | A polished HTML deck could still feel model-generated. | The latest team critique controls the cuts, map corrections, timing, demo and real team-authored ending. |
 
 - **Verdict:** Proceed with conditions.
-- **Blocking conditions:** replace every visibly labelled practice value before the judged pitch; complete the real photo, object and verified QR; rehearse the live flow on the presentation setup; keep removed material out of the live deck; never call the demo or audience response validation.
+- **Blocking conditions:** replace every visibly labelled practice value before the judged pitch; physically verify the public-demo QR; rehearse the live flow on the presentation setup; keep removed material out of the live deck; never call the demo or audience response validation.
 - **Weakest judging angle:** evidence quality.
 - **Main trade-off:** a shorter, more convincing live story gains clarity and product proof but depends heavily on unfinished primary research and reliable demo execution.
 - **Next evidence:** one documented What / Why / How study with a matched-format comparison, followed by a timed live-demo rehearsal.
-- **Recommendation:** treat the 11-slide HTML sequence as the live baseline, then fill only the primary evidence and handoff elements the team genuinely completes.
+- **Recommendation:** treat the 10-slide HTML sequence as the live baseline, then replace only the primary evidence that the team genuinely completes.
 
 ## Design-authenticity status
 
-- **Artifact inspected:** all 11 HTML slides at 1600 × 900, plus the map's first and final builds at presentation, tablet and phone viewport sizes.
+- **Artifact inspected:** the 10-slide HTML sequence at 1600 × 900, including the final map, findings, audience and QR states.
 - **Strongest remaining AI tell:** the three grouped coordinates and ratings form a visually convenient pattern even though they remain team hypotheses; the footer and spoken boundary must make that status unmistakable.
 - **Content-native signature:** one unboxed evidence annotation follows the channel map point-by-point, then hands off to the team's Goldilocks target rather than decorating the slide with a fixed research card.
 - **Material human change:** Ethan made the graph the longest narrative slide and required every spoken channel claim to appear beside its research support; unsupported labels, the extra blank statistic and the oval around the final opportunity were removed, then he named the unboxed marker the `goldilocks zone`.
 - **Verdict:** Revise before final use.
-- **Exact next action:** rehearse the 11-slide deck and full live demo on the presentation projector before promoting the overall deck to Pass.
+- **Exact next action:** rehearse the 10-slide deck, public QR and full live demo on the presentation projector before promoting the overall deck to Pass.
 
 ## Work outside the presentation
 
@@ -119,7 +118,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 - Compare text, voice, video call, handwritten letter, physical gift and Warm & Fuzzies using the same appreciation scenario; use the result to correct the map and test the highlighted gap.
 - Determine which people and relationship contexts experience the problem before returning a market claim to the pitch.
 - Rehearse the live maker-to-receiver flow on the actual network and devices, including correction, link generation, opening, keep/reopen and removal.
-- Supply and approve the real team photo; make the thank-you object; deploy its receiver route; verify the QR and no-scan fallback on a second device.
+- Verify the public-demo QR and no-scan fallback on a second physical device using the event network.
 - Keep context-aware anti-doomscroll prompting deferred until research tests whether it helps without making appreciation feel automated, surveilled or less sincere.
 - Resolve retention, deletion, forwarding, identity, privacy, accessibility, wrong-recipient and failed-media behaviour before making production claims.
 - Verify the official 2026 judging rules and required AI/third-party disclosures.
@@ -131,7 +130,6 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | `assets/gaegu.woff2` | Product/deck display typeface; licence in `assets/Gaegu-OFL.txt`. |
 | `assets/pretext.js` | Local text-measurement helper; no network dependency. |
 | Cecelia illustration assets | Team-authored identity and product art under `prototype/public/assets/illustrations/cecilia/`. |
-| Final team photo | Required team-authored handoff asset; not yet supplied or approved. |
-| Final thank-you object and QR | Required live handoff assets; not final until created, deployed and verified. |
+| `assets/live-demo-qr.svg` | Machine-decoded QR for the deployed public demo; still needs projector-distance and second-device verification. |
 
 AI assisted HTML composition and copy structure. Ethan supplied the controlling narrative decisions, and the team remains responsible for research, wording, selection, live testing, final visual edits and disclosure.
