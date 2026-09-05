@@ -367,10 +367,10 @@
 .hub-pattern {
   position: absolute;
   z-index: 1;
-  top: 54px;
-  right: -20px;
-  bottom: 112px;
-  left: -20px;
+  top: 62px;
+  right: -34px;
+  bottom: 118px;
+  left: -34px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -379,9 +379,17 @@
   position: absolute;
   display: block;
   height: auto;
-  opacity: .72;
+  opacity: .78;
   mix-blend-mode: multiply;
   filter: brightness(0) saturate(100%) invert(68%) sepia(89%) saturate(1179%) hue-rotate(337deg) brightness(99%) contrast(87%);
+}
+
+.hub-pattern .hub-pattern-mesh {
+  top: 48%;
+  left: 50%;
+  width: 620px;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(-1deg);
 }
 
 /* A new object starts with one person, so every later object and handoff is named rather than pre-filled. */
@@ -565,6 +573,7 @@
 
 .carrier-icon-firefly img {
   transform: scale(1.04);
+  filter: brightness(0) saturate(100%) invert(49%) sepia(12%) saturate(822%) hue-rotate(148deg) brightness(91%) contrast(87%);
 }
 
 .carrier-icon-hero {
@@ -3667,9 +3676,9 @@
 .envelope-workbench {
   position: absolute;
   z-index: 5;
-  inset: 116px 20px 82px;
+  inset: 116px 20px 116px;
   display: grid;
-  grid-template-rows: auto minmax(280px, 1fr) auto;
+  grid-template-rows: auto minmax(236px, 1fr) minmax(88px, auto);
   align-content: stretch;
 }
 
@@ -3831,15 +3840,20 @@
 }
 
 .envelope-status {
-  min-height: 24px;
-  margin-top: 6px !important;
+  min-height: 22px;
+  margin: 0 !important;
   color: color-mix(in srgb, currentColor 66%, white);
   font-size: 15px;
+  line-height: 1.22;
   text-align: center;
 }
 
 .envelope-stamp-choice {
-  min-height: 58px;
+  display: grid;
+  min-height: 88px;
+  align-content: start;
+  gap: 10px;
+  padding: 8px 0 6px;
   text-align: center;
 }
 
@@ -3847,13 +3861,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 30px;
 }
 
 .envelope-stamp-choice > div button {
-  min-height: 32px;
-  padding: 2px 0 !important;
-  font-size: 15px;
+  min-height: 42px;
+  padding: 5px 0 !important;
+  font-size: 16px;
+  line-height: 1.08;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
@@ -4289,7 +4304,7 @@
 
 .courier-firefly-frame-b {
   opacity: 0;
-  animation: courier-wing-state 560ms steps(1, end) infinite;
+  animation: courier-wing-state 560ms steps(1, end) 7;
 }
 
 .courier-object-body {
@@ -4617,12 +4632,12 @@
 }
 
 .arrival-sun {
-  top: -44px;
+  top: 8px;
   right: 22px;
 }
 
 .sent-reeds,
-.sent-plane-clouds {
+.sent-plane-cloud {
   position: absolute;
   z-index: 0;
   display: block;
@@ -4648,12 +4663,42 @@
 }
 
 .sent-plane-clouds {
-  top: -24px;
-  right: -42px;
-  width: 438px;
-  height: 478px;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 450px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sent-plane-cloud {
+  max-width: none;
   opacity: .92;
   filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  will-change: transform, opacity;
+}
+
+.sent-plane-cloud-top {
+  top: 120px;
+  left: -12px;
+  width: 220px;
+  height: 86px;
+}
+
+.sent-plane-cloud-middle {
+  top: 235px;
+  left: -30px;
+  width: 230px;
+  height: 110px;
+}
+
+.sent-plane-cloud-bottom {
+  top: 352px;
+  right: -14px;
+  width: 230px;
+  height: 88px;
 }
 
 .sent-letter-object {
@@ -4715,7 +4760,7 @@
   height: 148px;
 }
 
-.sent-delivery-stage[data-delivery-stage="still"] > .carrier-icon {
+.sent-delivery-stage:is([data-delivery-stage="still"], [data-delivery-stage="complete"]) > .carrier-icon {
   position: absolute;
   top: 150px;
   left: calc(50% - 78px);
@@ -4750,7 +4795,7 @@
   opacity: 0.38;
 }
 
-.sent-delivery-stage[data-carrier="bottle"][data-delivery-stage="still"] > .carrier-icon {
+.sent-delivery-stage[data-carrier="bottle"]:is([data-delivery-stage="still"], [data-delivery-stage="complete"]) > .carrier-icon {
   top: 117px;
 }
 

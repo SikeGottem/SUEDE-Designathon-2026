@@ -2,16 +2,16 @@
 
 # Cecelia collection
 
-These files are byte-for-byte copies of the unique PNGs supplied in `All grahpic assets.zip`; no source pixels have been cropped, recoloured, or otherwise changed. They are organised by semantic role so the app can use a real authored drawing instead of a code stand-in.
+The canonical source files are byte-for-byte copies of the unique PNGs supplied in `All grahpic assets.zip`; no source pixels have been changed. They are organised by semantic role so the app can use a real authored drawing instead of a code stand-in. A small derived-assets table below records the three lossless cloud crops and the heavier stamp treatment made from those sources for the current phone-scale compositions.
 
 `Active` means the current runtime renders the file. All unique supplied assets are ingested here, but only assets with a state-bearing product role render; parked sheets are preserved for future authored decisions, not a sticker wall or wallpaper layer.
 
 | Original archive filename | Canonical repository path | Recommended product role | Status |
 | --- | --- | --- | --- |
 | `B1.png` | `couriers/firefly-outline.png` | Quiet idle/landing firefly state | Active — landing and carrier state |
-| `F1.png` | `couriers/firefly-filled-a.png` | Firefly wing-frame A for flight motion | Active — one-shot flight motion |
+| `F1.png` | `couriers/firefly-filled-a.png` | Firefly wing-frame A for flight motion | Active — picker hero and one-shot flight motion |
 | `F2.png` | `couriers/firefly-filled-b.png` | Firefly wing-frame B for flight motion | Active — one-shot flight motion |
-| `firefly mesh.png` | `couriers/firefly-mesh.png` | Delivery-transition texture or distant fireflies | Parked |
+| `firefly mesh.png` | `couriers/firefly-mesh.png` | Authored small-firefly field | Active — static ochre hub field |
 | `ggggg.png` | `couriers/firefly-carrying.png` | Carrying firefly for the hub and courier scenes | Active — enlarged hub focal object; sender/receiver courier handoff, departure, and arrival |
 | `bottle.png` | `containers/bottle-classic.png` | Bottle carrier selection and cabinet thumbnail | Active — sealed bottle carrier state |
 | `bottle.2.png` | `containers/bottle-alt.png` | Alternate bottle carrier/material state | Parked |
@@ -21,7 +21,7 @@ These files are byte-for-byte copies of the unique PNGs supplied in `All grahpic
 | `plane.png` | `containers/paper-plane.png` | Paper-plane carrier choice and departure | Active — carrier, departure, and arrival |
 | `scroll.png` | `containers/scroll.png` | Parked concept carrier; do not introduce without a clear product role | Parked |
 | `Cloud.png` | `environment/clouds-outline.png` | One-shot plane departure backdrop | Parked |
-| `cloud.2.png` | `environment/clouds-alt.png` | Alternate cloud composition for a plane state | Active — restrained one-shot plane departure and arrival drift |
+| `cloud.2.png` | `environment/clouds-alt.png` | Alternate cloud composition for a plane state | Active source — receiver drift and three split sender cloud pieces |
 | `Icon.png` | `environment/icon-doodle-sheet.png` | Reference sheet for future hand-drawn UI details, not a generic sticker tray | Parked |
 | `Leaf.png` | `environment/leaf-doodle-sheet.png` | Reference sheet for a deliberate environmental composition | Parked |
 | `line art wavey.png` | `environment/line-art-wave-sheet.png` | Reference sheet for water/air transition details | Parked |
@@ -40,11 +40,20 @@ These files are byte-for-byte copies of the unique PNGs supplied in `All grahpic
 | `Stamp assets Circle.png` | `seals/stamp-filled-circles.png` | Circular wax/seal palette source in envelope finishing | Parked |
 | `stamp assets oval.png` | `seals/stamp-filled-ovals.png` | Oval wax/seal palette source in envelope finishing | Parked |
 | `stamp assets square.png` | `seals/stamp-filled-rectangles.png` | Rectangle wax/seal palette source in envelope finishing | Parked |
-| `stamp cb.png` | `seals/stamp-neutral-circle.png` | Neutral circular wax/seal base | Active — personal stamp editor and envelope preview |
+| `stamp cb.png` | `seals/stamp-neutral-circle.png` | Neutral circular wax/seal base | Active source — retained unchanged; heavier derived treatment renders at phone scale |
 | `wax assets lineart circle.png` | `seals/wax-outline-circles.png` | Circular hand-drawn seal outline options | Parked |
 | `wax assets lineart oval.png` | `seals/wax-outline-ovals.png` | Oval hand-drawn seal outline options | Parked |
 | `wax assets lineart rectangle.png` | `seals/wax-outline-rectangles.png` | Rectangle hand-drawn seal outline options | Parked |
 | `Warm+fuzzy-firefly logo.png` | Alias of `containers/bottle-broken.png` | Archive duplicate; intentionally not copied a second time | Duplicate / not copied |
+
+## Derived active assets
+
+| Derived path | Source | Transformation | Runtime role |
+| --- | --- | --- | --- |
+| `environment/plane-cloud-top.png` | `environment/clouds-alt.png` | Alpha-preserving crop of the upper authored cloud | Upper cloud in the one-shot plane send scene |
+| `environment/plane-cloud-middle.png` | `environment/clouds-alt.png` | Alpha-preserving crop of the middle authored cloud | Middle-left cloud in the one-shot plane send scene |
+| `environment/plane-cloud-bottom.png` | `environment/clouds-alt.png` | Alpha-preserving crop of the lower authored cloud | Lower-right cloud in the one-shot plane send scene |
+| `seals/stamp-neutral-circle-thick.png` | `seals/stamp-neutral-circle.png` | Existing warm-grey line pixels dilated without redrawing the silhouette | Phone-scale stamp base with line weight closer to the envelope |
 
 ## Duplicate finding
 

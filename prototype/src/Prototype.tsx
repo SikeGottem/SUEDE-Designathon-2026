@@ -96,6 +96,7 @@ const artwork = {
     filledA: `${CECILIA}couriers/firefly-filled-a.png`,
     filledB: `${CECILIA}couriers/firefly-filled-b.png`,
     carrying: `${CECILIA}couriers/firefly-carrying.png`,
+    mesh: `${CECILIA}couriers/firefly-mesh.png`,
   },
   containers: {
     bottleReady: `${CECILIA}containers/bottle-classic.png`,
@@ -104,13 +105,16 @@ const artwork = {
   },
   environment: {
     planeClouds: `${CECILIA}environment/clouds-alt.png`,
+    planeCloudTop: `${CECILIA}environment/plane-cloud-top.png`,
+    planeCloudMiddle: `${CECILIA}environment/plane-cloud-middle.png`,
+    planeCloudBottom: `${CECILIA}environment/plane-cloud-bottom.png`,
     reeds: `${CECILIA}environment/reeds.png`,
     sun: `${CECILIA}environment/sun.png`,
     waveA: `${CECILIA}environment/wave-divider-a.png`,
     waveB: `${CECILIA}environment/wave-divider-b.png`,
   },
   seal: {
-    base: `${CECILIA}seals/stamp-neutral-circle.png`,
+    base: `${CECILIA}seals/stamp-neutral-circle-thick.png`,
   },
 } as const;
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
@@ -124,17 +128,6 @@ const envelopeIds: EnvelopeId[] = ["mail", "night", "rust"];
 const pieceIds: PieceId[] = ["photo", "voice", "song", "drawing"];
 const stickerIds: StickerId[] = ["burst", "ribbon", "stamp"];
 const inkColors: InkColor[] = ["navy", "forest", "rust", "plum", "ochre"];
-const hubPatternMarks = [
-  { x: 4, y: 4, size: 35, rotate: -18 },
-  { x: 67, y: 2, size: 24, rotate: 16 },
-  { x: 84, y: 18, size: 42, rotate: 12 },
-  { x: 10, y: 29, size: 22, rotate: -28 },
-  { x: 73, y: 42, size: 30, rotate: -8 },
-  { x: 1, y: 58, size: 41, rotate: 20 },
-  { x: 82, y: 66, size: 20, rotate: -24 },
-  { x: 18, y: 80, size: 28, rotate: 14 },
-  { x: 69, y: 84, size: 39, rotate: -12 },
-] as const;
 const inkLabels: Record<InkColor, string> = {
   navy: "deep ink",
   forest: "olive",
@@ -892,7 +885,7 @@ function Menu({ reduceMotion, createOnly = false, onCreate, onLetters }: { reduc
     <Page className="menu-page">
       <motion.header initial={reduceMotion ? false : { opacity: .55, transform: "translate3d(0, 88px, 0) scale(2.35)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: reduceMotion ? .01 : .72, ease: [0.23, 1, 0.32, 1] }}><span>warm &amp; fuzzies</span></motion.header>
       <div className="hub-pattern" data-testid="hub-pattern" aria-hidden="true">
-        {hubPatternMarks.map((mark, index) => <img key={`${mark.x}-${mark.y}`} src={artwork.firefly.outline} alt="" draggable={false} style={{ left: `${mark.x}%`, top: `${mark.y}%`, width: `${mark.size}px`, transform: `rotate(${mark.rotate}deg)` }} data-asset-slot={`hub-pattern-firefly-${index + 1}`} />)}
+        <img className="hub-pattern-mesh" src={artwork.firefly.mesh} alt="" draggable={false} data-asset-slot="hub-firefly-mesh" />
       </div>
       <motion.div data-testid="hub-firefly" className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : 3.6, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
         <DeliveryMascot />
@@ -1988,12 +1981,16 @@ function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipien
   return (
     <Page className="sent-page">
       <div className="sent-delivery-stage" data-carrier={carrier.id} data-delivery-stage={sentComplete ? "complete" : reduceMotion ? "still" : "departing"} aria-hidden="true">
-        <motion.img className="delivery-sun sent-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="delivery-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] }} />
+        <motion.img className="delivery-sun sent-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="delivery-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] } }} />
         {carrier.id === "firefly" && <>
           <motion.img className="sent-reeds sent-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-left" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-3deg) translate3d(0, 12px, 0)", "rotate(2deg) translate3d(0, 0, 0)", "rotate(-1deg) translate3d(0, 0, 0)", "rotate(0deg) translate3d(0, 0, 0)"] : "rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .38, .72, 1], ease: [0.23, 1, 0.32, 1] }} />
           <motion.img className="sent-reeds sent-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-right" initial={reduceMotion ? false : { opacity: 0, transform: "scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)", "scaleX(-1) rotate(2deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(-1deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)"] : "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .34, .68, 1], ease: [0.23, 1, 0.32, 1] }} />
         </>}
-        {carrier.id === "plane" && <motion.img className="sent-plane-clouds" src={artwork.environment.planeClouds} alt="" draggable={false} data-asset-slot="plane-clouds" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(24px, 8px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(24px, 8px, 0)", "translate3d(-14px, 2px, 0)", "translate3d(-34px, -4px, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />}
+        {carrier.id === "plane" && <div className="sent-plane-clouds" aria-hidden="true">
+          <motion.img className="sent-plane-cloud sent-plane-cloud-top" src={artwork.environment.planeCloudTop} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(42px, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(42px, 12px, 0)", "translate3d(8px, 2px, 0)", "translate3d(-28px, -8px, 0)"] : "translate3d(-28px, -8px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
+          <motion.img className="sent-plane-cloud sent-plane-cloud-middle" src={artwork.environment.planeCloudMiddle} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(44px, 0, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(44px, 0, 0)", "translate3d(10px, 5px, 0)", "translate3d(-34px, 12px, 0)"] : "translate3d(-34px, 12px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
+          <motion.img className="sent-plane-cloud sent-plane-cloud-bottom" src={artwork.environment.planeCloudBottom} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(-38px, -4px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(-38px, -4px, 0)", "translate3d(4px, 7px, 0)", "translate3d(42px, 18px, 0)"] : "translate3d(42px, 18px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
+        </div>}
         {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" /><CarrierIcon id={carrier.id} size="sealed" /></> : carrier.id === "firefly" ? <span className="sent-firefly-carrying sent-delivery-still"><DeliveryMascot /></span> : <CarrierIcon id={carrier.id} size="sealed" /> : carrier.id === "firefly" ? (
           <>
             <motion.img
@@ -2018,7 +2015,7 @@ function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipien
         ) : carrier.id === "bottle" ? <>
           <motion.img className="sent-water-departure sent-water-departure-a" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" initial={false} animate={departureStarted ? { opacity: [0, .72, .72, .72, .68], transform: ["translate3d(-24px, 216px, 0) scale(.94)", "translate3d(-10px, 212px, 0) scale(.94)", "translate3d(-36px, 218px, 0) scale(.94)", "translate3d(-14px, 210px, 0) scale(.94)", "translate3d(-24px, 216px, 0) scale(.94)"] } : { opacity: 0, transform: "translate3d(-24px, 216px, 0) scale(.94)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
           <motion.img className="sent-water-departure sent-water-departure-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [0, .44, .44, .44, .4], transform: ["translate3d(-40px, 244px, 0) scale(.9)", "translate3d(-56px, 242px, 0) scale(.9)", "translate3d(-28px, 248px, 0) scale(.9)", "translate3d(-50px, 242px, 0) scale(.9)", "translate3d(-40px, 244px, 0) scale(.9)"] } : { opacity: 0, transform: "translate3d(-40px, 244px, 0) scale(.9)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
-          <motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 1, 0], transform: ["translate3d(74px, 116px, 0) rotate(-7deg) scale(.84)", "translate3d(104px, 102px, 0) rotate(4deg) scale(.96)", "translate3d(142px, 116px, 0) rotate(-4deg) scale(.94)", "translate3d(198px, 100px, 0) rotate(5deg) scale(.9)", "translate3d(286px, 112px, 0) rotate(-2deg) scale(.8)"] } : { opacity: 1, transform: "translate3d(74px, 116px, 0) rotate(-7deg) scale(.84)" }} transition={{ duration: departureSeconds, times: [0, .22, .48, .75, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
+          <motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 1, 0], transform: ["translate3d(128px, 112px, 0) scale(.92)", "translate3d(128px, 168px, 0) scale(.92)", "translate3d(128px, 252px, 0) scale(.92)", "translate3d(128px, 354px, 0) scale(.92)", "translate3d(128px, 540px, 0) scale(.92)"] } : { opacity: 1, transform: "translate3d(128px, 112px, 0) scale(.92)" }} transition={{ duration: departureSeconds, times: [0, .22, .48, .75, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
         </> : <motion.div className="sent-carrier-departure sent-carrier-departure-plane" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 1, 0], transform: ["translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)", "translate3d(98px, 154px, 0) rotate(-4deg) scale(1)", "translate3d(184px, 122px, 0) rotate(5deg) scale(.96)", "translate3d(256px, 54px, 0) rotate(1deg) scale(.9)", "translate3d(458px, -54px, 0) rotate(18deg) scale(.72)"] } : { opacity: 1, transform: "translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)" }} transition={{ duration: departureSeconds, times: [0, .18, .42, .72, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>}
       </div>
       <AnimatePresence>
@@ -2069,7 +2066,7 @@ function Arrival({ recipient, senderName, carrier, reduceMotion, onOpen, onDefer
     <Page className={`arrival-page arrival-carrier-${carrier.id}`}>
       <motion.header aria-hidden={!landed} initial={false} animate={{ opacity: landed ? 1 : 0, transform: landed ? "translate3d(0, 0, 0)" : "translate3d(0, 10px, 0)" }} transition={{ duration: reduceMotion ? .01 : .38, ease: [0.23, 1, 0.32, 1] }}><span>for {recipient}</span><h1>you’ve got something from {senderName}.</h1></motion.header>
       <div className="arrival-object" data-carrier={carrier.id}>
-        <motion.img className="delivery-sun arrival-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="arrival-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: !landed && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] }} />
+        <motion.img className="delivery-sun arrival-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="arrival-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: !landed && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] } }} />
         {carrier.id === "firefly" && <div className="arrival-firefly-reeds" aria-hidden="true"><motion.img className="arrival-environment arrival-reeds arrival-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "rotate(-3deg)" }} animate={{ transform: !landed && !reduceMotion ? ["rotate(-3deg)", "rotate(2deg)", "rotate(-1deg)", "rotate(0deg)"] : "rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .35, .72, 1], ease: [0.23, 1, 0.32, 1] }} /><motion.img className="arrival-environment arrival-reeds arrival-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "scaleX(-1) rotate(-3deg)" }} animate={{ transform: !landed && !reduceMotion ? ["scaleX(-1) rotate(-3deg)", "scaleX(-1) rotate(2deg)", "scaleX(-1) rotate(-1deg)", "scaleX(-1) rotate(0deg)"] : "scaleX(-1) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .32, .68, 1], ease: [0.23, 1, 0.32, 1] }} /></div>}
         {carrier.id === "plane" && <motion.img className="arrival-environment arrival-clouds" src={artwork.environment.planeClouds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "translate3d(18px, 4px, 0)" }} animate={{ transform: !landed && !reduceMotion ? ["translate3d(18px, 4px, 0)", "translate3d(-12px, 0, 0)", "translate3d(-28px, -3px, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />}
         {carrier.id === "bottle" && <div className="arrival-water" aria-hidden="true"><motion.img className="arrival-wave arrival-wave-a" src={artwork.environment.waveA} alt="" draggable={false} initial={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(-12px, 0, 0)", "translate3d(6px, 5px, 0)", "translate3d(12px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: [0.23, 1, 0.32, 1] }} /><motion.img className="arrival-wave arrival-wave-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(10px, 0, 0)", "translate3d(-4px, -4px, 0)", "translate3d(-10px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: [0.23, 1, 0.32, 1] }} /></div>}
@@ -2199,7 +2196,7 @@ function TopLine({ onBack, label }: { onBack: () => void; label: string }) {
 }
 
 function CarrierIcon({ id, size }: { id: CarrierId; size: "hero" | "thumb" | "guide" | "sealed" | "arrival" | "cabinet" }) {
-  const source = id === "bottle" ? artwork.containers.bottleReady : id === "plane" ? artwork.containers.plane : artwork.firefly.outline;
+  const source = id === "bottle" ? artwork.containers.bottleReady : id === "plane" ? artwork.containers.plane : artwork.firefly.filledA;
   return <span className={`carrier-icon carrier-icon-${id} carrier-icon-${size}`} role="img" aria-label={id === "firefly" ? "Firefly courier" : id}><img src={source} alt="" draggable={false} data-asset-slot={`carrier-${id}-${size}`} /></span>;
 }
 

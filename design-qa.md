@@ -331,3 +331,34 @@ The Impeccable detector ran after the final UI edit but its HTML parser dependen
 ## Final result
 
 passed for prototype alignment; the next useful check is a real-phone run of all three carrier scenes at presentation speed.
+
+---
+
+# Design QA — 6 September annotated carrier refinement
+
+## Target and capture conditions
+
+- Source of truth: Ethan's six newest annotated screenshots covering receiver sun framing, straight bottle travel, the authored hub mesh, the winged steel-blue firefly, stamp weight, separated plane clouds, and envelope text hierarchy.
+- App capture viewport: desktop review at 1100 × 1100 with the app-owned iPhone surface captured at 394 × 852 pixels and device scale factor 1.
+- Full comparison evidence: `prototype/output/design-qa/annotated-feedback-2026-09-06/comparison-arrival.png`, `comparison-bottle.png`, `comparison-hub.png`, `comparison-carrier.png`, `comparison-envelope.png`, and `comparison-plane.png`.
+- Motion samples: `sent-bottle-motion-final.png` and `sent-plane-motion-final.png` at roughly 2.1 seconds into their one-shot departures. Reduced-motion captures were also checked for a stable non-overlapping final composition.
+
+## Findings and corrections
+
+1. The receiver sun was partly outside the scene. It now sits fully inside the upper-right app surface, enters quickly, makes one restrained rotation, and settles.
+2. The bottle followed a diagonal rocking path. It now stays upright on one fixed x-axis and moves down through the two contained wave layers without rotation.
+3. Individually positioned outline fireflies made the hub feel like generic decoration. The background now uses Cecelia's single authored firefly-mesh asset in ochre behind the carrying firefly.
+4. The picker used the wingless outline state. Its selected firefly now uses Cecelia's winged F1 frame and the steel-blue `#5B7A85` preset.
+5. The phone-scale stamp line was materially lighter than the envelope. A recorded derived asset preserves Cecelia's silhouette and palette while dilating the existing line pixels; the original source remains unchanged.
+6. The plane scene moved one composite cloud sheet as a wallpaper. Three alpha-preserving crops of Cecelia's active cloud artwork now move apart independently while the accepted plane path remains unchanged.
+7. The envelope helper, reusable-stamp actions, and final travel action shared too little vertical space. The workbench now reserves separate rows and 42-pixel stamp-choice targets above the full-width travel button.
+
+## Verification
+
+- `npx playwright test tests/annotated-feedback.spec.ts --reporter=line` — 6 passed.
+- `npm run build` — passed, including TypeScript, Vite, Sites output preparation, and the 28-file protected runtime integrity check.
+- Side-by-side visual review found no actionable P0, P1, or P2 mismatch in this scoped refinement. No visible route line, ambient loop, generic replacement illustration, or new product mechanism was introduced.
+
+## Final result
+
+passed
