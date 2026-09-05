@@ -3,7 +3,22 @@
 
 This is an HTML-only 10-slide live presentation. `deck/deck-spec.json` remains the content contract and `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 4:35, leaving 1:25 inside the six-minute heat limit. The product is shown through a shared live maker-to-receiver demo, not a video or static product walkthrough.
 
-The full judge review, 2025 winner comparison and proposed next-level narrative are in [`NEXT_LEVEL_REVIEW.md`](NEXT_LEVEL_REVIEW.md). The proposal is not yet the live implementation.
+The full judge review, 2025 winner comparison and next-level narrative are in [`NEXT_LEVEL_REVIEW.md`](NEXT_LEVEL_REVIEW.md). The approved portions described below are now implemented in the live deck.
+
+## Approved next-level direction
+
+Ethan approved the next-level narrative and hierarchy direction below. The live HTML, speaker notes and deck specification now implement it, and the changed build states have been checked at the native 1600 × 900 canvas.
+
+- **Process stays in the story.** Page 3 introduces the original `where we started` hypothesis and emphasises `show it.` Page 4 then makes the process reframe explicit: the team moved from whether people care to when care feels socially permitted on an ordinary day.
+- **Secondary research becomes a bounded design question.** Page 5 presents text, voice/video and letter/gift as three psychological mechanisms to test. It reveals one active mechanism at a time; the Goldilocks position is a design target/question, never a discovered research result.
+- **One testable first need-state.** Page 7 centres a close but distance-separated relationship, one specific appreciative thought, and no suitable format in the moment. University students, long-distance family and close friends remain quiet recruitment examples, not declared market segments.
+- **Digital has an expressive advantage.** Page 9 retains the current solution sentence, then reveals `Because digital can hold more than words.` with five clean hand-drawn media labels: writing, photo, voice, video and chosen song. This is one expressive spectrum, not a product mockup, card grid or claim that digital is inherently more meaningful.
+- **The demo remains causal.** Page 10 explains why each step exists while showing `name → make → seal → send → open → keep/remove`, then closes verbally: `The message can be complete when it arrives.`
+- **Every build has one visual boss.** The current spoken point receives full contrast; supporting material stays subordinate; prior material fades. Deep blue is the active accent, and presenter chrome hides in presentation mode.
+
+Ethan deliberately did **not** approve the proposed replacements for the rehearsal survey slide, the If / And / Then / Therefore synthesis, or the existing main solution sentence. Those elements remain in the live sequence. This does not change the evidence contract below: no rehearsal percentage, rating, position or circle size may be presented as a participant finding in judged delivery.
+
+For page 9, reject the fake `for Maya` keepsake-paper box, decorative diamonds and an object-description subline. The five media labels are the whole supporting visual language beneath the headline.
 
 Open `index.html` directly, or serve the repository locally:
 

@@ -4,7 +4,9 @@ import { access, readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const deckUrl = new URL('../index.html', import.meta.url);
+const refinementsUrl = new URL('../refinements.css', import.meta.url);
 const source = await readFile(deckUrl, 'utf8');
+const refinements = await readFile(refinementsUrl, 'utf8');
 
 test('core scaling and navigation bootstrap without a static module import', () => {
   const bootScript = source.match(/<script>([\s\S]*?const deck = [\s\S]*?)<\/script>/);
@@ -35,7 +37,9 @@ test('the revised deck opens on a visible logo page and contains 10 live slides'
 });
 
 test('the latest meeting framing replaces attribution and unsupported market claims', () => {
-  assert.match(source, /We appreciate our friends and family\. We just do not always show it/);
+  assert.match(source, /We appreciate our friends and family\. We just do not always[\s\S]*?show it/);
+  assert.match(source, /class="problem-origin">where we started<\/p>/);
+  assert.match(source, /class="problem-emphasis">show it\.<\/span>/);
   assert.doesNotMatch(source, /Chloe put the problem this way/);
   assert.doesNotMatch(source, /Our first market/);
   assert.doesNotMatch(source, /digital card/);
@@ -68,8 +72,8 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   assert.match(source, /Who sits in the gap\?/);
   assert.match(source, /<span>text<\/span>[\s\S]*?too awkward[\s\S]*?too casual/);
   assert.match(source, /<span>letter \/ gift<\/span>[\s\S]*?too much[\s\S]*?high friction · inaccessible/);
-  assert.match(source, /<h2>They care\.<\/h2>[\s\S]*?appreciation[\s\S]*?stays unspoken/);
-  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
+  assert.match(source, /One thought\.<br>One close relationship\.<br>No format that fits\./);
+  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance family[\s\S]*close friends/);
   assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-zone left[\s\S]*class="audience-zone center[\s\S]*class="audience-zone right/);
   assert.doesNotMatch(source, /class="audience-target/);
   assert.doesNotMatch(source, /Grandmother|Granddaughter/);
@@ -84,12 +88,44 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   assert.doesNotMatch(source, /solution-detail|device-wrap/);
 });
 
+test('the approved process narrative uses one active focus at a time', () => {
+  assert.match(source, /We looked for what makes an ordinary day different\./);
+  assert.match(source, /How our framing changed/);
+  assert.match(source, /Psychology gave us three mechanisms to test\./);
+  assert.match(source, /mechanisms, not verdicts/);
+  assert.match(source, /Goldilocks zone are working hypotheses/);
+  assert.match(refinements, /\.occasion-slide\[data-current-step="2"\] \.occasion-token\[data-step="1"\]/);
+  assert.match(refinements, /\.matrix-slide\[data-current-step="4"\] \.plot:not\(\.target\)/);
+  assert.match(refinements, /opacity: \.42/);
+});
+
+test('the need-state and solution explain why digital expression is useful', () => {
+  const audienceSlide = source.match(/<article class="slide audience-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+  const solutionSlide = source.match(/<article class="slide solution-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+
+  assert.match(audienceSlide, /One thought\.<br>One close relationship\.<br>No format that fits\./);
+  assert.match(audienceSlide, /Distance should not leave appreciation unspoken\./);
+  assert.match(audienceSlide, /Recruitment examples: uni students · long-distance family · close friends/);
+  assert.doesNotMatch(audienceSlide, /close family/);
+  assert.match(solutionSlide, /data-steps="1"/);
+  assert.match(solutionSlide, /Warm &amp; Fuzzies is a private digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
+  assert.match(solutionSlide, /Because <em>digital<\/em> can hold more than words\./);
+  for (const medium of ['writing', 'photo', 'voice', 'video', 'song']) {
+    assert.match(solutionSlide, new RegExp(`>${medium}<`));
+  }
+  assert.match(solutionSlide, /<svg viewBox="0 0 64 64"/);
+  assert.match(solutionSlide, /class="expressive-media"/);
+  assert.doesNotMatch(solutionSlide, /keepsake-paper|for Maya|one thought, in the form it needs/);
+  assert.doesNotMatch(solutionSlide, /emoji|🏷|🎵|📷/u);
+  assert.match(refinements, /:fullscreen #hud,[\s\S]*:fullscreen #progress,[\s\S]*:fullscreen \.skip,[\s\S]*:fullscreen \.status/);
+});
+
 test('the latest review uses a problem-first opener and preserves the full synthesis', () => {
   assert.match(source, /When was the last time you showed someone appreciation or gratitude\?/);
   assert.doesNotMatch(source, /When was the last time someone showed you appreciation/);
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
-  assert.match(source, /Care this explicit can feel like it needs a reason\./);
+  assert.match(source, /We looked for what makes an ordinary day different\./);
   assert.match(source, /occasions provide a ready-made script/);
   assert.match(source, /<strong>ordinary day<\/strong><ul><li>awkward<\/li><li>too much<\/li><li>intense<\/li><\/ul>/);
   assert.match(source, /Kumar &amp; Epley, 2018 · Givi &amp; Galak, 2022/);
@@ -99,7 +135,7 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /no ready-made script/);
   assert.doesNotMatch(source, /Senders can overestimate awkwardness\./);
   assert.doesNotMatch(source, /Ordinary-day care can still be welcome\./);
-  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
+  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance family[\s\S]*close friends/);
   assert.match(source, /data-title="Research synthesis" data-steps="4"/);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
@@ -128,7 +164,7 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.match(source, /Tone can be misread\./);
   assert.match(source, /Voice can feel closer\./);
   assert.match(source, /Thoughtfulness matters more than price\./);
-  assert.match(source, /psychology-informed/);
+  assert.match(source, /mechanisms, not verdicts/);
   assert.match(source, /font-size:25px[\s\S]*?color:var\(--ink\)/);
   assert.match(source, /Published studies support the mechanism labels/);
   assert.doesNotMatch(source, /class="practice-ratings"/);

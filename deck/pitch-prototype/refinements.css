@@ -162,6 +162,86 @@
   max-width: 1320px;
 }
 
+/* Slide 03 — state the team's starting point without treating it as a finding. */
+.problem-slide .problem-core {
+  position: relative;
+}
+
+.problem-origin {
+  position: absolute;
+  top: 118px;
+  left: 50%;
+  translate: -50% 0;
+  color: var(--accent-ink);
+  font-size: 22px;
+  letter-spacing: .065em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.problem-emphasis {
+  display: inline-block;
+  color: inherit;
+  transition: color 240ms var(--enter), transform 340ms var(--enter);
+}
+
+.problem-slide[data-current-step="1"] .problem-emphasis {
+  color: var(--accent-ink);
+  transform: translateY(-3px);
+}
+
+/* Each click has one visual boss. Context remains present but deliberately quiet. */
+.occasion-slide .occasion-token,
+.matrix-slide .plot,
+.matrix-slide .plot-evidence,
+.occasion-slide .rule-layout > div:first-child,
+.matrix-slide .headline,
+.solution-slide .solution-statement h2 {
+  transition: opacity 220ms var(--enter), filter 220ms var(--enter), color 220ms var(--enter), transform 320ms var(--enter);
+}
+
+.occasion-slide[data-current-step="2"] .occasion-token[data-step="1"],
+.occasion-slide[data-current-step="3"] .occasion-token[data-step="1"],
+.occasion-slide[data-current-step="3"] .occasion-token[data-step="2"],
+.occasion-slide[data-current-step="4"] .occasion-token,
+.occasion-slide[data-current-step="5"] .occasion-token,
+.occasion-slide[data-current-step="5"] .permission-break,
+.occasion-slide[data-current-step="5"] .ordinary-day {
+  opacity: .42;
+  filter: saturate(.7);
+}
+
+.occasion-slide[data-current-step="4"] .permission-label,
+.occasion-slide[data-current-step="5"] .permission-label {
+  opacity: .42;
+}
+
+.occasion-slide[data-current-step="5"] .rule-layout > div:first-child {
+  opacity: .42;
+}
+
+.matrix-slide[data-current-step="2"] .plot[data-step="1"],
+.matrix-slide[data-current-step="3"] .plot[data-step="1"],
+.matrix-slide[data-current-step="3"] .plot[data-step="2"],
+.matrix-slide[data-current-step="4"] .plot:not(.target),
+.matrix-slide[data-current-step="4"] .map-key {
+  opacity: .42;
+  filter: saturate(.65);
+}
+
+.matrix-slide[data-current-step="1"] .headline,
+.matrix-slide[data-current-step="2"] .headline,
+.matrix-slide[data-current-step="3"] .headline,
+.matrix-slide[data-current-step="4"] .headline {
+  opacity: .42;
+}
+
+.matrix-slide[data-current-step="1"] .plot-evidence[data-evidence="1"],
+.matrix-slide[data-current-step="2"] .plot-evidence[data-evidence="2"],
+.matrix-slide[data-current-step="3"] .plot-evidence[data-evidence="3"] {
+  color: var(--ink);
+}
+
 /* Slide 06 — a handwritten comparison ledger, not a dashboard table. */
 .research-title {
   position: absolute;
@@ -389,6 +469,135 @@
   font-size: 38px;
   line-height: .88;
   text-wrap: balance;
+}
+
+/* Slide 07 — one working need-state, with recruitment examples deliberately subordinate. */
+.audience-zone.center {
+  left: 640px;
+  top: 334px;
+  width: 480px;
+}
+
+.audience-zone.center h2 {
+  font-size: 55px;
+  line-height: .83;
+  max-width: 470px;
+}
+
+.audience-consequence {
+  max-width: 430px;
+  color: var(--accent-ink);
+  font-size: 33px;
+}
+
+.audience-groups {
+  max-width: 430px;
+  color: rgb(8 31 77 / .56);
+  font-size: 18px;
+  line-height: 1.05;
+}
+
+.audience-slide[data-current-step="3"] .audience-zone.left,
+.audience-slide[data-current-step="3"] .audience-zone.right,
+.audience-slide[data-current-step="3"] .audience-ring {
+  opacity: .4;
+}
+
+/* Slide 09 — digital's advantage is expressive range, not another generic screen. */
+.solution-slide .solution-reveal {
+  padding-top: 96px;
+}
+
+.solution-slide .solution-statement {
+  max-width: 1360px;
+}
+
+.expressive-range {
+  max-width: 1240px;
+  margin: 34px auto 0;
+  color: var(--accent-ink);
+}
+
+.expressive-range > p {
+  margin-bottom: 46px;
+  font-size: 64px;
+  line-height: .88;
+  text-align: center;
+}
+
+.expressive-range > p em {
+  color: var(--accent-ink);
+  font-style: normal;
+}
+
+.expressive-media {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: min(100%, 1080px);
+  height: 152px;
+  margin: 0 auto;
+}
+
+.expressive-media::before {
+  content: "";
+  position: absolute;
+  top: 45px;
+  right: 58px;
+  left: 58px;
+  border-top: 2px solid rgb(8 31 77 / .24);
+}
+
+.expressive-mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  min-width: 118px;
+  color: var(--ink);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.expressive-mark svg {
+  width: 76px;
+  height: 76px;
+  padding: 10px;
+  background: var(--paper);
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3px;
+}
+
+.expressive-mark i { font-style: normal; }
+.expressive-mark.photo,
+.expressive-mark.video { transform: translateY(20px); }
+.expressive-mark.voice { transform: translateY(8px); }
+
+.solution-slide[data-current-step="1"] .solution-statement h2 {
+  opacity: .18;
+  transform: translateY(-24px) scale(.86);
+}
+
+.solution-slide[data-current-step="1"] .expressive-range {
+  color: var(--ink);
+  transform: translateY(-30px);
+}
+
+/* Chrome is useful while rehearsing, but should vanish in presentation fullscreen. */
+:fullscreen #hud,
+:fullscreen #progress,
+:fullscreen .skip,
+:fullscreen .status,
+:-webkit-full-screen #hud,
+:-webkit-full-screen #progress,
+:-webkit-full-screen .skip,
+:-webkit-full-screen .status {
+  display: none !important;
 }
 
 /* Slide 10 — one final invitation beside a QR, without a product-card shell. */

@@ -1342,3 +1342,57 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Reason: `rethinking social norms of how we show appreciation` names the right territory but is long and academic. The selected line makes the timing rule legible in ordinary language, does not claim the hypothesis is already proven and does not reveal the solution mechanism.
 - Hierarchy: the project title is read first, then the firefly and product name. Do not add a subtitle, feature statement or second thesis.
 - Remaining blocker: add the verified team number and member names once supplied.
+
+## 2026-09-05 - Evolve the live pitch through visible process, expressive digital media and one-boss hierarchy
+
+- Status: implemented and verified as the current rehearsal-deck direction.
+- Decision: implement the next-level review except its proposed replacements for the rehearsal survey slide, the existing If / And / Then / Therefore synthesis, and the current main solution sentence. Those three are retained at Ethan's direction.
+- Page 3: introduce the original idea as `where we started` and make `show it.` the visual emphasis. This distinguishes the team's starting hypothesis from a research result.
+- Page 4: make the process transition explicit: the team moved from whether people care to when ordinary-day care feels socially permitted.
+- Page 5: show one active psychological mechanism at a time across text, voice/video and letter/gift. Published work makes these mechanisms plausible to test; it does not prove the plotted geometry, comparisons or Goldilocks target. Goldilocks remains a design question.
+- Page 7: centre one working need-state — a close but distance-separated relationship, one specific appreciative thought, and no format that fits the moment. University students, long-distance family and close friends stay visually quiet recruitment examples rather than asserted markets.
+- Page 9: retain the current main solution sentence and add a second reveal: `Because digital can hold more than words.` Support it with five clean hand-drawn media icons/labels — writing, photo, voice, video and chosen song. This is one expressive spectrum, not a product mockup, card grid or claim that digital is inherently more meaningful.
+- Page-9 rejection: remove the fake `for Maya` keepsake-paper box, decorative diamonds and object-description subline. They falsely turn the rationale into a fake product state and dilute the headline's hierarchy.
+- Page 10: show the causal demo path `name → make → seal → send → open → keep/remove`, explain the reason for each step, and close verbally with `The message can be complete when it arrives.`
+- Deck-wide: every progressive build has one current visual boss. Current narration receives deep-blue/full contrast; supporting proof is subordinate; earlier points fade; presentation chrome hides during projection.
+
+### Mandatory judge review
+
+- Verdict: **Pass for rehearsal / Test first for judged delivery**.
+- Weakest judging angle: **evidence quality**. The retained survey and comparison treatments still use invented rehearsal percentages, ratings, positions and circle sizes.
+- Brief fit: strengthens conditionally. The deck more clearly identifies and questions the ordinary-day appreciation rule, then shows how the product responds.
+- Problem identification: strengthens. Hypothesis → occasion framing → mechanism test → specific working need-state makes the team's route visible without pretending it is completed research.
+- Solution approach and medium necessity: strengthens conditionally. The writing/photo/voice/video/chosen-song spectrum explains why a digital space can hold more modes of expression than one existing channel. It still does not establish that an app beats a text, voice note, letter or non-digital ritual.
+- Design innovation: strengthens. The product is framed as an authored, multi-modal expression rather than merely a digital card; however, that distinction must survive the live demo and participant testing.
+- Visual communication and presentation: strengthens. One-active-item hierarchy gives the presenter a controllable focal point and makes the process legible under time pressure.
+- Required challenge lenses: alternatives remain visible controls; the first audience is a working need-state rather than market sizing; expression must stay optional and accessible; different media must not create reply pressure or disclosure risk; the event-network QR retains an on-screen fallback; the live prototype proves flow only, not emotional impact.
+- Next evidence that would most change this decision: a matched ordinary-day comparison that records sender prediction, receiver interpretation and reply pressure across an existing channel, Warm & Fuzzies and one non-digital control.
+- Judged-delivery blocker: replace or remove every rehearsal percentage, decimal rating, chart coordinate and circle-size claim before presenting externally as evidence.
+
+### Required challenge review
+
+| Challenge lens | Current answer | Blocking unknown |
+| --- | --- | --- |
+| Assumption and inversion | Existing text, voice and physical gestures remain visible controls rather than being declared broken. | Whether an existing channel already resolves the same ordinary-day need. |
+| Behaviour and context | The story names an ordinary moment inside a close but distance-separated relationship. | How often that moment occurs and what actually stops the sender. |
+| Medium necessity | Digital can place writing, photo, voice, video and a chosen song in one asynchronous expression. | Whether combining media improves the experience enough to justify a new app. |
+| Alternatives | Text, voice/video, letter/gift and a future non-digital control remain part of the comparison. | Direct matched evidence across those alternatives. |
+| Human specificity | The first target is a need-state; university students, long-distance family and close friends are recruitment examples only. | Which real context shows the strongest shared need. |
+| Inclusion and accessibility | Modalities are optional and the receiver can open without an account. | Assistive-technology, low-bandwidth and media-permission testing. |
+| Trust, safety and privacy | The pitch avoids encrypted/private-delivery claims and gives the receiver keep/remove control. | Forwarding, disclosure and bearer-link expectations in real use. |
+| Failure and recovery | The QR has a visible no-phone fallback and the demo uses one complete path. | Physical event-network and second-device rehearsal. |
+| Feasibility and demo truth | The public route returns HTTP 200 and the deck claims only the behaviour shown live. | Cross-device reliability through the complete sender-to-receiver handoff. |
+| Incentives and second-order effects | No reply is required; media and prompts remain optional. | Whether repeated use creates obligation, prompting fatigue or oversharing. |
+| Simplicity and retellability | One current visual boss, one solution sentence and one causal demo reduce the retelling burden. | Timed first-listener recall under pitch conditions. |
+| Authorship and distinctiveness | Ethan removed the generated fake-object treatment; the deck retains Cecelia, Goldilocks rings and its hand-drawn channel language. | Whether the media spectrum still reads as a generic feature row without narration. |
+
+### Mandatory design-authenticity review
+
+- Verdict: **Pass for rehearsal / Test first for judged delivery**.
+- Content-native signature: the existing hand-drawn firefly, occasion-script tension and Goldilocks framing now resolve into one concrete expressive move — a sparse, hand-drawn writing/photo/voice/video/chosen-song spectrum when that is what the thought needs.
+- Human direction: Ethan selected the retained survey/synthesis/solution elements, requested the process narrative, specified the expressive media range and required the one-boss hierarchy.
+- Reference delta: the team borrowed the 2025 winner's specificity and visible research-to-product chain, not its 32-page length, colour system, persona-card structure or social-feed UI.
+- Decisive tests: the full sequence passes the logo-swap test because the occasion rule, Goldilocks gap and receiver-controlled ending depend on this problem; page 9 alone remains the weakest swap-resistant moment. The visible lines pass the team-voice test because Ethan directly rewrote and selected them after seeing the render.
+- Remaining risk: a generic multimedia-feature list would weaken the subject-specific point of view. The final render must show one expressive spectrum, not a feature grid, card set or fake keepsake-paper object, and must keep the receiver experience optional and non-performative.
+- Post-build result: all changed build states were inspected at the native 1600 × 900 canvas with no visible overflow, console error or warning. Fullscreen hides the HUD, progress, slide status and next control while keyboard navigation continues to advance builds. Page 9 now passes the subtraction review after Ethan removed the fake recipient object and retained only the headline plus expressive-media spectrum.
+- Remaining requirement: run a timed first-listener recall and physical projector/phone rehearsal before advancing beyond rehearsal.

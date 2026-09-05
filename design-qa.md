@@ -267,3 +267,36 @@ The original cover only named the product, so a judge received no project territ
 ## Final result
 
 passed; the title creates a clear first reading without adding a second explanatory paragraph or copying the winner deck's visual style.
+
+---
+
+# Design QA — approved next-level hierarchy and expressive-media direction
+
+## Scope and status
+
+- Status: implementation and native-canvas visual verification complete for the approved rehearsal direction.
+- Approved scope: page 3 hypothesis/process framing; page 4 explicit reframe; page 5 one-active-mechanism hierarchy; page 7 specific working need-state; page 9 headline `Because digital can hold more than words.` plus five clean hand-drawn labels — writing, photo, voice, video and chosen song; page 10 causal demo narration and verbal close; deck-wide one-boss hierarchy and hidden presentation chrome.
+- Explicitly retained by Ethan: the rehearsal survey slide, the If / And / Then / Therefore slide and the current main solution sentence.
+
+## Native-canvas verification
+
+1. Reviewed 21 changed/final build states across pages 3–10 at 1600 × 900. No visible content overflow was detected; the intentionally cropped page-7 rings were excluded from overflow failure because their crop is the selected composition.
+2. Page 5 presents one full-contrast form and one bounded mechanism at a time; earlier forms recede, and the final state explicitly labels the Goldilocks map as a working design target rather than a finding.
+3. Page 7 makes `One thought. One close relationship. No format that fits.` the first centre read; recruitment examples remain quiet and subordinate.
+4. Page 9 retains the exact first-click solution sentence, then reveals `Because digital can hold more than words.` with only writing, photo, voice, video and chosen-song icons. Ethan's subtraction removed the fake `for Maya` keepsake box, diamonds and object subline after seeing the render.
+5. Page 10 retains the optional QR/no-phone fallback. OpenCV decoded `https://warm-and-fuzzies.vercel.app/demo` from the final full-slide render, and the destination returned HTTP 200.
+6. In browser fullscreen, HUD, progress, slide status and next control all compute to `display: none`; an ArrowRight keypress still advances page 9 from build 0 to build 1.
+7. Browser navigation across the checked states produced zero console errors and zero warnings. The standalone deck suite passes 10/10, the deck specification validates and `git diff --check` passes.
+
+Final reference captures: `/tmp/suede-slide9-clean-spectrum.png` and `/tmp/suede-slide10-final.png`.
+
+The Impeccable detector ran after the final UI edit but its HTML parser dependencies were unavailable, so it used a degraded regex fallback and returned no findings. The result is treated as an undercount; the native-canvas render inspection above is the controlling visual evidence. Its open 393 × 852 hero phase belongs to an unrelated mobile-comp workflow and was not applied to this fixed 1600 × 900 presentation canvas.
+
+## Review boundary
+
+- Judge verdict: **Pass for rehearsal / Test first for judged delivery**.
+- Authenticity verdict: **Pass for rehearsal / Test first for judged delivery**.
+- Content-native signature: the same hand-drawn channel language moves from bounded psychology on page 5 to the sparse digital-expression spectrum on page 9, then into the real maker-to-receiver demo.
+- Strongest remaining AI tell: five evenly spaced media icons can still read as a generic feature row when presented without narration. The single headline, shared line and removal of all card/mockup containers keep it subordinate to the medium argument; the physical rehearsal must confirm first-listener recall.
+- Material human change after render: Ethan rejected the generated recipient-object composition and directly selected the stripped headline-plus-icons treatment.
+- Blocking evidence boundary: the retained 82%, 71%, ratings, coordinates and circle sizes remain invented rehearsal material. They must be replaced or removed before a judged delivery regardless of hierarchy or visual polish.
