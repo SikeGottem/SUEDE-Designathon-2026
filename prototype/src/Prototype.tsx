@@ -838,7 +838,7 @@ function Home({ onEnter }: { onEnter: () => void }) {
       </div>
       <div className="home-bee-mark" aria-hidden="true">
         <motion.img
-          src={artwork.firefly.outline}
+          src="/assets/illustrations/cecilia/firefly-brand-mark.png"
           alt=""
           draggable={false}
           data-asset-slot="home-bee"

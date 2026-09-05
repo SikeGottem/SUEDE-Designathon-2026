@@ -32,7 +32,7 @@ test.beforeEach(async ({ page }) => {
 
 test("places the authored firefly, envelope, and seal assets in their product slots", async ({ page }) => {
   await page.goto("/");
-  await expectAuthoredAsset(page.locator('[data-asset-slot="home-bee"]'), "couriers/firefly-outline.png");
+  await expect(page.locator('[data-asset-slot="home-bee"]')).toHaveAttribute("src", "/assets/illustrations/cecilia/firefly-brand-mark.png");
 
   await page.goto("/?screen=envelope");
   await expectAuthoredAsset(page.locator(".envelope-canvas-source"), "containers/envelope-outline.png");
