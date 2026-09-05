@@ -58,6 +58,23 @@ A test exists to change confidence, not to perform a research ritual.
 - Decision rule applied: change the runtime shell only; do not alter app-owned product composition to mask emulator framing.
 - What changes next: test on a physical phone and retain the desktop emulator as the design/QA control.
 
+### Frozen two-link pitch-demo rehearsal
+
+- Date: 5 September 2026
+- Idea link: [pre-made artifact / QR capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md)
+- Uncertainty: whether the deployed fixed demo routes and stable QR survive a physical event-like handoff without being confused for the normal product or private delivery.
+- What we believe now: `/demo/create` can walk the normal maker path from one locked, prefilled canonical artifact, while `/demo/receive` can replay that exact artifact repeatedly from one stable QR without touching the normal cabinet.
+- Falsification condition: either route changes the frozen artifact, the QR changes or fails after redeploy, the receiver is consumed, the normal product route changes, or the second device cannot complete the handoff.
+- Smallest useful test: deploy once, scan the `/demo/receive` QR from a second phone, open it twice, then use `/demo/create`; verify both routes show the exact canonical artifact and ordinary generated links still behave independently.
+- Who or what we need: deployed prototype, one presenter device, one audience device, and a no-device fallback.
+- Owner: prototype/pitch team
+- Timebox: one rehearsal before the pitch
+- Observable supporting signal: the QR and both fixed URLs remain stable; the receiver replays; the presenter shows the familiar flow without live composition; existing visual language remains unchanged.
+- Observable weakening signal: event-network, cross-device, cache, route, or visual-chrome failure; an audience member mistakes the demo link for a private keepsake delivery.
+- Decision rule applied: preserve the two-link rehearsal fixture only; edit the canonical preset and redeploy for content changes, never add a new demo UI or alter normal product behaviour.
+- Automated result: ten focused browser checks pass for the locked canonical creator, fixed presenter handoff URL, deterministic reload, two-context receiver replay, exact creator/receiver content match, legacy/trailing-slash hardening, receiver-flow containment, ephemeral cabinet isolation, and unchanged normal root. The existing three recipient/link/QR regression checks also pass.
+- What changes next: deploy, verify both public routes directly, then complete the remaining physical second-device rehearsal before placing the QR into the judged deck.
+
 ## Completed
 
 No completed tests yet.

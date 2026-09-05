@@ -845,3 +845,15 @@ The composition is part of the message. Each text block's position, size, rotati
 This delta does not validate whether richer composition improves appreciation, authorise new content types, or relax the no-scroll, sparse paper-first, no-chat, and no-marketplace boundaries.
 
 Primary source: [creator-canvas feedback](TRANSCRIPTS/2026-09-05-71a1d2ad-62f9-5a40-bef2-024e3a8df630.md).
+
+## 32. Frozen two-link pitch-demo contract — 5 September
+
+**Status:** Settled rehearsal/demo contract. This is not a new normal-product flow, user evidence, a private-delivery promise, or a replacement for exact per-object receiver links.
+
+One canonical artifact is frozen for the pitch. Fixed `/demo/create` is the presenter route: it walks the normal maker sequence, but starts from that artifact's prefilled, view-only creator state so the pitch does not spend its limited time composing or accidentally change the object behind the audience QR. Fixed `/demo/receive` is the audience route: it opens the exact same canonical artifact, remains replayable after any number of scans, and is never consumed. Any keep/remove state on this route is temporary to that page session, resets on reload, and never reads from or writes to the normal browser cabinet.
+
+Generate the presentation QR once from `/demo/receive`; it must remain stable across rehearsals and the pitch. Before presenting, the team may edit the canonical preset and redeploy, but must keep `/demo/create` and `/demo/receive` stable. The normal creator, generated bearer links/QRs, receiver path, and private-product boundaries do not change.
+
+The existing human-directed visual authenticity and sparse paper/ink language are preserved. The two demo routes must add no generic demo chrome, dashboard, or alternative visual system. The pitch still needs a no-device fallback and a second-device rehearsal of the deployed create-to-receive handoff.
+
+Primary source for the pre-made-object/QR intent: [pitch-demo capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md). The fixed routes and deployment discipline are the team's settled direct rehearsal decision.

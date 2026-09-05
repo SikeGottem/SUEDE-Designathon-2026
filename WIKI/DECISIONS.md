@@ -1396,3 +1396,46 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Remaining risk: a generic multimedia-feature list would weaken the subject-specific point of view. The final render must show one expressive spectrum, not a feature grid, card set or fake keepsake-paper object, and must keep the receiver experience optional and non-performative.
 - Post-build result: all changed build states were inspected at the native 1600 × 900 canvas with no visible overflow, console error or warning. Fullscreen hides the HUD, progress, slide status and next control while keyboard navigation continues to advance builds. Page 9 now passes the subtraction review after Ethan removed the fake recipient object and retained only the headline plus expressive-media spectrum.
 - Remaining requirement: run a timed first-listener recall and physical projector/phone rehearsal before advancing beyond rehearsal.
+
+## 2026-09-05 - Freeze one canonical two-link pitch demo
+
+- Status: current rehearsal/demo direction, selected directly by the team.
+- Decision: use one frozen canonical artifact at fixed `/demo/create` for the presenter and fixed `/demo/receive` for the audience. The presenter walks the normal process from a locked, prefilled creator state; the audience route replays the same object and is never consumed. Demo keep/remove state is ephemeral and isolated from the normal browser cabinet. Generate the presentation QR once from `/demo/receive` and keep it stable. Before-pitch changes edit the canonical preset and redeploy without changing either URL.
+- Reason: show the complete maker-to-receiver mechanism without spending live pitch time composing or creating a QR that points at a different object.
+- Evidence boundary: [the 5 September capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md) supports a pre-made artifact shared with the QR. Fixed route names, replay, and redeploy discipline are direct rehearsal decisions, not user evidence or private delivery.
+- Consequence: normal creator, generated bearer-link/QR, and receiver behaviours remain unchanged. Existing paper/ink visual authenticity is preserved; no generic demo chrome is permitted.
+
+### Mandatory judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | A short, legible demonstration supports the pitch without changing the experience claim. | It still cannot demonstrate norm change. |
+| Problem identification | neutral | Demo routing does not sharpen the underlying ordinary-day tension. | The pitch must retain its specific person and moment. |
+| Solution approach | strengthens | One exact object makes the maker-to-receiver mechanism visible end to end. | A prefilled maker can conceal creation friction. |
+| Design innovation | neutral | The product mechanism, not demo infrastructure, carries distinctiveness. | A staged route could read as a conventional app demo. |
+| Visual communication | strengthens | Preserving the existing visual language avoids a competing presentation shell. | Generic chrome would dilute the paper/ink point of view. |
+| Presentation skills | strengthens | Stable links and one QR make the story repeatable under time pressure. | Physical event-network and cross-device reliability can still break the handoff. |
+| Evidence quality | neutral | The source is internal team direction and is labelled as such. | A successful scan is not user validation or private delivery proof. |
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | Live making may tell a truer story. | The normal process remains visible; only its starting state is prefilled. | Whether live composition adds more than it costs in pitch time. |
+| Behaviour and context | Judges may not scan during a room demo. | The QR is optional and a no-device fallback remains required. | Actual room participation. |
+| Medium necessity | A recorded video could be safer. | The two-link fixture proves the deployed interaction rather than only showing it. | Whether network risk outweighs that proof. |
+| Alternatives | A single generic object might be enough. | Both routes share the same canonical artifact, preventing a false handoff. | Whether the chosen artifact represents the product clearly. |
+| Human specificity | The audience is not a normal recipient. | The route is explicitly rehearsal truth, not a recipient test. | Receiver interpretation outside the pitch. |
+| Inclusion and accessibility | QR-only access excludes some people. | A no-device fallback is mandatory. | Whether the fallback is equally clear in the room. |
+| Trust, safety and privacy | A public QR can be mistaken for a private delivery link. | The demo route is replayable and openly non-private. | Audience understanding of that distinction. |
+| Failure and recovery | A scan or route can fail live. | Stable URLs allow retry; the fallback covers no-device access. | Event-network behaviour. |
+| Feasibility and demo truth | Fixed routes can drift from the artifact or normal product. | One canonical preset and explicit isolation constrain the fixture. | Second-device deployed handoff. |
+| Incentives and second-order effects | A public object could pressure audience reaction. | Participation is optional; no response is requested or measured. | Perceived social pressure in the room. |
+| Simplicity and retellability | Two routes could confuse the presenter. | `create` is presenter-only and `receive` is audience-only, tied by one object. | First-listener recall. |
+| Authorship and distinctiveness | Demo chrome could make the experience generic. | Preserve the existing human-directed paper/ink visual language and add no chrome. | Final rendered route inspection. |
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: implement and rehearse the isolated two-link fixture.
+- Blocking conditions: deploy one canonical preset; generate the QR once from `/demo/receive`; preserve both URLs through pre-pitch preset edits/redeploys; keep the receiver replayable; retain a no-device fallback; complete a second-device rehearsal.
+- Weakest judging angle: **physical event-network/cross-device reliability**, because the pitch handoff fails visibly if the deployed QR or receiver route cannot open on another device.
+- Main trade-off: a dependable, concise demo gives up live proof of spontaneous creation.
+- Next evidence that could change the verdict: one second-device rehearsal on the deployed event-like network.
+- Recommendation: proceed only after that rehearsal passes; otherwise use the no-device fallback and fix the fixture without changing normal product routes.

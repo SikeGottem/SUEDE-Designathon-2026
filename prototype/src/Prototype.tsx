@@ -431,7 +431,8 @@ const defaultLayerLayouts: Record<LayerId, LayerLayout> = {
   stamp: { x: 92, y: 126, rotation: 5, scale: 1 },
 };
 
-const publicDemoSnapshot: KeepsakeSnapshot = {
+// The fixed rehearsal links both start from this one serializable artifact.
+const rehearsalArtifact: KeepsakeSnapshot = {
   v: 1,
   id: "warm-fuzzies-demo",
   sender,
@@ -452,6 +453,34 @@ const publicDemoSnapshot: KeepsakeSnapshot = {
   layouts: defaultLayerLayouts,
 };
 
+function cloneSnapshot(snapshot: KeepsakeSnapshot): KeepsakeSnapshot {
+  const cloneStrokes = (strokes: DoodleStroke[]) => strokes.map((stroke) => ({
+    ...stroke,
+    points: stroke.points.map((point) => ({ ...point })),
+  }));
+  return {
+    ...snapshot,
+    crossedOut: snapshot.crossedOut.map((range) => ({ ...range })),
+    seal: cloneStrokes(snapshot.seal),
+    pieces: [...snapshot.pieces],
+    capture: snapshot.capture ? { ...snapshot.capture } : null,
+    voice: snapshot.voice ? { ...snapshot.voice } : null,
+    song: snapshot.song ? { ...snapshot.song } : null,
+    doodles: cloneStrokes(snapshot.doodles),
+    stickers: [...snapshot.stickers],
+    layouts: Object.fromEntries(layerIds.map((layer) => [layer, { ...snapshot.layouts[layer] }])) as Record<LayerId, LayerLayout>,
+    textBlocks: textBlocksFromSnapshot(snapshot),
+  };
+}
+
+function rehearsalRouteFromPath(): "create" | "receive" | null {
+  if (typeof window === "undefined") return null;
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  if (pathname === "/demo/create") return "create";
+  if (pathname === "/demo" || pathname === "/demo/receive") return "receive";
+  return null;
+}
+
 function phaseFromQuery(): Phase | null {
   if (typeof window === "undefined") return null;
   const value = new URLSearchParams(window.location.search).get("screen");
@@ -460,17 +489,25 @@ function phaseFromQuery(): Phase | null {
 }
 
 export default function Prototype() {
-  const requestedPhase = phaseFromQuery();
-  const hashPresent = typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
-  const linkedSnapshot = snapshotFromHash() ?? (!hashPresent && typeof window !== "undefined" && window.location.pathname === "/demo" ? publicDemoSnapshot : null);
-  const seededPreview = Boolean(requestedPhase && !["home", "menu", "recipient"].includes(requestedPhase));
-  // A fragment link always wins over the capture route and is immutable for the receiving demo.
-  const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
+  const rehearsalRoute = rehearsalRouteFromPath();
+  const isRehearsalCreate = rehearsalRoute === "create";
+  const isDemoReceiver = rehearsalRoute === "receive";
+  const isRehearsalRoute = rehearsalRoute !== null;
+  const requestedPhase = isRehearsalCreate ? null : phaseFromQuery();
+  const hashPresent = !isRehearsalCreate && !isDemoReceiver && typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
+  const linkedSnapshot = isDemoReceiver
+    ? cloneSnapshot(rehearsalArtifact)
+    : isRehearsalCreate
+      ? null
+      : snapshotFromHash();
+  const seededPreview = !rehearsalRoute && Boolean(requestedPhase && !["home", "menu", "recipient"].includes(requestedPhase));
+  // Bearer fragments win for normal links; the fixed receiver rehearsal intentionally ignores them.
+  const [phase, setPhase] = useState<Phase>(() => isRehearsalCreate ? "home" : linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
-  const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? (seededPreview ? "Maya" : ""));
+  const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? (isRehearsalCreate ? rehearsalArtifact.recipient : seededPreview ? "Maya" : ""));
   const [textBlocks, setTextBlocks] = useState<TextBlock[]>(() => linkedSnapshot
     ? textBlocksFromSnapshot(linkedSnapshot)
-    : seededPreview ? textBlocksFromSnapshot(publicDemoSnapshot) : []);
+    : seededPreview ? textBlocksFromSnapshot(rehearsalArtifact) : []);
   const [paper, setPaper] = useState<PaperId>(() => linkedSnapshot?.paper ?? "dotted");
   const [envelope, setEnvelope] = useState<EnvelopeId>(() => linkedSnapshot?.envelope ?? "mail");
   const [seal, setSeal] = useState<DoodleStroke[]>(() => linkedSnapshot?.seal ?? []);
@@ -480,7 +517,7 @@ export default function Prototype() {
   const [cuesOpen, setCuesOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareFailed, setShareFailed] = useState(false);
-  const [cabinet, setCabinet] = useState<KeepsakeSnapshot[]>(loadCabinet);
+  const [cabinet, setCabinet] = useState<KeepsakeSnapshot[]>(() => isRehearsalRoute ? [] : loadCabinet());
   const [lastRemoved, setLastRemoved] = useState<KeepsakeSnapshot | null>(null);
   const [activeSnapshot, setActiveSnapshot] = useState<KeepsakeSnapshot | null>(linkedSnapshot);
   const [removeOpen, setRemoveOpen] = useState(false);
@@ -529,7 +566,8 @@ export default function Prototype() {
   }, [captureAsset, carrierId, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, sealWeight, songAsset, stickers, textBlocks, voiceAsset]);
 
   const applySnapshot = useCallback((snapshot: KeepsakeSnapshot) => {
-    setActiveSnapshot(snapshot); setDraftId(snapshot.id); setRecipient(snapshot.recipient); setTextBlocks(textBlocksFromSnapshot(snapshot)); setPaper(snapshot.paper); setCarrierId(snapshot.carrier); setEnvelope(snapshot.envelope); setSeal(snapshot.seal); setSealWeight(snapshot.sealWeight ?? "bold"); setPieces(snapshot.pieces); setCaptureAsset(snapshot.capture); setVoiceAsset(snapshot.voice); setSongAsset(snapshot.song); setDoodleStrokes(snapshot.doodles); setStickers(snapshot.stickers); setInkColor(snapshot.inkColor); setLayerLayouts(snapshot.layouts); captureAssetRef.current = snapshot.capture; voiceAssetRef.current = snapshot.voice; songAssetRef.current = snapshot.song;
+    const next = cloneSnapshot(snapshot);
+    setActiveSnapshot(next); setDraftId(next.id); setRecipient(next.recipient); setTextBlocks(textBlocksFromSnapshot(next)); setPaper(next.paper); setCarrierId(next.carrier); setEnvelope(next.envelope); setSeal(next.seal); setSealWeight(next.sealWeight ?? "bold"); setPieces(next.pieces); setCaptureAsset(next.capture); setVoiceAsset(next.voice); setSongAsset(next.song); setDoodleStrokes(next.doodles); setStickers(next.stickers); setInkColor(next.inkColor); setLayerLayouts(next.layouts); captureAssetRef.current = next.capture; voiceAssetRef.current = next.voice; songAssetRef.current = next.song;
   }, []);
 
   const replaceCapture = useCallback((next: CaptureAsset | null) => {
@@ -548,7 +586,14 @@ export default function Prototype() {
     else setSongAsset(next);
   }, []);
 
-  const go = (next: Phase) => {
+  const go = (requested: Phase) => {
+    const presenterPhases: Phase[] = ["home", "menu", "recipient", "studio", "envelope", "carrier", "preview", "handoff", "sent"];
+    const receiverPhases: Phase[] = ["arrival", "opening", "reveal", "cabinet", "deferred", "unavailable", "removed"];
+    const next = isRehearsalCreate && !presenterPhases.includes(requested)
+      ? "home"
+      : isDemoReceiver && !receiverPhases.includes(requested)
+        ? "arrival"
+        : requested;
     keyboard.hide();
     setRemoveOpen(false);
     setCabinetRemovingId(null);
@@ -586,7 +631,7 @@ export default function Prototype() {
   };
 
   const resetDraft = () => {
-    setRecipient("");
+    setRecipient(isRehearsalCreate ? rehearsalArtifact.recipient : "");
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setTextBlocks([]);
     setPaper("dotted");
@@ -621,6 +666,10 @@ export default function Prototype() {
   };
 
   const saveToCabinet = (snapshot: KeepsakeSnapshot) => {
+    if (isRehearsalRoute) {
+      setCabinet([cloneSnapshot(snapshot)]);
+      return true;
+    }
     if (containsBlobMedia(snapshot)) return false;
     const next = [snapshot, ...cabinet.filter((item) => item.id !== snapshot.id)].slice(0, 12);
     try {
@@ -633,6 +682,11 @@ export default function Prototype() {
   const removeFromCabinet = (id: string) => {
     const removed = cabinet.find((item) => item.id === id) ?? null;
     const next = cabinet.filter((item) => item.id !== id);
+    if (isRehearsalRoute) {
+      if (removed) setLastRemoved(removed);
+      setCabinet(next);
+      return true;
+    }
     try {
       window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
     } catch { return false; }
@@ -673,26 +727,26 @@ export default function Prototype() {
             {phase === "home" && (
               <Home key="home" onEnter={() => go("menu")} />
             )}
-            {phase === "menu" && <Menu key="menu" reduceMotion={Boolean(reduceMotion)} onCreate={resetDraft} onLetters={() => go("cabinet")} />}
-            {phase === "recipient" && <RecipientStart key="recipient" recipient={recipient} onRecipient={setRecipient} onBack={returnToMenu} onContinue={(name) => { setRecipient(name); go("studio"); }} />}
+            {phase === "menu" && <Menu key="menu" reduceMotion={Boolean(reduceMotion)} createOnly={isRehearsalCreate} onCreate={resetDraft} onLetters={() => go("cabinet")} />}
+            {phase === "recipient" && <RecipientStart key="recipient" recipient={recipient} locked={isRehearsalCreate} onRecipient={setRecipient} onBack={returnToMenu} onContinue={(name) => { if (isRehearsalCreate) applySnapshot(rehearsalArtifact); else setRecipient(name); go("studio"); }} />}
             {phase === "carrier" && (
-              <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
+              <CarrierPicker key="carrier" selected={carrierId} locked={isRehearsalCreate} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
+              <Studio key="studio" mode={studioMode} locked={isRehearsalCreate} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
             )}
-            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
+            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} locked={isRehearsalCreate} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
             {phase === "preview" && (
-              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
+              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} demo={isRehearsalCreate} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} rehearsalReceiver={isRehearsalCreate} onBack={() => go("preview")} onCopy={() => { if (isRehearsalCreate) { const url = `${window.location.origin}/demo/receive`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); return; } const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
               <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnToMenu} />
             )}
             {phase === "arrival" && (
-              <Arrival key="arrival" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onUnavailable={() => go("unavailable")} />
+              <Arrival key="arrival" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} demo={isDemoReceiver} onOpen={() => go("opening")} onDefer={() => go("deferred")} onUnavailable={() => go("unavailable")} />
             )}
             {phase === "deferred" && (
               <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={() => go("home")} />
@@ -703,7 +757,7 @@ export default function Prototype() {
             {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />}
             {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(activeSnapshot.id); go("removed"); }} />}
             {phase === "cabinet" && (
-              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onHome={returnToMenu} onMake={resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
+              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onHome={returnToMenu} onMake={isDemoReceiver ? () => { applySnapshot(rehearsalArtifact); go("arrival"); } : resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
             )}
             {phase === "removed" && <Removed key="removed" onLeave={returnToMenu} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
           </AnimatePresence>
@@ -774,7 +828,7 @@ function Home({ onEnter }: { onEnter: () => void }) {
   );
 }
 
-function Menu({ reduceMotion, onCreate, onLetters }: { reduceMotion: boolean; onCreate: () => void; onLetters: () => void }) {
+function Menu({ reduceMotion, createOnly = false, onCreate, onLetters }: { reduceMotion: boolean; createOnly?: boolean; onCreate: () => void; onLetters: () => void }) {
   const flyIn = reduceMotion
     ? { opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }
     : {
@@ -795,13 +849,13 @@ function Menu({ reduceMotion, onCreate, onLetters }: { reduceMotion: boolean; on
       </motion.div>
       <div className="menu-actions">
         <motion.button className="drawn-action" type="button" onClick={onCreate} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .72, duration: .26 }}>create something <Mark /></motion.button>
-        <motion.button className="drawn-action" type="button" onClick={onLetters} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .88, duration: .26 }}>look in your box <Mark /></motion.button>
+        {!createOnly && <motion.button className="drawn-action" type="button" onClick={onLetters} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .88, duration: .26 }}>look in your box <Mark /></motion.button>}
       </div>
     </Page>
   );
 }
 
-function RecipientStart({ recipient, onRecipient, onBack, onContinue }: { recipient: string; onRecipient: (value: string) => void; onBack: () => void; onContinue: (name: string) => void }) {
+function RecipientStart({ recipient, locked = false, onRecipient, onBack, onContinue }: { recipient: string; locked?: boolean; onRecipient: (value: string) => void; onBack: () => void; onContinue: (name: string) => void }) {
   const keyboard = useKeyboard();
   const cleanedName = recipient.trim().replace(/\s+/g, " ");
   const submit = () => {
@@ -818,19 +872,20 @@ function RecipientStart({ recipient, onRecipient, onBack, onContinue }: { recipi
         <label className="recipient-name-line">
           <span>for</span>
           <KeyboardInput
-            autoFocus
+            autoFocus={!locked}
             aria-label="Who is this for?"
             autoComplete="off"
             enterKeyHint="next"
             maxLength={60}
             placeholder="their name"
+            readOnly={locked}
             spellCheck={false}
             value={recipient}
             onBlur={() => keyboard.hide()}
             onChange={(event) => onRecipient(event.target.value)}
           />
         </label>
-        <p>you can change it later on the paper.</p>
+        <p>{locked ? "this name is part of the prepared demo." : "you can change it later on the paper."}</p>
         <button className="drawn-action recipient-start-action" type="submit" disabled={!cleanedName} aria-label={cleanedName ? `Start making for ${cleanedName}` : "Enter their name to start making"} onPointerDown={(event) => event.preventDefault()}>
           <span className="recipient-start-label">{cleanedName ? `make it for ${cleanedName}` : "make it for them"}</span> <Mark />
         </button>
@@ -839,22 +894,22 @@ function RecipientStart({ recipient, onRecipient, onBack, onContinue }: { recipi
   );
 }
 
-function CarrierPicker({ selected, onSelect, onCycle, onKeyDown, onBack, onNext }: { selected: CarrierId; onSelect: (carrier: CarrierId) => void; onCycle: (direction: -1 | 1) => void; onKeyDown: (event: ReactKeyboardEvent<HTMLButtonElement>, index: number) => void; onBack: () => void; onNext: () => void }) {
+function CarrierPicker({ selected, locked = false, onSelect, onCycle, onKeyDown, onBack, onNext }: { selected: CarrierId; locked?: boolean; onSelect: (carrier: CarrierId) => void; onCycle: (direction: -1 | 1) => void; onKeyDown: (event: ReactKeyboardEvent<HTMLButtonElement>, index: number) => void; onBack: () => void; onNext: () => void }) {
   const carrier = carriers.find((item) => item.id === selected) ?? carriers[0];
   return (
     <Page className={`carrier-page carrier-${selected}`}>
       <TopLine onBack={onBack} label="message" />
       <header className="carrier-heading"><p>pick how it arrives.</p><span>each one opens a little differently.</span></header>
       <div className="carrier-stage">
-        <button className="stage-arrow stage-arrow-left" type="button" aria-label="Previous carrier" onClick={() => onCycle(-1)}><Mark direction="left" /></button>
+        <button className="stage-arrow stage-arrow-left" type="button" aria-label="Previous carrier" disabled={locked} onClick={() => onCycle(-1)}><Mark direction="left" /></button>
         <motion.div key={selected} className="hero-carrier" initial={{ opacity: 0, transform: "translateY(10px) rotate(-2deg) scale(0.97)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
           <CarrierIcon id={selected} size="hero" />
         </motion.div>
-        <button className="stage-arrow stage-arrow-right" type="button" aria-label="Next carrier" onClick={() => onCycle(1)}><Mark /></button>
+        <button className="stage-arrow stage-arrow-right" type="button" aria-label="Next carrier" disabled={locked} onClick={() => onCycle(1)}><Mark /></button>
       </div>
       <div className="carrier-thumbnails" role="radiogroup" aria-label="Delivery carrier">
         {carriers.map((item, index) => (
-          <button id={`carrier-${item.id}`} key={item.id} className="carrier-thumb" type="button" role="radio" aria-checked={item.id === selected} aria-label={item.shortLabel} tabIndex={item.id === selected ? 0 : -1} onClick={() => onSelect(item.id)} onKeyDown={(event) => onKeyDown(event, index)}>
+          <button id={`carrier-${item.id}`} key={item.id} className="carrier-thumb" type="button" role="radio" aria-checked={item.id === selected} aria-label={item.shortLabel} tabIndex={item.id === selected ? 0 : -1} disabled={locked} onClick={() => onSelect(item.id)} onKeyDown={(event) => onKeyDown(event, index)}>
             <CarrierIcon id={item.id} size="thumb" />
           </button>
         ))}
@@ -865,7 +920,7 @@ function CarrierPicker({ selected, onSelect, onCycle, onKeyDown, onBack, onNext 
   );
 }
 
-function Studio({ mode, capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, cuesOpen, layouts, canPreview, onMode, onCapture, onVoice, onSong, onRecipient, onTextBlocks, onPaper, onDoodles, onStickers, onInkColor, onTogglePiece, onToggleCues, onLayout, onBack, onPreview }: { mode: StudioMode; capture: CaptureAsset | null; voice: AudioAsset | null; song: AudioAsset | null; recipient: string; textBlocks: TextBlock[]; paper: PaperId; pieces: PieceId[]; doodles: DoodleStroke[]; stickers: StickerId[]; inkColor: InkColor; cuesOpen: boolean; layouts: Record<LayerId, LayerLayout>; canPreview: boolean; onMode: (mode: StudioMode) => void; onCapture: (capture: CaptureAsset | null) => void; onVoice: (asset: AudioAsset | null) => void; onSong: (asset: AudioAsset | null) => void; onRecipient: (value: string) => void; onTextBlocks: (value: TextBlock[]) => void; onPaper: (value: PaperId) => void; onDoodles: (strokes: DoodleStroke[]) => void; onStickers: (stickers: StickerId[]) => void; onInkColor: (color: InkColor) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onBack: () => void; onPreview: () => void }) {
+function Studio({ mode, locked = false, capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, cuesOpen, layouts, canPreview, onMode, onCapture, onVoice, onSong, onRecipient, onTextBlocks, onPaper, onDoodles, onStickers, onInkColor, onTogglePiece, onToggleCues, onLayout, onBack, onPreview }: { mode: StudioMode; locked?: boolean; capture: CaptureAsset | null; voice: AudioAsset | null; song: AudioAsset | null; recipient: string; textBlocks: TextBlock[]; paper: PaperId; pieces: PieceId[]; doodles: DoodleStroke[]; stickers: StickerId[]; inkColor: InkColor; cuesOpen: boolean; layouts: Record<LayerId, LayerLayout>; canPreview: boolean; onMode: (mode: StudioMode) => void; onCapture: (capture: CaptureAsset | null) => void; onVoice: (asset: AudioAsset | null) => void; onSong: (asset: AudioAsset | null) => void; onRecipient: (value: string) => void; onTextBlocks: (value: TextBlock[]) => void; onPaper: (value: PaperId) => void; onDoodles: (strokes: DoodleStroke[]) => void; onStickers: (stickers: StickerId[]) => void; onInkColor: (color: InkColor) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onBack: () => void; onPreview: () => void }) {
   const keyboard = useKeyboard();
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [editingTextId, setEditingTextId] = useState<string | null>(null);
@@ -973,6 +1028,7 @@ function Studio({ mode, capture, voice, song, recipient, textBlocks, paper, piec
         ) : (
           <StoryComposer
             key="compose"
+            locked={locked}
             capture={capture}
             voice={voice}
             song={song}
@@ -1232,6 +1288,7 @@ function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured }: { capt
 }
 
 type StoryComposerProps = {
+  locked?: boolean;
   capture: CaptureAsset | null;
   voice: AudioAsset | null;
   song: AudioAsset | null;
@@ -1282,7 +1339,7 @@ type StoryComposerProps = {
   onPreview: () => void;
 };
 
-function StoryComposer({ capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, layouts, selectedLayer, editingTextId, editingRecipient, drawingActive, voiceRecorderOpen, activePrompt, cuesOpen, showGestureHint, canPreview, onSelectLayer, onLayout, onRemoveLayer, onTextLayout, onEditText, onCreateText, onTextWords, onTextCrossedOut, onPaper, onFinishText, onToggleCues, onPrompt, onEditRecipient, onRecipient, onFinishRecipient, onStartVoice, onCancelVoice, onVoice, onSongFile, onDraw, onDoneDrawing, onUndoDoodle, onDoodle, onAddSticker, onInkColor, onCamera, onBack, onPreview }: StoryComposerProps) {
+function StoryComposer({ locked = false, capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, layouts, selectedLayer, editingTextId, editingRecipient, drawingActive, voiceRecorderOpen, activePrompt, cuesOpen, showGestureHint, canPreview, onSelectLayer, onLayout, onRemoveLayer, onTextLayout, onEditText, onCreateText, onTextWords, onTextCrossedOut, onPaper, onFinishText, onToggleCues, onPrompt, onEditRecipient, onRecipient, onFinishRecipient, onStartVoice, onCancelVoice, onVoice, onSongFile, onDraw, onDoneDrawing, onUndoDoodle, onDoodle, onAddSticker, onInkColor, onCamera, onBack, onPreview }: StoryComposerProps) {
   const editingText = editingTextId !== null;
   const blankPaperPointer = useRef<{ pointerId: number; x: number; y: number } | null>(null);
   useEffect(() => {
@@ -1292,7 +1349,7 @@ function StoryComposer({ capture, voice, song, recipient, textBlocks, paper, pie
     return () => window.cancelAnimationFrame(frame);
   }, []);
   const startWritingOnPaper = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (drawingActive || editingText) return;
+    if (locked || drawingActive || editingText) return;
     const target = event.target as HTMLElement;
     if (target.closest("button, input, textarea, audio, video, [role='group']")) return;
     blankPaperPointer.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
@@ -1312,7 +1369,7 @@ function StoryComposer({ capture, voice, song, recipient, textBlocks, paper, pie
       <div className="story-canvas" aria-label="Full-screen paper keepsake canvas">
         <header className="story-topbar">
           <button type="button" aria-label="Leave the message maker" onClick={onBack}><CloseMark /></button>
-          {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" onClick={onEditRecipient}>for {recipient || "someone"}</button>}
+          {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" disabled={locked} onClick={onEditRecipient}>for {recipient || "someone"}</button>}
           <button className="story-done" type="button" disabled={!canPreview} aria-label="Next: fold and decorate the envelope" onClick={onPreview}>next <Mark /></button>
         </header>
 
@@ -1322,16 +1379,16 @@ function StoryComposer({ capture, voice, song, recipient, textBlocks, paper, pie
           {drawingActive ? <DoodleSurface strokes={doodles} onStroke={onDoodle} /> : doodles.length > 0 ? <DoodleArtwork strokes={doodles} className="story-doodle-artwork" /> : null}
 
           <AnimatePresence>
-            {capture && <CanvasLayer key="photo" id="photo" label={capture.kind === "video" ? "video" : "photo"} layout={layouts.photo} selected={selectedLayer === "photo"} resizable onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("photo", layout)} onRemove={onRemoveLayer}><div className="story-photo-visual"><span className="paper-tape" aria-hidden="true" /><CapturedMedia capture={capture} className="story-paper-media" /></div></CanvasLayer>}
+            {capture && <CanvasLayer key="photo" id="photo" locked={locked} label={capture.kind === "video" ? "video" : "photo"} layout={layouts.photo} selected={selectedLayer === "photo"} resizable onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("photo", layout)} onRemove={onRemoveLayer}><div className="story-photo-visual"><span className="paper-tape" aria-hidden="true" /><CapturedMedia capture={capture} className="story-paper-media" /></div></CanvasLayer>}
             {textBlocks.map((block, index) => {
               const isEditing = editingTextId === block.id;
               if (!block.words.trim() && !isEditing) return null;
               const label = `text box ${index + 1}`;
-              return <CanvasLayer key={block.id} id={block.id} className="story-layer-text" dataTextBlockId={block.id} label={label} layout={block.layout} selected={selectedLayer === block.id} editing={isEditing} resizable onSelect={onSelectLayer} onLayout={onTextLayout} onRemove={onRemoveLayer} onEdit={() => onEditText(block.id)}>{isEditing ? <RichHandwritingEditor label={`Write directly on the paper in ${label}. Backspace crosses out text; use undo cross-out to restore it.`} value={block.words} crossedOut={block.crossedOut} placeholder={activePrompt} onChange={(value) => onTextWords(block.id, value)} onCrossedOut={(value) => onTextCrossedOut(block.id, value)} /> : <RichWords value={block.words} crossedOut={block.crossedOut} className="story-words-visual" />}</CanvasLayer>;
+              return <CanvasLayer key={block.id} id={block.id} locked={locked} className="story-layer-text" dataTextBlockId={block.id} label={label} layout={block.layout} selected={selectedLayer === block.id} editing={isEditing} resizable onSelect={onSelectLayer} onLayout={onTextLayout} onRemove={onRemoveLayer} onEdit={() => onEditText(block.id)}>{isEditing ? <RichHandwritingEditor label={`Write directly on the paper in ${label}. Backspace crosses out text; use undo cross-out to restore it.`} value={block.words} crossedOut={block.crossedOut} placeholder={activePrompt} onChange={(value) => onTextWords(block.id, value)} onCrossedOut={(value) => onTextCrossedOut(block.id, value)} /> : <RichWords value={block.words} crossedOut={block.crossedOut} className="story-words-visual" />}</CanvasLayer>;
             })}
-            {voice && pieces.includes("voice") && <CanvasLayer key="voice" id="voice" label="voice note" layout={layouts.voice} selected={selectedLayer === "voice"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("voice", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={voice} kind="voice" /></CanvasLayer>}
-            {song && pieces.includes("song") && <CanvasLayer key="song" id="song" label="song" layout={layouts.song} selected={selectedLayer === "song"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("song", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={song} kind="song" /></CanvasLayer>}
-            {stickers.map((sticker) => <CanvasLayer key={sticker} id={sticker} label={`${sticker} mark`} layout={layouts[sticker]} selected={selectedLayer === sticker} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout(sticker, layout)} onRemove={onRemoveLayer}><StickerMark id={sticker} /></CanvasLayer>)}
+            {voice && pieces.includes("voice") && <CanvasLayer key="voice" id="voice" locked={locked} label="voice note" layout={layouts.voice} selected={selectedLayer === "voice"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("voice", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={voice} kind="voice" /></CanvasLayer>}
+            {song && pieces.includes("song") && <CanvasLayer key="song" id="song" locked={locked} label="song" layout={layouts.song} selected={selectedLayer === "song"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("song", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={song} kind="song" /></CanvasLayer>}
+            {stickers.map((sticker) => <CanvasLayer key={sticker} id={sticker} locked={locked} label={`${sticker} mark`} layout={layouts[sticker]} selected={selectedLayer === sticker} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout(sticker, layout)} onRemove={onRemoveLayer}><StickerMark id={sticker} /></CanvasLayer>)}
           </AnimatePresence>
         </motion.div>
 
@@ -1340,7 +1397,7 @@ function StoryComposer({ capture, voice, song, recipient, textBlocks, paper, pie
         <p className="story-mode-status" aria-live="polite">{drawingActive ? `doodling · ${doodles.length} ${doodles.length === 1 ? "stroke" : "strokes"}` : editingText ? "writing directly on the paper" : ""}</p>
         <AnimatePresence>{showGestureHint && !editingText && !drawingActive && <motion.p className="story-gesture-tip" initial={{ opacity: 0, transform: "translateY(5px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>move it anywhere. corners turn and resize.</motion.p>}</AnimatePresence>
 
-        <StoryToolRail hasWords={textBlocks.some((block) => block.words.trim())} canAddText={textBlocks.length < MAX_TEXT_BLOCKS} paper={paper} capture={capture} voice={voice} song={song} pieces={pieces} stickers={stickers} inkColor={inkColor} drawingActive={drawingActive} editingText={editingText} cuesOpen={cuesOpen} activePrompt={activePrompt} canUndoDoodle={doodles.length > 0} onText={() => onCreateText()} onFinishText={onFinishText} onToggleCues={onToggleCues} onPrompt={onPrompt} onPaper={onPaper} onDraw={onDraw} onDoneDrawing={onDoneDrawing} onUndoDoodle={onUndoDoodle} onCamera={onCamera} onVoice={onStartVoice} onSongFile={onSongFile} onAddSticker={onAddSticker} onInkColor={onInkColor} />
+        {!locked && <StoryToolRail hasWords={textBlocks.some((block) => block.words.trim())} canAddText={textBlocks.length < MAX_TEXT_BLOCKS} paper={paper} capture={capture} voice={voice} song={song} pieces={pieces} stickers={stickers} inkColor={inkColor} drawingActive={drawingActive} editingText={editingText} cuesOpen={cuesOpen} activePrompt={activePrompt} canUndoDoodle={doodles.length > 0} onText={() => onCreateText()} onFinishText={onFinishText} onToggleCues={onToggleCues} onPrompt={onPrompt} onPaper={onPaper} onDraw={onDraw} onDoneDrawing={onDoneDrawing} onUndoDoodle={onUndoDoodle} onCamera={onCamera} onVoice={onStartVoice} onSongFile={onSongFile} onAddSticker={onAddSticker} onInkColor={onInkColor} />}
       </div>
     </motion.div>
   );
@@ -1525,7 +1582,7 @@ function EnvelopeFoldLines() {
   </svg>;
 }
 
-function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealWeight, onSaveSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; sealWeight: SealWeight; savedSeal: PersonalStamp | null; onSeal: (value: DoodleStroke[]) => void; onSealWeight: (weight: SealWeight) => void; onSaveSeal: (value: DoodleStroke[], weight: SealWeight) => void; onBack: () => void; onNext: () => void }) {
+function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, locked = false, onSeal, onSealWeight, onSaveSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; sealWeight: SealWeight; savedSeal: PersonalStamp | null; locked?: boolean; onSeal: (value: DoodleStroke[]) => void; onSealWeight: (weight: SealWeight) => void; onSaveSeal: (value: DoodleStroke[], weight: SealWeight) => void; onBack: () => void; onNext: () => void }) {
   const reduced = useReducedMotion();
   const [folded, setFolded] = useState(Boolean(reduced));
   const [sealOpen, setSealOpen] = useState(false);
@@ -1571,11 +1628,11 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealW
             <header><h1>leave your mark.</h1><p>The envelope stays simple. The stamp is yours.</p></header>
             <div className="envelope-canvas">
               <img className="envelope-canvas-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />
-              <button className={`seal-stamp seal-weight-${sealWeight} ${seal.length ? "has-seal" : ""}`} data-seal-weight={sealWeight} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
+              <button className={`seal-stamp seal-weight-${sealWeight} ${seal.length ? "has-seal" : ""}`} data-seal-weight={sealWeight} type="button" disabled={locked} onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
             </div>
             <div className="envelope-stamp-choice">
               <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : savedSeal?.strokes.length ? "your stamp is ready when you want it." : "add a stamp, or keep it simple."}</p>
-              {canReuseStamp && savedSeal && <div><button type="button" onClick={() => { onSeal(savedSeal.strokes.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }))); onSealWeight(savedSeal.weight); }}>use my stamp</button><button type="button" onClick={() => { onSeal([]); setSealOpen(true); }}>draw a new one</button></div>}
+              {canReuseStamp && savedSeal && <div><button type="button" disabled={locked} onClick={() => { onSeal(savedSeal.strokes.map((stroke) => ({ ...stroke, points: stroke.points.map((point) => ({ ...point })) }))); onSealWeight(savedSeal.weight); }}>use my stamp</button><button type="button" disabled={locked} onClick={() => { onSeal([]); setSealOpen(true); }}>draw a new one</button></div>}
             </div>
           </motion.section>
         )}
@@ -1594,7 +1651,7 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, onSeal, onSealW
   );
 }
 
-function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selected, editing = false, resizable = false, children, onSelect, onLayout, onRemove, onEdit }: { id: string; className?: string; dataTextBlockId?: string; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; resizable?: boolean; children: ReactNode; onSelect: (id: string | null) => void; onLayout: (id: string, layout: LayerLayout) => void; onRemove: (id: string) => void; onEdit?: () => void }) {
+function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selected, editing = false, resizable = false, locked = false, children, onSelect, onLayout, onRemove, onEdit }: { id: string; className?: string; dataTextBlockId?: string; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; resizable?: boolean; locked?: boolean; children: ReactNode; onSelect: (id: string | null) => void; onLayout: (id: string, layout: LayerLayout) => void; onRemove: (id: string) => void; onEdit?: () => void }) {
   const layerRef = useRef<HTMLDivElement>(null);
   const moveRef = useRef({ pointerId: -1, startX: 0, startY: 0, startLayout: layout, moved: false });
   const rotationRef = useRef({ pointerId: -1, startAngle: 0, startRotation: 0, moved: false });
@@ -1605,7 +1662,7 @@ function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selec
   });
   const clampScale = (scale: number) => Math.max(0.52, Math.min(id === "photo" ? 1.75 : 1.9, scale));
   const startMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (editing || (event.pointerType === "mouse" && event.button !== 0)) return;
+    if (locked || editing || (event.pointerType === "mouse" && event.button !== 0)) return;
     if ((event.target as HTMLElement).closest("button, input, textarea, audio, video")) return;
     event.stopPropagation();
     moveRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, startLayout: layout, moved: false };
@@ -1680,8 +1737,8 @@ function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selec
     resizeRef.current.pointerId = -1;
   };
   return (
-    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} data-text-block-id={dataTextBlockId} data-layout={`${layout.x},${layout.y},${layout.rotation},${layout.scale}`} role="group" aria-label={editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={editing ? -1 : 0} style={{ x: layout.x, y: layout.y }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={() => { if (!editing) onSelect(id); }} onDoubleClick={onEdit} onKeyDown={(event) => {
-      if (editing) return;
+    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} data-text-block-id={dataTextBlockId} data-layout={`${layout.x},${layout.y},${layout.rotation},${layout.scale}`} role="group" aria-label={locked || editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={locked || editing ? -1 : 0} style={{ x: layout.x, y: layout.y }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={() => { if (!locked && !editing) onSelect(id); }} onDoubleClick={locked ? undefined : onEdit} onKeyDown={(event) => {
+      if (locked || editing) return;
       const movement = event.shiftKey ? 18 : 6;
       if (event.key === "ArrowLeft") onLayout(id, { ...layout, ...clampPosition(layout.x - movement, layout.y) });
       else if (event.key === "ArrowRight") onLayout(id, { ...layout, ...clampPosition(layout.x + movement, layout.y) });
@@ -1791,15 +1848,15 @@ function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: Keepsak
   return <div className={`sealed-envelope-artwork seal-weight-${sealWeight} ${className}`} data-seal-weight={sealWeight} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
-function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
+function Preview({ snapshot, demo = false, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; demo?: boolean; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
   return (
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {snapshot.recipient}</span><span>from {snapshot.sender}</span></div>
       <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translate3d(0, 18px, 0) rotate(-3deg) scale(.95)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
       <div className="preview-copy"><h1>one thing, ready to give.</h1></div>
-      <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
-      <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
+      {!demo && <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>}
+      <button className="drawn-action preview-next" type="button" onClick={onGive}>{demo ? "continue with this prepared demo" : "give this privately"} <Mark /></button>
     </Page>
   );
 }
@@ -1812,7 +1869,7 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
   return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={`${CECILIA}firefly-brand-mark.png`} alt="" /></div><div className="courier-payload" data-asset-slot="courier-payload"><img src={`${CECILIA}envelope-mail-02.png`} alt="" /></div></div>;
 }
 
-function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
+function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, rehearsalReceiver, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; rehearsalReceiver?: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
   const qrDialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -1832,7 +1889,9 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
     return () => { document.removeEventListener("keydown", handleKeys); previous?.focus(); };
   }, [qrOpen]);
   const encoded = containsBlobMedia(snapshot) ? "" : encodeSnapshot(snapshot);
-  const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v3.${encoded}` : "";
+  const url = rehearsalReceiver
+    ? `${typeof window === "undefined" ? "" : window.location.origin}/demo/receive`
+    : encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v3.${encoded}` : "";
   const qrIsExact = Boolean(url) && url.length <= QR_MAX;
   const saveQr = () => {
     const svg = qrDialogRef.current?.querySelector(":scope > svg");
@@ -1854,8 +1913,8 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
       <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1>{failed && <p>Nothing left this screen. Your object is still here.</p>}</header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
       <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}</div>
-      {copied ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
-      <p className="system-note">This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected.</p>
+      {copied || rehearsalReceiver ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
+      <p className="system-note">{rehearsalReceiver ? "This public demo link always opens the same keepsake. No account or response is connected." : "This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected."}</p>
       {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && qrIsExact && <motion.div ref={qrDialogRef} className="qr-dialog" role="dialog" aria-modal="true" aria-label="Receiver QR for this keepsake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={url} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title="Scan to open this keepsake" /><p>scan to give this to {recipient}.</p><small>This code belongs to this keepsake. Anyone who scans it opens the same sealed object—no account needed.</small><button className="quiet-link qr-save" type="button" onClick={saveQr}>save this QR</button></motion.div>}</AnimatePresence>, document.body)}
     </Page>
   );
@@ -1908,7 +1967,7 @@ function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipien
   );
 }
 
-function Arrival({ recipient, carrier, reduceMotion, onOpen, onDefer, onUnavailable }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onOpen: () => void; onDefer: () => void; onUnavailable: () => void }) {
+function Arrival({ recipient, carrier, reduceMotion, demo = false, onOpen, onDefer, onUnavailable }: { recipient: string; carrier: Carrier; reduceMotion: boolean; demo?: boolean; onOpen: () => void; onDefer: () => void; onUnavailable: () => void }) {
   const [landed, setLanded] = useState(reduceMotion);
   const [tapPrimed, setTapPrimed] = useState(false);
   const lastTapRef = useRef(0);
@@ -1932,7 +1991,7 @@ function Arrival({ recipient, carrier, reduceMotion, onOpen, onDefer, onUnavaila
   };
   return (
     <Page className={`arrival-page arrival-carrier-${carrier.id}`}>
-      <header><span>for {recipient}</span><h1>{sender} made something private for you.</h1></header>
+      <header><span>for {recipient}</span><h1>{demo ? `${sender} made something for you.` : `${sender} made something private for you.`}</h1></header>
       <div className="arrival-object"><AnimatePresence>{!landed && <motion.div className="arrival-courier-motion" initial={{ opacity: 0, transform: "translate(130px, -158px) rotate(17deg)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(130px, -158px) rotate(17deg)", "translate(34px, -58px) rotate(4deg)", "translate(0, 0) rotate(0deg)", "translate(-92px, 80px) rotate(-14deg)"] }} transition={{ duration: 3.6, times: [0, .18, .64, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>{landed && <div className="arrival-drop"><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } }} animate={{ transform: tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="arrival" /></motion.button><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></div>}</div>
       <div className="arrival-options"><button className="quiet-link" type="button" onClick={onDefer}>another time</button><button className="quiet-link unavailable-link" type="button" onClick={onUnavailable}>this link is not for me</button></div>
     </Page>

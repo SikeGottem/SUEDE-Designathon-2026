@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 64 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 66 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -385,3 +385,13 @@ These captures refine the current exploratory build and pitch. They do not prove
 - Let each text box and the existing image layer move and resize directly.
 
 This is internal prototype feedback, not participant validation. It does not establish that richer composition improves appreciation, authorise multiple image layers or a broad editor, or relax the paper-first, no-scroll, sparse-control, no-chat, and no-marketplace boundaries.
+
+## 5 September pitch-demo addendum
+
+**Source:** [pre-made artifact / QR capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md). The capture asks for one pre-made letter during the pitch and for it to be the same object carried by the QR. The route names and operating rules below are the team's subsequent settled rehearsal decision.
+
+- Freeze one canonical demo artifact. The presenter starts at fixed `/demo/create` and walks the normal maker process with that artifact prefilled; the audience receives the exact same object at fixed `/demo/receive`.
+- Generate the presentation QR once from `/demo/receive`, then leave it stable. The audience route is replayable, never consumed after one scan, and is not a private delivery link.
+- Before a pitch, change the canonical preset only by editing it and redeploying; keep both fixed URLs unchanged. The normal creator, generated object links/QRs, receiver route, and product contract remain unchanged.
+
+This is rehearsal/demo truth, not user evidence, a private-delivery claim, or proof that a room-wide QR changes the product outcome. The existing visual authenticity remains the authority: the demo adds no generic chrome or new visual system.

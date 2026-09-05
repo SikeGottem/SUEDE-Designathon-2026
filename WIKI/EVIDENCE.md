@@ -109,6 +109,14 @@ The published timeline is more specific: background research began around 12:00,
 - Boundary: this is internal implementation feedback, not usability, desirability, accessibility, or outcome evidence. It does not authorise multiple image layers, global layer-order tooling, item-removal recovery, a general-purpose editor, templates, or additional material types.
 - What this changes for us: verify the bounded canvas behaviours in the coded prototype and on a real phone before treating them as complete; preserve the sparse, non-scrolling, paper-first surface.
 
+## 5 September frozen pitch-demo artifact — rehearsal truth only
+
+- Source: [pre-made artifact / QR capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md). It records the team's request to avoid live composition during the pitch and to use the same pre-made object behind the QR.
+- Settled rehearsal implementation: one canonical artifact appears in both fixed `/demo/create` (locked, prefilled presenter walkthrough) and fixed `/demo/receive` (replayable audience opening). Receiver keep/remove state is session-only and isolated from the normal cabinet. The presentation QR is generated once from `/demo/receive`; pre-pitch changes edit the preset and redeploy while preserving both URLs.
+- Boundary: this is demo choreography, not user validation, private delivery, recipient authentication, or evidence that a QR scan changes appreciation, comprehension, or intent. Normal product links, generated QR behaviour, and receiver semantics remain unchanged.
+- Visual boundary: preserve the established human-directed paper/ink authenticity; add no generic demo chrome or separate visual system.
+- What this changes for us: rehearse the deployed QR on a second physical device and retain a no-device fallback before calling the pitch handoff reliable.
+
 ## Latest carrier ritual and sequencing correction — internal direction, not usability evidence
 
 - Sources: [913ddc06…](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md), created `2026-09-04T16:52:08.940Z`, especially 04:21–07:58; [2d8ab5ab…](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md), 15:29–17:56; [4ef45d20…](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md), 03:26–05:24; and the later [bbc5485c…](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md), 01:59–05:28.
