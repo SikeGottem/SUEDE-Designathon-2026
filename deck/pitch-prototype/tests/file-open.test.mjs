@@ -38,30 +38,37 @@ test('the latest meeting framing replaces attribution and unsupported market cla
   assert.doesNotMatch(source, /digital card/);
 });
 
-test('the newest follow-up simplifies research, restores personas and clears the demo slide', () => {
+test('the newest follow-up simplifies research, defines the need-state audience and clears the demo slide', () => {
   assert.match(source, /data-title="What · why · how" data-steps="4"/);
   assert.match(source, /class="research-number">82%/);
   assert.match(source, /class="research-number">71%/);
   assert.match(source, /feel they do not fully show the appreciation they feel/);
   assert.match(source, /class="mini-ratings-table"[\s\S]*impact \/5[\s\S]*friction \/5[\s\S]*frequency \/5/);
   assert.match(source, /\.mini-ratings-table \{[^}]*min-height:390px[^}]*flex:1 1 auto/);
-  assert.match(source, /quick text[\s\S]*voice note[\s\S]*video call[\s\S]*handwritten letter[\s\S]*physical gift/);
+  assert.match(source, /quick text[\s\S]*voice note \/[\s\S]*video call[\s\S]*handwritten letter \/[\s\S]*physical gift/);
   assert.equal((source.match(/class="target-score"/g) ?? []).length, 3);
   assert.doesNotMatch(source, /class="practice-flag"/);
   assert.doesNotMatch(source, /research-bridge/);
-  assert.match(source, /Grandmother[\s\S]*Granddaughter/);
-  assert.match(source, /Grandmother makes it now\. Granddaughter opens it later\./);
+  assert.match(source, /Who sits in the gap\?/);
+  assert.match(source, /The Goldilocks gap/);
+  assert.match(source, /class="audience-groups[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
+  assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-target/);
+  assert.doesNotMatch(source, /Grandmother|Granddaughter/);
   assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?<h2>Let us show you\.<\/h2>/);
   assert.doesNotMatch(source, /demo-sequence/);
   assert.doesNotMatch(source, /Live prototype · no video/);
+  assert.match(source, /Warm &amp; Fuzzies is a private digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
+  assert.doesNotMatch(source, /assets\/current-home\.png/);
+  assert.doesNotMatch(source, /solution-detail|device-wrap/);
 });
 
 test('the latest review uses a problem-first opener and preserves the full synthesis', () => {
-  assert.match(source, /When was the last time someone showed you appreciation or gratitude\?/);
+  assert.match(source, /When was the last time you showed someone appreciation or gratitude\?/);
+  assert.doesNotMatch(source, /When was the last time someone showed you appreciation/);
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
   assert.match(source, /Is everything okay\?/);
-  assert.match(source, /different time zones/);
+  assert.match(source, /class="audience-groups[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
   assert.match(source, /data-title="Research synthesis" data-steps="4"/);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
@@ -71,12 +78,15 @@ test('the latest review uses a problem-first opener and preserves the full synth
 });
 
 test('the channel map reveals local evidence with disclosed rehearsal ratings', () => {
-  assert.equal((source.match(/class="plot-evidence"/g) ?? []).length, 5);
+  assert.equal((source.match(/class="plot-evidence"/g) ?? []).length, 3);
+  assert.match(source, /data-title="The channel gap" data-steps="4"/);
+  assert.match(source, /voice note \/ video call/);
+  assert.match(source, /handwritten letter \/ physical gift/);
   assert.doesNotMatch(source, /class="evidence-dock"/);
   assert.match(source, /Kumar &amp; Epley, 2021/);
   assert.match(source, /Kumar &amp; Epley, 2018/);
   assert.match(source, /Algoe et al., 2008/);
-  assert.match(source, /Temporary practice positions—not findings/);
+  assert.match(source, /Temporary grouped positions—not findings/);
   assert.doesNotMatch(source, /class="practice-ratings"/);
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);

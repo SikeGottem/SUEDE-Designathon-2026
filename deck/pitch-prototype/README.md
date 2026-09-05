@@ -20,20 +20,20 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 ## Live sequence
 
 1. Warm & Fuzzies logo
-2. Audience appreciation question, with no solution-first reference to letters
+2. Sender-framed audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
 4. Occasion-based permission and How Might We
-5. Impact / friction / frequency channel map with local paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
-6. The original three-column What / Why / How layout, with a compact five-row ratings table inside How and a fourth-click highlight pass
-7. The grandmother-granddaughter personas as the **when** scenario, including different time zones
+5. Impact / friction / frequency map across three presentation families, with bounded paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
+6. The original three-column What / Why / How layout, with a full-height three-row grouped ratings table inside How and a fourth-click highlight pass
+7. Overlapping Goldilocks rings, with university students, long-distance connections, close friends and close family named inside the need-state gap between a text that feels too casual and a physical gesture that feels too difficult
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
 10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
 11. Real team thank-you object, real team photo and verified QR handoff
 
-There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each channel to published evidence; What / Why / How explains the team's specific problem; the personas locate the moment; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
+There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; What / Why / How explains the team's specific problem; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
 
-The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students are not pitched as a target market. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
+The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students, long-distance connections, close friends and close family appear inside one need-state overlap rather than as exclusive demographic markets. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
 ## Evidence contract
 
@@ -41,7 +41,7 @@ The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` 
 - Each visible channel statement is limited to a cited paper's finding; no secondary study becomes a survey percentage or proof of the highlighted gap.
 - **What** establishes whether people feel they show less appreciation than they feel.
 - **Why** investigates the occasion rule, awkwardness, channel mismatch and exceptions.
-- **How** compares the perceived impact, effort and frequency of text, voice, video call, handwritten letter and physical gift using the same appreciation scenario. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
+- **How** groups quick text, voice/video and letter/gift for pitch clarity while retaining the individual forms as controls for the real matched-content study. The displayed group values do not prove equivalence. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
 - Team opinion, mentor reaction, published secondary research, practice values and prototype polish cannot become final primary evidence.
 - The latest follow-up fixes the primary instrument at the three visible What / Why / How questions. Further survey explanation belongs in the appendix.
 - Psychology on text, voice, gratitude letters and perceived gift effort supports the map's channel-by-channel mechanism narration. Detailed methods, ownership evidence and limitations still belong in the appendix, and none can replace the primary percentages or qualitative themes.
@@ -73,7 +73,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
 | Brief fit | strengthens | The live story names and redesigns the occasion-based unwritten rule. | Exact 2026 wording remains unconfirmed. |
-| Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, What / Why / How and one **when** scenario form a causal chain. | Every primary value and the affected audience remain unknown. |
+| Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, What / Why / How and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
 | Solution approach | strengthens | The live maker-to-receiver flow shows the mechanism and receiver-controlled ending directly. | The medium has not beaten any control in a completed matched-format test. |
 | Design innovation | strengthens | Making, sealing, giving and receiver-led opening form a clearer ritual than a static feature tour. | Without participant evidence, the experience may still be read as a decorated digital letter. |
 | Visual communication | strengthens | Eleven slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The What / Why / How placeholders and handoff blockers can look unfinished until real evidence and assets arrive. |
@@ -85,10 +85,10 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Lens | Strongest challenge | Current answer / boundary |
 | --- | --- | --- |
 | Assumption and inversion | Care may already be expressed adequately through action. | What / Why must test the gap and its exceptions rather than assuming explicit messages are always better. |
-| Behaviour and context | The problem could be too broad without a market. | The live pitch locates one ordinary-day **when** scenario while leaving audience selection to research. |
+| Behaviour and context | The problem could be too broad without a market. | The Goldilocks rings define one format tension and name included relationship contexts while leaving validation to research. |
 | Medium necessity | Why not text, voice, video or a physical gesture? | Each remains visible on the map and inside the required matched-format comparison. |
 | Alternatives | A non-digital ritual may work better. | Letter and gift remain controls; the digital product does not claim superiority. |
-| Human specificity | The scenario could become an invented persona. | The live deck describes a moment without fabricated names, demographics, quotes or demand. |
+| Human specificity | The included groups could be mistaken for validated segments. | The slide leads with a shared need-state and labels the groups as examples rather than demographic proof. |
 | Inclusion and accessibility | A QR and live demo can exclude. | The team needs a prepared no-scan receiver path and real assistive testing. |
 | Trust, safety and privacy | The link or cabinet could imply privacy and permanence. | The demo may claim only the controls it shows; production identity, retention and forwarding remain unresolved. |
 | Failure and recovery | The live flow or network may fail. | Rehearse on the actual setup and keep pre-opened live sender and receiver states, not a replacement video. |
@@ -107,7 +107,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 ## Design-authenticity status
 
 - **Artifact inspected:** all 11 HTML slides at 1600 × 900, plus the map's first and final builds at presentation, tablet and phone viewport sizes.
-- **Strongest remaining AI tell:** the five plotted coordinates are visually precise even though they remain team hypotheses; the spoken boundary must make that status unmistakable.
+- **Strongest remaining AI tell:** the three grouped coordinates and ratings form a visually convenient pattern even though they remain team hypotheses; the footer and spoken boundary must make that status unmistakable.
 - **Content-native signature:** one unboxed evidence annotation follows the channel map point-by-point, then hands off to the team's Goldilocks target rather than decorating the slide with a fixed research card.
 - **Material human change:** Ethan made the graph the longest narrative slide and required every spoken channel claim to appear beside its research support; unsupported labels, the extra blank statistic and the oval around the final opportunity were removed, then he named the unboxed marker the `goldilocks zone`.
 - **Verdict:** Revise before final use.

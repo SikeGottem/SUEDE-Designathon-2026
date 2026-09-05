@@ -1107,3 +1107,71 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Main trade-off: a more complete causal bridge in exchange for greater slide density and a sharper risk of overclaiming.
 - Next evidence that could change the verdict: completed What and Why results plus a matched-format receiver comparison across the five channels and the prototype.
 - Recommendation: rehearse all four beats now, then replace only the values and conclusion that real research changes.
+
+## 2026-09-05 - Use a sender-framed opening, group the comparison, target the need-state, and reduce the solution reveal
+
+- Decision: open by asking `When was the last time you showed someone appreciation or gratitude?`, with birthdays, celebrations and major events excluded aloud. Collapse the live channel map and How table into three presentation families: quick text; voice note / video call; handwritten letter / physical gift. Replace the grandmother-granddaughter persona with overlapping Goldilocks rings for people caught between a text that feels too casual and a physical gesture that feels too difficult. Name university students, long-distance connections, close friends and close family as included examples. Replace page 9's phone screenshot and supporting copy with: `Warm & Fuzzies is a private digital keepsake that brings the thoughtfulness of a letter to the ease of a text.`
+- Status: current rehearsal-deck direction; selected directly by Ethan, not participant-validated.
+- Supersedes: the five separately plotted channel reveals on pages 5 and 6, and the grandmother-granddaughter page-7 scenario. The individual forms remain separate controls for actual research.
+- Reason: the team needs fewer speaking beats, one clearer audience tension and a solution statement that explains both the product and its intended advantage before the live demo.
+- Evidence: direct team direction in [d16ae2…](TRANSCRIPTS/2026-09-05-d16ae2e6-7c26-5981-83c0-e76dbe3baecb.md) at 00:01 and [ee6aa5…](TRANSCRIPTS/2026-09-05-ee6aa56c-390b-5fc9-af50-e68149891ec4.md) at 00:01; Ethan's direct follow-ups selecting Goldilocks rings, included groups and the one-sentence solution; the existing [provisional ICP policy](../deck/PRESENTATION_MASTER_BRIEF.md#7-provisional-icp-and-persona-policy). These sources establish team intent, not market demand, cultural transmission, social enforcement or channel equivalence.
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The need-state makes the occasion and format norms visible before the product redesigns them. | The exact 2026 brief remains unverified. |
+| Problem identification | strengthens conditionally | The sender-framed opener now points at the behaviour the product asks someone to change, and the target is defined by one precise tension instead of an invented persona. | Recall difficulty is not prevalence data; segment boundaries and exceptions remain unmeasured. |
+| Solution approach | strengthens conditionally | The solution sentence directly answers the identified gap with thoughtfulness plus ease. | No comparison shows that the product delivers either outcome better. |
+| Design innovation | neutral | The combination is clearer, but grouping familiar channels does not create novelty. | Judges may still see a decorated digital letter. |
+| Visual communication | strengthens | Three map points, a three-row table, overlapping rings and one solution sentence reduce scan time. | Grouped points can imply false equivalence without the visible boundary. |
+| Presentation skills | strengthens | Four graph clicks replace six, the target can be retold in one phrase and page 9 has one speaking line. | The presenter must still explain both findings inside each grouped reveal. |
+| Evidence quality | weak | Published mechanisms remain beside the grouped points and temporary data stays disclosed. | All positions, ratings, percentages and audience claims remain unvalidated. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if text, voice or a physical gesture already fits? | Each remains a valid control; the deck describes a possible in-between need rather than declaring every existing form inadequate. | Which people actually experience the gap. |
+| Behaviour and context | Does the need occur on ordinary days or only around occasions? | The sender-framed question and ordinary-day trigger point at the moment of action, while distance-based relationships remain examples. | Real sender and receiver accounts across relationship contexts. |
+| Medium necessity | Why does this need a new digital product? | The proposition combines authored-object qualities with link-level ease and is demonstrated live. | Whether an existing channel can produce the same response with less product overhead. |
+| Alternatives | Does grouping hide better alternatives? | Individual text, voice, video, letter and gift formats remain separate research controls. | Matched-content results for every form and a non-app ritual. |
+| Human specificity | Are university students, close friends and close family too broad? | They are examples inside a shared need-state, not separate demographic targets. | Which examples have enough common behaviour to justify one experience. |
+| Inclusion and accessibility | Do overlapping rings and grouped labels remain legible? | The final 1600 × 900 render uses large type, high contrast and visible staged builds. | Projector-distance and colour-vision testing. |
+| Trust, safety and privacy | Does `private digital keepsake` overstate protection? | The phrase describes the intended interaction; the demo must keep bearer-link and retention limits explicit in Q&A. | Production identity, forwarding, storage and deletion guarantees. |
+| Failure and recovery | What if the group averages collapse in real data? | The HTML and table preserve separate replaceable values and the source notes retain the individual evidence. | Whether the three-family story survives actual results. |
+| Feasibility and demo truth | Does the single sentence imply proven superiority? | Speaker notes call thoughtfulness plus ease the proposition; the live demo proves interaction only. | Matched receiver evidence of comparative impact. |
+| Incentives and second-order effects | Could a keepsake create effort pressure or reply debt? | The current product keeps personalisation optional and does not require a reply. | Effects of repeated use across close relationships. |
+| Simplicity and retellability | Can judges explain the audience and product back? | `People caught between the formats` leads directly to `thoughtfulness of a letter` plus `ease of a text`. | First-listener recall after a timed rehearsal. |
+| Authorship and distinctiveness | Do the rings become a generic Venn diagram? | The overlap uses the same Goldilocks logic, hand-drawn linework and exact channel tension already selected by the team. | Whether the team delivers the language naturally. |
+
+### AI and authorship check
+
+- Ethan reversed the opening from receiving to initiating appreciation, selected the channel pairings, rejected the persona, named the included groups and removed the screenshot and subtext from page 9.
+- AI translated those decisions into bounded copy, HTML geometry, tests and documentation; it did not create research findings or validate the market.
+- Rejected directions: demographic persona cards, a market-size slide, five separate research beats, a screenshot-led solution reveal and an unsupported `better than everything` claim.
+- Required disclosure remains the external research sources and AI-assisted deck implementation under the final event rules.
+
+### Design-authenticity preflight and post-build review
+
+- Communication job: make the in-between audience immediately visible, simplify the comparison and let one product sentence answer the gap.
+- Specific source anchors: Ethan's three channel families; the ordinary-day format tension; the map's Goldilocks target; Cecelia's navy, white, green and Gaegu system.
+- Structural direction A: retain the grandmother-granddaughter relationship. It provides a story but falsely implies a selected research persona.
+- Structural direction B: show four demographic audience cards. It names groups but turns the deck into a generic market slide.
+- Structural direction C: use overlapping need rings with the included groups underneath. It ties the audience directly to the team's format gap. Selected by Ethan.
+- Rejected defaults: no stock persona illustration, demographic card grid, market-size bubble, phone mockup or feature subtext.
+- Content-native signature: a green double Goldilocks ring occupies the overlap between `wants more meaning` and `needs less friction`; the same comparison resolves into the single solution sentence two slides later.
+- Restraint: page 9 removes the product screenshot, logo lockup, mechanism paragraph and footer so only the solution proposition remains.
+- Human-authored change: Ethan explicitly collapsed the channel families, replaced the persona with Goldilocks rings and rewrote the job of page 9.
+- Render inspection: all four page-5 builds, the page-6 circle state, the complete page-7 rings and the one-sentence page 9 were inspected at 1600 × 900. The page-5 letter/gift evidence block was moved after the first render exposed a collision.
+- Strongest remaining AI tell: the grouped rehearsal values still form an unusually convenient pattern and must not be mistaken for measured evidence.
+- Logo-swap test: passes because the repeated text-versus-crafted-gesture tension, Goldilocks ring and keepsake proposition depend on this exact appreciation problem.
+- Team-voice test: passes conditionally; `people caught between the formats` and the solution sentence must survive timed rehearsal without extra explanation.
+- Authenticity verdict: **Pass for rehearsal only**.
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: use the three-family map and table, need-state Goldilocks rings and one-sentence solution reveal for rehearsal.
+- Blocking conditions: keep audience hesitation separate from evidence; do not claim cultural transmission or social enforcement without research; keep individual forms separate in actual research; do not claim paired forms are equivalent; retain the temporary-data disclosures; describe the audience as a working need-state; treat thoughtfulness plus ease as a proposition; replace every temporary value before judging.
+- Weakest judging angle: **evidence quality**, because the structure is clearer but no participant result validates the groups, audience or comparative product claim.
+- Main trade-off: much stronger clarity and retellability in exchange for hiding variation within the paired channels.
+- Next evidence that could change the verdict: one matched-content comparison across the individual forms and Warm & Fuzzies, segmented by whether participants identify with the in-between need.
+- Recommendation: rehearse this simpler story now, but preserve the individual-channel research instrument and replace the grouped values only after results support the aggregation.
+- Revisit when: real data separates voice from video or letters from gifts; the audience examples do not share one need; or first-listener rehearsal misreads `private` or the product proposition as a proven claim.
