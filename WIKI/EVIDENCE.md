@@ -101,6 +101,14 @@ The published timeline is more specific: background research began around 12:00,
 - Boundary: “Story-like” is an ease and direct-manipulation analogy, not an Instagram visual/social clone and not evidence that the flow is easy for intended users. Real camera permissions, touch ergonomics, paper-first discoverability, accessibility, and the meaning of visible creation effort still need human testing.
 - What this changes for us: the bordered form-like paper sheet and below-page material rail are superseded for the current prototype. The full-screen composer is the next test stimulus, not a final product decision.
 
+## 5 September creator-canvas feedback — internal implementation evidence only
+
+- Source: [71a1d2ad… raw creator-canvas capture](TRANSCRIPTS/2026-09-05-71a1d2ad-62f9-5a40-bef2-024e3a8df630.md).
+- Observation: the creator reports an invisible placement barrier making text and the existing image layout awkward, asks for text/image resizing, and asks for multiple text boxes in one creation.
+- Current implementation target: remove that barrier; support multiple independently movable/resizable text blocks and one independently movable/resizable existing image layer on the paper.
+- Boundary: this is internal implementation feedback, not usability, desirability, accessibility, or outcome evidence. It does not authorise multiple image layers, global layer-order tooling, item-removal recovery, a general-purpose editor, templates, or additional material types.
+- What this changes for us: verify the bounded canvas behaviours in the coded prototype and on a real phone before treating them as complete; preserve the sparse, non-scrolling, paper-first surface.
+
 ## Latest carrier ritual and sequencing correction — internal direction, not usability evidence
 
 - Sources: [913ddc06…](TRANSCRIPTS/2026-09-04-913ddc06-3a86-513e-a05c-3c0bbe1d4312.md), created `2026-09-04T16:52:08.940Z`, especially 04:21–07:58; [2d8ab5ab…](TRANSCRIPTS/2026-09-04-2d8ab5ab-b58f-5864-98e7-b63865cb6c37.md), 15:29–17:56; [4ef45d20…](TRANSCRIPTS/2026-09-04-4ef45d20-2643-5baa-97e2-ea66e5810701.md), 03:26–05:24; and the later [bbc5485c…](TRANSCRIPTS/2026-09-04-bbc5485c-837c-538c-b9e0-855e7aec8060.md), 01:59–05:28.

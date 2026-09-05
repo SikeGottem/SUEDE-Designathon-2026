@@ -3,7 +3,7 @@
 
 > **Status:** Source reconstruction for human review. This page describes what the team was reaching for, what changed over time, and what remains unresolved. It is not user validation.
 >
-> **Source cut:** all 47 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
+> **Source cut:** all 64 raw transcript files currently in `WIKI/TRANSCRIPTS/`, read end to end. Setup tests, scheduling, food conversation, and unintelligible fragments were checked but do not count as product evidence.
 >
 > **Recency rule:** later conversations refine or supersede earlier ones only when they clearly revisit the same choice. The latest direct instruction from Ethan outranks transcript-era proposals for the current prototype, but it does not become population evidence.
 
@@ -65,6 +65,7 @@ The no-reply/no-telemetry contract still matters. It is a structural boundary ar
 | Latest carrier sequencing and motion correction | Carrier choice interrupted expression; the courier and opening treatment read as unfinished | Compose first, then choose a carrier. Make the courier's transport legible and the opening visibly unfold; do not turn path guides into decoration or make a paper object scroll. |
 | Latest customization and direct-reveal correction | The creator lacked enough authored choice, and unfolding led to an extra transition instead of the object itself | Remove flower from the current carrier test; let unfolding reveal the completed composed object directly; add restrained colours and stickers as optional authored materials. |
 | Latest carrier and personalisation correction | The current ladybug and one-look page treatment were too narrow | Replace ladybug with firefly in the reversible trio; investigate a small selectable page-design/page-character variation so the authored object can become more personal. Exact variation system remains open. |
+| Creator-canvas correction | The text and existing image layer were constrained by an invisible placement barrier | Remove the barrier; support multiple independent text blocks and direct resize for text and the existing image layer, while keeping the maker sparse and paper-first. |
 
 ## Reconstructed product vision
 
@@ -374,3 +375,13 @@ These are latest internal prototype directions, not user research or proof that 
 - The pitch problem is the expression barrier: people may care but not know how to show appreciation naturally. This is team framing, not a prevalence or impact finding.
 
 These captures refine the current exploratory build and pitch. They do not prove that the hub, paper choice, stamp, carrier theatre, cabinet, or digital medium solves the expression barrier.
+
+## 5 September creator-canvas addendum
+
+**Source:** [creator-canvas feedback](TRANSCRIPTS/2026-09-05-71a1d2ad-62f9-5a40-bef2-024e3a8df630.md), a one-minute internal prototype capture.
+
+- Remove the invisible placement barrier that made the existing text and image layout feel constrained or awkward.
+- Allow multiple independent text boxes on one paper composition.
+- Let each text box and the existing image layer move and resize directly.
+
+This is internal prototype feedback, not participant validation. It does not establish that richer composition improves appreciation, authorise multiple image layers or a broad editor, or relax the paper-first, no-scroll, sparse-control, no-chat, and no-marketplace boundaries.

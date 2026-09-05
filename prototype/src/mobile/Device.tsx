@@ -1,4 +1,4 @@
-import { createContext, type PropsWithChildren, useContext, useMemo, useState } from "react";
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { mobileAssets } from "./assets";
@@ -46,15 +46,48 @@ type MobileDeviceContextValue = {
   device: MobileDevicePreset;
   deviceId: MobileDeviceId;
   setDeviceId: (deviceId: MobileDeviceId) => void;
+  edgeToEdge: boolean;
 };
 
 const MobileDeviceContext = createContext<MobileDeviceContextValue | null>(null);
 
+const edgeToEdgePointerQuery = "(hover: none) and (pointer: coarse)";
+
+function getEdgeToEdgeMode() {
+  if (typeof window === "undefined") return false;
+
+  return window.matchMedia(edgeToEdgePointerQuery).matches
+    && (window.innerWidth <= 767 || window.innerHeight <= 600);
+}
+
+function useEdgeToEdgeMode() {
+  const [edgeToEdge, setEdgeToEdge] = useState(getEdgeToEdgeMode);
+
+  useEffect(() => {
+    const pointerQuery = window.matchMedia(edgeToEdgePointerQuery);
+    const update = () => setEdgeToEdge(getEdgeToEdgeMode());
+
+    update();
+    pointerQuery.addEventListener("change", update);
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
+
+    return () => {
+      pointerQuery.removeEventListener("change", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("orientationchange", update);
+    };
+  }, []);
+
+  return edgeToEdge;
+}
+
 export function MobileDeviceProvider({ children }: PropsWithChildren) {
   const [deviceId, setDeviceId] = useState<MobileDeviceId>("iphone");
+  const edgeToEdge = useEdgeToEdgeMode();
   const value = useMemo(
-    () => ({ device: mobileDevices[deviceId], deviceId, setDeviceId }),
-    [deviceId],
+    () => ({ device: mobileDevices[deviceId], deviceId, setDeviceId, edgeToEdge }),
+    [deviceId, edgeToEdge],
   );
 
   return <MobileDeviceContext.Provider value={value}>{children}</MobileDeviceContext.Provider>;

@@ -833,3 +833,15 @@ Navy remains the active visual direction. Green is an unselected experiment, not
 For the pitch, the intended audience handoff is a real receiver URL encoded in a real QR and checked on a second device. The intended team introduction uses a real, approved team photograph and a bespoke composition. Until those inputs exist, both remain explicitly blocked placeholders rather than invented assets.
 
 Primary sources: [later prototype and presentation review](TRANSCRIPTS/2026-09-05-5697c82d-2e9b-52ae-9644-e8133a703b83.md) and [pitch-edit review](TRANSCRIPTS/2026-09-05-36abc9a9-4368-56af-9d56-cc91795ba5c7.md).
+
+## 31. Creator-canvas interaction delta — 5 September
+
+**Status:** Implemented direct prototype requirement from Darius’s creator-canvas feedback. It is internal team feedback, not participant validation or a decision to broaden the product into design software.
+
+The maker can place **multiple independent text blocks** and the existing image layer across the usable full paper. A text block or image is directly movable and resizable, without the former invisible centre-clamp limiting horizontal or vertical placement. Selection controls stay contextual to the current piece; they do not introduce persistent editor chrome, templates, a material market, or a Canva-like workspace.
+
+The composition is part of the message. Each text block's position, size, rotation, text, and strike-through state, plus the image layout, must remain exact when the page folds, when a serializable share object is opened by the receiver, and when a serializable object is reopened from the browser-local cabinet. The implementation provides keyboard-accessible equivalents for selecting, moving, resizing, editing, and removing the selected item; strike-through recovery remains available while writing, and no keyboard or pointer path may become a dead end.
+
+This delta does not validate whether richer composition improves appreciation, authorise new content types, or relax the no-scroll, sparse paper-first, no-chat, and no-marketplace boundaries.
+
+Primary source: [creator-canvas feedback](TRANSCRIPTS/2026-09-05-71a1d2ad-62f9-5a40-bef2-024e3a8df630.md).

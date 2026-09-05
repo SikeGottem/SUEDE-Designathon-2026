@@ -1524,6 +1524,11 @@
   transform-origin: center;
 }
 
+.story-layer-text {
+  width: min(250px, calc(100% - 52px));
+  margin-left: max(-125px, calc((52px - 100%) / 2));
+}
+
 .story-layer-paper::after {
   position: absolute;
   z-index: -1;
@@ -1675,7 +1680,8 @@
 }
 
 .story-layer-remove,
-.story-layer-rotate {
+.story-layer-rotate,
+.story-layer-resize {
   position: absolute;
   z-index: 4;
   top: -39px;
@@ -1700,8 +1706,16 @@
   touch-action: none;
 }
 
+.story-layer-resize {
+  top: auto;
+  right: 0;
+  bottom: -39px;
+  touch-action: none;
+}
+
 .story-layer-remove .control-mark,
-.story-layer-rotate .control-mark {
+.story-layer-rotate .control-mark,
+.story-layer-resize .control-mark {
   width: 18px;
   height: 18px;
 }

@@ -62,22 +62,41 @@ function useDeviceScale(deviceWidth: number, deviceHeight: number) {
 }
 
 export function PhoneFrame({ children }: PropsWithChildren) {
-  const { device } = useMobileDevice();
+  const { device, edgeToEdge } = useMobileDevice();
   const { geometry } = device;
   const scale = useDeviceScale(geometry.device.width, geometry.device.height);
   const screenRef = useRef<HTMLDivElement | null>(null);
   const contextValue = useMemo(() => ({ screenRef }), []);
   const mobileCursor = useMobileCursor();
+  const screenStyle = edgeToEdge
+    ? {
+      "--device-safe-area-top": "env(safe-area-inset-top, 0px)",
+      "--device-safe-area-bottom": "env(safe-area-inset-bottom, 0px)",
+      inset: 0,
+      width: "auto",
+      height: "auto",
+      borderRadius: 0,
+      zIndex: 1,
+    } as CSSProperties
+    : {
+      "--device-safe-area-bottom": `${geometry.safeArea.bottom}px`,
+      left: geometry.screen.x,
+      top: geometry.screen.y,
+      width: geometry.screen.width,
+      height: geometry.screen.height,
+      borderRadius: geometry.screen.radius,
+      zIndex: device.bezelLayer === "above-screen" ? 1 : 2,
+    } as CSSProperties;
 
   return (
     <ScreenPortalContext.Provider value={contextValue}>
-      <div className="phone-stage">
-        <DevicePicker />
+      <div className={`phone-stage ${edgeToEdge ? "phone-stage-edge-to-edge" : ""}`} data-runtime-mode={edgeToEdge ? "edge-to-edge" : "emulator"}>
+        {!edgeToEdge && <DevicePicker />}
         <div
           className="phone-scale-box"
           style={{
-            width: geometry.device.width * scale,
-            height: geometry.device.height * scale,
+            width: edgeToEdge ? "100%" : geometry.device.width * scale,
+            height: edgeToEdge ? "100%" : geometry.device.height * scale,
           }}
         >
           <div
@@ -87,41 +106,32 @@ export function PhoneFrame({ children }: PropsWithChildren) {
             data-testid="phone-frame"
             onDragStartCapture={suppressNativeDrag}
             style={{
-              width: geometry.device.width,
-              height: geometry.device.height,
-              transform: `scale(${scale})`,
+              width: edgeToEdge ? "100%" : geometry.device.width,
+              height: edgeToEdge ? "100%" : geometry.device.height,
+              transform: edgeToEdge ? "none" : `scale(${scale})`,
             }}
           >
-            <img
+            {!edgeToEdge && <img
               className="phone-bezel"
               src={device.bezel}
               alt=""
               aria-hidden="true"
               draggable={false}
               style={{ zIndex: device.bezelLayer === "above-screen" ? 2 : 1 }}
-            />
+            />}
             <div
               ref={screenRef}
               className="device-screen"
-              data-cursor-debug={mobileCursor.cursorDebug ? "true" : "false"}
+              data-cursor-debug={!edgeToEdge && mobileCursor.cursorDebug ? "true" : "false"}
               data-device={device.id}
+              data-edge-to-edge={edgeToEdge ? "true" : "false"}
               data-phone-screen
               data-testid="device-screen"
-              {...mobileCursor.cursorHandlers}
-              style={
-                {
-                  "--device-safe-area-bottom": `${geometry.safeArea.bottom}px`,
-                  left: geometry.screen.x,
-                  top: geometry.screen.y,
-                  width: geometry.screen.width,
-                  height: geometry.screen.height,
-                  borderRadius: geometry.screen.radius,
-                  zIndex: device.bezelLayer === "above-screen" ? 1 : 2,
-                } as CSSProperties
-              }
+              {...(!edgeToEdge ? mobileCursor.cursorHandlers : {})}
+              style={screenStyle}
             >
               {children}
-              {device.camera ? (
+              {!edgeToEdge && device.camera ? (
                 <span
                   className="device-camera"
                   data-testid="device-camera"
@@ -134,7 +144,7 @@ export function PhoneFrame({ children }: PropsWithChildren) {
                   }}
                 />
               ) : null}
-              {mobileCursor.cursorElement}
+              {!edgeToEdge && mobileCursor.cursorElement}
             </div>
           </div>
         </div>

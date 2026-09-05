@@ -10,9 +10,8 @@ export function MobileRuntime({ children }: PropsWithChildren) {
       <PhoneFrame>
         <KeyboardProvider>
           <KeyboardPreview />
-          <StatusBar />
+          <MobileChrome />
           <MobileAppViewport>{children}</MobileAppViewport>
-          <HomeIndicator />
           <KeyboardDock />
         </KeyboardProvider>
       </PhoneFrame>
@@ -21,19 +20,28 @@ export function MobileRuntime({ children }: PropsWithChildren) {
 }
 
 function MobileAppViewport({ children }: PropsWithChildren) {
-  const { device } = useMobileDevice();
+  const { device, edgeToEdge } = useMobileDevice();
   const keyboard = useKeyboard();
 
   return (
     <div
       className="mobile-app-viewport"
       data-keyboard-visible={keyboard.visible ? "true" : "false"}
+      data-edge-to-edge={edgeToEdge ? "true" : "false"}
       data-platform={device.platform}
       data-testid="mobile-app-viewport"
     >
       {children}
     </div>
   );
+}
+
+function MobileChrome() {
+  const { edgeToEdge } = useMobileDevice();
+
+  if (edgeToEdge) return null;
+
+  return <><StatusBar /><HomeIndicator /></>;
 }
 
 function KeyboardPreview() {

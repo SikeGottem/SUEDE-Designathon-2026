@@ -21,7 +21,7 @@ test("a new keepsake asks who it is for and carries that name to the receiver", 
   await expect(page.getByTestId("keyboard-dock")).toHaveAttribute("data-visible", "false");
   await expect(page.locator(".keepsake-app > .mobile-scroll")).toHaveJSProperty("scrollTop", 0);
 
-  await page.getByRole("button", { name: "edit" }).click();
+  await page.getByRole("button", { name: "write" }).click();
   await page.getByLabel(/Write directly on the paper/).fill("You made today feel lighter.");
   await page.getByRole("button", { name: "done writing" }).click();
   await page.getByRole("button", { name: /Next: fold and decorate the envelope/ }).click();
