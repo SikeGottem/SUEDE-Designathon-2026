@@ -80,6 +80,7 @@ type KeepsakeSnapshot = {
 
 const CECILIA = "/assets/illustrations/cecilia/";
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
+const RETURNING_KEY = "warm-fuzzies-returning-v1";
 const LINK_MAX = 12_000;
 const QR_MAX = 620;
 const carrierIds: CarrierId[] = ["bottle", "firefly", "plane"];
@@ -292,6 +293,13 @@ function loadCabinet() {
   } catch { return [] as KeepsakeSnapshot[]; }
 }
 
+function loadReturningState() {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(RETURNING_KEY) === "true" || loadCabinet().length > 0;
+  } catch { return false; }
+}
+
 type Carrier = {
   id: CarrierId;
   label: string;
@@ -371,6 +379,7 @@ export default function Prototype() {
   const linkedSnapshot = snapshotFromHash() ?? (!hashPresent && typeof window !== "undefined" && window.location.pathname === "/demo" ? publicDemoSnapshot : null);
   // A fragment link always wins over the capture route and is immutable for the receiving demo.
   const [phase, setPhase] = useState<Phase>(() => linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : phaseFromQuery() ?? "home"));
+  const [isReturning, setIsReturning] = useState(loadReturningState);
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
   const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? "Maya");
   const [words, setWords] = useState(() => linkedSnapshot?.words ?? "You made the first week in a new place feel familiar. You noticed what I needed before I knew how to ask.");
@@ -456,6 +465,11 @@ export default function Prototype() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!isReturning) return;
+    try { window.localStorage.setItem(RETURNING_KEY, "true"); } catch { /* Local storage is optional in the prototype. */ }
+  }, [isReturning]);
+
   const togglePiece = (piece: PieceId) => {
     setPieces((current) =>
       current.includes(piece)
@@ -465,6 +479,7 @@ export default function Prototype() {
   };
 
   const resetDraft = () => {
+    setIsReturning(true);
     setRecipient("Maya");
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setWords("");
@@ -489,12 +504,15 @@ export default function Prototype() {
     go("studio");
   };
 
+  const returnHome = () => go("home");
+
   const saveToCabinet = (snapshot: KeepsakeSnapshot) => {
     if (containsBlobMedia(snapshot)) return false;
     const next = [snapshot, ...cabinet.filter((item) => item.id !== snapshot.id)].slice(0, 12);
     try {
       window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
     } catch { return false; }
+    setIsReturning(true);
     setCabinet(next);
     return true;
   };
@@ -540,15 +558,15 @@ export default function Prototype() {
         <main className="keepsake-shell" aria-label="Friendship keepsake exploratory prototype">
           <AnimatePresence mode="wait" initial={false}>
             {phase === "home" && (
-              <Home key="home" onMake={resetDraft} />
+              <Home key="home" returning={isReturning} onMake={resetDraft} onLetters={() => go("cabinet")} />
             )}
             {phase === "carrier" && (
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} words={words} crossedOut={crossedOut} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onWords={setWords} onCrossedOut={setCrossedOut} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={() => go("home")} onPreview={() => go("envelope")} />
+              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} words={words} crossedOut={crossedOut} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onWords={setWords} onCrossedOut={setCrossedOut} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnHome} onPreview={() => go("envelope")} />
             )}
-            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onEnvelope={setEnvelope} onSeal={setSeal} envelope={envelope} seal={seal} onNext={() => go("carrier")} />}
+            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} onNext={() => go("carrier")} />}
             {phase === "preview" && (
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
@@ -556,23 +574,23 @@ export default function Prototype() {
               <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
-              <Sent key="sent" onAgain={resetDraft} onLeave={() => go("home")} />
+              <Sent key="sent" recipient={recipient} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnHome} />
             )}
             {phase === "arrival" && (
               <Arrival key="arrival" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onUnavailable={() => go("unavailable")} />
             )}
             {phase === "deferred" && (
-              <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={() => go("home")} />
+              <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={returnHome} />
             )}
             {phase === "unavailable" && (
-              <QuietExit key="unavailable" title="this one cannot be opened." body="No private content has been shown. The link may have expired or reached the wrong person." action="back to the sample" onAction={() => go("arrival")} onLeave={() => go("home")} />
+              <QuietExit key="unavailable" title="this one cannot be opened." body="No private content has been shown. The link may have expired or reached the wrong person." action="back to the sample" onAction={() => go("arrival")} onLeave={returnHome} />
             )}
             {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />}
             {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(activeSnapshot.id); go("removed"); }} />}
             {phase === "cabinet" && (
-              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onClose={() => go("home")} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
+              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onMake={resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
             )}
-            {phase === "removed" && <Removed key="removed" onLeave={() => go("home")} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
+            {phase === "removed" && <Removed key="removed" onLeave={returnHome} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
           </AnimatePresence>
         </main>
       </MobileScroll>
@@ -610,7 +628,11 @@ function RotateMark() {
   return <svg className="control-mark control-mark-rotate" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 11c-4-6-14-5-17 2-4 9 6 17 14 12 3-2 4-4 5-7M20 6l5 5 2-7" /></svg>;
 }
 
-function Home({ onMake }: { onMake: () => void }) {
+function AppBottomNav({ lettersCurrent = false, onMake, onLetters }: { lettersCurrent?: boolean; onMake: () => void; onLetters: () => void }) {
+  return <nav className="return-nav" aria-label="Warm and fuzzies"><span className="return-nav-spacer" aria-hidden="true" /><button className="return-nav-make" type="button" onClick={onMake} aria-label="Make a new letter"><span aria-hidden="true">+</span><small>make</small></button><button className="return-nav-letters" type="button" aria-current={lettersCurrent ? "page" : undefined} onClick={onLetters}>your letters</button></nav>;
+}
+
+function Home({ returning, onMake, onLetters }: { returning: boolean; onMake: () => void; onLetters: () => void }) {
   return (
     <Page className="home-page">
       <div className="home-bee-mark" aria-hidden="true">
@@ -628,9 +650,7 @@ function Home({ onMake }: { onMake: () => void }) {
         <h1 className="working-wordmark">warm &amp;<br />fuzzies</h1>
         <p>something good<br />on your mind?</p>
       </div>
-      <div className="home-invitation">
-        <button className="drawn-action" type="button" onClick={onMake}>make it for them <Mark /></button>
-      </div>
+      {returning ? <AppBottomNav onMake={onMake} onLetters={onLetters} /> : <div className="home-invitation"><button className="drawn-action" type="button" onClick={onMake}>make it for them <Mark /></button></div>}
     </Page>
   );
 }
@@ -1262,7 +1282,7 @@ function AuthoredPaper({ snapshot, className = "", receiver = false }: { snapsho
 }
 
 function SealSurface({ strokes, onChange, onDone }: { strokes: DoodleStroke[]; onChange: (strokes: DoodleStroke[]) => void; onDone: () => void }) {
-  return <div className="seal-surface"><DoodleSurface label="Draw your personal seal" strokes={strokes} onStroke={(stroke) => onChange([...strokes, stroke])} /><div className="seal-controls"><button type="button" onClick={() => onChange(strokes.slice(0, -1))} disabled={!strokes.length}>undo stroke</button><button type="button" onClick={() => onChange([])} disabled={!strokes.length}>clear</button><button className="seal-apply" type="button" onClick={onDone} disabled={!strokes.length}>apply seal <Mark /></button></div></div>;
+  return <div className="seal-surface"><DoodleSurface label="Draw your personal stamp" strokes={strokes} onStroke={(stroke) => onChange([...strokes, stroke])} /><div className="seal-controls"><button type="button" onClick={() => onChange(strokes.slice(0, -1))} disabled={!strokes.length}>undo stroke</button><button type="button" onClick={() => onChange([])} disabled={!strokes.length}>clear</button><button className="seal-apply" type="button" onClick={onDone} disabled={!strokes.length}>apply stamp <Mark /></button></div></div>;
 }
 
 function EnvelopeFoldLines() {
@@ -1272,7 +1292,7 @@ function EnvelopeFoldLines() {
   </svg>;
 }
 
-function EnvelopeStudio({ snapshot, envelope, seal, onEnvelope, onSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; envelope: EnvelopeId; seal: DoodleStroke[]; onEnvelope: (value: EnvelopeId) => void; onSeal: (value: DoodleStroke[]) => void; onBack: () => void; onNext: () => void }) {
+function EnvelopeStudio({ snapshot, seal, onSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; onSeal: (value: DoodleStroke[]) => void; onBack: () => void; onNext: () => void }) {
   const reduced = useReducedMotion();
   const [folded, setFolded] = useState(Boolean(reduced));
   const [sealOpen, setSealOpen] = useState(false);
@@ -1295,22 +1315,46 @@ function EnvelopeStudio({ snapshot, envelope, seal, onEnvelope, onSeal, onBack, 
     document.addEventListener("keydown", handleKeys);
     return () => { window.cancelAnimationFrame(focusFrame); document.removeEventListener("keydown", handleKeys); previous?.focus(); };
   }, [sealOpen]);
-  useEffect(() => {
-    if (!folded) return;
-    const handleTemplateKeys = (event: KeyboardEvent) => {
-      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-      if (!(event.target instanceof HTMLElement) || !event.target.closest(".envelope-options")) return;
-      event.preventDefault();
-      const current = envelopeIds.indexOf(envelope);
-      const direction = event.key === "ArrowRight" ? 1 : -1;
-      const next = envelopeIds[(current + direction + envelopeIds.length) % envelopeIds.length];
-      onEnvelope(next);
-      window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(`.envelope-option.envelope-${next}`)?.focus());
-    };
-    document.addEventListener("keydown", handleTemplateKeys);
-    return () => document.removeEventListener("keydown", handleTemplateKeys);
-  }, [envelope, folded, onEnvelope]);
-  return <Page className="envelope-page"><TopLine onBack={onBack} label="back to your paper" /><AnimatePresence>{!folded && <motion.div className="envelope-fold-preview" exit={{ opacity: 0 }} transition={{ duration: .18 }}><motion.div className="folding-paper-shell" initial={reduced ? false : { transform: "translateY(18px) scale(.88) rotate(0deg)" }} animate={reduced ? { transform: "translateY(70px) scale(.34) rotate(-3deg)" } : { transform: ["translateY(18px) scale(.88) rotate(0deg)", "translateY(18px) scale(.88) rotate(0deg)", "translateY(70px) scale(.34) rotate(-3deg)"], opacity: [1, 1, .72] }} transition={{ duration: 1.36, times: [0, .65, 1], ease: [0.77, 0, 0.175, 1] }}><AuthoredPaper snapshot={snapshot} className="fold-paper-base" /><motion.div className="fold-leaf fold-leaf-left" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(178deg)" }} transition={{ delay: .18, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-right" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(-178deg)" }} transition={{ delay: .24, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div><motion.div className="fold-leaf fold-leaf-bottom" initial={false} animate={reduced ? { transform: "rotateX(0deg)" } : { transform: "rotateX(-178deg)" }} transition={{ delay: .76, duration: .5, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div></motion.div><p>your page folds with every mark still in place.</p></motion.div>}</AnimatePresence><AnimatePresence>{folded && <motion.section className="envelope-workbench" aria-label="Decorate the outside envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}><header><h1>make the outside yours.</h1><p>Pick its paper, then leave your mark.</p></header><div className={`envelope-canvas envelope-${envelope}`} data-envelope={envelope}><span className="envelope-template-detail" aria-hidden="true" /><EnvelopeFoldLines /><span className="envelope-address">for {snapshot.recipient}<small>from {snapshot.sender}</small></span><button className={`seal-stamp ${seal.length ? "has-seal" : ""}`} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal seal" : "Draw your personal seal"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your seal</span>}</button></div><div className="envelope-options" role="radiogroup" aria-label="Envelope templates">{(["mail", "night", "rust"] as EnvelopeId[]).map((option) => <button className={`envelope-option envelope-${option}`} key={option} type="button" role="radio" aria-checked={envelope === option} onClick={() => onEnvelope(option)}><span className="envelope-swatch" aria-hidden="true" /><span>{option === "mail" ? "classic" : option === "night" ? "midnight" : "postcard"}</span></button>)}</div><p className="envelope-status" aria-live="polite">{seal.length ? "sealed by you." : "add a seal, or keep it simple."}</p></motion.section>}</AnimatePresence>{folded ? <button className="drawn-action envelope-next" type="button" onClick={onNext}>choose how it travels <Mark /></button> : <p className="envelope-fold-status" role="status">folding your page…</p>}<AnimatePresence>{sealOpen && <motion.section className="seal-editor" role="dialog" aria-modal="true" aria-label="Draw your personal seal" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: .24, ease: [0.23, 1, .32, 1] }}><button className="seal-editor-close" type="button" onClick={() => setSealOpen(false)} aria-label="Close seal editor"><CloseMark /></button><header><span>one mark, made by you</span><h1>draw your seal.</h1><p>It will be stamped onto the envelope exactly like this.</p></header><SealSurface strokes={seal} onChange={onSeal} onDone={() => setSealOpen(false)} /></motion.section>}</AnimatePresence></Page>;
+  return (
+    <Page className="envelope-page">
+      <TopLine onBack={onBack} label="back to your paper" />
+      <AnimatePresence>
+        {!folded && (
+          <motion.div className="envelope-fold-preview" exit={{ opacity: 0 }} transition={{ duration: .18 }}>
+            <motion.div className="folding-paper-shell" initial={reduced ? false : { transform: "translateY(18px) scale(.88) rotate(0deg)" }} animate={reduced ? { transform: "translateY(70px) scale(.34) rotate(-3deg)" } : { transform: ["translateY(18px) scale(.88) rotate(0deg)", "translateY(18px) scale(.88) rotate(0deg)", "translateY(70px) scale(.34) rotate(-3deg)"], opacity: [1, 1, .72] }} transition={{ duration: 1.36, times: [0, .65, 1], ease: [0.77, 0, 0.175, 1] }}>
+              <AuthoredPaper snapshot={snapshot} className="fold-paper-base" />
+              <motion.div className="fold-leaf fold-leaf-left" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(178deg)" }} transition={{ delay: .18, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
+              <motion.div className="fold-leaf fold-leaf-right" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(-178deg)" }} transition={{ delay: .24, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
+              <motion.div className="fold-leaf fold-leaf-bottom" initial={false} animate={reduced ? { transform: "rotateX(0deg)" } : { transform: "rotateX(-178deg)" }} transition={{ delay: .76, duration: .5, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
+            </motion.div>
+            <p>your page folds with every mark still in place.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {folded && (
+          <motion.section className="envelope-workbench" aria-label="Add a personal stamp to the envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}>
+            <header><h1>leave your mark.</h1><p>The envelope stays simple. The stamp is yours.</p></header>
+            <div className="envelope-canvas">
+              <img className="envelope-canvas-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />
+              <button className={`seal-stamp ${seal.length ? "has-seal" : ""}`} type="button" onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
+            </div>
+            <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : "add a stamp, or keep it simple."}</p>
+          </motion.section>
+        )}
+      </AnimatePresence>
+      {folded ? <button className="drawn-action envelope-next" type="button" onClick={onNext}>choose how it travels <Mark /></button> : <p className="envelope-fold-status" role="status">folding your page…</p>}
+      <AnimatePresence>
+        {sealOpen && (
+          <motion.section className="seal-editor" role="dialog" aria-modal="true" aria-label="Draw your personal stamp" initial={{ opacity: 0, transform: "translateY(18px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(12px)" }} transition={{ duration: .24, ease: [0.23, 1, .32, 1] }}>
+            <button className="seal-editor-close" type="button" onClick={() => setSealOpen(false)} aria-label="Close stamp editor"><CloseMark /></button>
+            <header><span>one mark, made by you</span><h1>draw your stamp.</h1><p>It will be stamped onto the envelope exactly like this.</p></header>
+            <SealSurface strokes={seal} onChange={onSeal} onDone={() => setSealOpen(false)} />
+          </motion.section>
+        )}
+      </AnimatePresence>
+    </Page>
+  );
 }
 
 function CanvasLayer({ id, label, layout, selected, editing = false, children, onSelect, onLayout, onRemove, onEdit }: { id: LayerId; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; children: ReactNode; onSelect: (id: LayerId | null) => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onRemove: (id: LayerId) => void; onEdit?: () => void }) {
@@ -1449,8 +1493,8 @@ function CapturedMedia({ capture, className = "", interactive = false }: { captu
 }
 
 function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: KeepsakeSnapshot; className?: string }) {
-  const label = `A ${snapshot.envelope === "mail" ? "classic" : snapshot.envelope === "night" ? "midnight" : "postcard"} envelope for ${snapshot.recipient} from ${snapshot.sender}`;
-  return <div className={`sealed-envelope-artwork envelope-${snapshot.envelope} ${className}`} data-envelope={snapshot.envelope} role="img" aria-label={label}><span className="sealed-envelope-fill" aria-hidden="true" /><span className="envelope-template-detail" aria-hidden="true" /><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
+  const label = `A hand-drawn envelope for ${snapshot.recipient} from ${snapshot.sender}${snapshot.seal.length ? ", finished with their personal stamp" : ""}`;
+  return <div className={`sealed-envelope-artwork ${className}`} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
 function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
@@ -1504,11 +1548,53 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, o
   );
 }
 
-function Sent({ onAgain, onLeave }: { onAgain: () => void; onLeave: () => void }) {
+function DeliveryMascot({ className = "" }: { className?: string }) {
+  return <span className={`delivery-mascot ${className}`}><img className="delivery-mascot-letter" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} /><img className="delivery-mascot-firefly" src={`${CECILIA}firefly-carrying-envelope.png`} alt="" draggable={false} /></span>;
+}
+
+function Sent({ recipient, reduceMotion, onAgain, onLeave }: { recipient: string; reduceMotion: boolean; onAgain: () => void; onLeave: () => void }) {
+  const [deliveryLoop, setDeliveryLoop] = useState(reduceMotion);
+  const [pickupStarted, setPickupStarted] = useState(false);
+  useEffect(() => {
+    if (reduceMotion) { setDeliveryLoop(true); return; }
+    let timer = 0;
+    const frame = window.requestAnimationFrame(() => {
+      setPickupStarted(true);
+      timer = window.setTimeout(() => setDeliveryLoop(true), 4_800);
+    });
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer); };
+  }, [reduceMotion]);
   return (
     <Page className="sent-page">
+      <div className="sent-delivery-stage" data-delivery-stage={reduceMotion ? "still" : deliveryLoop ? "flying" : "pickup"} aria-hidden="true">
+        {reduceMotion ? <DeliveryMascot className="sent-delivery-still" /> : deliveryLoop ? (
+          <div className="sent-delivery-loop"><DeliveryMascot /></div>
+        ) : (
+          <>
+            <motion.img
+              className="sent-letter-object"
+              src={`${CECILIA}envelope-mail-02.png`}
+              alt=""
+              draggable={false}
+              initial={false}
+              animate={pickupStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(0, -2px, 0) rotate(0deg) scale(.96)", "translate3d(0, -8px, 0) rotate(2deg) scale(.78)"] } : { opacity: 1, transform: "translate3d(0, 0, 0) rotate(-1deg) scale(1)" }}
+              transition={{ duration: 4.8, times: [0, .46, .56, .7], ease: [0.77, 0, 0.175, 1] }}
+            />
+            <motion.div
+              className="sent-pickup-courier"
+              initial={false}
+              animate={pickupStarted ? { opacity: [0, 1, 1, 1, 0], transform: ["translate3d(356px, -48px, 0) rotate(16deg) scale(.68)", "translate3d(258px, 62px, 0) rotate(7deg) scale(.76)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(410px, -76px, 0) rotate(14deg) scale(.66)"] } : { opacity: 0, transform: "translate3d(356px, -48px, 0) rotate(16deg) scale(.68)" }}
+              transition={{ duration: 4.8, times: [0, .23, .47, .61, 1], ease: [0.77, 0, 0.175, 1] }}
+            >
+              <motion.img className="sent-firefly-empty" src={`${CECILIA}firefly-brand-mark.png`} alt="" draggable={false} initial={false} animate={pickupStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 4.8, times: [0, .46, .54, 1], ease: [0.23, 1, 0.32, 1] }} />
+              <motion.span className="sent-firefly-carrying" initial={false} animate={pickupStarted ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: 4.8, times: [0, .47, .55, 1], ease: [0.23, 1, 0.32, 1] }}><DeliveryMascot /></motion.span>
+            </motion.div>
+          </>
+        )}
+      </div>
       <div className="sent-copy"><h1>that&apos;s it from you.</h1></div>
       <div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another</button><button className="quiet-link" type="button" onClick={onLeave}>leave</button></div>
+      <p className="sr-only" role="status">Your firefly has the letter for {recipient}.</p>
     </Page>
   );
 }
@@ -1623,13 +1709,19 @@ function Reveal(props: ReceiverObjectProps) {
   return <Page className="reveal-page"><ReceiverObject {...props} /></Page>;
 }
 
-function Cabinet({ items, removingId, onOpen, onClose, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onOpen: (item: KeepsakeSnapshot) => void; onClose: () => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
+function Cabinet({ items, removingId, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onMake: () => void; onOpen: (item: KeepsakeSnapshot) => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const returnToLetters = () => {
+    headingRef.current?.focus();
+    headingRef.current?.scrollIntoView({ block: "start", behavior: "auto" });
+  };
   return (
     <Page className="cabinet-page">
-      <header><button className="navy-back" type="button" onClick={onClose}><Mark direction="left" /> close</button><h1>things you kept.</h1></header>
+      <header><h1 ref={headingRef} tabIndex={-1}>things you kept.</h1></header>
       <div className="cabinet-field">
         {items.length ? items.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
+      <AppBottomNav lettersCurrent onMake={onMake} onLetters={returnToLetters} />
     </Page>
   );
 }

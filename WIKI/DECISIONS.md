@@ -739,3 +739,49 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Material human-directed change: the supplied frames determined hierarchy, subtraction, colour role, and the quiet Sent/Cabinet compositions.
 - Next corrective action: observe the full flow once on a real phone before treating the hierarchy as final.
 - Verdict: Pass for the exploratory prototype.
+
+## 2026-09-05 - Keep Home as the entry, add cabinet navigation, reduce outer authorship to a stamp, and show delivery
+
+- Status: current exploratory implementation decision; team-directed, not participant-validated or final.
+- Decision: always open the ordinary app root on the large `warm & fuzzies` Home screen. In a first-use local state, Home ends with `make it for them`; after someone begins making or has a kept object, the same Home ends with a persistent `your letters` destination plus a large central `+` action. Repeat that navigation in `things you kept`, without turning the cabinet into the homepage. Remove the outer-envelope template chooser and show Cecelia's clean envelope artwork with only an optional maker-drawn stamp. On the sent confirmation, show Cecelia's firefly visibly collect the envelope and continue a slow delivery flight; show the same object at rest when reduced motion is requested.
+- Supersedes: the visible envelope-template choice and exact template-continuity requirement in `Approve the authored envelope-and-seal flow`; only the Sent-specific ban on automatic departure and persistent courier motion in `Adopt the human-redrawn white, object-first sender and cabinet layouts`. It does not add an app-wide mascot, flight paths, particles, tracking, replies, or delivery-status claims.
+- Reason: Ethan asked for a main interface centred on a create button and cabinet access, then explicitly corrected the implementation so the app still starts on Home. He also judged outer letter/envelope design unnecessary while preserving stamp design, and made the firefly physically carrying the finished letter a core motion beat rather than decoration.
+- Evidence: Ethan's direct 5 September build-session decisions and Home correction, Cecelia's `firefly-carrying-envelope.png` and `envelope-mail-02.png` source assets, and the matched 394 × 852 captures in `output/design-qa/motion-nav-2026-09-05/`. This is team direction and prototype evidence, not user research.
+- Consequence: the root must remain Home; local return state may alter only Home's lower navigation and must not be presented as an account or cloud library. Home and Cabinet must expose creation and cabinet access/current location. Stamp-making remains optional and cannot gate progression. Delivery motion must keep the letter visibly attached to the firefly, move slowly enough to read, leave copy/actions still, avoid drawn route lines, and respect reduced motion.
+- Revisit when: the account/persistence model is decided; a repeat maker cannot find creation or their cabinet; the stamp is experienced as decorative labour; delivery motion distracts from closure; or a stronger creation-discovery mechanism changes the flow before the envelope.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | Making, giving, receiving and keeping remain the visible redesign of ordinary-day appreciation. | Navigation and delivery theatre cannot compensate for a weak expression mechanism. |
+| Problem identification | neutral | This pass removes flow confusion but does not change the hesitation/retrieval problem. | The maker may still arrive without knowing what specific thing to say. |
+| Solution approach | strengthens | Home keeps the emotional entry while returning navigation exposes collection/create choices; stamp-only outer authorship removes one low-value choice. | Browser-local return state is only a prototype substitute for identity and persistence. |
+| Design innovation | strengthens | The courier physically completes the transfer instead of becoming a decorative mascot or progress indicator. | The effect could feel ornamental if receivers do not value the delivery ritual. |
+| Visual communication | strengthens | One clean envelope, one optional human mark, and one slow carrying action are immediately legible. | Asset scaling and motion cadence still need real-device inspection. |
+| Presentation skills | strengthens | The flow now has a clear returning-state frame and a demonstrable departure beat. | A polished animation could overstate product completeness. |
+| Evidence quality | weak | Direct team decisions and matched rendered states support the implementation. | No repeat maker or receiver has evaluated findability, stamp value, or emotional effect. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if the intro should remain the emotional home every time? | It now does: Home remains the root, while its lower action area adapts after first use. | Repeat-use comprehension and preference. |
+| Behaviour and context | Will a large `+` actually help someone act when appreciation occurs? | It shortens navigation and avoids replaying onboarding. | The harder barrier may be remembering a concrete moment, not finding the button. |
+| Medium necessity | Does a flying courier earn a digital medium? | It makes transfer visible and can preserve one authored object across distance. | Whether that benefit beats an ordinary message or physical note. |
+| Alternatives | Would a simple list plus compose button be clearer? | The cabinet is intentionally a visual object field without counts, rankings or feed mechanics. | Comparative task time and emotional response. |
+| Human specificity | Could the stamp prescribe one narrow form of care? | It is optional and contains only the maker's own mark. | Motor, cultural and relationship-context differences. |
+| Inclusion and accessibility | Can motion or handwriting block use? | Controls remain semantic and high contrast; reduced motion renders a static carrying object. | Screen-reader, low-vision and real-touch testing. |
+| Trust, safety and privacy | Does `your letters` imply durable private storage? | The prototype records only local browser state and must not claim an account, sync or security guarantee. | Authentication, forwarding, expiry, deletion and device migration. |
+| Failure and recovery | What happens if local state disappears or the maker leaves mid-flow? | The current implementation keeps the return route and draft transitions local and reversible. | Production draft persistence and explicit data-loss messaging. |
+| Feasibility and demo truth | Is the courier actually connected to the finished object? | The rendered delivery uses Cecelia's firefly plus the same envelope asset, not a path-line placeholder. | Production transport remains a link demonstration, not verified delivery. |
+| Incentives and second-order effects | Could a cabinet create collection or reciprocity pressure? | It exposes no counts, streaks, rankings, reminders or sender telemetry. | Emotional burden after repeated use. |
+| Simplicity and retellability | Does removing envelope templates make the story clearer? | The sequence becomes make, stamp if wanted, choose travel, give, keep/leave. | Whether the stamp step earns even its smaller cost. |
+| Authorship and distinctiveness | Is motion substituting for human specificity? | Cecelia drew the courier and envelope; the maker's words, composition and optional stamp remain the payload. | The creator still needs a tested way to surface specific memories in the maker's own voice. |
+
+- Verdict: **Proceed with conditions**.
+- Blocking conditions: do not claim accounts, cloud persistence, secure delivery or delivery tracking; do not gate sending on a stamp; do not add route lines, particles, an app-wide mascot, reply pressure, counts or streaks; preserve reduced motion and receiver agency.
+- Weakest judging angle: **evidence quality**, because the change is team-directed and the underlying creation problem remains untested.
+- Main trade-off: a consistent emotional Home and clearer physical handoff in exchange for one extra tap to reach the cabinet, local-state limitations, and more visible delivery theatre.
+- Next evidence that could change the verdict: compare the current blank creator against one private memory-retrieval scaffold, then run one repeat maker-to-receiver flow on a real phone.
+- Recommendation: keep this navigation/stamp/delivery correction, but treat the creation mechanism—not additional decoration—as the next product test.
