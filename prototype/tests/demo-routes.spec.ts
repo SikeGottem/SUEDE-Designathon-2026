@@ -39,7 +39,7 @@ async function expectCanonicalCreator(page: Page) {
 
 async function reachHandoffFromPreview(page: Page) {
   const previewAdvance = page.locator(".preview-next");
-  await expect(previewAdvance).not.toContainText(/private/i);
+  await expect(previewAdvance).toBeVisible();
   await previewAdvance.click();
 }
 
@@ -77,48 +77,70 @@ test("/demo/create reloads to its normal home entry without another navigation",
   await expect(page.locator(".story-paper-sheet")).toHaveCount(0);
 });
 
-test("the prepared creator is read-only and its tools cannot alter the canonical artifact", async ({ page }) => {
+test("the prepared creator is a fully editable template with the normal maker tools", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/demo/create");
   await page.getByRole("button", { name: "make it for them", exact: true }).click();
   await page.getByRole("button", { name: "create something", exact: true }).click();
-  await expect(page.getByLabel("Who is this for?")).toHaveAttribute("readonly", "");
+  await expect(page.getByLabel("Who is this for?")).not.toHaveAttribute("readonly", "");
   await page.getByRole("button", { name: `Start making for ${canonicalRecipient}`, exact: true }).click();
   await expectCanonicalCreator(page);
 
   const text = page.locator(".story-layer-text");
-  const photo = page.locator(".story-layer-photo");
-  const [textBefore, photoBefore] = await Promise.all([text.boundingBox(), photo.boundingBox()]);
-  if (!textBefore || !photoBefore) throw new Error("Prepared artifact is not measurable");
   await drag(page, text, 82, -58);
-  await drag(page, photo, -76, 64);
-  const [textAfter, photoAfter] = await Promise.all([text.boundingBox(), photo.boundingBox()]);
-  if (!textAfter || !photoAfter) throw new Error("Prepared artifact changed unexpectedly");
-  expect(textAfter.x).toBeCloseTo(textBefore.x, 0);
-  expect(textAfter.y).toBeCloseTo(textBefore.y, 0);
-  expect(photoAfter.x).toBeCloseTo(photoBefore.x, 0);
-  expect(photoAfter.y).toBeCloseTo(photoBefore.y, 0);
+  await expect(text).not.toHaveAttribute("tabindex", "-1");
   await text.dblclick();
-  await expect(page.getByLabel(/Write directly on the paper/)).toHaveCount(0);
-
-  await expect(page.locator(".story-tool-dock")).toHaveCount(0);
+  await expect(page.getByLabel(/Write directly on the paper/)).toBeVisible();
+  await page.getByLabel(/Write directly on the paper/).fill(`${canonicalMessage} I am glad you are here.`);
+  await page.getByRole("button", { name: "done writing", exact: true }).click();
+  await page.getByRole("button", { name: "add", exact: true }).click();
+  await expect(page.getByRole("group", { name: "Paper character" })).toBeVisible();
+  await page.getByRole("button", { name: "grid", exact: true }).click();
+  await page.getByRole("button", { name: "Use rust ink", exact: true }).click();
+  await page.getByRole("button", { name: "Add burst mark", exact: true }).click();
+  await expect(page.locator(".story-tool-dock")).toBeVisible();
+  await expect(page.locator(".story-paper-sheet")).toHaveClass(/paper-grid/);
+  await expect(page.locator(".story-layer-burst")).toBeVisible();
 });
 
-test("the presenter handoff remains canonical and exposes only the fixed audience route", async ({ page }) => {
+test("the demo handoff sends the exact edited template through a v3 receiver URL", async ({ browser }) => {
+  const page = await browser.newPage();
   await page.emulateMedia({ reducedMotion: "reduce" });
   await openDemoCreate(page);
+  const revisedMessage = `${canonicalMessage} Thank you for making it feel like home.`;
+  await page.locator(".story-layer-text").dblclick();
+  await page.getByLabel(/Write directly on the paper/).fill(revisedMessage);
+  await page.getByRole("button", { name: "done writing", exact: true }).click();
+  await page.getByRole("button", { name: "add", exact: true }).click();
+  await page.getByRole("button", { name: "grid", exact: true }).click();
+  await page.getByRole("button", { name: "for Maya", exact: true }).click();
+  await page.getByLabel("Who is this for?").fill("Noor");
+  await page.getByRole("button", { name: "done", exact: true }).click();
   await page.getByRole("button", { name: /Next: fold and decorate the envelope/ }).click();
   await page.getByRole("button", { name: "choose how it travels", exact: true }).click();
-  await expect(page.getByRole("radio", { name: "firefly", exact: true })).toHaveAttribute("aria-checked", "true");
-  const carrierOptionsLocked = await page.getByRole("radiogroup", { name: "Delivery carrier" }).evaluate((element) => element.hasAttribute("inert") || Array.from(element.querySelectorAll<HTMLButtonElement>("button")).every((button) => button.disabled || button.getAttribute("aria-disabled") === "true"));
-  expect(carrierOptionsLocked).toBe(true);
+  await page.getByRole("radio", { name: "plane", exact: true }).click();
+  await expect(page.getByRole("radio", { name: "plane", exact: true })).toHaveAttribute("aria-checked", "true");
   await page.getByRole("button", { name: "see it ready to give", exact: true }).click();
   await reachHandoffFromPreview(page);
 
-  await expect(page.locator(".private-link span")).toHaveText(`${new URL(page.url()).origin}/demo/receive`);
-  await expect(page.getByRole("button", { name: "finish giving", exact: true })).toBeVisible();
-  await expect(page.getByRole("button", { name: "show the broken-link state", exact: true })).toHaveCount(0);
-  await expect(page.locator(".handoff-page")).not.toContainText(/private|bearer link/i);
+  const url = await page.locator(".private-link span").innerText();
+  expect(url).toMatch(/\/demo\/receive#v3\./);
+  await expect(page.getByRole("button", { name: "show the broken-link state", exact: true })).toBeVisible();
+
+  const receiver = await browser.newPage();
+  try {
+    await receiver.emulateMedia({ reducedMotion: "reduce" });
+    await receiver.goto(url);
+    await expect(receiver.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+    await expect(receiver.getByText("for Noor", { exact: true })).toBeVisible();
+    await expect(receiver.getByLabel("Double tap the plane to open")).toBeVisible();
+    await receiver.getByRole("button", { name: "open it", exact: true }).click();
+    const paper = receiver.locator(".receiver-paper-final .authored-paper");
+    await expect(paper.locator(".story-layer-text")).toContainText(revisedMessage);
+    await expect(paper).toHaveClass(/paper-grid/);
+  } finally {
+    await Promise.all([receiver.close(), page.close()]);
+  }
 });
 
 test("/demo/receive presents the same canonical receiver object in separate browser contexts", async ({ browser }) => {
@@ -165,12 +187,17 @@ test("/demo/receive keeps only in its ephemeral demo cabinet", async ({ page }) 
   await expect.poll(() => page.evaluate((key) => window.localStorage.getItem(key), normalCabinetKey)).toBe(normalCabinetValue);
 });
 
-test("legacy and trailing-slash receiver URLs cannot be overridden", async ({ page }) => {
+test("demo receiver rejects legacy and malformed payload hashes instead of replacing them with the fallback", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/demo/?screen=studio#v3.not-a-rehearsal-payload");
+  for (const hash of ["#v1.not-a-demo-payload", "#v2.not-a-demo-payload", "#v3.not-a-demo-payload"]) {
+    await page.goto(`/demo/receive${hash}`);
+    await expect(page.getByRole("heading", { name: "this one cannot be opened." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "open it", exact: true })).toHaveCount(0);
+  }
+
+  await page.goto("/demo/");
   await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
   await expect(page.getByRole("button", { name: "open it", exact: true })).toBeVisible();
-  await expect(page.locator(".story-paper-sheet")).toHaveCount(0);
 });
 
 test("the receiver demo cannot escape into the normal home or create flow", async ({ page }) => {

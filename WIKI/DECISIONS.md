@@ -1399,7 +1399,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 
 ## 2026-09-05 - Freeze one canonical two-link pitch demo
 
-- Status: current rehearsal/demo direction, selected directly by the team.
+- Status: superseded on 2026-09-05 by **Editable prepared demo template with exact v3 handoff** below. This historical record remains to preserve the original locked-fixture decision.
 - Decision: use one frozen canonical artifact at fixed `/demo/create` for the presenter and fixed `/demo/receive` for the audience. The presenter walks the normal process from a locked, prefilled creator state; the audience route replays the same object and is never consumed. Demo keep/remove state is ephemeral and isolated from the normal browser cabinet. Generate the presentation QR once from `/demo/receive` and keep it stable. Before-pitch changes edit the canonical preset and redeploy without changing either URL.
 - Reason: show the complete maker-to-receiver mechanism without spending live pitch time composing or creating a QR that points at a different object.
 - Evidence boundary: [the 5 September capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md) supports a pre-made artifact shared with the QR. Fixed route names, replay, and redeploy discipline are direct rehearsal decisions, not user evidence or private delivery.
@@ -1440,3 +1440,49 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Next evidence that could change the verdict: one second-device rehearsal on the deployed event-like network.
 - Recommendation: proceed only after that rehearsal passes; otherwise use the no-device fallback and fix the fixture without changing normal product routes.
 - Post-build result: ten focused route checks pass; `https://warm-and-fuzzies.vercel.app/demo/create` and `https://warm-and-fuzzies.vercel.app/demo/receive` both return successfully from the production alias, while accidental trailing slashes redirect to the canonical URLs. The remaining condition is the physical second-device rehearsal, not deployment.
+
+## 2026-09-05 - Replace the locked pitch fixture with an editable prepared demo template
+
+- Status: current rehearsal/demo direction, selected directly by Ethan; supersedes the locked-fixture decision above without changing the two base routes.
+- Decision: `/demo/create` starts from the ordinary landing and recipient setup, then loads the compiled canonical artifact into the normal editable maker. Its handoff must serialize the current safe edit to `/demo/receive#v3.<payload>` and generate the QR from that exact URL. A valid safe v3 fragment wins; bare `/demo/receive` remains the stable compiled-artifact fallback. Recognized invalid, unsafe, or legacy payloads show unavailable, never a substituted object. Demo receiver cabinet state remains session-only; normal `/` and `/for/` remain unchanged.
+- Reason: the presenter needs to customise the prepared object with the real tools and then prove that the audience opens that exact object, while retaining a reliable recovery route for the deck.
+- Evidence boundary: [the 5 September pre-made artifact capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md) supports a prepared pitch object and the same-object QR intent. The editable-template choice, v3 fragment mechanism, invalid-state rule, and stable-fallback distinction are Ethan's newer direct implementation decision—not user validation, a transcript inference, or a private-delivery claim.
+- Consequence: local blob media is editable only on the presenter's device and must be removed before a cross-device link/QR can be made; oversize objects must fail visibly. The runtime-generated QR/link is the exact current artifact. The static slide QR points only to bare `/demo/receive` and is recovery fallback, not a claim to show the latest edit.
+
+### Mandatory judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens conditionally | A complete making-to-opening flow can be demonstrated without changing the underlying brief claim. | The demo still cannot establish that the experience changes the unwritten rule. |
+| Problem identification | neutral | This is demo infrastructure; it does not sharpen the ordinary-day appreciation problem. | The live narration must preserve the specific person, moment and cause. |
+| Solution approach | strengthens | The audience can receive the exact customised object rather than a separate prepared substitute. | A polished demo remains proof of flow, not proof of reduced awkwardness. |
+| Design innovation | strengthens slightly | The live mechanism makes authorship, transfer and exact recipient experience legible rather than showing a static product tour. | Fragment transport is infrastructure, not the product's distinctive insight. |
+| Visual communication | strengthens | Real maker tools and the resulting object remain in the existing paper/ink language. | Extra tool access could clutter the live walkthrough if the presenter explores instead of following a prepared path. |
+| Presentation skills | strengthens conditionally | The fallback bare route protects recovery while the exact generated QR makes the handoff truthful. | Two QR roles can confuse a presenter or audience without rehearsal. |
+| Evidence quality | neutral | The change is explicitly recorded as Ethan's direct implementation decision and retains rehearsal boundaries. | No intended user has tested editability, cross-device comprehension, or the claimed social outcome. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | A locked object may be safer and clearer than editable creation. | The compiled starting artifact still constrains the demo; editability is added only to show actual capability and exact handoff. | Whether the value of live customisation outweighs its added failure surface in the room. |
+| Behaviour and context | A judge may not need to watch editing to understand the need-state. | The presenter can customise before speaking and demonstrate only the decisive edits plus handoff. | Which minimum edit best communicates personal effort. |
+| Medium necessity | A pre-recorded video or physical object would avoid QR/link fragility. | The deployed route can prove an actual receiver opening; the bare fallback and no-device plan retain recovery. | Whether event connectivity makes a physical or recorded fallback preferable. |
+| Alternatives | A single locked route or server-side saved draft could carry the same demo. | URL fragments are a scoped static-prototype mechanism that avoids inventing persistence claims; the stable fallback retains the simpler route. | Whether a backend is warranted for a final product rather than this rehearsal. |
+| Human specificity | The audience is not a normal recipient and may read the demo differently. | The artifact is explicitly a pitch sample and no response, identity, or behavioural outcome is claimed. | How intended makers and receivers experience the editable flow in real relationships. |
+| Inclusion and accessibility | QR-only, long-link, camera/media and touch-heavy actions may exclude people. | No-device fallback, visible links, keyboard paths and local-media failure states remain required. | Real assistive-tech, low-bandwidth and device testing. |
+| Trust, safety and privacy | A bearer fragment can be forwarded and local media cannot travel safely. | The route makes no privacy claim; invalid/unsafe payloads fail closed to unavailable and local blob media/oversize attempts are blocked honestly. | What real sharing, forwarding and retention expectations would require in a deployed service. |
+| Failure and recovery | Long or malformed payloads can fail at the exact pitch moment. | Exact runtime link/QR, explicit invalid/unsafe/oversize states, stable bare fallback and no-device fallback make failure visible and recoverable. | Second-device behavior at actual room distance and event network. |
+| Feasibility and demo truth | A fallback could quietly show a different object than the presenter edited. | Valid v3 wins; recognized invalid/unsafe/legacy data must show unavailable rather than substitute the compiled object. | Targeted implementation and deployed-route verification of all branches. |
+| Incentives and second-order effects | Customisation could create performance pressure or encourage oversharing. | The demo does not ask the audience to reply or submit content; only safe serializable content is handed off. | Whether repeated real use changes social pressure or disclosure behaviour. |
+| Simplicity and retellability | Exact QR plus fallback QR adds a second concept. | The presenter story remains one line: make it personal, hand over this exact object, let them open it; the fallback is only recovery. | First-listener recall after a timed rehearsal. |
+| Authorship and distinctiveness | Editable tools can slide into generic Canva-like feature proof. | The creator stays sparse, paper-first, and team-directed; the prepared artifact, stamp and composition show human choices rather than a template. | Human review of the actual final customised artifact and pitch sequence. |
+
+- Verdict: **Proceed with conditions**.
+- Work permitted by this verdict: implement, deploy and rehearse the editable prepared template with exact v3 handoff while retaining the bare fallback route.
+- Blocking conditions: preserve normal routes and session-only demo cabinet; generate the receiver link/QR from the current safe snapshot; make invalid, unsafe, legacy, blob-media and oversize states honest; ensure bare `/demo/receive` remains stable compiled fallback; run focused automated branch checks; rehearse the exact generated handoff and bare fallback on a second device; retain a no-device fallback.
+- Weakest judging angle: **feasibility and demo truth / cross-device pitch reliability**, because the feature only earns its value if the audience opens the exact edit and failures do not silently show a different one.
+- Main trade-off: truthful, customisable live proof gains a larger failure surface and more QR/link complexity than the original locked fixture.
+- Next evidence that could change the verdict: a second-device rehearsal using a real edited artifact, including invalid/oversize/local-media failure branches and a room-distance QR scan.
+- Recommendation: use the editable prepared template for the live demo only after that rehearsal passes; otherwise show the bare fallback or no-device route and do not imply the receiver is seeing a live edit.
+- Post-build result: ten focused browser checks pass locally, including editable maker tools, exact edited v3 handoff into a second browser context, canonical bare-route fallback, recognized invalid/legacy-fragment rejection, demo-cabinet isolation and unchanged normal entry. Protected-runtime integrity, production build, Sites fallback, and the existing three recipient/link/QR regression checks pass. Public deployment and the physical second-device rehearsal remain outstanding.

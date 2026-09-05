@@ -495,14 +495,17 @@ export default function Prototype() {
   const isRehearsalRoute = rehearsalRoute !== null;
   const requestedPhase = isRehearsalCreate ? null : phaseFromQuery();
   const hashPresent = !isRehearsalCreate && !isDemoReceiver && typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
+  const demoPayloadAttempted = isDemoReceiver && typeof window !== "undefined" && /^#v[123]\./.test(window.location.hash);
+  const demoSnapshot = isDemoReceiver && window.location.hash.startsWith("#v3.") ? snapshotFromHash() : null;
+  const demoPayloadInvalid = demoPayloadAttempted && !demoSnapshot;
   const linkedSnapshot = isDemoReceiver
-    ? cloneSnapshot(rehearsalArtifact)
+    ? demoSnapshot ?? cloneSnapshot(rehearsalArtifact)
     : isRehearsalCreate
       ? null
       : snapshotFromHash();
   const seededPreview = !rehearsalRoute && Boolean(requestedPhase && !["home", "menu", "recipient"].includes(requestedPhase));
-  // Bearer fragments win for normal links; the fixed receiver rehearsal intentionally ignores them.
-  const [phase, setPhase] = useState<Phase>(() => isRehearsalCreate ? "home" : linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
+  // Normal bearer fragments win over query previews; demo receive only accepts valid v3 artifacts and otherwise opens its fallback.
+  const [phase, setPhase] = useState<Phase>(() => isRehearsalCreate ? "home" : demoPayloadInvalid ? "unavailable" : linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
   const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? (isRehearsalCreate ? rehearsalArtifact.recipient : seededPreview ? "Maya" : ""));
   const [textBlocks, setTextBlocks] = useState<TextBlock[]>(() => linkedSnapshot
@@ -728,19 +731,19 @@ export default function Prototype() {
               <Home key="home" onEnter={() => go("menu")} />
             )}
             {phase === "menu" && <Menu key="menu" reduceMotion={Boolean(reduceMotion)} createOnly={isRehearsalCreate} onCreate={resetDraft} onLetters={() => go("cabinet")} />}
-            {phase === "recipient" && <RecipientStart key="recipient" recipient={recipient} locked={isRehearsalCreate} onRecipient={setRecipient} onBack={returnToMenu} onContinue={(name) => { if (isRehearsalCreate) applySnapshot(rehearsalArtifact); else setRecipient(name); go("studio"); }} />}
+            {phase === "recipient" && <RecipientStart key="recipient" recipient={recipient} onRecipient={setRecipient} onBack={returnToMenu} onContinue={(name) => { if (isRehearsalCreate) applySnapshot({ ...cloneSnapshot(rehearsalArtifact), recipient: name }); else setRecipient(name); go("studio"); }} />}
             {phase === "carrier" && (
-              <CarrierPicker key="carrier" selected={carrierId} locked={isRehearsalCreate} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
+              <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" mode={studioMode} locked={isRehearsalCreate} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
+              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
             )}
-            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} locked={isRehearsalCreate} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
+            {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
             {phase === "preview" && (
-              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} demo={isRehearsalCreate} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
+              <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} rehearsalReceiver={isRehearsalCreate} onBack={() => go("preview")} onCopy={() => { if (isRehearsalCreate) { const url = `${window.location.origin}/demo/receive`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); return; } const snapshot = activeSnapshot ?? currentSnapshot; if (containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const url = `${window.location.origin}/for/${snapshot.id}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} onBack={() => go("preview")} onCopy={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!isSafeSnapshot(snapshot) || containsBlobMedia(snapshot)) { setShareFailed(true); return; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return; } const receiverPath = isRehearsalCreate ? "/demo/receive" : `/for/${snapshot.id}`; const url = `${window.location.origin}${receiverPath}#v3.${payload}`; setShareFailed(false); setCopied(true); if (navigator.clipboard) void navigator.clipboard.writeText(url).catch(() => undefined); }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
               <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnToMenu} />
@@ -1848,15 +1851,15 @@ function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: Keepsak
   return <div className={`sealed-envelope-artwork seal-weight-${sealWeight} ${className}`} data-seal-weight={sealWeight} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
-function Preview({ snapshot, demo = false, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; demo?: boolean; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
+function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
   return (
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {snapshot.recipient}</span><span>from {snapshot.sender}</span></div>
       <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translate3d(0, 18px, 0) rotate(-3deg) scale(.95)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
       <div className="preview-copy"><h1>one thing, ready to give.</h1></div>
-      {!demo && <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>}
-      <button className="drawn-action preview-next" type="button" onClick={onGive}>{demo ? "continue with this prepared demo" : "give this privately"} <Mark /></button>
+      <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
+      <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
     </Page>
   );
 }
@@ -1869,7 +1872,7 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
   return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={`${CECILIA}firefly-brand-mark.png`} alt="" /></div><div className="courier-payload" data-asset-slot="courier-payload"><img src={`${CECILIA}envelope-mail-02.png`} alt="" /></div></div>;
 }
 
-function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, rehearsalReceiver, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; rehearsalReceiver?: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
+function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, demoReceiver, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; demoReceiver?: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
   const qrDialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -1888,10 +1891,9 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, r
     document.addEventListener("keydown", handleKeys);
     return () => { document.removeEventListener("keydown", handleKeys); previous?.focus(); };
   }, [qrOpen]);
-  const encoded = containsBlobMedia(snapshot) ? "" : encodeSnapshot(snapshot);
-  const url = rehearsalReceiver
-    ? `${typeof window === "undefined" ? "" : window.location.origin}/demo/receive`
-    : encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}/for/${snapshot.id}#v3.${encoded}` : "";
+  const encoded = isSafeSnapshot(snapshot) && !containsBlobMedia(snapshot) ? encodeSnapshot(snapshot) : "";
+  const receiverPath = demoReceiver ? "/demo/receive" : `/for/${snapshot.id}`;
+  const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}${receiverPath}#v3.${encoded}` : "";
   const qrIsExact = Boolean(url) && url.length <= QR_MAX;
   const saveQr = () => {
     const svg = qrDialogRef.current?.querySelector(":scope > svg");
@@ -1912,9 +1914,9 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, r
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1>{failed && <p>Nothing left this screen. Your object is still here.</p>}</header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
-      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : "Link unavailable: this keepsake is too large for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}</div>
-      {copied || rehearsalReceiver ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
-      <p className="system-note">{rehearsalReceiver ? "This public demo link always opens the same keepsake. No account or response is connected." : "This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected."}</p>
+      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : !isSafeSnapshot(snapshot) ? "Link creation is blocked: this draft contains details that cannot safely travel in a link." : "Link unavailable: this keepsake is too large or too detailed for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={onCopy}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => setQrOpen(true)} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}</div>
+      {copied ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
+      <p className="system-note">This bearer link is not encryption. Prototype only: no account, delivery, storage, or receiver activity is connected.</p>
       {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && qrIsExact && <motion.div ref={qrDialogRef} className="qr-dialog" role="dialog" aria-modal="true" aria-label="Receiver QR for this keepsake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={url} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title="Scan to open this keepsake" /><p>scan to give this to {recipient}.</p><small>This code belongs to this keepsake. Anyone who scans it opens the same sealed object—no account needed.</small><button className="quiet-link qr-save" type="button" onClick={saveQr}>save this QR</button></motion.div>}</AnimatePresence>, document.body)}
     </Page>
   );

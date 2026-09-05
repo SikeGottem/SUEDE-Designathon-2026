@@ -388,10 +388,11 @@ This is internal prototype feedback, not participant validation. It does not est
 
 ## 5 September pitch-demo addendum
 
-**Source:** [pre-made artifact / QR capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md). The capture asks for one pre-made letter during the pitch and for it to be the same object carried by the QR. The route names and operating rules below are the team's subsequent settled rehearsal decision.
+**Source:** [pre-made artifact / QR capture](TRANSCRIPTS/2026-09-05-68611ccd-495c-564d-9b92-7b2c0b167533.md). The capture asks for one pre-made letter during the pitch and for it to be the same object carried by the QR. The transcript establishes that prepared-start/same-object intent; the route names, editability, and handoff mechanics below are later direct team decisions, not claims inferred from the transcript.
 
-- Freeze one canonical demo artifact. The presenter starts at fixed `/demo/create` and walks the normal maker process with that artifact prefilled; the audience receives the exact same object at fixed `/demo/receive`.
-- Generate the presentation QR once from `/demo/receive`, then leave it stable. The audience route is replayable, never consumed after one scan, and is not a private delivery link.
-- Before a pitch, change the canonical preset only by editing it and redeploying; keep both fixed URLs unchanged. The normal creator, generated object links/QRs, receiver route, and product contract remain unchanged.
+- Compile one canonical demo artifact. The presenter starts at fixed `/demo/create`, walks normal maker setup, then edits that prepared artifact with normal tools. Handoff serializes the current safe edited snapshot to `/demo/receive#v3.<payload>`; a valid safe v3 fragment opens that exact object for the audience.
+- Bare `/demo/receive` stays replayable and never consumed, but is the compiled-artifact fallback only. Recognized invalid, unsafe, or legacy payloads show unavailable rather than substituting the fallback. It is not a private delivery link.
+- The generated handoff QR/link is exact to the current edited artifact. A stable deck QR may point only to bare `/demo/receive` as recovery. Locally captured blob media must be removed before cross-device handoff, and oversize snapshots must surface their limit.
+- Keep the two base routes stable. The normal creator, generated object links/QRs, receiver route, and product contract remain unchanged; demo cabinet state stays session-only.
 
 This is rehearsal/demo truth, not user evidence, a private-delivery claim, or proof that a room-wide QR changes the product outcome. The existing visual authenticity remains the authority: the demo adds no generic chrome or new visual system.
