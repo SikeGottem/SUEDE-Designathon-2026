@@ -12,7 +12,7 @@
 
 ## Exact mentor-endorsed problem framing
 
-Ethan identifies the following as Chloe's framing. Chronicle assigned the entire meeting to `ethan`, so the speaker identity cannot be independently verified from the raw file. The exact machine-transcribed wording at [30:02](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md#L51) is:
+Ethan confirmed the following as Chloe's framing. Chronicle assigned the entire meeting to `ethan`, so the attribution comes from Ethan rather than independent speaker labels in the raw file. The exact machine-transcribed wording at [30:02](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md#L51) is:
 
 > “I think I think the unwritten rule is this idea that there's no expectation or norm to show appreciation for friends and family if it is not something that is prompted through something like a birthday brief, um, like some sort of event, right? Like we always are prompted to show appreciation when there is something societally that tells us to.”
 
@@ -30,35 +30,36 @@ This is the lead problem statement, but it remains an evidence-informed working 
 
 ## Mentor actionables applied to the presentation
 
-1. **Lead with the social rule, not the app.** The pitch now identifies occasion-based permission as the central unwritten rule and makes the connection to the solution explicit.
+1. **Lead with the social rule, not the app.** The pitch now gives Chloe's complete 30:02 machine-transcribed framing its own slide, preserves `birthday brief` verbatim, then compresses it into the central occasion-based permission rule on the following slide.
 2. **Open with the letter question.** Ask when the audience last sent and received a letter, then use its rarity to introduce the question rather than claim proof.
 3. **Use one direct How Might We.** “How might we create that permission on an ordinary day?” Keep reply pressure as a receiver-side requirement rather than diluting the central social-rule framing.
-4. **Make the why dominate.** The first eight slides establish the rule, alternatives, evidence, missing evidence, target context and design reasoning before the product reveal. The mentor's “80 percent problem” comment is treated as direction, not a literal rubric weight.
-5. **Correct the opportunity map.** Add video calls, alongside text, voice notes, digital cards or group boards, gifts and handwritten letters. Label every plotted position as a team hypothesis until measured.
+4. **Make the why dominate.** The first nine slides establish the rule, alternatives, evidence, missing evidence, target context and design reasoning before the product reveal. The mentor's “80 percent problem” comment is treated as direction, not a literal rubric weight.
+5. **Correct the opportunity map.** Add video calls, alongside text, voice notes, digital cards or group boards, gifts and handwritten letters. Name the highlighted hypothesis `the ordinary-day gap` and show an intentionally blank `___%` marker labelled as pending a matched-format participant test. Never invent the percentage; every position and the gap itself remain hypotheses until measured.
 6. **Bring psychology and existing solutions into the argument.** Use the sourced gratitude-letter finding about anticipated awkwardness with its narrow boundary; add the voice-versus-text connection study as a control, not proof for this product. Use Hallmark and Kudoboard to show that current digital-card discovery is still organised around occasion categories, not to claim demand or advantage.
 7. **Show what evidence is absent.** The primary-research slide separates quantitative “what/how often,” qualitative “why/in what context,” and observed prototype behaviour. All stay visibly pending until the records exist.
-8. **Name a provisional audience without pretending it is validated.** University students maintaining close relationships across distance or changing life stages are a recruitment focus to confirm, not a settled market claim.
-9. **Tell one end-to-end situation.** Show the ordinary-day trigger, the sender's decision, the receiver's context and choice to open, and possible later revisiting. The grandmother-granddaughter relationship remains blocked until its provenance and details are confirmed.
+8. **Name the selected first market without pretending demand is validated.** The team selected university students maintaining long-distance connections with friends and family as the first market for research and design. That is a team targeting decision, not a prevalence, need or demand finding.
+9. **Tell one end-to-end situation.** Show the ordinary-day trigger, the sender's decision, the receiver's context and choice to open, and possible later revisiting. The grandmother and university-student granddaughter journey is explicitly illustrative, with no invented demographic detail or claimed behaviour.
 10. **Establish cadence.** Position Warm & Fuzzies as an occasional, unexpected and finite gesture—not continuous messaging, frequent back-and-forth or another social network.
 11. **Weave process through cause and effect.** Every material step should read `evidence or hypothesis -> conclusion -> design requirement -> product response`; the dedicated process slide shows actual artifacts rather than a diary.
 12. **Keep the solution explanation focused.** Introduce one mechanism, then demo the complete sender-to-receiver journey. Avoid a feature inventory.
 13. **Explain low-friction access honestly.** Receiver access by link is a prototype direction. Do not claim that sender apps, accounts, integrations or production delivery are resolved.
 14. **Replace permanence rhetoric with a receiver contract.** Say the sender's act is final and the receiver can keep, close or remove the prototype object. Do not say “own,” “immortalised,” “permanent” or “forever” until retention, identity, deletion and migration are actually defined.
 15. **Keep the audience handoff.** A verified QR/link and no-device alternative can demonstrate the receiver flow. Participation stays optional, generic, private, accessible and reply-free; reactions are not validation.
-16. **Close on the logic.** “Occasions currently grant permission. Warm & Fuzzies proposes an ordinary-day ritual.” Do not claim the prototype has already changed the norm.
+16. **Separate the future anti-doomscroll direction from current proof.** A context-aware moment may optionally resurface a past note or message, or gently suggest sending something. It must be labelled unbuilt, untested and outside the current prototype demonstration; it must not shame, interrupt or manipulate users.
+17. **Close on the logic.** “Occasions currently grant permission. Warm & Fuzzies proposes an ordinary-day ritual.” Do not claim the prototype has already changed the norm.
 
 ## Mentor actionables that a presentation edit cannot complete
 
 - Gather defensible quantitative evidence showing whether and how often the intended audience experiences the problem.
 - Conduct and document qualitative research explaining context, interpretation, awkwardness, reply pressure, existing behaviours and exceptions.
-- Confirm one primary audience, recruit the right people and replace the provisional target label.
+- Recruit within the selected university-student market and establish whether long-distance friend and family connections actually share the need, contexts and constraints the team currently assumes.
 - Test the working prototype with that audience and record where people hesitate, what they misunderstand and what changed afterward.
 - Run a matched comparison against text, voice or video calls and a physical note or letter rather than assuming the digital object occupies a valuable gap.
 - Explore at least three mechanism-level responses, including an intervention in an existing channel and a non-app ritual, before claiming the current product is the strongest answer.
 - Decide the production delivery model: sender web or app, receiver link, account needs, forwarding, expiry, wrong-recipient recovery and adoption friction.
 - Define production identity, privacy, deletion, retention, storage cost, device migration and what receiver control legally and technically means.
 - Verify the QR and deployed receiver experience on a second device and prepare the no-device fallback.
-- Keep the suggested doomscrolling or resurfacing prompt in the backlog unless research connects it to the central ordinary-day appreciation problem.
+- Research and test the optional context-aware anti-doomscroll direction before building it: whether resurfacing a past note or message, or gently suggesting a new gesture, helps, annoys, shames or creates notification pressure. It remains outside current prototype proof.
 
 ## What the team has said about the pitch
 

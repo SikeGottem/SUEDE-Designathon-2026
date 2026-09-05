@@ -23,12 +23,18 @@ test('CSS centres the fixed canvas before JavaScript enhances its scale', () => 
   );
 });
 
-test('the revised deck opens on a visible logo page and contains 13 slides', () => {
-  assert.equal((source.match(/<article class="slide/g) ?? []).length, 13);
+test('the revised deck opens on a visible logo page and contains 14 slides', () => {
+  assert.equal((source.match(/<article class="slide/g) ?? []).length, 14);
   assert.match(
     source,
     /<article class="slide logo-slide active"[^>]*>[\s\S]*?<div class="brand-lockup">/,
   );
+});
+
+test('the problem is prefaced by Chloe\'s exact transcript framing', () => {
+  assert.match(source, /Chloe put the problem this way/);
+  assert.match(source, /there's no expectation or norm to show appreciation for friends and family/);
+  assert.match(source, /birthday brief/);
 });
 
 test('every local image reference resolves from the standalone deck file', async () => {
