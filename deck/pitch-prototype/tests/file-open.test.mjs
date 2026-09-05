@@ -39,8 +39,14 @@ test('the latest meeting framing replaces attribution and unsupported market cla
 });
 
 test('the newest follow-up simplifies research, restores personas and clears the demo slide', () => {
-  assert.match(source, /class="research-number">___%/);
+  assert.match(source, /data-title="What · why · how" data-steps="4"/);
+  assert.match(source, /class="research-number">82%/);
+  assert.match(source, /class="research-number">71%/);
   assert.match(source, /feel they do not fully show the appreciation they feel/);
+  assert.match(source, /class="mini-ratings-table"[\s\S]*impact \/5[\s\S]*friction \/5[\s\S]*frequency \/5/);
+  assert.match(source, /quick text[\s\S]*voice note[\s\S]*video call[\s\S]*handwritten letter[\s\S]*physical gift/);
+  assert.equal((source.match(/class="target-score"/g) ?? []).length, 3);
+  assert.doesNotMatch(source, /class="practice-flag"/);
   assert.doesNotMatch(source, /research-bridge/);
   assert.match(source, /Grandmother[\s\S]*Granddaughter/);
   assert.match(source, /Grandmother makes it now\. Granddaughter opens it later\./);
@@ -49,26 +55,32 @@ test('the newest follow-up simplifies research, restores personas and clears the
   assert.doesNotMatch(source, /Live prototype · no video/);
 });
 
-test('the latest review uses a problem-first opener and adds the synthesis bridge', () => {
+test('the latest review uses a problem-first opener and preserves the full synthesis', () => {
   assert.match(source, /When was the last time someone showed you appreciation or gratitude\?/);
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
   assert.match(source, /Is everything okay\?/);
   assert.match(source, /different time zones/);
-  assert.match(source, /data-title="Research synthesis"[\s\S]*<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>/);
+  assert.match(source, /data-title="Research synthesis" data-steps="4"/);
+  assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
+  assert.match(source, /Create the impact of gift-giving, with the low friction and repeatability of everyday digital contact\./);
   assert.match(source, /11 \/ 11/);
   assert.doesNotMatch(source, />75%</);
 });
 
-test('the channel map reveals bounded research instead of an invented gap statistic', () => {
-  assert.equal((source.match(/class="map-evidence"/g) ?? []).length, 6);
-  assert.match(source, /Sheldon &amp; Yu, 2022/);
+test('the channel map reveals local evidence with disclosed rehearsal ratings', () => {
+  assert.equal((source.match(/class="plot-evidence"/g) ?? []).length, 5);
+  assert.doesNotMatch(source, /class="evidence-dock"/);
   assert.match(source, /Kumar &amp; Epley, 2021/);
   assert.match(source, /Kumar &amp; Epley, 2018/);
-  assert.match(source, /Algoe, Haidt &amp; Gable, 2008/);
-  assert.match(source, /Team hypothesis · not a participant finding/);
-  assert.match(source, /<strong>goldilocks zone<\/strong><small>authored \+ revisitable<\/small>/);
+  assert.match(source, /Algoe et al., 2008/);
+  assert.match(source, /Temporary practice positions—not findings/);
+  assert.doesNotMatch(source, /class="practice-ratings"/);
+  assert.doesNotMatch(source, /quick text<small>2\.2/);
+  assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
+  assert.match(source, /--accent:#94a550/);
+  assert.doesNotMatch(source, /#b56d5f|#eda343/i);
   assert.doesNotMatch(source, /find digital channels too slight/);
   assert.doesNotMatch(source, /highest friction · occasion-coded/);
   assert.doesNotMatch(source, /hypothesis to test/i);

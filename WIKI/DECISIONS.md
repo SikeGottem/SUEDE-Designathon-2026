@@ -917,12 +917,12 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 
 ## 2026-09-05 - Make the channel map the main evidence moment
 
-- Status: current live-pitch direction; secondary evidence is bounded and the plotted opportunity remains unvalidated.
-- Decision: give the opportunity map 60 seconds, the longest narrative-slide allocation. Reveal text, voice, video, handwritten letter and physical gift one at a time with one visible published finding and its limitation. Remove the unsupported fourth percentage and unsupported absolute labels. End on an unboxed `goldilocks zone` marker with `authored + revisitable` underneath; Ethan will explain aloud that it remains a team hypothesis requiring a matched-format receiver test.
-- Reason: Ethan required every spoken graph claim to be visibly backed while he explains what the cited research found. A changing evidence panel preserves the map's pacing without turning the slide into a static literature grid.
-- Evidence: Ethan's direct 5 September presentation direction; the transcript-derived channel comparison in [the latest presentation findings](../deck/TRANSCRIPT_PRESENTATION_FINDINGS.md); and the cited psychology synthesis in [Psychology evidence for the Warm & Fuzzies pitch](RESEARCH/FRIENDSHIP_APPRECIATION/PSYCHOLOGY_PITCH/report-source.md). These sources support bounded mechanisms, not the plotted coordinates, an Australian prevalence rate, or the product's superiority.
-- Consequence: the What / Why / How slide remains reserved for the team's primary results. Secondary studies may explain why channel form could matter, but cannot fill primary-research blanks or validate the highlighted gap.
-- Revisit when: a source is corrected or withdrawn; rehearsal shows the study sequence overwhelms the problem; or the matched-format receiver comparison changes the position, axes or opportunity.
+- Status: current rehearsal-deck direction; every displayed rating and percentage remains temporary until replaced by documented primary research.
+- Decision: give the channel map 60 seconds. Use recipient impact on the horizontal axis, mental-and-physical friction on the vertical axis and dot size for frequency. Reveal text, voice, video, handwritten letter and physical gift one at a time with one unboxed published conclusion beside the active point. Keep all numeric ratings on page 6 in a compact How table; on its fourth click, circle physical-gift impact, quick-text friction and voice-note frequency. End page 5 on an unboxed `goldilocks zone` for high impact, low friction and repeatability. Set the deck accent to `#94A550`, with a darker green for small text contrast.
+- Reason: Ethan required every graph claim to be research-backed, then specified the three survey variables and authorised plausible temporary values for presentation rehearsal. He explicitly removed the fixed research box, oval, `hypothesis to test` label and top-right practice label.
+- Evidence: [91bad8…](TRANSCRIPTS/2026-09-05-91bad8dd-1e89-586f-947f-9624f46d1fde.md) at 00:02, [7a7a60…](TRANSCRIPTS/2026-09-05-7a7a60e4-e77d-5f46-9123-82e767184889.md) at 00:01, [a39841…](TRANSCRIPTS/2026-09-05-a398410c-69a5-5f37-8b5b-0b86fc27f9d1.md) at 11:56, the transcript-derived [presentation findings](../deck/TRANSCRIPT_PRESENTATION_FINDINGS.md), and [Psychology evidence for the Warm & Fuzzies pitch](RESEARCH/FRIENDSHIP_APPRECIATION/PSYCHOLOGY_PITCH/report-source.md). The papers support bounded mechanisms only; the 1–5 ratings, positions, dot sizes, 82% and 71% are invented rehearsal values disclosed in the slide footers.
+- Consequence: page 5 stays visually focused on mechanisms, while page 6 carries the readable numeric comparison and makes the three borrowed qualities explicit. Every temporary value must still be replaced before the judged pitch.
+- Revisit when: primary responses are coded; a source is corrected or withdrawn; rehearsal shows the local annotations overwhelm the map; or the matched-format receiver comparison changes the ratings, position or Goldilocks target.
 
 ### Judge review
 
@@ -932,9 +932,9 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 | Problem identification | strengthens | Each channel claim now has a named evidence boundary instead of relying on team intuition. | Primary prevalence, audience and local context remain unknown. |
 | Solution approach | strengthens | The final synthesis identifies the mechanisms the prototype attempts to combine: digital ease, authorship, revisitation and receiver control. | No comparison shows that this combination improves the receiving experience. |
 | Design innovation | neutral | Evidence makes the mechanism more credible but does not make the individual ingredients novel. | Judges may still describe the concept as a decorated digital letter. |
-| Visual communication | strengthens | One active evidence panel follows the point being discussed and disappears when the next channel appears. | Five precise coordinates can still look more measured than they are. |
+| Visual communication | strengthens | One unboxed annotation follows the point being discussed; impact, friction and frequency have distinct visual roles. | Temporary precision can still be mistaken for measured evidence despite the footer. |
 | Presentation skills | strengthens | The presenter can explain one paper at a time while the source and limitation remain visible. | Sixty seconds of literature can feel academic without rehearsal. |
-| Evidence quality | strengthens with limits | The displayed statements track the cited studies and include counterclaims and population/task boundaries. | The evidence is adjacent: no paper directly compares all five channels with the same appreciation content. |
+| Evidence quality | weak for the values; bounded for the papers | The displayed paper conclusions track the cited studies, and the footer discloses the invented rehearsal values. | No paper or participant result directly supports the displayed 1–5 ratings, percentages or cross-channel ranking. |
 
 ### Required challenge review
 
@@ -945,10 +945,10 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 | Medium necessity | Do the studies justify another app? | They suggest cues, authorship and receiver control worth testing; the slide calls the product area a hypothesis. | Whether the digital artifact beats text, voice or a physical note. |
 | Alternatives | Are voice notes or physical gestures enough? | They remain visible, credible controls with their own supported strengths. | Same-content comparative evidence. |
 | Human specificity | Could channel meaning vary by culture or relationship? | The presentation avoids a universal hierarchy and retains study boundaries. | The team's intended audience and exceptions. |
-| Inclusion and accessibility | Can the active evidence panel be read at distance? | The panel uses large high-contrast copy and one source line, verified at the 1600 × 900 presentation canvas. | Actual room distance and projector contrast. |
+| Inclusion and accessibility | Can the active evidence annotation and green accent be read at distance? | Small green text uses a darker contrast companion while `#94A550` remains the decorative accent. | Actual room distance, projector contrast and full-slide rehearsal. |
 | Trust, safety and privacy | Does the evidence imply the product is private or safe? | No privacy, identity or permanence claim is added. | Production trust remains outside this slide. |
 | Failure and recovery | What if a citation is challenged? | The full report records source links, counterevidence and limits for Q&A. | The presenting team must know which claims are adjacent rather than direct. |
-| Feasibility and demo truth | Does the map imply a tested product position? | The footer and final panel state that coordinates and the gap remain team hypotheses. | Whether that spoken boundary survives a rushed delivery. |
+| Feasibility and demo truth | Does the map imply measured product positioning? | The footer labels every value as temporary rehearsal data and the map does not plot the product as a validated result. | Whether judges notice the small disclosure during rehearsal. |
 | Incentives and second-order effects | Could visible effort encourage performative labour? | The gift panel says thoughtfulness, not price or raw effort, carries the supported relationship. | Repeated product use may still create performance pressure. |
 | Simplicity and retellability | Do five studies bury the core story? | Only one finding appears at a time and the final synthesis compresses them into authored, revisitable care. | Timed rehearsal with a first-time listener. |
 | Authorship and distinctiveness | Does this become a generic citation-card slide? | The evidence changes inside the team's existing hand-drawn opportunity map and culminates in its specific gap. | Team delivery and later primary findings must remain the dominant authorship. |
@@ -966,12 +966,12 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Communication job: let judges see the support and boundary for the exact channel being discussed, then recognise the gap as the team's deduction rather than a measured fact.
 - Specific source anchors: the team-selected five-channel map; the hand-drawn Gaegu and navy/rust palette; Ethan's point-by-point narration; the report's counterclaim that text can work.
 - Structural direction A: attach a permanent citation label to every plotted point. It preserves locality but creates unreadable clutter.
-- Structural direction B: use one changing evidence panel tied to the active point. It preserves sequence and makes the current claim scannable. Selected by Ethan's instruction to explain each paper while the point appears.
+- Structural direction B: use one changing unboxed annotation tied to the active point. It preserves sequence and makes the current claim scannable. Selected by Ethan's instruction to place the research beside the point without a box.
 - Structural direction C: split the map into five separate channel slides. It creates room for methods but breaks the comparison and pitch timing.
 - Rejected defaults: no grid of equal research cards; no decorative percentage; no oversized quotation; no invented effect size; no generic journal-page screenshot.
-- Content-native signature: the evidence panel changes with the plotted channel, then becomes the team's bounded synthesis on the final click without an oval or defensive graph label.
-- Restraint: show one paper conclusion and one limitation at a time; keep detailed methods and ownership literature out of the live slide.
-- Render inspection: all six builds were checked at the 1600 × 900 canvas with no evidence overflow or console errors; final-state scaling was also checked at 768 × 1024 and 375 × 812.
+- Content-native signature: the unboxed annotation changes with the plotted channel; the final click reveals a plain Goldilocks label without an oval or defensive graph label.
+- Restraint: show one paper conclusion and one citation at a time on page 5; show the rehearsal values only once, inside page 6's compact table.
+- Render inspection: all six map builds, the compact How table before and after its circle pass, and the final If / And / Then / Therefore build were checked at 1600 × 900 with no visible overflow or active-annotation collision.
 - Strongest remaining AI tell: the coordinates retain diagrammatic precision despite being hypotheses.
 - Material human change: Ethan changed the slide's priority and evidence requirement; unsupported labels and the extra blank statistic were removed in response.
 - Logo-swap test: passes because the channel sequence, ordinary-day gap and authored/revisitable synthesis depend on this specific problem.
@@ -979,7 +979,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Authenticity verdict: **Pass for the evidence-map implementation; the unfinished primary-research and handoff slides remain blocked.**
 
 - Verdict: **Proceed with conditions**.
-- Blocking conditions: keep each display claim within its cited study; retain the counterclaim that text can work; never describe coordinates as measured; do not add percentages without real primary data; rehearse the 60-second sequence; keep detailed methods and limitations available in the appendix or Q&A source.
+- Blocking conditions: keep each paper claim within its cited study; never describe the 1–5 ratings, 82%, 71%, positions or dot sizes as participant findings; replace every temporary value before the judged pitch; rehearse the 60-second sequence; keep detailed methods and limitations available in the appendix or Q&A source.
 - Weakest judging angle: **evidence quality**, because the literature is adjacent and no matched-content receiver study validates the graph or product position.
 - Main trade-off: the graph becomes more credible and explainable, but gains more verbal and visual density.
 - Next evidence that could change the verdict: one matched-content receiver comparison across ordinary text, voice or video, a physical/crafted control and Warm & Fuzzies.
@@ -1046,3 +1046,64 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Main trade-off: stronger personal intent and demo correctness in exchange for one extra required action before writing.
 - Next evidence that could change the verdict: ask one teammate to start a new object unaided on a real phone and observe whether naming feels clarifying or like a gate.
 - Recommendation: keep the upfront recipient step in the exploratory prototype and test its effect on creation momentum before treating it as final.
+
+## 2026-09-05 - Preserve If / And / Then and add the Therefore requirement
+
+- Status: current rehearsal-deck direction; the logical structure is selected, while its displayed percentages are temporary.
+- Decision: page 8 keeps the original `If → And → Then` sequence. `Then` states the desired outcome: make showing appreciation feel normal on an ordinary day. A fourth `Therefore` line is added beneath it: create the impact of gift-giving with the low friction and repeatability of everyday digital contact. Use the same 82% and 71% rehearsal values as page 6, with a footer disclosure, until real findings replace them.
+- Reason: Ethan explicitly corrected the outcome-only revision and said the earlier page 8 was “perfect”; the requested change was to add the new design requirement at the bottom, not replace the existing deduction.
+- Evidence: [91bad8…](TRANSCRIPTS/2026-09-05-91bad8dd-1e89-586f-947f-9624f46d1fde.md) at 00:02, [7a7a60…](TRANSCRIPTS/2026-09-05-7a7a60e4-e77d-5f46-9123-82e767184889.md) at 00:01, and Ethan's direct follow-up in the active presentation review. These are team directions, not participant findings.
+- Consequence: the slide now carries both the human outcome and the specific product brief into the Warm & Fuzzies reveal. It must not imply that the product already achieves the stated combination.
+- Revisit when: real What and Why results replace the rehearsal percentages, the map changes the selected combination, or rehearsal shows four beats cannot be delivered clearly in 15 seconds.
+
+### Judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The chain makes the unwritten occasion rule lead to a redesign requirement. | The prevalence of the rule remains unmeasured. |
+| Problem identification | strengthens conditionally | If and And separate the expression gap from the ordinary-day barrier. | The current 82% and 71% are rehearsal values, not evidence. |
+| Solution approach | strengthens | Therefore names the combination the solution must attempt before revealing the product. | It may overpromise gift-level impact without a matched test. |
+| Design innovation | neutral | Combining high impact, low friction and repeatability is a useful brief. | The combination alone does not prove distinctiveness. |
+| Visual communication | strengthens | Four sequential verbs make the causal chain easy to scan. | The added fourth line increases density. |
+| Presentation skills | strengthens conditionally | The presenter can narrate one clean deduction into the solution. | Fifteen seconds may be too short without rehearsal. |
+| Evidence quality | weak | Temporary figures are disclosed and the design requirement is labelled as a deduction. | No completed primary study supports the percentages or outcome. |
+
+### Required challenge review
+
+| Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
+| --- | --- | --- | --- |
+| Assumption and inversion | What if the gap does not exist? | The structure makes the outcome conditional on the What and Why findings. | Real prevalence and exceptions. |
+| Behaviour and context | Does ordinary-day awkwardness cause non-expression? | The And line names the proposed barrier without calling it causal proof. | Coded sender and receiver accounts. |
+| Medium necessity | Does this require a new app? | Therefore defines a requirement rather than declaring a medium winner. | Whether an existing channel can meet it. |
+| Alternatives | Could a voice note or physical ritual already combine the qualities? | Both remain comparison channels on page 5. | Same-content comparative results. |
+| Human specificity | Does the requirement vary by relationship? | The preceding grandmother-granddaughter scene gives one bounded use moment. | Differences across friends, family, culture and age. |
+| Inclusion and accessibility | Can four builds be followed at room distance? | Each line uses one large connective term and one dominant claim. | Projector and audience-distance verification. |
+| Trust, safety and privacy | Does “digital contact” imply safe delivery? | The slide makes no privacy, identity or permanence claim. | Production trust model. |
+| Failure and recovery | What if a percentage changes materially? | The structure survives replacement because the values and claims are separate elements. | Whether the resulting deduction still holds. |
+| Feasibility and demo truth | Does the product actually deliver gift-like impact? | The next slide calls it a proposition and the demo proves only interaction. | Matched receiver impact evidence. |
+| Incentives and second-order effects | Could normalisation create obligation or spam? | Receiver control and no required response remain part of the proposed mechanism. | Effects of repeated use and prompting. |
+| Simplicity and retellability | Is four-part logic too much? | If / And / Then / Therefore is a familiar sequence and each line has one job. | Timed first-listener recall. |
+| Authorship and distinctiveness | Is this generic strategy language? | The final combination comes directly from the team's selected channels and ordinary-day problem. | Whether the delivery sounds natural in the team's voice. |
+
+### AI and authorship check
+
+- Ethan selected the original deduction, required the additional bottom line, chose the temporary figures and set the green accent.
+- AI implemented the HTML structure, generated plausible rehearsal-only values and maintained the evidence disclosure; AI did not collect participant data.
+- Required disclosure: if the temporary values appear outside internal rehearsal, state explicitly that they are illustrative and replace them before judging.
+
+### Design-authenticity post-build review
+
+- Communication job: preserve the team's causal research story, make the three borrowed channel qualities visible, and hand them directly into the product reveal.
+- Content-native signature: the compact table lives inside the existing How column and circles only the three selected cells on the fourth click; page 8 then converts those same qualities into the added Therefore line.
+- Rejected defaults: no dashboard card, colourful heatmap, generic data visualisation, detached research table or AI-written methodology block.
+- Strongest remaining AI tell: the temporary figures form an unusually clean pattern; the footer disclosure and mandatory replacement prevent them from being presented as organic research.
+- Human material changes: Ethan restored the three-column slide, moved the table into the third column, selected the final click behaviour, removed redundant page-5 numbers and replaced orange with `#94A550`.
+- Render inspection: the three-column table, fourth-click circles, all map builds and the final page-8 build were inspected at 1600 × 900; no visible clipping or overlap remains.
+- Authenticity verdict: **Pass for rehearsal only; blocked for judged delivery until the fabricated figures are replaced.**
+
+- Verdict: **Proceed for rehearsal only**.
+- Blocking conditions: preserve the If / And / Then chain; keep Therefore subordinate; retain the footer disclosure while invented values remain; replace 82%, 71% and every channel rating before the judged pitch; do not claim gift-level impact or normalisation as an achieved outcome.
+- Weakest judging angle: **evidence quality**.
+- Main trade-off: a more complete causal bridge in exchange for greater slide density and a sharper risk of overclaiming.
+- Next evidence that could change the verdict: completed What and Why results plus a matched-format receiver comparison across the five channels and the prototype.
+- Recommendation: rehearse all four beats now, then replace only the values and conclusion that real research changes.

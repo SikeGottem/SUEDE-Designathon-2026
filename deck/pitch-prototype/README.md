@@ -23,25 +23,26 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 2. Audience appreciation question, with no solution-first reference to letters
 3. Plain problem statement
 4. Occasion-based permission and How Might We
-5. Evidence-backed channel map: each channel reveals with one bounded published finding; the plotted positions and highlighted gap remain hypotheses
-6. High-contrast What / Why / How findings with blank evidence placeholders and no small subtext
+5. Impact / friction / frequency channel map with local paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
+6. The original three-column What / Why / How layout, with a compact five-row ratings table inside How and a fourth-click highlight pass
 7. The grandmother-granddaughter personas as the **when** scenario, including different time zones
-8. An If / And / Then synthesis connecting the research results to everyday normalisation
+8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
 10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
 11. Real team thank-you object, real team photo and verified QR handoff
 
-There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map connects each channel claim to published evidence before exposing a possible gap; What / Why / How must prove and explain the team's specific problem; the personas locate the moment; the If / And / Then slide turns those findings into an everyday-normalisation requirement; the live product demonstrates the resulting ritual and its design decisions.
+There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each channel to published evidence; What / Why / How explains the team's specific problem; the personas locate the moment; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
 
 The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students are not pitched as a target market. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
 ## Evidence contract
 
-- Every plotted position on the map remains a team hypothesis. Each visible channel statement is limited to a cited paper's finding and boundary; no secondary study becomes a survey percentage or proof of the highlighted gap.
+- The current 1–5 ratings, chart positions, point sizes, 82% and 71% are temporary practice data requested for rehearsal. They are disclosed in the slide footers and must be replaced before the judged pitch.
+- Each visible channel statement is limited to a cited paper's finding; no secondary study becomes a survey percentage or proof of the highlighted gap.
 - **What** establishes whether people feel they show less appreciation than they feel.
 - **Why** investigates the occasion rule, awkwardness, channel mismatch and exceptions.
 - **How** compares the perceived impact, effort and frequency of text, voice, video call, handwritten letter and physical gift using the same appreciation scenario. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
-- Team opinion, mentor reaction, published secondary research and prototype polish cannot fill primary-evidence placeholders.
+- Team opinion, mentor reaction, published secondary research, practice values and prototype polish cannot become final primary evidence.
 - The latest follow-up fixes the primary instrument at the three visible What / Why / How questions. Further survey explanation belongs in the appendix.
 - Psychology on text, voice, gratitude letters and perceived gift effort supports the map's channel-by-channel mechanism narration. Detailed methods, ownership evidence and limitations still belong in the appendix, and none can replace the primary percentages or qualitative themes.
 - The live demo proves only that the prototype can complete the demonstrated flow. It does not prove demand, sincerity, reduced awkwardness or social change.
@@ -60,10 +61,10 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 
 - **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
 - **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the channel map's published evidence; honest hypothesis labels; the actual live handoff; the team's real thank-you object and photo.
-- **Rejected defaults:** no mentor-quote theatre, demographic persona card, secondary-research grid, fake percentage, fake QR, process diary, feature cards or screenshot carousel.
-- **Signature move:** the opportunity-map evidence panel changes with each revealed channel, so the presenter cannot visually detach a claim from its source or limitation. The If / And / Then slide then makes the primary-evidence deduction visible before the product appears.
+- **Rejected defaults:** no mentor-quote theatre, demographic persona card, boxed research panel, fake QR, process diary, feature cards or screenshot carousel.
+- **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the next slide circles the three qualities the team will combine; the later synthesis keeps If / And / Then and adds one Therefore requirement.
 - **Restraint:** no opener counterpoint, product-feature recap or second conclusion after the thank-you handoff.
-- **Human decision:** the 21-minute review cut the earlier 14-slide structure; the seven-minute follow-up simplified research and restored personas; the newest 11-minute review replaces the solution-first letter opener and inserts a synthesis slide between persona and product.
+- **Human decision:** the latest captures make the graph a three-variable practice instrument, set #94A550 as the accent and preserve If / And / Then while adding one Therefore design requirement beneath it.
 
 ## Judge review
 
@@ -97,7 +98,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Authorship and distinctiveness | A polished HTML deck could still feel model-generated. | The latest team critique controls the cuts, map corrections, timing, demo and real team-authored ending. |
 
 - **Verdict:** Proceed with conditions.
-- **Blocking conditions:** leave all research values blank until supported; complete the real photo, object and verified QR; rehearse the live flow on the presentation setup; keep removed material out of the live deck; never call the demo or audience response validation.
+- **Blocking conditions:** replace every visibly labelled practice value before the judged pitch; complete the real photo, object and verified QR; rehearse the live flow on the presentation setup; keep removed material out of the live deck; never call the demo or audience response validation.
 - **Weakest judging angle:** evidence quality.
 - **Main trade-off:** a shorter, more convincing live story gains clarity and product proof but depends heavily on unfinished primary research and reliable demo execution.
 - **Next evidence:** one documented What / Why / How study with a matched-format comparison, followed by a timed live-demo rehearsal.
@@ -107,7 +108,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 
 - **Artifact inspected:** all 11 HTML slides at 1600 × 900, plus the map's first and final builds at presentation, tablet and phone viewport sizes.
 - **Strongest remaining AI tell:** the five plotted coordinates are visually precise even though they remain team hypotheses; the spoken boundary must make that status unmistakable.
-- **Content-native signature:** one changing evidence panel follows the channel map point-by-point, then hands off to the team's highlighted test area rather than decorating the slide with static citations.
+- **Content-native signature:** one unboxed evidence annotation follows the channel map point-by-point, then hands off to the team's Goldilocks target rather than decorating the slide with a fixed research card.
 - **Material human change:** Ethan made the graph the longest narrative slide and required every spoken channel claim to appear beside its research support; unsupported labels, the extra blank statistic and the oval around the final opportunity were removed, then he named the unboxed marker the `goldilocks zone`.
 - **Verdict:** Revise before final use.
 - **Exact next action:** rehearse the 11-slide deck and full live demo on the presentation projector before promoting the overall deck to Pass.
