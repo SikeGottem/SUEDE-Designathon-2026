@@ -89,7 +89,29 @@ type KeepsakeSnapshot = {
   textBlocks?: TextBlock[];
 };
 
-const CECILIA = "/assets/illustrations/cecilia/";
+const CECILIA = "/assets/illustrations/cecilia-collection/";
+const artwork = {
+  firefly: {
+    outline: `${CECILIA}couriers/firefly-outline.png`,
+    filledA: `${CECILIA}couriers/firefly-filled-a.png`,
+    filledB: `${CECILIA}couriers/firefly-filled-b.png`,
+    carrying: `${CECILIA}couriers/firefly-carrying.png`,
+  },
+  containers: {
+    bottleReady: `${CECILIA}containers/bottle-classic.png`,
+    envelope: `${CECILIA}containers/envelope-outline.png`,
+    plane: `${CECILIA}containers/paper-plane.png`,
+  },
+  environment: {
+    planeClouds: `${CECILIA}environment/clouds-alt.png`,
+    reeds: `${CECILIA}environment/reeds.png`,
+    waveA: `${CECILIA}environment/wave-divider-a.png`,
+    waveB: `${CECILIA}environment/wave-divider-b.png`,
+  },
+  seal: {
+    base: `${CECILIA}seals/stamp-neutral-circle.png`,
+  },
+} as const;
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
 const PERSONAL_STAMP_KEY = "warm-fuzzies-personal-stamp-v1";
 const LINK_MAX = 12_000;
@@ -816,7 +838,7 @@ function Home({ onEnter }: { onEnter: () => void }) {
       </div>
       <div className="home-bee-mark" aria-hidden="true">
         <motion.img
-          src={`${CECILIA}firefly-brand-mark.png`}
+          src={artwork.firefly.outline}
           alt=""
           draggable={false}
           data-asset-slot="home-bee"
@@ -847,8 +869,8 @@ function Menu({ reduceMotion, createOnly = false, onCreate, onLetters }: { reduc
     <Page className="menu-page">
       <header><span>warm &amp; fuzzies</span></header>
       <motion.div className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : 3.6, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
-        <img className="menu-firefly-frame menu-firefly-frame-one" src={`${CECILIA}firefly-filled-f1.png`} alt="" draggable={false} />
-        {!reduceMotion && <motion.img className="menu-firefly-frame menu-firefly-frame-two" src={`${CECILIA}firefly-filled-f2.png`} alt="" draggable={false} initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0, 1, 0, 1, 0, 1, 0] }} transition={{ duration: 3.6, times: [0, .12, .24, .36, .48, .6, .72, .84, 1], ease: "linear" }} />}
+        <img className="menu-firefly-frame menu-firefly-frame-one" src={artwork.firefly.filledA} alt="" draggable={false} />
+        {!reduceMotion && <motion.img className="menu-firefly-frame menu-firefly-frame-two" src={artwork.firefly.filledB} alt="" draggable={false} initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0, 1, 0, 1, 0, 1, 0] }} transition={{ duration: 3.6, times: [0, .12, .24, .36, .48, .6, .72, .84, 1], ease: "linear" }} />}
       </motion.div>
       <div className="menu-actions">
         <motion.button className="drawn-action" type="button" onClick={onCreate} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .72, duration: .26 }}>create something <Mark /></motion.button>
@@ -1629,9 +1651,9 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, locked = false,
         {folded && (
           <motion.section className="envelope-workbench" aria-label="Add a personal stamp to the envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}>
             <header><h1>leave your mark.</h1><p>The envelope stays simple. The stamp is yours.</p></header>
-            <div className="envelope-canvas">
-              <img className="envelope-canvas-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />
-              <button className={`seal-stamp seal-weight-${sealWeight} ${seal.length ? "has-seal" : ""}`} data-seal-weight={sealWeight} type="button" disabled={locked} onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}>{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
+            <div className="envelope-canvas" data-envelope={snapshot.envelope}>
+              <img className="envelope-canvas-source" src={artwork.containers.envelope} alt="" draggable={false} data-asset-slot="envelope-exterior" />
+              <button className={`seal-stamp seal-weight-${sealWeight} ${seal.length ? "has-seal" : ""}`} data-seal-weight={sealWeight} type="button" disabled={locked} onClick={() => setSealOpen(true)} aria-label={seal.length ? "Edit your personal stamp" : "Draw your personal stamp"}><img className="seal-stamp-base" src={artwork.seal.base} alt="" draggable={false} data-asset-slot="personal-seal-base" />{seal.length ? <DoodleArtwork strokes={seal} className="seal-artwork" /> : <span>draw<br />your stamp</span>}</button>
             </div>
             <div className="envelope-stamp-choice">
               <p className="envelope-status" aria-live="polite">{seal.length ? "stamped by you." : savedSeal?.strokes.length ? "your stamp is ready when you want it." : "add a stamp, or keep it simple."}</p>
@@ -1848,7 +1870,7 @@ function CapturedMedia({ capture, className = "", interactive = false }: { captu
 function SealedEnvelopeArtwork({ snapshot, className = "" }: { snapshot: KeepsakeSnapshot; className?: string }) {
   const label = `A hand-drawn envelope for ${snapshot.recipient} from ${snapshot.sender}${snapshot.seal.length ? ", finished with their personal stamp" : ""}`;
   const sealWeight = snapshot.sealWeight ?? "bold";
-  return <div className={`sealed-envelope-artwork seal-weight-${sealWeight} ${className}`} data-seal-weight={sealWeight} role="img" aria-label={label}><img className="sealed-envelope-source" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
+  return <div className={`sealed-envelope-artwork seal-weight-${sealWeight} ${className}`} data-envelope={snapshot.envelope} data-seal-weight={sealWeight} role="img" aria-label={label}><img className="sealed-envelope-source" src={artwork.containers.envelope} alt="" draggable={false} data-asset-slot="sealed-envelope" />{snapshot.seal.length > 0 && <span className="sealed-artwork-stamp"><img className="sealed-stamp-base" src={artwork.seal.base} alt="" draggable={false} /><DoodleArtwork strokes={snapshot.seal} className="seal-artwork" /></span>}</div>;
 }
 
 function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: KeepsakeSnapshot; onEdit: () => void; onChangeCarrier: () => void; onGive: () => void }) {
@@ -1866,10 +1888,10 @@ function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: Keep
 
 function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "departure" | "arrival" }) {
   if (carrier.id !== "firefly") {
-    const source = carrier.id === "bottle" ? "bottle-intact.png" : "carrier-plane.png";
-    return <div className={`courier courier-${state} courier-${carrier.id}`} aria-hidden="true"><div className="courier-body courier-object-body" data-asset-slot={`courier-${carrier.id}`}><img src={`${CECILIA}${source}`} alt="" /></div></div>;
+    const source = carrier.id === "bottle" ? artwork.containers.bottleReady : artwork.containers.plane;
+    return <div className={`courier courier-${state} courier-${carrier.id}`} aria-hidden="true"><div className="courier-body courier-object-body" data-asset-slot={`courier-${carrier.id}`}><img src={source} alt="" /></div></div>;
   }
-  return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={`${CECILIA}firefly-brand-mark.png`} alt="" /></div><div className="courier-payload" data-asset-slot="courier-payload"><img src={`${CECILIA}envelope-mail-02.png`} alt="" /></div></div>;
+  return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body courier-firefly-carrying" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={artwork.firefly.carrying} alt="" /></div></div>;
 }
 
 function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, demoReceiver, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; demoReceiver?: boolean; onBack: () => void; onCopy: () => void; onFail: () => void; onFinish: () => void }) {
@@ -1923,7 +1945,7 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, d
 }
 
 function DeliveryMascot({ className = "" }: { className?: string }) {
-  return <span className={`delivery-mascot ${className}`}><img className="delivery-mascot-letter" src={`${CECILIA}envelope-mail-02.png`} alt="" draggable={false} /><img className="delivery-mascot-firefly" src={`${CECILIA}firefly-carrying-envelope.png`} alt="" draggable={false} /></span>;
+  return <span className={`delivery-mascot ${className}`}><img className="delivery-mascot-firefly" src={artwork.firefly.carrying} alt="" draggable={false} data-asset-slot="firefly-carrying-letter" /></span>;
 }
 
 function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onAgain: () => void; onLeave: () => void }) {
@@ -1936,11 +1958,13 @@ function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipien
   return (
     <Page className="sent-page">
       <div className="sent-delivery-stage" data-carrier={carrier.id} data-delivery-stage={reduceMotion ? "still" : "departing"} aria-hidden="true">
-        {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src="/assets/illustrations/generated/water-departure-v1.png" alt="" draggable={false} /><CarrierIcon id={carrier.id} size="sealed" /></> : <CarrierIcon id={carrier.id} size="sealed" /> : carrier.id === "firefly" ? (
+        {carrier.id === "bottle" && <motion.img className="sent-reeds" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="bottle-reeds" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-8px, 8px, 0) rotate(-2deg)" }} animate={{ opacity: .2, transform: departureStarted && !reduceMotion ? "translate3d(0, 0, 0) rotate(0deg)" : "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : 1.1, ease: [0.23, 1, 0.32, 1] }} />}
+        {carrier.id === "plane" && <motion.img className="sent-plane-clouds" src={artwork.environment.planeClouds} alt="" draggable={false} data-asset-slot="plane-clouds" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(20px, 10px, 0)" }} animate={{ opacity: .12, transform: departureStarted && !reduceMotion ? "translate3d(-12px, -4px, 0)" : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : 4.8, ease: [0.23, 1, 0.32, 1] }} />}
+        {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" /><CarrierIcon id={carrier.id} size="sealed" /></> : carrier.id === "firefly" ? <span className="sent-firefly-carrying sent-delivery-still"><DeliveryMascot /></span> : <CarrierIcon id={carrier.id} size="sealed" /> : carrier.id === "firefly" ? (
           <>
             <motion.img
               className="sent-letter-object"
-              src={`${CECILIA}envelope-mail-02.png`}
+              src={artwork.containers.envelope}
               alt=""
               draggable={false}
               initial={false}
@@ -1953,12 +1977,13 @@ function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipien
               animate={departureStarted ? { opacity: [0, 1, 1, 1, 1, 0], transform: ["translate3d(356px, -48px, 0) rotate(16deg) scale(.68)", "translate3d(258px, 62px, 0) rotate(7deg) scale(.76)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(118px, 171px, 0) rotate(-7deg) scale(.83)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.82)", "translate3d(410px, -76px, 0) rotate(14deg) scale(.66)"] } : { opacity: 0, transform: "translate3d(356px, -48px, 0) rotate(16deg) scale(.68)" }}
               transition={{ duration: 5.2, times: [0, .22, .45, .52, .61, 1], ease: [0.77, 0, 0.175, 1] }}
             >
-              <motion.span className="sent-firefly-empty" initial={false} animate={departureStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 5.2, times: [0, .45, .53, 1], ease: [0.23, 1, 0.32, 1] }}><img className="sent-firefly-wing-frame sent-firefly-wing-one" src={`${CECILIA}firefly-wing-w1.png`} alt="" draggable={false} /><img className="sent-firefly-wing-frame sent-firefly-wing-two" src={`${CECILIA}firefly-wing-w2.png`} alt="" draggable={false} /></motion.span>
+              <motion.span className="sent-firefly-empty" initial={false} animate={departureStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 5.2, times: [0, .45, .53, 1], ease: [0.23, 1, 0.32, 1] }}><img className="sent-firefly-wing-frame sent-firefly-wing-one" src={artwork.firefly.filledA} alt="" draggable={false} /><img className="sent-firefly-wing-frame sent-firefly-wing-two" src={artwork.firefly.filledB} alt="" draggable={false} /></motion.span>
               <motion.span className="sent-firefly-carrying" initial={false} animate={departureStarted ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: 5.2, times: [0, .47, .55, 1], ease: [0.23, 1, 0.32, 1] }}><DeliveryMascot /></motion.span>
             </motion.div>
           </>
         ) : carrier.id === "bottle" ? <>
-          <motion.img className="sent-water-departure" src="/assets/illustrations/generated/water-departure-v1.png" alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [0, 1, 1, .96, 0], transform: ["translate3d(-118px, 148px, 0) scale(1.08)", "translate3d(-58px, 142px, 0) scale(1.08)", "translate3d(46px, 148px, 0) scale(1.08)", "translate3d(172px, 138px, 0) scale(1.08)", "translate3d(290px, 142px, 0) scale(1.08)"] } : { opacity: 0, transform: "translate3d(-118px, 148px, 0) scale(1.08)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
+          <motion.img className="sent-water-departure sent-water-departure-a" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" initial={false} animate={departureStarted ? { opacity: [0, .4, .4, .34, 0], transform: ["translate3d(-84px, 216px, 0) scale(.94)", "translate3d(-38px, 212px, 0) scale(.94)", "translate3d(42px, 218px, 0) scale(.94)", "translate3d(128px, 210px, 0) scale(.94)", "translate3d(214px, 216px, 0) scale(.94)"] } : { opacity: 0, transform: "translate3d(-84px, 216px, 0) scale(.94)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
+          <motion.img className="sent-water-departure sent-water-departure-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [0, .2, .2, .16, 0], transform: ["translate3d(-14px, 244px, 0) scale(.9)", "translate3d(-52px, 242px, 0) scale(.9)", "translate3d(-116px, 248px, 0) scale(.9)", "translate3d(-180px, 242px, 0) scale(.9)", "translate3d(-244px, 246px, 0) scale(.9)"] } : { opacity: 0, transform: "translate3d(-14px, 244px, 0) scale(.9)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
           <motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, .95, 0], transform: ["translate3d(24px, 116px, 0) rotate(-8deg) scale(.82)", "translate3d(62px, 104px, 0) rotate(4deg) scale(1)", "translate3d(158px, 114px, 0) rotate(-4deg) scale(.96)", "translate3d(276px, 94px, 0) rotate(6deg) scale(.9)", "translate3d(440px, 76px, 0) rotate(-3deg) scale(.76)"] } : { opacity: 1, transform: "translate3d(24px, 116px, 0) rotate(-8deg) scale(.82)" }} transition={{ duration: 5.8, times: [0, .2, .48, .72, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
         </> : <motion.div className="sent-carrier-departure sent-carrier-departure-plane" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(24px, 210px, 0) rotate(-18deg) scale(.78)", "translate3d(108px, 154px, 0) rotate(-5deg) scale(1)", "translate3d(228px, 78px, 0) rotate(9deg) scale(.94)", "translate3d(458px, -54px, 0) rotate(18deg) scale(.72)"] } : { opacity: 1, transform: "translate3d(24px, 210px, 0) rotate(-18deg) scale(.78)" }} transition={{ duration: 4.8, times: [0, .12, .78, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>}
       </div>
@@ -1994,7 +2019,7 @@ function Arrival({ recipient, carrier, reduceMotion, demo = false, onOpen, onDef
   return (
     <Page className={`arrival-page arrival-carrier-${carrier.id}`}>
       <header><span>for {recipient}</span><h1>{demo ? `${sender} made something for you.` : `${sender} made something private for you.`}</h1></header>
-      <div className="arrival-object"><AnimatePresence>{!landed && <motion.div className="arrival-courier-motion" initial={{ opacity: 0, transform: "translate(130px, -158px) rotate(17deg)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(130px, -158px) rotate(17deg)", "translate(34px, -58px) rotate(4deg)", "translate(0, 0) rotate(0deg)", "translate(-92px, 80px) rotate(-14deg)"] }} transition={{ duration: 3.6, times: [0, .18, .64, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>{landed && <div className="arrival-drop"><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } }} animate={{ transform: tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="arrival" /></motion.button><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></div>}</div>
+      <div className="arrival-object" data-carrier={carrier.id}>{carrier.id === "bottle" && <img className="arrival-environment arrival-reeds" src={artwork.environment.reeds} alt="" draggable={false} />}{carrier.id === "plane" && <img className="arrival-environment arrival-clouds" src={artwork.environment.planeClouds} alt="" draggable={false} />}<AnimatePresence>{!landed && <motion.div className="arrival-courier-motion" initial={{ opacity: 0, transform: "translate(130px, -158px) rotate(17deg)" }} animate={{ opacity: [0, 1, 1, 0], transform: ["translate(130px, -158px) rotate(17deg)", "translate(34px, -58px) rotate(4deg)", "translate(0, 0) rotate(0deg)", "translate(-92px, 80px) rotate(-14deg)"] }} transition={{ duration: 3.6, times: [0, .18, .64, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>{landed && <div className="arrival-drop"><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } }} animate={{ transform: tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="arrival" /></motion.button><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></div>}</div>
       <div className="arrival-options"><button className="quiet-link" type="button" onClick={onDefer}>another time</button><button className="quiet-link unavailable-link" type="button" onClick={onUnavailable}>this link is not for me</button></div>
     </Page>
   );
@@ -2118,8 +2143,8 @@ function TopLine({ onBack, label }: { onBack: () => void; label: string }) {
 }
 
 function CarrierIcon({ id, size }: { id: CarrierId; size: "hero" | "thumb" | "guide" | "sealed" | "arrival" | "cabinet" }) {
-  const source = id === "bottle" ? "bottle-intact.png" : id === "plane" ? "carrier-plane.png" : "firefly-brand-mark.png";
-  return <span className={`carrier-icon carrier-icon-${id} carrier-icon-${size}`} role="img" aria-label={id === "firefly" ? "Firefly courier" : id}><img src={`${CECILIA}${source}`} alt="" draggable={false} /></span>;
+  const source = id === "bottle" ? artwork.containers.bottleReady : id === "plane" ? artwork.containers.plane : artwork.firefly.outline;
+  return <span className={`carrier-icon carrier-icon-${id} carrier-icon-${size}`} role="img" aria-label={id === "firefly" ? "Firefly courier" : id}><img src={source} alt="" draggable={false} data-asset-slot={`carrier-${id}-${size}`} /></span>;
 }
 
 function MaterialIcon({ id }: { id: PieceId }) {
