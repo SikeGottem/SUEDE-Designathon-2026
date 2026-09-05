@@ -25,7 +25,7 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 4. Occasion-based permission and How Might We
 5. Impact / friction / frequency map across three presentation families, with bounded paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
 6. Evidence-first research findings: 82%, 71%, and a full-height three-row grouped ratings table, followed by a fourth-click highlight pass
-7. Overlapping Goldilocks rings, with university students, long-distance connections, close friends and close family named inside the need-state gap between a text that feels too casual and a physical gesture that feels too difficult
+7. Two oversized cropped Goldilocks rings dividing the full slide into a text constraint, the people caught in between, and a letter-or-gift constraint
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
 10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
@@ -33,7 +33,7 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 
 There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
 
-The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students, long-distance connections, close friends and close family appear inside one need-state overlap rather than as exclusive demographic markets. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
+The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students, long-distance connections, close friends and close family appear inside the centre band between two oversized need-state rings rather than as exclusive demographic markets. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
 ## Evidence contract
 

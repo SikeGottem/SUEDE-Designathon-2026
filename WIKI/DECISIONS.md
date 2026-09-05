@@ -1184,3 +1184,11 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Scope: the presentation palette only. Historical transcript records and product-brand decisions remain unchanged.
 - Reason: Ethan directly rejected the green rehearsal accent after reviewing the simplified findings slide and asked for blue instead.
 - Accessibility boundary: do not use deep blue against the deep-ink slide background. The pale blue companion preserves visible progress, focus and highlighted closing text on dark slides.
+
+## 2026-09-05 - Make the audience gap occupy the whole slide
+
+- Status: current rehearsal-deck direction, selected from Ethan's supplied layout sketch.
+- Decision: replace page 7's small central overlap badge with two oversized cropped Goldilocks rings that divide the full slide into three bands. The left band states the text constraint; the right states the letter-or-gift constraint; the centre names the people caught between the formats and the risk that their appreciation stays unspoken.
+- Audience examples: university students, long-distance connections, close friends and close family remain illustrative contexts inside the need-state, not validated segments or market sizing.
+- Reveal order: text constraint, letter-or-gift constraint, then the people and consequence between them.
+- Evidence boundary: `awkward`, `friction` and `inaccessible` remain working hypotheses until primary research establishes prevalence, context and exceptions.

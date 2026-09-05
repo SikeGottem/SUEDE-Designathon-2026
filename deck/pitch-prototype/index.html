@@ -135,22 +135,20 @@
     .evidence-card p { margin-top:20px; font-size:23px; line-height:1.07; color:rgb(8 31 77 / .76); }
     .evidence-card cite { margin-top:auto; padding-top:20px; border-top:1px solid rgb(8 31 77 / .28); font-size:15px; line-height:1.2; font-style:normal; color:rgb(8 31 77 / .64); }
 
-    .audience-slide .headline { max-width:1000px; font-size:78px; }
-    .audience-rings { position:absolute; left:170px; right:170px; top:205px; bottom:78px; }
-    .audience-ring { position:absolute; top:42px; width:680px; height:455px; border:3px solid var(--ink); border-radius:49% 52% 47% 54%; }
-    .audience-ring.left { left:0; transform:rotate(-1.2deg); }
-    .audience-ring.right { right:0; transform:rotate(1.4deg); }
-    .audience-ring span { position:absolute; top:63px; width:250px; font-size:18px; line-height:1; letter-spacing:.055em; text-transform:uppercase; color:var(--accent-ink); }
-    .audience-ring strong { position:absolute; top:102px; width:280px; font-size:40px; line-height:.88; font-weight:400; }
-    .audience-ring.left span,.audience-ring.left strong { left:72px; }
-    .audience-ring.right span,.audience-ring.right strong { right:72px; text-align:right; }
-    .audience-target { position:absolute; left:50%; top:92px; width:430px; height:330px; transform:translateX(-50%); display:grid; place-items:center; padding:45px 38px 31px; text-align:center; background:var(--paper); border-radius:50%; z-index:2; }
-    .audience-target:before,.audience-target:after { content:""; position:absolute; inset:0; border:4px solid var(--accent); border-radius:50% 47% 53% 48%; transform:rotate(-2deg); z-index:-1; }
-    .audience-target:after { inset:13px 18px 10px 14px; border-width:2px; border-radius:47% 53% 49% 51%; transform:rotate(3deg); }
-    .audience-target h3 { font-size:45px; line-height:.84; font-weight:400; }
-    .audience-target p { margin-top:12px; font-size:20px; line-height:.92; color:var(--accent-ink); }
-    .audience-groups { margin-top:20px; display:grid; grid-template-columns:1fr 1.35fr; gap:8px 10px; align-items:center; }
-    .audience-groups span { padding-top:7px; border-top:1.5px solid var(--ink); font-size:18px; line-height:.92; }
+    .audience-map { position:absolute; inset:0; overflow:hidden; }
+    .audience-ring { position:absolute; border:8px solid var(--ink); border-radius:50%; z-index:1; }
+    .audience-ring.left { left:-760px; top:-180px; width:1360px; height:1280px; }
+    .audience-ring.right { left:-120px; top:-200px; width:1340px; height:1320px; }
+    .audience-zone { position:absolute; z-index:2; }
+    .audience-zone span { display:block; margin-bottom:18px; font-size:19px; line-height:1; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-ink); }
+    .audience-zone strong { display:block; font-size:51px; line-height:.88; font-weight:400; text-wrap:balance; }
+    .audience-zone.left { left:90px; top:430px; width:385px; }
+    .audience-zone.center { left:650px; top:410px; width:445px; }
+    .audience-zone.right { left:1240px; top:420px; width:300px; }
+    .audience-zone.center h2 { font-size:47px; line-height:.86; font-weight:400; text-wrap:balance; }
+    .audience-groups { margin-top:28px; font-size:29px; line-height:1; }
+    .audience-consequence { margin-top:28px; font-size:33px; line-height:.9; color:var(--accent-ink); text-wrap:balance; }
+    .audience-slide .source { left:650px; max-width:440px; z-index:3; }
 
     .synthesis-layout { height:100%; display:grid; align-content:center; padding:25px 55px 5px; }
     .synthesis-kicker { margin-bottom:26px; font-size:25px; line-height:1; letter-spacing:.07em; text-transform:uppercase; color:var(--rust); }
@@ -253,8 +251,8 @@
     <button class="skip" aria-label="Advance build">next ↵</button><div class="research-story"><section class="research-job build" data-step="1"><strong class="research-number">82%</strong><div class="research-answer">feel they do not fully show the appreciation they feel.</div></section><section class="research-job build" data-step="2"><strong class="research-number">71%</strong><div class="research-answer">say ordinary-day appreciation can feel awkward or out of place.</div></section><section class="research-job has-table build" data-step="3"><table class="mini-ratings-table"><thead><tr><th scope="col">form</th><th scope="col">impact /5</th><th scope="col">friction /5</th><th scope="col">frequency /5</th></tr></thead><tbody><tr><td><span class="form-family">quick text</span></td><td>2.2</td><td><span class="target-score" style="--ring-tilt:4deg">1.0</span></td><td>4.7</td></tr><tr><td><span class="form-family">voice note /<br>video call</span></td><td>3.5</td><td>2.1</td><td><span class="target-score" style="--ring-tilt:-5deg">3.6</span></td></tr><tr><td><span class="form-family">handwritten letter /<br>physical gift</span></td><td><span class="target-score" style="--ring-tilt:-3deg">4.7</span></td><td>4.3</td><td>1.2</td></tr></tbody></table></section></div><p class="source">Temporary grouped rehearsal figures—not participant findings. Paired forms are not equivalent results.</p><span class="status">06 / 11</span>
   </article>
 
-  <article class="slide audience-slide" data-title="Who is this for?" data-steps="3">
-    <button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">Who sits in the gap?</h2><div class="audience-rings" role="img" aria-label="Two overlapping need rings. One represents wanting more meaning than a casual text. The other represents needing less friction than a letter or gift. Their Goldilocks overlap includes university students, long-distance connections, close friends and close family."><div class="audience-ring left build" data-step="1"><span>wants more meaning</span><strong>A text feels too casual.</strong></div><div class="audience-ring right build" data-step="1"><span>needs less friction</span><strong>A letter or gift feels like too much.</strong></div><div class="audience-target build" data-step="2"><div><h3>The Goldilocks gap</h3><p>More meaning, without making an ordinary day a major occasion.</p><div class="audience-groups build" data-step="3"><span>uni students</span><span>long-distance connections</span><span>close friends</span><span>close family</span></div></div></div></div><span class="status">07 / 11</span>
+  <article class="slide audience-slide" data-title="Who sits in the gap?" data-steps="3">
+    <button class="skip" aria-label="Advance build">next ↵</button><div class="audience-map" role="img" aria-label="Two oversized Goldilocks rings divide the slide into three zones. A text can feel too casual or awkward. A letter or gift can feel like too much because of friction or inaccessibility. In between are university students, long-distance connections, close friends and close family whose appreciation can stay unspoken."><div class="audience-ring left build" data-step="1" aria-hidden="true"></div><div class="audience-ring right build" data-step="2" aria-hidden="true"></div><section class="audience-zone left build" data-step="1"><span>too slight</span><strong>A text can feel too casual or awkward.</strong></section><section class="audience-zone center build" data-step="3"><h2>People caught between the formats</h2><p class="audience-groups">uni students · long-distance connections · close friends · close family</p><p class="audience-consequence">They care—but the appreciation can stay unspoken.</p></section><section class="audience-zone right build" data-step="2"><span>too much</span><strong>A letter or gift can feel like too much: high friction or inaccessible.</strong></section></div><p class="source">Working need-state hypothesis—not validated market segmentation.</p><span class="status">07 / 11</span>
   </article>
 
   <article class="slide synthesis-slide" data-title="Research synthesis" data-steps="4">

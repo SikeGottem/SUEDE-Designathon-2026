@@ -54,9 +54,10 @@ test('the newest follow-up simplifies research, defines the need-state audience 
   assert.doesNotMatch(source, /class="practice-flag"/);
   assert.doesNotMatch(source, /research-bridge/);
   assert.match(source, /Who sits in the gap\?/);
-  assert.match(source, /The Goldilocks gap/);
-  assert.match(source, /class="audience-groups[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
-  assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-target/);
+  assert.match(source, /People caught between the formats/);
+  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
+  assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-zone left[\s\S]*class="audience-zone center[\s\S]*class="audience-zone right/);
+  assert.doesNotMatch(source, /class="audience-target/);
   assert.doesNotMatch(source, /Grandmother|Granddaughter/);
   assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?<h2>Let us show you\.<\/h2>/);
   assert.doesNotMatch(source, /demo-sequence/);
@@ -72,7 +73,7 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
   assert.match(source, /Is everything okay\?/);
-  assert.match(source, /class="audience-groups[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
+  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance connections[\s\S]*close friends[\s\S]*close family/);
   assert.match(source, /data-title="Research synthesis" data-steps="4"/);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);

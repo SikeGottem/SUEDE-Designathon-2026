@@ -94,3 +94,45 @@ No actionable P0, P1, or P2 finding remains. A P3 research question remains: tes
 ## Final result
 
 passed
+
+---
+
+# Design QA — page 7 oversized Goldilocks rings
+
+## Target and capture conditions
+
+- Source visual truth: `/var/folders/r9/vz8tpfxn03l3g57fvpf5bbfr0000gn/T/codex-clipboard-7Cm0yE.png`, Ethan's supplied frame-layout screenshot.
+- Source pixels: 1580 × 1026. The visible white frame was cropped to 1564 × 984, then normalized to 800 × 450 because the screenshot includes Figma chrome and an incomplete frame crop.
+- Implementation: `http://127.0.0.1:4176/deck/pitch-prototype/index.html?slide=7&step=3` at a 1600 × 900 CSS viewport and device scale factor 1.
+- Implementation screenshot: `/tmp/suede-slide7-oversized-rings-final-v2.png`, 1600 × 900 pixels.
+- Side-by-side comparison: `/tmp/suede-slide7-comparison-v2.png`, 1600 × 450 pixels.
+- State: final third build, with both rings, both format constraints, the illustrative audience contexts and the unspoken-appreciation consequence visible.
+
+## Full-view comparison evidence
+
+The source and implementation were placed together in `/tmp/suede-slide7-comparison-v2.png`. Both use two extremely large cropped circular boundaries to create three full-height reading bands. The text, centre audience block and letter-or-gift constraint align around the visual midpoint. The implementation intentionally preserves the deck's Gaegu font, deep-blue palette, navigation and evidence disclosure instead of copying Figma chrome, black strokes or rough placeholder wording.
+
+No focused crop was needed because the slide contains no raster assets or icons, and the typography, ring crop and complete copy are legible in the normalized full-view comparison.
+
+## Findings and comparison history
+
+1. First comparison: the centre audience block began roughly 80 pixels above the side statements, creating a P2 hierarchy mismatch against the reference's aligned three-zone reading path.
+2. Fix: moved `.audience-zone.center` from `top:330px` to `top:410px` without altering the two ring crops or side statements.
+3. Post-fix evidence: `/tmp/suede-slide7-comparison-v2.png` shows the three content zones aligned around the same vertical centre. No actionable P0, P1 or P2 mismatch remains.
+
+## Required fidelity surfaces
+
+- Fonts and typography: the source's informal handwritten direction is preserved with the deck's bundled Gaegu family; display, supporting and disclosure sizes retain clear hierarchy and do not clip.
+- Spacing and layout rhythm: two oversized cropped rings now occupy the whole frame, with the centre band and both side bands matching the reference's proportions. The audience block aligns with the two constraint blocks.
+- Colors and visual tokens: the slide uses the user-selected deep-blue accent on white. The reference's black is treated as structural guidance, not a palette override.
+- Image quality and asset fidelity: the source contains no photographic or illustrative asset. The circular boundaries are semantic diagram geometry rendered sharply at the native slide size.
+- Copy and content: rough source placeholders are replaced by bounded presentation copy. University students, long-distance connections, close friends and close family remain examples rather than a validated demographic claim.
+- Interaction and accessibility: the three-click order is text constraint, letter-or-gift constraint, then the audience and consequence. The full diagram has one descriptive accessibility label. Browser console reported zero errors.
+
+## Follow-up polish
+
+- P3: verify ring weight and small disclosure legibility on the actual projector; neither blocks the current rehearsal deck.
+
+## Final result
+
+passed
