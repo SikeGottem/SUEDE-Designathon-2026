@@ -4,8 +4,7 @@
   "outputDirectory": "dist/client",
   "rewrites": [
     { "source": "/for/:id", "destination": "/index.html" },
-    { "source": "/demo/create", "destination": "/index.html" },
-    { "source": "/demo/receive", "destination": "/index.html" },
+    { "source": "/demo/:path*", "destination": "/index.html" },
     { "source": "/demo", "destination": "/index.html" }
   ]
 }
