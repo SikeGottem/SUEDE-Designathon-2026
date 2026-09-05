@@ -20,28 +20,28 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 ## Revised story
 
 1. Warm & Fuzzies logo
-2. Existing communication contradiction
-3. Problem statement and How Might We
-4. Cost versus meaning/effort opportunity map
-5. Initial-to-useful research direction
-6. Primary research findings
-7. Grandmother–granddaughter relationship lens
-8. Prototype evolution driven by the relationship requirement
-9. Warm & Fuzzies as a proposed normalising ritual
+2. Audience letter question and communication contradiction
+3. Mentor-endorsed unwritten rule and bounded How Might We
+4. Hypothesis map across text, voice, video, cards, gifts and letters
+5. Published research and existing-solution scan
+6. Primary research still required
+7. Illustrative grandmother–university-student-granddaughter scenario
+8. Prototype evolution as three evidence-led design decisions
+9. Warm & Fuzzies as an ordinary-day, deliberately occasional ritual
 10. Sender flow
-11. Receiver flow
+11. Receiver control without a required reply
 12. Audience QR/link handoff card
-13. Conclusion
+13. Return to the unwritten rule
 
 ## Visual contract
 
-- **Communication job:** make the expression barrier legible, show how research narrowed it, then demonstrate one authored object moving from sender to receiver.
-- **Source anchors:** Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the grandmother–granddaughter relationship lens; the make → seal → travel → receive object journey.
+- **Communication job:** make the occasion-only social rule legible, show how evidence sharpened it, then demonstrate one authored object moving from sender to receiver.
+- **Source anchors:** Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the clearly labelled illustrative relationship scenario; the make → seal → travel → receive object journey.
 - **Reference delta:** the earlier Jobs-style deck still contributes diagnostic pacing, but the revised deck replaces the ring-led structure with the team's requested research, relationship and process arc.
 - **Rejected defaults:** no persona card, stock portrait, decorative affinity board, fake statistics, fake QR, feature-card grid or process diary.
-- **Signature move:** each conclusion visibly causes the next decision: method map → research reframe → format diagnosis → relationship requirement → authored object → optional room handoff.
+- **Signature move:** each conclusion visibly causes the next decision: unwritten rule → opportunity hypothesis → external evidence → unanswered primary questions → relationship requirement → authored object → optional room handoff.
 - **Restraint:** accents appear only when they identify the opportunity, relationship thread or product handoff; most slides remain ink on white paper.
-- **Human decision:** Ethan directly requested the logo-first sequence, retained intro, problem/HMW, x/y opportunity map, research and interview findings, grandmother–granddaughter lens, process, product detail, audience card and conclusion. His latest review also made cause-and-effect process narration and normalising expression—not manufacturing care—the controlling story choices.
+- **Human decision:** Ethan directly requested the logo-first sequence, letter opener, problem/HMW, x/y opportunity map, research, relationship lens, process, product detail, audience card and conclusion. The latest mentor review made cause-and-effect reasoning and the ordinary-day social-permission rule the controlling story choices.
 
 ## Structural divergence considered
 
@@ -60,12 +60,12 @@ For the latest pass, three process treatments were considered: one isolated proc
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
 | Brief fit | strengthens | The problem and solution both name the unwritten ordinary-day appreciation rule. | Exact 2026 wording remains unconfirmed. |
-| Problem identification | strengthens | The deck now separates existing care from the expression barrier and shows a relationship context. | The interview synthesis and persona still need exact sources. |
+| Problem identification | strengthens | The deck now leads with the mentor-endorsed occasion-permission rule and shows one concrete relationship context. | Primary evidence has not established prevalence, affected groups or exceptions. |
 | Solution approach | strengthens | Make, seal, travel, receive and keep/close/remove connect directly to authorship and receiver agency. | The medium has not beaten chat or a physical note in a completed test. |
-| Design innovation | strengthens | One authored object and receiver-owned ending are clearer than a generic gratitude app. | Carrier and envelope theatre could still read as decoration without user evidence. |
+| Design innovation | strengthens | One authored object and a receiver-controlled ending are clearer than a generic gratitude app. | Carrier and envelope theatre could still read as decoration without user evidence. |
 | Visual communication | strengthens | One dominant composition per slide, real states and restrained brand accents replace the earlier abstract ring repetition. | Some source labels are intentionally small and need projector review. |
 | Presentation skills | strengthens | The pitch now follows problem → map → research reframe → diagnosis → human requirement → prototype change → mechanism → live handoff → close. | A full team rehearsal may expose overrun or weak handoffs. |
-| Evidence quality | weak | External research and real prototype states are sourced; missing evidence is labelled. | Primary findings, persona provenance and audience URL are not complete. |
+| Evidence quality | weak | Published gratitude and communication-channel studies, product-category observations and real prototype states are sourced; missing evidence is labelled. | Primary findings, persona provenance and audience URL are not complete. |
 
 ### Challenge review
 
@@ -73,7 +73,7 @@ For the latest pass, three process treatments were considered: one isolated proc
 | --- | --- | --- |
 | Assumption and inversion | Care may already be expressed adequately through action. | The deck starts from existing appreciation and does not call indirect care deficient. |
 | Behaviour and context | “Friends” and “ordinary day” remain broad. | The relationship slide provides one case, but it stays illustrative until sourced. |
-| Medium necessity | Why not text, voice or a physical letter? | The x/y slide keeps them visible as alternatives; the prototype proposes lower logistics plus ownership, not superiority. |
+| Medium necessity | Why not text, voice, video or a physical letter? | The x/y slide keeps them visible as controls; the prototype proposes lower logistics plus a distinct receiving context, not superiority. |
 | Alternatives | A non-digital ritual may work better. | The opportunity map and Q&A retain physical gestures as controls. |
 | Human specificity | The persona could become fiction. | No names, ages or quotes are invented; provenance is visibly blocked. |
 | Inclusion and accessibility | QR, handwriting and motion can exclude. | The deck has reduced-motion support, semantic controls and a no-device handoff. Real assistive testing is still required. |
@@ -81,27 +81,27 @@ For the latest pass, three process treatments were considered: one isolated proc
 | Failure and recovery | Appreciation can be unwanted or misread. | Open later, decline, close and remove remain visible product states. |
 | Feasibility and demo truth | A polished deck can imply production delivery. | Product slides say working prototype and distinguish implemented controls from unresolved production behaviour. |
 | Incentives and second-order effects | Craft may create effort theatre or reply debt. | The receiving ending has no required reply or sender-visible receipt; effect remains untested. |
-| Simplicity and retellability | Thirteen slides may diffuse the core idea. | The close repeats one line: care exists; the comfortable format is missing. |
+| Simplicity and retellability | Thirteen slides may diffuse the core idea. | The close repeats one line: appreciation should not need an occasion. |
 | Authorship and distinctiveness | The deck could still feel generated. | Ethan chose the structure, Cecelia supplied the identity assets, and the app screenshots show the team's actual interaction decisions. |
 
 - **Verdict:** Proceed with conditions.
-- **Blocking conditions:** replace the working interview synthesis with the exact sample/method/findings/exceptions; confirm persona provenance; replace the QR placeholder with a verified live URL and real QR; rehearse the full deck inside six minutes; do not call the audience reaction validation.
+- **Blocking conditions:** complete and document the missing primary research; validate or replace the illustrative persona; replace the QR placeholder with a verified live URL and real QR; rehearse the full deck inside six minutes; do not call the audience reaction validation.
 - **Weakest judging angle:** evidence quality.
 - **Main trade-off:** the deck now documents enough process and research to build confidence, at the cost of less time for the product demo.
-- **Next evidence:** one verified interview synthesis and one timed full-team run.
+- **Next evidence:** one matched sender/receiver test across text, voice/video, a physical note and Warm & Fuzzies, plus one timed full-team run.
 - **Recommendation:** review this draft as the new story baseline, then correct the three blocked slides before Figma or final export.
 
 ## Design-authenticity post-build
 
 - **Artifact inspected:** all 13 slides at 1600 × 900, including the revised causal headlines, relationship requirement, prototype evolution and normalisation framing.
-- **Strongest remaining AI tell:** the three interview findings can read like generic synthesis until the team's actual language and exceptions replace them.
+- **Strongest remaining AI tell:** the research plan and illustrative persona will still feel generic until participant evidence supplies real language, exceptions and observed behaviour.
 - **Content-native signature:** one appreciative thought moves through a visible chain of human decisions before becoming a made, sealed, carried and receiver-owned object.
-- **Material human change:** Ethan asked for the process to explain how the team reached each conclusion, then clarified that the product is meant to normalise expression rather than create appreciation. Those points now govern slides 4–9 and the close; Cecelia's supplied identity still governs the deck.
+- **Material human change:** Ethan asked for the process to explain how the team reached each conclusion. The latest mentor session then supplied the occasion-permission framing and required the map, research, audience, cadence and receiver journey to be made explicit; Cecelia's supplied identity still governs the deck.
 - **Logo-swap test:** pass for the product and object-journey slides; the research slides depend on the final interview language to pass fully.
-- **Team-voice test:** pass for the problem, process, product and close; primary-findings copy still needs team wording.
+- **Team-voice test:** pass for the problem, process, product and close; primary-research language still needs participant wording.
 - **Subtraction pass:** removed the repeated top metadata, decorative ring system, fake optimum implication, feature-grid treatment and unverified QR.
 - **Verdict:** Revise before final use.
-- **Exact next action:** replace the three provisional findings and illustrative persona details with the team's approved evidence, then insert and test the live handoff QR.
+- **Exact next action:** complete the matched participant research, replace or validate the illustrative persona details, then insert and test the live handoff QR.
 
 ## Assets and disclosure
 

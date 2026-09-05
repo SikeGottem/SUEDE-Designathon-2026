@@ -1,13 +1,64 @@
-<!-- This report preserves every presentation-relevant direction found across the complete SUEDE transcript set. -->
+<!-- This report preserves every presentation-relevant direction found across the complete SUEDE transcript set and separates mentor advice from project evidence. -->
 # Transcript presentation findings
 
 ## Coverage
 
 - All 25 transcript captures available in `WIKI/TRANSCRIPTS/` at the 4 September 2026 review cut-off were read in full, plus the folder README.
 - This pass also applied the two newest presentation-specific captures: [9ddc…](../WIKI/TRANSCRIPTS/2026-09-04-9ddc0551-abce-5be0-8dcd-faf67accd863.md) for the page-by-page deck review and [e0acf…](../WIKI/TRANSCRIPTS/2026-09-04-e0acf8d3-60e2-5585-bc2d-25087f016ae9.md) for the later problem and solution correction.
+- The 5 September revision treats the newest 33-minute mentor meeting, [ca9d…](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md), as the controlling critique for presentation changes. It supersedes earlier deck advice where the two conflict, but remains mentor guidance and team discussion rather than participant research.
 - The review covered direct mentions of decks and pitches as well as indirect decisions about the opening, evidence, humour, visual comparisons, demo choreography, audience participation, Q&A and what the team rejected.
 - Several Discord captures compress long discussions into a single timestamped line. Local recordings 14–20 also contain unattributed machine transcription. File and timestamp references are reliable retrieval pointers; uncertain speaker identity is not inferred.
 - No substantive presentation direction appeared in the Chronicle test captures or files `29cb…`, `bd6…`, `ce112…`, `1743…`, `1fe…`, `330…`, `9a…` and `9fb…`.
+
+## Exact mentor-endorsed problem framing
+
+Ethan identifies the following as Chloe's framing. Chronicle assigned the entire meeting to `ethan`, so the speaker identity cannot be independently verified from the raw file. The exact machine-transcribed wording at [30:02](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md#L51) is:
+
+> “I think I think the unwritten rule is this idea that there's no expectation or norm to show appreciation for friends and family if it is not something that is prompted through something like a birthday brief, um, like some sort of event, right? Like we always are prompted to show appreciation when there is something societally that tells us to.”
+
+The response immediately after it at [30:27](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md#L52) is:
+
+> “I think that's it. And I think sh if find a way that you can very easily convey that. Yeah. You would you word it very well. I think find a way to say find a way that you can articulate that all of you like quickly easily and it's very clear the linkage that's the solution.”
+
+The transcript does **not** contain “that's perfect” at this point; the recorded approval is “I think that's it” and “you worded it very well.” `Birthday brief` is almost certainly a transcription error, but it must remain unchanged inside the verbatim quote.
+
+Deck-normalized version:
+
+> **Without an occasion, appreciation has no familiar social permission.** Birthdays, farewells and milestones prompt us to show it; an ordinary day does not.
+
+This is the lead problem statement, but it remains an evidence-informed working framing rather than a universal population fact.
+
+## Mentor actionables applied to the presentation
+
+1. **Lead with the social rule, not the app.** The pitch now identifies occasion-based permission as the central unwritten rule and makes the connection to the solution explicit.
+2. **Open with the letter question.** Ask when the audience last sent and received a letter, then use its rarity to introduce the question rather than claim proof.
+3. **Use one direct How Might We.** “How might we create that permission on an ordinary day?” Keep reply pressure as a receiver-side requirement rather than diluting the central social-rule framing.
+4. **Make the why dominate.** The first eight slides establish the rule, alternatives, evidence, missing evidence, target context and design reasoning before the product reveal. The mentor's “80 percent problem” comment is treated as direction, not a literal rubric weight.
+5. **Correct the opportunity map.** Add video calls, alongside text, voice notes, digital cards or group boards, gifts and handwritten letters. Label every plotted position as a team hypothesis until measured.
+6. **Bring psychology and existing solutions into the argument.** Use the sourced gratitude-letter finding about anticipated awkwardness with its narrow boundary; add the voice-versus-text connection study as a control, not proof for this product. Use Hallmark and Kudoboard to show that current digital-card discovery is still organised around occasion categories, not to claim demand or advantage.
+7. **Show what evidence is absent.** The primary-research slide separates quantitative “what/how often,” qualitative “why/in what context,” and observed prototype behaviour. All stay visibly pending until the records exist.
+8. **Name a provisional audience without pretending it is validated.** University students maintaining close relationships across distance or changing life stages are a recruitment focus to confirm, not a settled market claim.
+9. **Tell one end-to-end situation.** Show the ordinary-day trigger, the sender's decision, the receiver's context and choice to open, and possible later revisiting. The grandmother-granddaughter relationship remains blocked until its provenance and details are confirmed.
+10. **Establish cadence.** Position Warm & Fuzzies as an occasional, unexpected and finite gesture—not continuous messaging, frequent back-and-forth or another social network.
+11. **Weave process through cause and effect.** Every material step should read `evidence or hypothesis -> conclusion -> design requirement -> product response`; the dedicated process slide shows actual artifacts rather than a diary.
+12. **Keep the solution explanation focused.** Introduce one mechanism, then demo the complete sender-to-receiver journey. Avoid a feature inventory.
+13. **Explain low-friction access honestly.** Receiver access by link is a prototype direction. Do not claim that sender apps, accounts, integrations or production delivery are resolved.
+14. **Replace permanence rhetoric with a receiver contract.** Say the sender's act is final and the receiver can keep, close or remove the prototype object. Do not say “own,” “immortalised,” “permanent” or “forever” until retention, identity, deletion and migration are actually defined.
+15. **Keep the audience handoff.** A verified QR/link and no-device alternative can demonstrate the receiver flow. Participation stays optional, generic, private, accessible and reply-free; reactions are not validation.
+16. **Close on the logic.** “Occasions currently grant permission. Warm & Fuzzies proposes an ordinary-day ritual.” Do not claim the prototype has already changed the norm.
+
+## Mentor actionables that a presentation edit cannot complete
+
+- Gather defensible quantitative evidence showing whether and how often the intended audience experiences the problem.
+- Conduct and document qualitative research explaining context, interpretation, awkwardness, reply pressure, existing behaviours and exceptions.
+- Confirm one primary audience, recruit the right people and replace the provisional target label.
+- Test the working prototype with that audience and record where people hesitate, what they misunderstand and what changed afterward.
+- Run a matched comparison against text, voice or video calls and a physical note or letter rather than assuming the digital object occupies a valuable gap.
+- Explore at least three mechanism-level responses, including an intervention in an existing channel and a non-app ritual, before claiming the current product is the strongest answer.
+- Decide the production delivery model: sender web or app, receiver link, account needs, forwarding, expiry, wrong-recipient recovery and adoption friction.
+- Define production identity, privacy, deletion, retention, storage cost, device migration and what receiver control legally and technically means.
+- Verify the QR and deployed receiver experience on a second device and prepare the no-device fallback.
+- Keep the suggested doomscrolling or resurfacing prompt in the backlog unless research connects it to the central ordinary-day appreciation problem.
 
 ## What the team has said about the pitch
 
