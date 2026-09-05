@@ -11,8 +11,8 @@
     "working_constraint_source": "WIKI/BRIEF.md#captured-presentation-guidance--confirm-against-organiser-materials",
     "controlling_review_source": "WIKI/TRANSCRIPTS/2026-09-05-358f1cfb-7704-52f2-8abb-ba7c89de9b05.md",
     "latest_research_followup_source": "WIKI/TRANSCRIPTS/2026-09-05-ba43f3af-350e-57bf-9d8f-931b5c09b9c0.md",
-    "latest_presentation_followup_sources": ["WIKI/TRANSCRIPTS/2026-09-05-30a3e27b-cb4f-51f2-97cd-312f23922aa2.md", "WIKI/TRANSCRIPTS/2026-09-05-a398410c-69a5-5f37-8b5b-0b86fc27f9d1.md", "WIKI/TRANSCRIPTS/2026-09-05-91bad8dd-1e89-586f-947f-9624f46d1fde.md", "WIKI/TRANSCRIPTS/2026-09-05-7a7a60e4-e77d-5f46-9123-82e767184889.md", "WIKI/TRANSCRIPTS/2026-09-05-b095b6db-6397-5b7c-bc97-579875233111.md", "WIKI/TRANSCRIPTS/2026-09-05-d16ae2e6-7c26-5981-83c0-e76dbe3baecb.md", "WIKI/TRANSCRIPTS/2026-09-05-ee6aa56c-390b-5fc9-af50-e68149891ec4.md"],
-    "narrative_rule": "Move from unprompted appreciation through the visible reframing process, the psychology-informed channel gap, a working market-gap need-state, one separate illustrative Maya use case, one explicit design brief, the solution proposition, the product qualities it combines and one shared live demo.",
+    "latest_presentation_followup_sources": ["WIKI/TRANSCRIPTS/2026-09-05-30a3e27b-cb4f-51f2-97cd-312f23922aa2.md", "WIKI/TRANSCRIPTS/2026-09-05-a398410c-69a5-5f37-8b5b-0b86fc27f9d1.md", "WIKI/TRANSCRIPTS/2026-09-05-91bad8dd-1e89-586f-947f-9624f46d1fde.md", "WIKI/TRANSCRIPTS/2026-09-05-7a7a60e4-e77d-5f46-9123-82e767184889.md", "WIKI/TRANSCRIPTS/2026-09-05-b095b6db-6397-5b7c-bc97-579875233111.md", "WIKI/TRANSCRIPTS/2026-09-05-d16ae2e6-7c26-5981-83c0-e76dbe3baecb.md", "WIKI/TRANSCRIPTS/2026-09-05-ee6aa56c-390b-5fc9-af50-e68149891ec4.md", "WIKI/TRANSCRIPTS/2026-09-05-8c070b5e-f60e-562c-aceb-55dca8e41449.md"],
+    "narrative_rule": "Move from unprompted appreciation through the visible reframing process, the psychology-informed channel gap, a working market-gap need-state, one separate illustrative Maya use case, one explicit design brief, the solution proposition, a mechanism-level response to the gap and one shared live demo.",
     "evidence_rule": "The displayed participant ratings and percentages—including the 72% and 78% Maya-slide placeholders—are disclosed in the slide footers as temporary rehearsal data because Ethan explicitly requested presentable test values; they must be replaced before the judged pitch. Published studies support only the adjacent channel mechanisms, not the practice values, plotted positions, Goldilocks gap, market sizing, demand or product superiority."
   },
   "design": {
@@ -165,13 +165,13 @@
       "id": "product-differentiation",
       "section": "Solution",
       "status": "draft",
-      "claim": "Warm & Fuzzies brings four familiar strengths into one firefly-branded digital gift.",
-      "audience_takeaway": "Understand the four specific strengths combined by the current product before the live demo without mistaking capability for proven superiority.",
-      "evidence_refs": ["WIKI/DECISIONS.md", "WIKI/FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md", "prototype/IMPLEMENTATION_NOTES.md", "prototype/tests/demo-routes.spec.ts"],
-      "visual": { "composition": "Abandon the Venn. Use four literal dot points in one vertical sequence, then group them with a single hand-drawn brace into one firefly-branded digital gift. Build 1 reveals `the personality of a handwritten letter`. Build 2 reveals `the dynamism of mixed media` with `writing · photo · voice · video · song`. Build 3 reveals `the ease of a text` with `one direct link · no receiver account`. Build 4 reveals `the sense of ownership from a gift` with `the receiver decides: keep · revisit · remove`, then lands the brace and Warm & Fuzzies firefly mark. Keep the capability footer explicit: receiver control is not legal ownership, revisitability is not permanent storage, the bearer link does not establish privacy, and emotional impact is not yet measured. Do not use a Venn, screenshots, feature cards, a comparison table, arrows or another media-icon row.", "assets": ["prototype/public/assets/illustrations/cecilia/firefly-carrying-envelope.png"] },
-      "speaker_notes": ["Timing: 20 seconds.", "Build 1: the personality of a handwritten letter. Build 2: the dynamism of mixed media—writing, photo, voice, video and song. Build 3: the ease of a text—one direct link and no receiver account. Build 4: the sense of ownership from a gift, operationalised as the receiver deciding whether to keep, revisit or remove it.", "Close the brace by saying: `Warm & Fuzzies brings those four strengths into one digital gift.`", "There is no receiver app download, reply box or read receipt. Use `one link` or `direct link`, not `private link`: the bearer link can be forwarded. Receiver choice is not legal ownership, and revisitability is browser-local in the current prototype rather than permanent storage.", "This is a design proposition supported by current capabilities. It does not prove greater emotional impact, lower awkwardness or superiority over an existing format."],
+      "claim": "Warm & Fuzzies answers the format gap through four visible working-prototype mechanisms rather than an unsupported high-impact, low-friction score.",
+      "audience_takeaway": "See how each borrowed strength becomes a product mechanism and which part of the gap that mechanism is designed to answer before the live demo.",
+      "evidence_refs": ["WIKI/DECISIONS.md", "WIKI/FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md", "prototype/IMPLEMENTATION_NOTES.md", "prototype/tests/demo-routes.spec.ts", "WIKI/TRANSCRIPTS/2026-09-05-8c070b5e-f60e-562c-aceb-55dca8e41449.md#52:36"],
+      "visual": { "composition": "Use a three-column causal ledger headed `strength we borrow`, `working prototype mechanism` and `gap it answers`. Build 1 maps handwritten-letter personality to an authored canvas—words, layout and personal mark—then to `personal, not generic`. Build 2 maps mixed media to writing, photo, voice, video and song in one keepsake, then to `more than words`. Build 3 maps text to one direct browser link with no receiver account or download, then to `opens without setup`. Build 4 maps gift-like ownership to a receiver-controlled keepsake—keep, revisit or remove—then reveals a firefly-branded summary strip connecting implemented mechanisms to the design targets `impact`, `low friction` and `repeatability`. Use no product score, fake metric, Venn, screenshots or generic feature cards. Keep the footer explicit that outcomes are design targets, receiver control is not legal ownership and revisitability is not permanent storage.", "assets": ["prototype/public/assets/illustrations/cecilia/firefly-carrying-envelope.png"] },
+      "speaker_notes": ["Timing: 20 seconds.", "Build 1: `We did not just borrow the idea of a letter; the working maker preserves your own words, layout and personal mark, so authorship stays visible.`", "Build 2: `One keepsake can hold writing, photo, voice, video and a chosen song, so the form can fit the thought.`", "Build 3: `It arrives through one direct browser link, with no receiver account or download, so opening does not introduce setup friction.`", "Build 4: `The receiver decides whether to keep, revisit or remove the keepsake. Those mechanisms are how we are designing toward impact, low friction and repeatability.`", "Do not call the link private: it can be forwarded. Receiver choice is not legal ownership, and revisitability is browser-local in the current prototype rather than permanent storage. The slide proves implemented mechanisms, not emotional impact, reduced awkwardness, market demand or superiority."],
       "duration_seconds": 20,
-      "motion": { "purpose": "causality", "description": "Use exactly four builds: reveal one literal strength per build; on the fourth, add the hand-drawn brace and resolve all four points into the firefly-branded Warm & Fuzzies digital gift.", "manual_in_figma": true },
+      "motion": { "purpose": "causality", "description": "Use exactly four builds. Each build reveals and highlights one complete source-to-mechanism-to-response row. On build four, retain the full ledger and reveal the firefly summary that maps mechanisms to the three Goldilocks design targets.", "manual_in_figma": true },
       "figma": { "slide_node_id": null }
     },
     {
@@ -188,10 +188,26 @@
       "figma": { "slide_node_id": null }
     }
   ],
+  "appendix_contract": {
+    "route": "deck/pitch-prototype/appendix.html",
+    "page_count": 15,
+    "separate_from_live_deck": true,
+    "purpose": "Give judges a fast, inspectable evidence and Q&A layer without adding to the 11-slide live pitch.",
+    "winner_benchmark": "Borrow the 2025 winner's separation between a sparse live story and a detailed research appendix, including raw-method visibility and references, without copying its visual identity.",
+    "navigation": "Deep links use ?slide=A1 through ?slide=A15; I opens the index; F toggles fullscreen; the single return control goes to live slide 11.",
+    "evidence_statuses": ["2024 criteria fallback", "transcript provenance—not research", "secondary evidence", "primary evidence pending", "working hypothesis", "test next", "working prototype", "open risks"],
+    "non_negotiable_boundaries": [
+      "No completed primary study currently validates the expression gap, occasion rule, market, audience, product outcome or superiority.",
+      "The 82%, 71%, 72%, 78%, 1–5 ratings, chart positions and dot sizes are quarantined rehearsal placeholders.",
+      "Published studies support adjacent mechanisms only; no study directly validates Warm & Fuzzies.",
+      "Prototype screenshots and the live flow prove implemented behaviour only, not desirability or social change.",
+      "Unknown team metadata, consent and 2026 disclosure requirements remain visibly incomplete rather than invented."
+    ]
+  },
   "appendix": [
     "brief-and-deliverables",
     "team-details-and-photo-consent",
-    "chloe-full-verbatim-mentor-framing-source",
+    "machine-transcript-team-framing-source-with-speaker-unverified",
     "secondary-psychology-and-product-scan",
     "research-methods-sample-and-limitations",
     "what-why-how-raw-results-and-exceptions",

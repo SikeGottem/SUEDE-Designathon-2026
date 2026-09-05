@@ -1554,3 +1554,78 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Next evidence that could change the verdict: a second-device rehearsal using a real edited artifact, including invalid/oversize/local-media failure branches and a room-distance QR scan.
 - Recommendation: use the editable prepared template for the live demo only after that rehearsal passes; otherwise show the bare fallback or no-device route and do not imply the receiver is seeing a live edit.
 - Post-build result: ten focused browser checks pass, including editable maker tools, exact edited v3 handoff into a second browser context, canonical bare-route fallback, recognized invalid/legacy-fragment rejection, demo-cabinet isolation and unchanged normal entry. Protected-runtime integrity, production build, Sites fallback, and the existing three recipient/link/QR regression checks pass. The verified production build returns successfully from both stable base URLs, and trailing slashes redirect canonically. The physical second-device rehearsal remains outstanding.
+
+## 2026-09-06 - Make page 10 prove the product response mechanism by mechanism
+
+- Status: current live-presentation direction, selected directly by Ethan after Ivan's mentor review; supersedes the page-10 brace-and-dot-list composition only.
+- Decision: replace the four-claim list with a causal ledger: `strength we borrow → working prototype mechanism → gap it answers`. Use four paced rows—handwritten letter, mixed media, text and gift—then resolve the implemented mechanisms into the Goldilocks design targets `impact`, `low friction` and `repeatability` in one firefly-branded strip. Do not add a numeric Warm & Fuzzies row or imply measured superiority.
+- Reason: Ivan asked for a visual comparable to the existing table that shows how the solution addresses the identified gaps, and Ethan approved that direction only if the deck proves how rather than simply labelling the product high impact, low friction and repeatable.
+- Evidence: [Ivan review at 52:36–53:24](TRANSCRIPTS/2026-09-05-8c070b5e-f60e-562c-aceb-55dca8e41449.md) and Ethan's direct 6 September correction.
+- Consequence: page 10 now gives the live demo a falsifiable handoff: the slide identifies the mechanisms the audience should look for, and the demo can show whether those mechanisms actually exist. Emotional effect, awkwardness reduction, repeat usage and superiority remain unmeasured.
+
+### Mandatory judge review
+
+| Lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The product response is visibly tied back to the ordinary-day format gap. | The social norm itself is still a working hypothesis. |
+| Problem identification | neutral | No new problem evidence is introduced or inflated. | Placeholder primary figures remain unresolved elsewhere. |
+| Solution approach | strengthens | Each intended outcome is linked to an implemented prototype mechanism. | Mechanisms do not yet prove emotional or behavioural outcomes. |
+| Design innovation | strengthens | Authored canvas, mixed media, direct link and receiver control form one coherent digital-gift ritual. | Judges may still view it as a decorated digital letter without strong demo execution. |
+| Visual communication | strengthens | Four staged rows provide one active point at a time, then preserve the complete logic in the final state. | The presenter must move briskly so the ledger does not become a feature tour. |
+| Presentation skills | strengthens | The page supplies the exact causal bridge Ivan said was missing before the demo. | Twenty seconds leaves little room for extra explanation. |
+| Evidence quality | neutral | The footer explicitly labels Goldilocks outcomes as design targets and adds no product score. | Product outcome evidence remains absent. |
+
+- Verdict: **Proceed with conditions**.
+- Blocking conditions: retain the design-target footer; do not add invented product ratings; describe only working mechanisms; keep receiver control distinct from legal ownership and revisitability distinct from permanent storage.
+- Weakest judging angle: **evidence quality**.
+- Main trade-off: the denser ledger is more explicit than the previous branded list, but it earns that density by proving the reasoning instead of repeating marketing claims.
+- Next evidence: a matched sender-and-receiver comparison that tests whether the implemented mechanisms actually improve the intended outcomes.
+
+### Design-authenticity post-build review
+
+- Artifact inspected: all four page-10 build states at 1600 × 900.
+- Communication job: prove how the proposed product responds to the format gap before asking the live demo to carry the argument.
+- Specific source anchors: Gaegu; deep-blue ink; Cecelia's firefly; the earlier three-variable comparison; the maker's authored canvas; the direct browser handoff; the receiver's keep, revisit and remove controls.
+- Rejected defaults: no numeric product rating, generic feature-card grid, Venn, screenshot collage or unsupported check marks.
+- Signature move: each pale-blue row shows one complete borrowed-strength-to-mechanism-to-response chain; the final firefly strip maps only visible mechanisms to the three design targets.
+- Strongest remaining AI tell: the three-column ledger is a familiar information pattern, mitigated by project-specific product mechanics, hand-drawn typography, staged emphasis and the team firefly rather than generic dashboard styling.
+- Material human-directed change: Ethan rejected a score-only comparison and required the slide to demonstrate how each claimed quality is produced.
+- Authenticity verdict: **Pass for rehearsal; judged delivery remains Test first under the existing evidence gate**.
+
+## 2026-09-06 - Separate a 15-page evidence appendix from the 11-slide live pitch
+
+- Status: current presentation-support direction, selected directly by Ethan after comparison with the public 2025 winning presentation.
+- Decision: keep `deck/pitch-prototype/index.html` at exactly 11 live slides and create `deck/pitch-prototype/appendix.html` as a separately navigable 15-page evidence dossier. The appendix covers the brief and fallback rubric; submission metadata and consent; the transcript-derived team framing source; secondary psychology; primary method and raw-result requirements; rehearsal-data quarantine; map status; the matched-format test; process artifacts; prototype truth; trust and recovery; scope; AI/third-party disclosure; and live-demo backup. It has direct A1–A15 links, a complete index, keyboard/fullscreen/print support and one deterministic return to live slide 11. The live route contains no appendix link and cannot advance beyond slide 11.
+- Reason: last year's winner kept its main story light while placing research questions, methods, interview/survey/task findings, wireframes and references in a substantial appendix. Warm & Fuzzies needs the same evidence accessibility for Q&A, but its current lack of completed primary evidence must remain visible rather than being hidden behind presentation polish.
+- Reference delta: borrow the winner's evidence transparency, raw-artifact visibility and live-story/appendix separation. Do not borrow its purple/doodle identity, page compositions or unbounded density. Preserve the Warm & Fuzzies paper, deep-blue ink, Gaegu, Cecelia firefly and evidence-status language.
+- Evidence boundary: the 2024 public criteria remain the latest explicit fallback because the 2026 rubric is unverified. The machine transcript labels both quoted turns as Ethan, so the quotation is presented as team-framing provenance with speaker identity explicitly unverified—not as mentor testimony or research. Every paper is presented as support for an adjacent mechanism, not proof of the product. The 82%, 71%, 72%, 78%, 1–5 scores, opportunity-map positions and dot sizes are quarantined as rehearsal placeholders. Unknown team details, consent, exact 2026 disclosure wording and primary results remain visibly incomplete.
+- Consequence: judges can inspect the reasoning, sources, technical truth and next-test plan without consuming live-pitch time or confusing appendix material with the 11-slide count. The team must still replace placeholders, complete primary research, confirm metadata/consent/rules and physically rehearse the exact QR handoff before judged delivery.
+
+### Mandatory judge review
+
+| Judging lens | Effect | Evidence | Risk or unknown |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | A1 connects the working unwritten-rule brief to the latest explicit public rubric; A3 records how the occasion framing emerged. | Exact 2026 wording and criteria remain unverified. |
+| Problem identification | strengthens conditionally | A4–A9 separate secondary mechanisms, the unfinished primary instrument, rehearsal placeholders, the hypothesis map and the decisive matched-receiver test. | There is still no completed primary evidence for the gap, cause, prevalence or audience. |
+| Solution approach | strengthens | A10–A11 trace research pressure to visible product decisions and distinguish working behaviour from outcomes not claimed. | A functioning authored-object flow does not prove it reduces awkwardness or increases appreciation. |
+| Design innovation | strengthens | The appendix explains the specific combination of mixed-media authorship, direct-link access and receiver control rather than relying on a novelty claim. | Judges may still read it as a decorated digital letter until matched outcomes distinguish it from controls. |
+| Visual communication | strengthens | Every page has one dominant question, consistent status labels, readable source/boundary footers and a native 1600 × 900 paper-and-ink system. | Dense evidence pages must still be projector-checked and used selectively in Q&A. |
+| Presentation skills | strengthens | The live deck remains sparse and hard-stops at the demo while judges can jump directly to any evidence question. | The team must know which A-page answers each likely question; browsing all 15 pages live would weaken the pitch. |
+| Evidence quality | strengthens honesty, not validity | A5–A6 make the missing study and quarantined figures impossible to mistake; A7 shows claim/counterclaim boundaries; A9 specifies decision rules. | The central product case remains blocked by missing primary receiver evidence. |
+
+- Verdict: **Proceed with conditions as a Q&A and submission-support artifact; the judged evidence case remains Test first**.
+- Blocking conditions: do not add the appendix to the main slide count; preserve all status and boundary labels; replace every rehearsal figure only with fully documented results; complete team/consent/disclosure blanks; keep the transcript quotation out of the primary-evidence category and do not infer its speaker; run both HTTP and direct-file navigation/asset tests; render every page at 1600 × 900; verify the 15-page 16:9 print export and return route; physically test the live QR on the event setup.
+- Weakest judging angle: **evidence quality**, because the appendix can expose a research gap but cannot fill it.
+- Main trade-off: the appendix increases detail and Q&A readiness while creating more material the team must keep current and avoid overusing in the six-minute story.
+- Next evidence: one content-matched sender-and-receiver comparison across ordinary text, voice note and Warm & Fuzzies, with exact wording, sample, exceptions, limitations and stop/pivot rules recorded.
+
+### Design-authenticity post-build review
+
+- Artifact inspected: 15 appendix pages at 1600 × 900, the A1–A15 index, A7 deep link, live-slide-11 return and contact sheet.
+- Communication job: let a judge answer “where did that come from?”, “what actually works?”, “what remains unknown?” and “what would change your mind?” in seconds.
+- Source anchors: the paper-and-deep-blue live deck; Gaegu; Cecelia's firefly; real maker/arrival/receiver captures; the team's Figma research exports; the public winner's raw task-findings precedent; DOI-level psychology sources.
+- Rejected defaults: no appended research dump, card-dashboard shell, fake survey results, synthetic personas, decorative charts, copied winner palette or silent “validated” language.
+- Signature move: each page carries a high-contrast evidence status in the header and a source/boundary split in the footer, turning epistemic status into the visual hierarchy.
+- Strongest remaining AI tell: familiar research-ledger and risk-table structures. They are mitigated by project-specific source language, explicit unknowns, human-directed cuts, Cecelia assets and real implementation boundaries.
+- Material human-directed change: Ethan asked for the winner-informed appendix, maximum detail, Figma screenshots, accumulated research and criteria coverage while keeping the main presentation HTML and functional.
+- Authenticity verdict: **Pass for the standalone appendix; final submission readiness remains conditional on the open evidence and metadata gates**.

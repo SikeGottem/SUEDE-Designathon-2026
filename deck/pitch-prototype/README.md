@@ -13,7 +13,7 @@ Ethan approved the next-level narrative and hierarchy direction below. The live 
 - **Secondary research becomes a bounded design question.** Page 4 presents text, voice/video and letter/gift as three psychological mechanisms to test. It reveals one active mechanism at a time; the Goldilocks position is a design target/question, never a discovered research result.
 - **Market gap, then one illustrative use case.** Page 6 uses the Goldilocks rings to show the working need-state: text can feel too awkward or casual; a letter or gift can feel like too much. Its pale-blue final reveal is simply: `Users are stuck in limbo.` Page 7 then makes the situation concrete with Maya—an illustrative scenario, not participant research or a validated segment—and explicitly labels its 72% and 78% rehearsal placeholders.
 - **Digital has an expressive advantage.** Page 9 retains the current solution sentence, then reveals `Because digital can hold more than words.` with five clean hand-drawn media labels: writing, photo, voice, video and chosen song. This is one expressive spectrum, not a claim that digital is inherently more meaningful.
-- **The format earns its place before the demo.** Page 10 calls Warm & Fuzzies a digital gift, then builds four qualities: a handwritten letter's personality; mixed media's dynamism; a text's ease through one direct link and no receiver account; and the sense of ownership from a gift, with a receiver who can keep, revisit or remove it. The brace and firefly resolve the list on the final build. This is a design proposition, not measured superiority.
+- **The format earns its place before the demo.** Page 10 now proves the response mechanism by mechanism. Its causal ledger maps each borrowed strength to a working-prototype behaviour and then to the part of the gap it is designed to answer. The fourth build resolves the visible mechanisms into the Goldilocks design targets; it adds no unsupported product score and claims no measured superiority.
 - **The demo remains causal.** Page 11 explains why each step exists while showing `name → make → seal → send → open → keep/remove`, then closes verbally: `The message can be complete when it arrives.`
 - **Every build has one visual boss.** The current spoken point receives full contrast; supporting material stays subordinate; prior material fades. Deep blue is the active accent, and presenter chrome hides in presentation mode.
 
@@ -29,10 +29,41 @@ python3 -m http.server 4176 --bind 127.0.0.1
 
 Visit `http://127.0.0.1:4176/deck/pitch-prototype/`. Arrow keys, Space, Enter, click and the on-screen controls advance; `F` toggles fullscreen. Use `?slide=N&step=M` to open an exact build state. Print exposes the final state of every slide.
 
+## Standalone evidence appendix
+
+`appendix.html` is a separate 15-page judge-facing dossier. It is intentionally absent from `index.html`, so the judged route remains exactly 11 slides and hard-stops at the live demo. Open it directly at:
+
+```text
+http://127.0.0.1:4176/deck/pitch-prototype/appendix.html?slide=A1
+```
+
+Use Left / Right, Page Up / Page Down, Home / End, or the on-screen controls to move. Press `I` for a complete appendix index and `F` for fullscreen. Every page has a deterministic deep link such as `?slide=A7`; the one return control goes back to live slide 11. Print exposes all 15 pages as separate 16:9 sheets.
+
+The appendix follows the strongest transferable pattern from the 2025 winner: keep the spoken story sparse, then retain raw research structure, methods, sources, process artifacts, prototype truth and limitations in an inspectable Q&A layer. It does not copy the winner's visual style. Its pages are:
+
+1. current brief and latest explicit public judging criteria
+2. team metadata and consent blanks that must be closed before submission
+3. full machine-transcribed team framing, with speaker identity explicitly unverified, and the team's distilled reframe
+4. secondary psychology and alternative-product scan
+5. primary method, sample and limitation requirements
+6. What / Why / How result template, exceptions and quarantined rehearsal figures
+7. paper-by-paper psychology ledger with counterevidence and claim boundaries
+8. opportunity-map method and explicit hypothesis status
+9. matched-message receiver test with proposed continue / revise / stop rules to finalise and time-stamp before recruitment
+10. process artifacts connected to the decisions they changed
+11. working / limited / not-claimed prototype truth table with real screenshots
+12. trust, privacy, retention, access and recovery obligations
+13. built / evidence-dependent / deliberately excluded scope
+14. authorship, AI assistance, third-party references and unresolved disclosure wording
+15. exact live path, stable receiver fallback, recovery ladder and four short Q&A answers
+
+Evidence-status labels are part of the content contract: `secondary evidence`, `working hypothesis`, `primary evidence pending`, `working prototype` and `open risks` cannot be softened for visual polish. The appendix deliberately exposes that no completed primary study currently validates the market gap, prevalence, rehearsal percentages or emotional outcome.
+
 Run the standalone regression check with:
 
 ```sh
 node --test deck/pitch-prototype/tests/file-open.test.mjs
+node --test deck/pitch-prototype/tests/appendix.test.mjs
 ```
 
 ## Live sequence
@@ -46,12 +77,12 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 7. Maya's separate illustrative use case, with explicitly temporary 72% and 78% rehearsal placeholders
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal and the digital expressive spectrum
-10. `Warm & Fuzzies is a digital gift` followed by four dot-list qualities: letter personality, mixed-media dynamism, text ease and receiver-controlled gift ownership; a brace and firefly resolve the final build
+10. `How Warm & Fuzzies answers the gap.` followed by four source → working mechanism → response rows; the final firefly strip maps those mechanisms to impact, low friction and repeatability as design targets
 11. “Follow along.” with an encoding-verified `/demo/receive` QR, followed immediately by one continuous live sender-to-receiver demonstration
 
-There is no separate research-plan slide, secondary-research slide, market-size slide, demographic profile, thank-you slide or repeated conclusion. Process is woven into the causal story: the starting hypothesis visibly changes into the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the Goldilocks rings identify a working market gap; the separate Maya scenario makes that gap tangible; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; page 10 shows the product qualities the team deliberately combines; the public QR and live product then prove the proposed flow.
+There is no separate research-plan slide, secondary-research slide, market-size slide, demographic profile, thank-you slide or repeated conclusion. Process is woven into the causal story: the starting hypothesis visibly changes into the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the Goldilocks rings identify a working market gap; the separate Maya scenario makes that gap tangible; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; page 10 shows exactly how implemented product mechanisms respond to the earlier format gap; the public QR and live product then prove the proposed flow.
 
-The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. Maya and her close friend are an illustrative use case within the working contexts of university students, long-distance family and close friends; they are not exclusive demographic targeting. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
+The full 30:02 machine-transcribed framing remains in `speaker-notes.md` as source context only. The source transcript labels both quoted turns as Ethan, so the appendix does not present the quote as Chloe's or as verified mentor testimony. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. Maya and her close friend are an illustrative use case within the working contexts of university students, long-distance family and close friends; they are not exclusive demographic targeting. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
 ## Evidence contract
 
@@ -79,8 +110,8 @@ The QR opens the fixed, replayable public receiver fixture. It is not a personal
 
 - **Communication job:** make the proposed occasion script clear without presenting it as fact, show how the team will prove the gap, synthesize the design requirement, and then let the working product demonstrate one complete act of appreciation.
 - **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the channel map's published evidence; honest hypothesis labels; the public demo and its encoding-verified QR.
-- **Rejected defaults:** no mentor-quote theatre, demographic profile card, boxed research panel, fake QR, process diary, feature cards, screenshot carousel or second ending.
-- **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the market-gap slide identifies the unmet need, then Maya makes it tangible; page 10 resolves the four-part digital-gift list with a brace and firefly.
+- **Rejected defaults:** no mentor-quote theatre, demographic profile card, boxed research panel, fake QR, process diary, feature cards, screenshot carousel, unsupported Warm & Fuzzies score or second ending.
+- **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the market-gap slide identifies the unmet need, then Maya makes it tangible; page 10 closes the loop with four hand-drawn causal rows and one firefly outcome strip.
 - **Restraint:** no opener counterpoint, product-feature recap, separate thank-you slide or second conclusion after the live demo.
 - **Human decision:** the latest captures make the graph a three-variable practice instrument and preserve If / And / Then while adding one Therefore design requirement beneath it. Ethan's newest direct correction supersedes the earlier green choice and sets deep blue as the live-deck accent.
 

@@ -698,8 +698,8 @@
   transform: translateY(-30px);
 }
 
-/* Slide 09 — four literal ingredients resolve into one digital gift. */
-.gift-kicker {
+/* Slide 10 — a causal ledger proves how each borrowed quality is implemented. */
+.response-kicker {
   position: absolute;
   top: 54px;
   left: 95px;
@@ -710,155 +710,234 @@
   text-transform: uppercase;
 }
 
-.gift-title {
+.response-title {
   position: absolute;
   top: 86px;
   left: 95px;
   right: 95px;
-  max-width: 1320px;
+  max-width: 1390px;
   color: var(--ink);
-  font-size: 90px;
+  font-size: 72px;
   font-weight: 400;
   letter-spacing: -.032em;
-  line-height: .8;
+  line-height: .88;
   text-wrap: balance;
 }
 
-.gift-title em {
-  color: var(--accent-ink);
-  font-style: normal;
+.response-ledger {
+  position: absolute;
+  inset: 200px 92px 66px 95px;
+  display: grid;
+  grid-template-rows: 38px repeat(4, minmax(0, 1fr)) 108px;
 }
 
-.gift-stem {
-  position: absolute;
-  top: 190px;
-  left: 105px;
-  color: rgb(8 31 77 / .62);
-  font-size: 27px;
+.response-head,
+.response-row {
+  display: grid;
+  grid-template-columns: minmax(0, 290px) minmax(0, 650px) minmax(0, 1fr);
+  column-gap: 34px;
+}
+
+.response-head {
+  align-items: start;
+  padding: 0 18px;
+  color: var(--accent-ink);
+  font-size: 17px;
+  letter-spacing: .07em;
   line-height: 1;
+  text-transform: uppercase;
 }
 
-.gift-composition {
-  position: absolute;
-  inset: 232px 82px 58px 95px;
-  display: grid;
-  grid-template-columns: minmax(0, 925px) 90px minmax(0, 1fr);
-  gap: 22px;
-  align-items: center;
-}
-
-.gift-points {
-  align-self: stretch;
-  display: grid;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
-  gap: 5px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.gift-point {
+.response-row {
   position: relative;
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
-  align-content: center;
-  column-gap: 16px;
-  padding: 5px 0;
-  transition: opacity 230ms var(--enter), translate 340ms var(--enter);
+  align-items: center;
+  padding: 9px 18px 7px;
+  border-top: 2px solid rgb(8 31 77 / .28);
+  transition: opacity 230ms var(--enter), translate 340ms var(--enter), background-color 240ms var(--enter);
 }
 
-.gift-point::before {
-  content: "";
-  align-self: center;
-  grid-row: 1 / span 2;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px var(--paper), 0 0 0 6px rgb(37 72 120 / .2);
+.product-outcomes-slide[data-current-step="1"] .response-row[data-step="1"],
+.product-outcomes-slide[data-current-step="2"] .response-row[data-step="2"],
+.product-outcomes-slide[data-current-step="3"] .response-row[data-step="3"],
+.product-outcomes-slide[data-current-step="4"] .response-row[data-step="4"] {
+  background: linear-gradient(90deg, rgb(168 197 238 / .2), rgb(168 197 238 / .03) 72%, transparent);
 }
 
-.gift-point strong {
-  color: var(--ink);
-  font-size: 45px;
-  font-weight: 400;
-  letter-spacing: -.012em;
-  line-height: .83;
-  text-wrap: balance;
+.response-row:last-of-type {
+  border-bottom: 2px solid rgb(8 31 77 / .28);
 }
 
-.gift-point small {
-  grid-column: 2;
-  margin-top: 9px;
-  color: var(--accent-ink);
-  font-size: 24px;
-  line-height: .9;
+.response-source,
+.response-mechanism,
+.response-result {
+  min-width: 0;
 }
 
-.gift-brace {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 470px;
-  color: rgb(8 31 77 / .27);
-  font-family: Georgia, serif;
-  font-size: 420px;
-  font-weight: 400;
-  line-height: .72;
-  transform: scaleY(1.32) rotate(-1deg);
-  transform-origin: center;
-}
-
-.gift-core {
-  display: grid;
-  justify-items: center;
-  margin: 0;
-  color: var(--ink);
-  text-align: center;
-  transform-origin: center;
-  transition: opacity 260ms var(--enter), translate 420ms var(--enter), transform 520ms var(--enter);
-}
-
-.gift-core img {
-  width: 292px;
-  height: 292px;
-  object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(2200%) hue-rotate(184deg) brightness(77%) contrast(107%);
-}
-
-.gift-core figcaption {
-  margin-top: 9px;
-}
-
-.gift-core figcaption strong,
-.gift-core figcaption span {
+.response-source span,
+.response-source strong,
+.response-mechanism strong,
+.response-mechanism small,
+.response-result strong,
+.response-result small {
   display: block;
   font-weight: 400;
 }
 
-.gift-core figcaption strong {
-  font-size: 48px;
-  line-height: .82;
-}
-
-.gift-core figcaption span {
-  margin-top: 10px;
+.response-source span {
+  margin-bottom: 4px;
   color: var(--accent-ink);
-  font-size: 30px;
-  line-height: .9;
+  font-size: 16px;
+  letter-spacing: .06em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.product-outcomes-slide[data-current-step="2"] .gift-point:nth-child(1),
-.product-outcomes-slide[data-current-step="3"] .gift-point:nth-child(-n + 2) {
-  opacity: .54;
+.response-source strong {
+  color: var(--ink);
+  font-size: 34px;
+  letter-spacing: -.012em;
+  line-height: .86;
+  text-wrap: balance;
 }
 
-.product-outcomes-slide[data-current-step="4"] .gift-point.show {
-  opacity: 1;
+.response-mechanism strong {
+  color: var(--ink);
+  font-size: 35px;
+  letter-spacing: -.012em;
+  line-height: .84;
+  text-wrap: balance;
 }
 
-.product-outcomes-slide[data-current-step="4"] .gift-core {
-  transform: scale(1.025);
+.response-mechanism small,
+.response-result small {
+  margin-top: 7px;
+  color: var(--accent-ink);
+  font-size: 19px;
+  line-height: .92;
+}
+
+.response-result {
+  position: relative;
+  padding-left: 48px;
+}
+
+.response-result::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 29px;
+  border-top: 2px solid var(--accent-ink);
+  transform: translateY(-50%);
+}
+
+.response-result::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 22px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--accent-ink);
+  border-right: 2px solid var(--accent-ink);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.response-result strong {
+  color: var(--ink);
+  font-size: 31px;
+  line-height: .86;
+  text-wrap: balance;
+}
+
+.response-summary {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 36px;
+  align-items: center;
+  margin-top: 10px;
+  padding: 12px 20px 10px;
+  border-top: 3px solid var(--ink);
+  background: rgb(168 197 238 / .18);
+  transition: opacity 260ms var(--enter), translate 420ms var(--enter), transform 520ms var(--enter);
+}
+
+.response-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.response-brand img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(2200%) hue-rotate(184deg) brightness(77%) contrast(107%);
+}
+
+.response-brand span,
+.response-brand strong,
+.response-brand small {
+  display: block;
+  font-weight: 400;
+}
+
+.response-brand strong {
+  color: var(--ink);
+  font-size: 31px;
+  line-height: .83;
+}
+
+.response-brand small {
+  margin-top: 5px;
+  color: var(--accent-ink);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.response-targets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.response-targets > span,
+.response-targets strong,
+.response-targets small {
+  display: block;
+  font-weight: 400;
+}
+
+.response-targets > span {
+  padding-left: 16px;
+  border-left: 2px solid rgb(8 31 77 / .32);
+}
+
+.response-targets strong {
+  color: var(--ink);
+  font-size: 25px;
+  line-height: .86;
+}
+
+.response-targets small {
+  margin-top: 6px;
+  color: var(--accent-ink);
+  font-size: 17px;
+  line-height: .92;
+}
+
+.product-outcomes-slide[data-current-step="2"] .response-row[data-step="1"],
+.product-outcomes-slide[data-current-step="3"] .response-row:is([data-step="1"],[data-step="2"]) {
+  opacity: .38;
+}
+
+.product-outcomes-slide[data-current-step="4"] .response-row:not([data-step="4"]) {
+  opacity: .72;
+}
+
+.product-outcomes-slide[data-current-step="4"] .response-summary {
+  transform: translateY(-2px);
 }
 
 /* Chrome is useful while rehearsing, but should vanish in presentation fullscreen. */
@@ -982,19 +1061,14 @@
     opacity: .22 !important;
   }
 
-  .gift-point,
-  .gift-brace,
-  .gift-core {
+  .response-row,
+  .response-summary {
     opacity: 1 !important;
     visibility: visible !important;
     translate: none !important;
   }
 
-  .gift-point {
-    opacity: 1 !important;
-  }
-
-  .gift-core {
-    transform: scale(1.025) !important;
+  .response-summary {
+    transform: translateY(-2px) !important;
   }
 }
