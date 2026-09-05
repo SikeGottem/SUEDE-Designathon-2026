@@ -26,8 +26,8 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 5. Initial-to-useful research direction
 6. Primary research findings
 7. Grandmother–granddaughter relationship lens
-8. Prototype evolution
-9. Warm & Fuzzies solution reveal
+8. Prototype evolution driven by the relationship requirement
+9. Warm & Fuzzies as a proposed normalising ritual
 10. Sender flow
 11. Receiver flow
 12. Audience QR/link handoff card
@@ -39,9 +39,9 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 - **Source anchors:** Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the grandmother–granddaughter relationship lens; the make → seal → travel → receive object journey.
 - **Reference delta:** the earlier Jobs-style deck still contributes diagnostic pacing, but the revised deck replaces the ring-led structure with the team's requested research, relationship and process arc.
 - **Rejected defaults:** no persona card, stock portrait, decorative affinity board, fake statistics, fake QR, feature-card grid or process diary.
-- **Signature move:** the same appreciative thought moves from an awkward sentence, through a relationship and research gap, into one finite object that the room can optionally receive.
+- **Signature move:** each conclusion visibly causes the next decision: method map → research reframe → format diagnosis → relationship requirement → authored object → optional room handoff.
 - **Restraint:** accents appear only when they identify the opportunity, relationship thread or product handoff; most slides remain ink on white paper.
-- **Human decision:** Ethan directly requested the logo-first sequence, retained intro, problem/HMW, x/y opportunity map, research and interview findings, grandmother–granddaughter lens, process, product detail, audience card and conclusion.
+- **Human decision:** Ethan directly requested the logo-first sequence, retained intro, problem/HMW, x/y opportunity map, research and interview findings, grandmother–granddaughter lens, process, product detail, audience card and conclusion. His latest review also made cause-and-effect process narration and normalising expression—not manufacturing care—the controlling story choices.
 
 ## Structural divergence considered
 
@@ -51,9 +51,11 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 | B. Relationship-first case | Grandmother and granddaughter open the story | More emotional and human | The persona is not yet sourced strongly enough to lead | Deferred until provenance and detail are confirmed |
 | C. Object journey | The made object travels from sender to receiver | Product is immediately retellable | Judges may see a digital card before accepting the problem | Used only in the product half |
 
+For the latest pass, three process treatments were considered: one isolated process slide, cause-and-effect decisions distributed across slides 4–9, and a chronological process diary. The distributed treatment was selected because it answers “how did you reach that conclusion?” at the moment each conclusion appears; the single process slide remains only as proof of the most important product change.
+
 ## Judge review
 
-**Decision:** revise the exploratory pitch into the 13-slide research-led sequence requested by Ethan while preserving evidence boundaries.
+**Decision:** revise the exploratory pitch into a 13-slide causal sequence where each research or design conclusion explains the next decision, while preserving evidence boundaries.
 
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
@@ -62,7 +64,7 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 | Solution approach | strengthens | Make, seal, travel, receive and keep/close/remove connect directly to authorship and receiver agency. | The medium has not beaten chat or a physical note in a completed test. |
 | Design innovation | strengthens | One authored object and receiver-owned ending are clearer than a generic gratitude app. | Carrier and envelope theatre could still read as decoration without user evidence. |
 | Visual communication | strengthens | One dominant composition per slide, real states and restrained brand accents replace the earlier abstract ring repetition. | Some source labels are intentionally small and need projector review. |
-| Presentation skills | strengthens | The pitch now follows problem → research → human case → judgment → mechanism → live handoff → close. | A full team rehearsal may expose overrun or weak handoffs. |
+| Presentation skills | strengthens | The pitch now follows problem → map → research reframe → diagnosis → human requirement → prototype change → mechanism → live handoff → close. | A full team rehearsal may expose overrun or weak handoffs. |
 | Evidence quality | weak | External research and real prototype states are sourced; missing evidence is labelled. | Primary findings, persona provenance and audience URL are not complete. |
 
 ### Challenge review
@@ -91,10 +93,10 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 
 ## Design-authenticity post-build
 
-- **Artifact inspected:** all 13 slides at 1600 × 900, including the updated relationship and current cabinet states.
+- **Artifact inspected:** all 13 slides at 1600 × 900, including the revised causal headlines, relationship requirement, prototype evolution and normalisation framing.
 - **Strongest remaining AI tell:** the three interview findings can read like generic synthesis until the team's actual language and exceptions replace them.
-- **Content-native signature:** one appreciative thought becomes a made, sealed, carried and receiver-owned object.
-- **Material human change:** Ethan replaced the earlier ring-led pitch with the logo-first research, persona, process and audience-handoff sequence; Cecelia's supplied identity now governs the deck.
+- **Content-native signature:** one appreciative thought moves through a visible chain of human decisions before becoming a made, sealed, carried and receiver-owned object.
+- **Material human change:** Ethan asked for the process to explain how the team reached each conclusion, then clarified that the product is meant to normalise expression rather than create appreciation. Those points now govern slides 4–9 and the close; Cecelia's supplied identity still governs the deck.
 - **Logo-swap test:** pass for the product and object-journey slides; the research slides depend on the final interview language to pass fully.
 - **Team-voice test:** pass for the problem, process, product and close; primary-findings copy still needs team wording.
 - **Subtraction pass:** removed the repeated top metadata, decorative ring system, fake optimum implication, feature-grid treatment and unverified QR.

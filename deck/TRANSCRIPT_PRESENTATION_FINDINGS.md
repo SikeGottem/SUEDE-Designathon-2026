@@ -4,11 +4,23 @@
 ## Coverage
 
 - All 25 transcript captures available in `WIKI/TRANSCRIPTS/` at the 4 September 2026 review cut-off were read in full, plus the folder README.
+- This pass also applied the two newest presentation-specific captures: [9ddc…](../WIKI/TRANSCRIPTS/2026-09-04-9ddc0551-abce-5be0-8dcd-faf67accd863.md) for the page-by-page deck review and [e0acf…](../WIKI/TRANSCRIPTS/2026-09-04-e0acf8d3-60e2-5585-bc2d-25087f016ae9.md) for the later problem and solution correction.
 - The review covered direct mentions of decks and pitches as well as indirect decisions about the opening, evidence, humour, visual comparisons, demo choreography, audience participation, Q&A and what the team rejected.
 - Several Discord captures compress long discussions into a single timestamped line. Local recordings 14–20 also contain unattributed machine transcription. File and timestamp references are reliable retrieval pointers; uncertain speaker identity is not inferred.
 - No substantive presentation direction appeared in the Chronicle test captures or files `29cb…`, `bd6…`, `ce112…`, `1743…`, `1fe…`, `330…`, `9a…` and `9fb…`.
 
 ## What the team has said about the pitch
+
+- **Show how each conclusion caused the next decision.**
+  - Process should be woven through the argument rather than confined to a retrospective slide.
+  - The causal chain is: compare existing expression methods → narrow the research question → diagnose a format problem → derive a relationship requirement → change the prototype from message entry to authored object.
+  - Source: Ethan's direct 5 September follow-up and the page-by-page review in [9ddc…](../WIKI/TRANSCRIPTS/2026-09-04-9ddc0551-abce-5be0-8dcd-faf67accd863.md).
+
+- **The product is trying to normalise expression, not create care.**
+  - Ethan explicitly separated the product's role from “showing appreciation” as a one-off utility: the intended intervention is to make ordinary-day expression feel more normal.
+  - He restated the problem as “it's not that people don't appreciate their friends, it's that we don't know how to show it” and rejected a mental-health framing.
+  - The absence of a familiar dedicated ritual or product was raised as a clue to the unwritten rule, but it is not sufficient evidence of prevalence or market absence.
+  - Source: [e0acf… 00:01–06:50](../WIKI/TRANSCRIPTS/2026-09-04-e0acf8d3-60e2-5585-bc2d-25087f016ae9.md).
 
 - **Sell the product, not the struggle.**
   - Ethan initially expected the presentation to cover process problems and difficulties.
