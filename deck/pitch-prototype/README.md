@@ -1,86 +1,118 @@
-<!-- Orientation: exploratory HTML pitch prototype for testing story, motion and prototype framing. -->
-# Exploratory pitch prototype
+<!-- Orientation: working notes, evidence boundaries and review gates for the exploratory Warm & Fuzzies HTML pitch. -->
+# Exploratory Warm & Fuzzies pitch
 
-This folder is a disposable, self-contained HTML presentation stimulus. It is **not** the deck source of truth, a final pitch, a validated product claim, or a replacement for `deck/deck-spec.json` / Figma Slides. It exists to test a Jobs-style problem diagnosis and a receiver-first product demonstration before a human selects a final direction.
+This is a disposable 13-slide HTML presentation draft. It is not the final Figma Slides source, a validated product claim or completed research record. It exists so the team can review the revised story before finalising evidence, persona details and the audience handoff.
 
-Open `index.html` directly, or serve the repository locally when you want the optional text-measurement helper:
+Open `index.html` directly, or serve the repository locally:
 
 ```sh
 python3 -m http.server 4176 --bind 127.0.0.1
 ```
 
-Visit `http://127.0.0.1:4176/deck/pitch-prototype/`. Arrow keys, space, Enter, click, and the on-screen controls advance; `F` toggles fullscreen. Use `?slide=N&step=M` to open an exact build state, for example `?slide=10&step=2`. Print exposes the final state of every slide.
+Visit `http://127.0.0.1:4176/deck/pitch-prototype/`. Arrow keys, Space, Enter, click and the on-screen controls advance; `F` toggles fullscreen. Use `?slide=N&step=M` to open an exact build state. Print exposes the final state of every slide.
 
-Run the standalone-file regression check with `node --test tests/file-open.test.mjs`.
+Run the standalone regression check with:
 
-Local review exports (generated and intentionally ignored by the repository):
+```sh
+node --test deck/pitch-prototype/tests/file-open.test.mjs
+```
 
-- `output/pitch-prototype.pdf` — static 12-page, 16:9 fallback.
-- `output/contact-sheet.png` — final-state overview for quick critique.
+## Revised story
+
+1. Warm & Fuzzies logo
+2. Existing communication contradiction
+3. Problem statement and How Might We
+4. Cost versus meaning/effort opportunity map
+5. Initial-to-useful research direction
+6. Primary research findings
+7. Grandmother–granddaughter relationship lens
+8. Prototype evolution
+9. Warm & Fuzzies solution reveal
+10. Sender flow
+11. Receiver flow
+12. Audience QR/link handoff card
+13. Conclusion
 
 ## Visual contract
 
-- **Communication job:** make the invisible occasion rule legible before showing the prototype. The audience must see the missing social space, then understand that the proposed object is only a test of it.
-- **Source anchors:** the actual white-to-navy receiver threshold; Gaegu handwritten product typography; current light hand-drawn linework; the minimal home with its bottom-centred invitation; the sender's one-paper-sheet workspace; and the receiver-owned `keep / close / remove` ending.
-- **Reference delta:** Steve Jobs supplies the diagnostic structure, not an Apple visual imitation. This deck uses a conceptual social map and a moving appreciation sentence, not product-keynote black slides, product glamour or fake metrics.
-- **Exact visual system:** #FFFFFF paper and #0B2858 navy only. Gaegu is the presentation voice; system sans is limited to source/status text. Geometry is square, linework is 1.5 to 2.2px navy ink, space is intentionally generous. No gradients, rounded cards, shadows, icon libraries, stock imagery, or decorative UI.
-- **Signature move:** three concentric social-ceremony rings make the Goldilocks gap literal without turning it into measured data. The same sentence then crosses social contexts: `birthday` is struck through and becomes `ordinary Tuesday`; at the receiver threshold the whole slide crosses white to navy. Motion explains interpretation and ownership, not decoration.
-- **Rejected defaults:** (1) an inspirational story/photo opening, because it asks for belief before diagnosis; (2) numeric axes or a fake optimum marker, because no measurement supports one; (3) three equal comparison cards, because the audience needs an evolving social script, not a feature table; (4) the usual product-app reveal before the problem requirement exists; and (5) decorative loops or identical entrances on every slide.
-- **Restraint:** no fake QR, no fabricated audience quote, no claim that paper is inferior, and no result graphic for the planned test.
-- **Human decision:** Ethan chose the Jobs-style diagnosis, the current product prototype as the visual reference, and then materially redirected the original x/y map into three Goldilocks rings while requesting clearer comparison graphics and more purposeful motion. The middle ring remains explicitly exploratory.
+- **Communication job:** make the expression barrier legible, show how research narrowed it, then demonstrate one authored object moving from sender to receiver.
+- **Source anchors:** Cecelia's firefly and palette; Gaegu; the current white/deep-ink product; real prototype captures; the grandmother–granddaughter relationship lens; the make → seal → travel → receive object journey.
+- **Reference delta:** the earlier Jobs-style deck still contributes diagnostic pacing, but the revised deck replaces the ring-led structure with the team's requested research, relationship and process arc.
+- **Rejected defaults:** no persona card, stock portrait, decorative affinity board, fake statistics, fake QR, feature-card grid or process diary.
+- **Signature move:** the same appreciative thought moves from an awkward sentence, through a relationship and research gap, into one finite object that the room can optionally receive.
+- **Restraint:** accents appear only when they identify the opportunity, relationship thread or product handoff; most slides remain ink on white paper.
+- **Human decision:** Ethan directly requested the logo-first sequence, retained intro, problem/HMW, x/y opportunity map, research and interview findings, grandmother–granddaughter lens, process, product detail, audience card and conclusion.
 
 ## Structural divergence considered
 
-| Direction | Viewer notices first | What it clarifies | Main risk | Source anchor |
+| Direction | First impression | Strength | Main risk | Result |
 | --- | --- | --- | --- | --- |
-| A. Three-orbit ceremony spectrum **chosen after render review** | The missing middle ring between casual and occasion-coded scripts | Why a different receiving contract might be worth testing without implying measured coordinates | Viewers may mistake the middle for a proven optimum unless every marker stays provisional | Occasion permission, Ethan's Goldilocks-ring direction and the same-words test |
-| B. Sentence-as-stage | One unchanged sentence changing meaning | The enforcement mechanism | May become anecdotal before the opportunity is clear | Birthday versus Tuesday distinction |
-| C. Object-journey | The sender-to-receiver handoff | The interaction and threshold | Reveals product before the judges accept the problem | Current working prototype |
+| A. Research-led journey | Problem, evidence, relationship, evolution, product | Closest to Ethan's requested story and the judging chain | Can become a process diary | Chosen; process limited to one design-changing slide |
+| B. Relationship-first case | Grandmother and granddaughter open the story | More emotional and human | The persona is not yet sourced strongly enough to lead | Deferred until provenance and detail are confirmed |
+| C. Object journey | The made object travels from sender to receiver | Product is immediately retellable | Judges may see a digital card before accepting the problem | Used only in the product half |
 
-## Judge preflight, exploratory build only
+## Judge review
 
-**Verdict: Proceed with conditions.** This is permitted only as a labelled exploratory stimulus under the repository's direct-request exception. Do not promote it to the final deck without a human choice, an artifact review, and the listed evidence.
+**Decision:** revise the exploratory pitch into the 13-slide research-led sequence requested by Ethan while preserving evidence boundaries.
 
-| Lens | Effect | Evidence and condition |
+| Lens | Effect | Evidence | Risk / unanswered question |
+| --- | --- | --- | --- |
+| Brief fit | strengthens | The problem and solution both name the unwritten ordinary-day appreciation rule. | Exact 2026 wording remains unconfirmed. |
+| Problem identification | strengthens | The deck now separates existing care from the expression barrier and shows a relationship context. | The interview synthesis and persona still need exact sources. |
+| Solution approach | strengthens | Make, seal, travel, receive and keep/close/remove connect directly to authorship and receiver agency. | The medium has not beaten chat or a physical note in a completed test. |
+| Design innovation | strengthens | One authored object and receiver-owned ending are clearer than a generic gratitude app. | Carrier and envelope theatre could still read as decoration without user evidence. |
+| Visual communication | strengthens | One dominant composition per slide, real states and restrained brand accents replace the earlier abstract ring repetition. | Some source labels are intentionally small and need projector review. |
+| Presentation skills | strengthens | The pitch now follows problem → research → human case → judgment → mechanism → live handoff → close. | A full team rehearsal may expose overrun or weak handoffs. |
+| Evidence quality | weak | External research and real prototype states are sourced; missing evidence is labelled. | Primary findings, persona provenance and audience URL are not complete. |
+
+### Challenge review
+
+| Lens | Strongest challenge | Current answer / boundary |
 | --- | --- | --- |
-| Brief fit | strengthens | Reveals and tests an unwritten rule. Keep the official 2026 brief status unconfirmed. |
-| Problem identification | strengthens | Names an ordinary-day moment, predicted interpretation, and causal rule. The prevalence of this rule remains untested. |
-| Solution approach | neutral | Receiver-owned closure follows the hypothesis but has not been shown to reduce pressure. |
-| Design innovation | neutral | The social contract is more distinct than a scrapbook UI; digital letters remain an existing control. |
-| Visual communication | strengthens | One moving sentence, one map, and the white-to-navy threshold establish a coherent explanatory language. |
-| Presentation skills | strengthens | The story moves problem → cause → requirement → prototype → test, within six minutes. |
-| Evidence quality | mixed | Kumar & Epley supports a narrow prediction gap, not this audience, norm, or medium. Every visual claim preserves that boundary. |
+| Assumption and inversion | Care may already be expressed adequately through action. | The deck starts from existing appreciation and does not call indirect care deficient. |
+| Behaviour and context | “Friends” and “ordinary day” remain broad. | The relationship slide provides one case, but it stays illustrative until sourced. |
+| Medium necessity | Why not text, voice or a physical letter? | The x/y slide keeps them visible as alternatives; the prototype proposes lower logistics plus ownership, not superiority. |
+| Alternatives | A non-digital ritual may work better. | The opportunity map and Q&A retain physical gestures as controls. |
+| Human specificity | The persona could become fiction. | No names, ages or quotes are invented; provenance is visibly blocked. |
+| Inclusion and accessibility | QR, handwriting and motion can exclude. | The deck has reduced-motion support, semantic controls and a no-device handoff. Real assistive testing is still required. |
+| Trust, safety and privacy | A private-looking link may overpromise. | The receiver flow states production privacy, identity and persistence are unresolved. |
+| Failure and recovery | Appreciation can be unwanted or misread. | Open later, decline, close and remove remain visible product states. |
+| Feasibility and demo truth | A polished deck can imply production delivery. | Product slides say working prototype and distinguish implemented controls from unresolved production behaviour. |
+| Incentives and second-order effects | Craft may create effort theatre or reply debt. | The receiving ending has no required reply or sender-visible receipt; effect remains untested. |
+| Simplicity and retellability | Thirteen slides may diffuse the core idea. | The close repeats one line: care exists; the comfortable format is missing. |
+| Authorship and distinctiveness | The deck could still feel generated. | Ethan chose the structure, Cecelia supplied the identity assets, and the app screenshots show the team's actual interaction decisions. |
 
-| Challenge lens | Control / unresolved question |
-| --- | --- |
-| Assumption and inversion | Direct appreciation may not be desirable for everyone. Compare not sending, practical care, chat, paper and object. |
-| Behaviour and context | The decisive moment is before sending and when receiving unexpected care. Test both people separately. |
-| Medium necessity | The digital object must earn itself against paper and chat, not merely look more crafted. |
-| Alternatives | Physical letter, voice note, practical help, ordinary chat and one-way physical rituals stay alive. |
-| Human specificity | Relationship history, culture, boundaries and personal communication style may reverse the result. |
-| Inclusion and accessibility | Provide text alternative, no-device route and reduced motion. The actual deck supports reduced motion and print; the product still needs verification. |
-| Trust, safety and privacy | No anonymous delivery, visible sender provenance, block/decline and receiver agency need product-level testing. |
-| Failure and recovery | `keep / close / remove` is presented as a prototype contract, not proof. Clarify recovery for unwanted reconnection. |
-| Feasibility and demo truth | Screens are copied from the current local prototype. The social effect and test result are not implemented or claimed. |
-| Incentives and second-order effects | A made object could become effort theatre or create reply debt. The matched test must surface it. |
-| Simplicity and retellability | Core retelling: “Care already exists, but ordinary-day appreciation can feel like it needs a reason.” |
-| Authorship and distinctiveness | Human selection: Ethan chose the narrative and product reference. Team must perform a real render review and materially redirect or approve before final use. |
+- **Verdict:** Proceed with conditions.
+- **Blocking conditions:** replace the working interview synthesis with the exact sample/method/findings/exceptions; confirm persona provenance; replace the QR placeholder with a verified live URL and real QR; rehearse the full deck inside six minutes; do not call the audience reaction validation.
+- **Weakest judging angle:** evidence quality.
+- **Main trade-off:** the deck now documents enough process and research to build confidence, at the cost of less time for the product demo.
+- **Next evidence:** one verified interview synthesis and one timed full-team run.
+- **Recommendation:** review this draft as the new story baseline, then correct the three blocked slides before Figma or final export.
 
-**Weakest judging angle:** evidence quality. The smallest evidence likely to change the direction is a consented matched same-words comparison across chat, physical, and prototype conditions that records sender prediction and receiver interpretation.
+## Design-authenticity post-build
 
-## Evidence boundary
-
-The three-ring social-framing spectrum is explicitly not measured data. Ring radius represents increasing social ceremony, and the middle ring maps a hypothesis rather than a discovered optimum. Kumar and Epley (2018) found that gratitude-letter expressers overestimated recipient awkwardness and underestimated recipients' positive response; it does not establish that all friends share an occasion rule or that this digital format solves it. Slide 11 is a comparison protocol, not a results graph.
+- **Artifact inspected:** all 13 slides at 1600 × 900, including the updated relationship and current cabinet states.
+- **Strongest remaining AI tell:** the three interview findings can read like generic synthesis until the team's actual language and exceptions replace them.
+- **Content-native signature:** one appreciative thought becomes a made, sealed, carried and receiver-owned object.
+- **Material human change:** Ethan replaced the earlier ring-led pitch with the logo-first research, persona, process and audience-handoff sequence; Cecelia's supplied identity now governs the deck.
+- **Logo-swap test:** pass for the product and object-journey slides; the research slides depend on the final interview language to pass fully.
+- **Team-voice test:** pass for the problem, process, product and close; primary-findings copy still needs team wording.
+- **Subtraction pass:** removed the repeated top metadata, decorative ring system, fake optimum implication, feature-grid treatment and unverified QR.
+- **Verdict:** Revise before final use.
+- **Exact next action:** replace the three provisional findings and illustrative persona details with the team's approved evidence, then insert and test the live handoff QR.
 
 ## Assets and disclosure
 
 | Asset | Source / role |
 | --- | --- |
-| `assets/gaegu.woff2` | Copied from `prototype/public/assets/fonts/Gaegu-Regular-latin.woff2`; display typeface matching current prototype. License: `assets/Gaegu-OFL.txt`. |
-| `assets/pretext.js` | Copied from `~/.claude/skills/gstack/design-html/vendor/pretext.js`; local text-measurement helper, no network dependency. |
-| `assets/product-home.png` | Current local minimal-home prototype capture, used on slide 8. |
-| `assets/sender-studio.png` | Current local populated paper-first Story-composer capture, used on slide 9. |
-| `assets/arrival.png` | Current local receiver-arrival capture, used on slide 10 initial state. |
-| `assets/receiver-reveal.png` | Current local receiver-reveal capture, used on slide 10 revealed state. |
+| `assets/gaegu.woff2` | Product/deck display typeface; licence in `assets/Gaegu-OFL.txt`. |
+| `assets/pretext.js` | Local text-measurement helper; no network dependency. |
+| `assets/process-blank.png` | Actual earlier creator capture used in the process and sender-flow slides. |
+| `assets/process-materials.png` | Actual material-exploration capture. |
+| `assets/current-home.png` | Current Home capture. |
+| `assets/current-carrier.png` | Current carrier-selection capture. |
+| `assets/current-cabinet.png` | Current white cabinet capture produced from the live prototype during this deck pass. |
+| `assets/arrival.png`, `assets/receiver-reveal.png` | Current receiver-flow captures already held by the deck. |
+| Cecelia illustration assets | Repository copies under `prototype/public/assets/illustrations/cecilia/`; team-authored identity, envelope and carrier art. |
 
-AI assisted exploratory HTML composition. Humans framed the problem, selected the Jobs-style diagnosis, selected the current prototype as the reference, and must inspect, change or approve the rendered direction before it becomes a presentation asset. Record any final tool/material disclosure in the submission appendix.
+AI assisted the HTML composition and copy structure. Ethan supplied the narrative order and the team retains responsibility for evidence, wording, selection, testing, final visual edits and disclosure.

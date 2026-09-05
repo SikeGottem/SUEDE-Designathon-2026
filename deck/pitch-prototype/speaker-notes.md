@@ -1,34 +1,35 @@
-<!-- Orientation: concise live prompts, build cues and evidence boundaries for the exploratory pitch deck. -->
+<!-- Orientation: concise live prompts, timing cues and evidence boundaries for the exploratory Warm & Fuzzies pitch. -->
 # Speaker notes
 
-Target: 5:25 total, leaving 35 seconds recovery inside the six-minute heat limit. These are prompts, not a script. Team name, number, members, QR/no-device route and live-demo URL remain unresolved.
+Target: 5:35 total, leaving 25 seconds inside the six-minute heat limit. These are prompts, not a script. Interview specifics, persona provenance and the final demo URL remain blocking.
 
 | Slide | Time | Narration prompt | Click cue | Source / caveat |
 | --- | ---: | --- | --- | --- |
-| 1. Opening | 0:00–0:20 | We can talk instantly. Name the contradiction, then let the sentence land. | Claim → question → sentence | Team details pending. |
-| 2. Goldilocks gap | 0:20–0:45 | Read the rings as increasing social ceremony: chat is ordinary, a letter is occasion-coded, and the middle has no established script. | Inner ring → outer ring → missing middle | Conceptual framing spectrum, not measured data or a proven optimum. |
-| 3. Tuesday | 0:45–1:10 | Same words, different social explanation. Let the questions appear before naming the rule. | Birthday → sentence → Tuesday → interpretations | Hypothesis, not universal fact. |
-| 4. Causal rule | 1:10–1:35 | Walk the three causal beats. The care is already there; the occasion normally explains the intensity. Say “our hypothesis” before the final line lands. | Context → hesitation → non-receipt + hypothesis | Avoid claims about all friends, men or cultures. |
-| 5. Evidence | 1:35–2:00 | One narrow study supports the hesitation pattern, not the occasion rule or product premise. State that boundary plainly. | Sender prediction → recipient response → boundary | Kumar & Epley, 2018, DOI 10.1177/0956797618772506. |
-| 6. Receiving contract | 2:00–2:25 | Translate the risk into four connected conditions worth testing—not proven requirements. Distinguish deliberate care from needing an occasion. | One connected condition per click | The contract is provisional until testing. |
-| 7. Social scripts | 2:25–2:55 | Follow the same note as each medium changes what happens next: conversation, occasion, or receiver-paced opening. Surface the risk that craft can add pressure. | Note → chat → letter → test object | The test object is proposed, not validated or “better.” |
-| 8. Prototype | 2:55–3:20 | Close the loop: this is one way to test the contract. It is one finite object, not another chat turn. | Name → proposition → home screen | Current working prototype state. |
-| 9. Sender | 3:20–3:50 | Show that authorship belongs to the sender. Point only to editable words and chosen media/marks; do not over-narrate the UI. | Editable words → chosen material → status | Actual local prototype screen captured 5 September 2026. |
-| 10. Receiver | 3:50–4:30 | Pause on open / another time / not for me. Then cross the navy threshold and reveal keep / close / remove. | Entry choice → white-to-navy reveal | Interaction is a working hypothesis. |
-| 11. Test | 4:30–5:00 | This is what would make us change our minds: hold the words constant, change the delivery, then compare sender expectation with receiver interpretation. | Same words → three deliveries → two perspectives | Protocol only. Test not yet run and no results are shown. |
-| 12. Close | 5:00–5:25 | Return to the three rings. The prototype sits on the middle orbit as a question, not a victory. End on what you are testing. | Prototype position → hypothesis boundary → route pending | No fake Goldilocks win and no fake QR. Team must decide the live ending. |
+| 1. Logo | 0:00–0:10 | Introduce the team verbally. Let the identity sit alone. | Firefly + wordmark | Team number and final member line still need confirmation. |
+| 2. Contradiction | 0:10–0:35 | We can talk instantly, but one sincere sentence can still feel unusually hard to send. | Claim → question → sentence | Preserves the strongest existing opening. |
+| 3. Problem + HMW | 0:35–1:00 | The care is already there. The barrier is finding a natural way to express it on an ordinary day. | Problem → HMW | Working frame, not a universal friendship claim. |
+| 4. Opportunity space | 1:00–1:30 | Read the axes as practical cost and perceived meaning. Position the target as an opportunity, not an optimum. | Existing methods → opportunity | Conceptual design-space map; no measured coordinates. |
+| 5. Research direction | 1:30–1:55 | We stopped asking whether people care enough and examined how appreciation is already expressed and interpreted. | Broad question → useful question → methods | The method labels are working synthesis categories. |
+| 6. Primary findings | 1:55–2:25 | Lead with the findings, not interview logistics. Name indirect care, occasion permission and the role of format. | One finding per click | Replace with exact participant count, coding, exceptions and approved wording before final use. |
+| 7. Relationship lens | 2:25–2:55 | Walk the grandmother–granddaughter relationship visually: strong care, different routines, scarce moments for direct words. | Both people → thread → friction → opportunity | Confirm whether the duo is real, composite or illustrative. Do not invent details. |
+| 8. Process | 2:55–3:20 | Show one judgment: the team moved away from form-filling and toward making a personal object. | Blank page → materials → simplified invitation | Actual prototype captures; not participant evidence. |
+| 9. Solution | 3:20–3:40 | Warm & Fuzzies turns an appreciative thought into a private object someone can open and keep. | Identity → mechanism + Home | Working prototype, not proof of social impact. |
+| 10. Sender flow | 3:40–4:15 | Four verbs only: make, seal, choose how it travels, give. Stress that the words stay human-authored. | One state per verb | Link transport is implemented for the demo; production delivery is unresolved. |
+| 11. Receiver flow | 4:15–4:50 | The receiver decides when to open and can keep, close or remove without a required reply. | Arrive → open → keep/close/remove | Do not overclaim privacy, identity or persistence. |
+| 12. Audience handoff | 4:50–5:15 | Invite the room to open the same generic experience. Keep it optional and show the no-device route. | Invitation → handoff card | Replace the placeholder with a tested live URL and real QR. Audience response is not impact evidence. |
+| 13. Close | 5:15–5:35 | Return to the problem: care was never missing; the comfortable way to send it was. | Conclusion → identity | End cleanly. Do not add a feature recap. |
 
 ## Live handling
 
-- If time is short, tap through slide 6 conditions together. Do not skip slide 5’s evidence boundary or slide 11’s test plan.
-- If asked why not a letter: “It may be the better answer for some people. That is why it is a control in the same-words test.”
-- If asked whether everyone wants direct appreciation: “No. The rule is a hypothesis about a specific moment. We are testing where it holds and where it does not.”
-- If asked whether a no-reply label is enough: “No. The prototype tries to make closure structural through receiver controls and no sender-visible receipt. We still need to test whether people experience it that way.”
+- If time is short, compress slides 4 and 8. Do not cut the problem, primary findings, receiver agency or the close.
+- If asked why not a physical letter: it may be better for some people. This prototype tests a lower-logistics, keepable object with a distinct receiving space.
+- If asked whether everyone wants direct appreciation: no. The project is for relationships where the thought already exists but the sender lacks a comfortable format.
+- If asked whether the QR validates the idea: no. It demonstrates the receiver flow; only completed research and testing can support outcome claims.
 
-## Unresolved production details
+## Blocking details before final use
 
-- Team name, number and member names.
-- Presenter handoffs and whether one person carries the full narrative.
-- Live-demo route, QR and a no-device fallback.
-- Consent and recruitment plan for the matched sender/receiver test.
-- Final Figma Slides source and transition editor pass.
+- Team number and confirmed member-name spelling on the opening or verbal introduction.
+- Exact primary-research sample, method, coding, findings, exceptions and limitations.
+- Whether the grandmother–granddaughter duo is real, composite or illustrative, plus consent and approved details.
+- Deployed receiver URL, real QR, second-device check and no-device fallback.
+- Final Figma Slides source and transition editor pass if the deck moves out of HTML.
