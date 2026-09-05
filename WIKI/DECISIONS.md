@@ -1196,7 +1196,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 ## 2026-09-05 - Illustrate the gap, simplify the findings, and merge the live ending
 
 - Status: current rehearsal-deck direction, selected directly by Ethan after reviewing the rendered HTML slides.
-- Page 5: retain frequency as a translucent dot-size encoding, add hand-drawn channel icons, and use Cecelia's firefly mascot as the Goldilocks target rather than an abstract diamond.
+- Page 5: retain frequency as a clearly visible circle-size encoding behind the hand-drawn channel icons, and use Cecelia's firefly mascot in the same deep navy as the deck typography for the Goldilocks target rather than an abstract diamond.
 - Page 6: preserve 82%, 71%, the nine grouped scores and the fourth-click rings, but replace the literal table with a loose handwritten trade-off ledger headed `each form gets one thing right`.
 - Page 7: reduce the outer bands to `text — too awkward or too casual` and `letter / gift — too much; high friction; inaccessible`. The centre now leads with `They care. But appreciation stays unspoken.`, followed by university students, long-distance connections, close friends and close family as quiet examples.
 - Ending: remove the separate page 11 thank-you handoff. Page 10 now says `Follow along.` and shows a real QR for the deployed generic demo at `https://warm-and-fuzzies.vercel.app/demo`, plus the readable URL and a no-phone fallback.

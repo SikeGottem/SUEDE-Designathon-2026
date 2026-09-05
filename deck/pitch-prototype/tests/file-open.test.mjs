@@ -105,6 +105,8 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.match(source, /assets\/channel-voice-video\.svg/);
   assert.match(source, /assets\/illustrations\/cecilia\/envelope-mail-02\.png/);
   assert.match(source, /class="plot target build"[\s\S]*?assets\/illustrations\/cecilia\/firefly-brand-mark\.png/);
+  assert.match(source, /width:calc\(var\(--freq,24px\) \+ 42px\)/);
+  assert.match(source, /\.plot\.target \.plot-marker::before[\s\S]*?background:var\(--ink\)[\s\S]*?mask:url\('\.\.\/\.\.\/prototype\/public\/assets\/illustrations\/cecilia\/firefly-brand-mark\.png'\)/);
   assert.doesNotMatch(source, /class="evidence-dock"/);
   assert.match(source, /Kumar &amp; Epley, 2021/);
   assert.match(source, /Kumar &amp; Epley, 2018/);

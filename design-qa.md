@@ -162,3 +162,11 @@ passed
 ## Final result
 
 passed for rehearsal; the QR still needs a physical-phone scan at presentation distance on the event network.
+
+## Follow-up correction — page 5 marker contrast
+
+- Ethan's delivery-size review found that the translucent frequency marks disappeared behind the channel icons and that the firefly's native steel fill looked disconnected from the navy type.
+- The three marks are now explicit size-encoded circles at 86, 78 and 63 pixels behind 50–52 pixel icons; the quick-text point moved clear of the axis.
+- Cecelia's original firefly PNG remains the source asset, but its alpha is used as a mask so every visible pixel renders in the exact deck ink `#081F4D`.
+- Post-build check: all three circle sizes remain distinct in `/tmp/suede-slide5-markerfix-step4.png` at 1600 × 900, and the firefly now carries the exact same navy as the surrounding title.
+- Authenticity verdict: **Pass**. The circle size remains an information encoding rather than decoration, the Cecelia mascot stays the subject-specific signature, and the user-directed contrast correction is the material human change.
