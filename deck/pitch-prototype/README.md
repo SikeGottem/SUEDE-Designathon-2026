@@ -64,7 +64,7 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 - **Rejected defaults:** no mentor-quote theatre, demographic persona card, boxed research panel, fake QR, process diary, feature cards or screenshot carousel.
 - **Signature move:** each channel's paper conclusion appears unboxed beside the active dot and disappears when the presenter moves on. The map ends on an unboxed Goldilocks target; the next slide circles the three qualities the team will combine; the later synthesis keeps If / And / Then and adds one Therefore requirement.
 - **Restraint:** no opener counterpoint, product-feature recap or second conclusion after the thank-you handoff.
-- **Human decision:** the latest captures make the graph a three-variable practice instrument, set #94A550 as the accent and preserve If / And / Then while adding one Therefore design requirement beneath it.
+- **Human decision:** the latest captures make the graph a three-variable practice instrument and preserve If / And / Then while adding one Therefore design requirement beneath it. Ethan's newest direct correction supersedes the earlier green choice and sets deep blue as the live-deck accent.
 
 ## Judge review
 

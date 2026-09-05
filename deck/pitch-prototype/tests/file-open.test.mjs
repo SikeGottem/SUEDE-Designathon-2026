@@ -44,6 +44,8 @@ test('the newest follow-up simplifies research, defines the need-state audience 
   assert.match(source, /class="research-number">71%/);
   assert.doesNotMatch(source, /Does the expression gap exist\?|Why does it stay unspoken\?|How do the forms compare\?/);
   assert.doesNotMatch(source, /<span>what<\/span>|<span>why<\/span>|<span>how<\/span>/);
+  assert.doesNotMatch(source, /\.research-job \{[^}]*border-top/);
+  assert.doesNotMatch(source, /\.research-answer \{[^}]*border-top/);
   assert.match(source, /feel they do not fully show the appreciation they feel/);
   assert.match(source, /class="mini-ratings-table"[\s\S]*impact \/5[\s\S]*friction \/5[\s\S]*frequency \/5/);
   assert.match(source, /\.mini-ratings-table \{[^}]*min-height:590px[^}]*flex:1 1 auto/);
@@ -92,7 +94,10 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.doesNotMatch(source, /class="practice-ratings"/);
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
-  assert.match(source, /--accent:#94a550/);
+  assert.match(source, /--accent:#081f4d/);
+  assert.match(source, /--accent-ink:#254878/);
+  assert.match(source, /--accent-on-ink:#a8c5ee/);
+  assert.doesNotMatch(source, /#94a550|#5b682f/i);
   assert.doesNotMatch(source, /#b56d5f|#eda343/i);
   assert.doesNotMatch(source, /find digital channels too slight/);
   assert.doesNotMatch(source, /highest friction · occasion-coded/);

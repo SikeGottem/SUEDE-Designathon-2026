@@ -1111,7 +1111,7 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 ## 2026-09-05 - Use a sender-framed opening, group the comparison, target the need-state, and reduce the solution reveal
 
 - Decision: open by asking `When was the last time you showed someone appreciation or gratitude?`, with birthdays, celebrations and major events excluded aloud. Collapse the live channel map and How table into three presentation families: quick text; voice note / video call; handwritten letter / physical gift. Replace the grandmother-granddaughter persona with overlapping Goldilocks rings for people caught between a text that feels too casual and a physical gesture that feels too difficult. Name university students, long-distance connections, close friends and close family as included examples. Replace page 9's phone screenshot and supporting copy with: `Warm & Fuzzies is a private digital keepsake that brings the thoughtfulness of a letter to the ease of a text.`
-- Presentation follow-up: remove the visible What / Why / How labels and research questions from page 6. Lead directly with the 82% and 71% rehearsal findings and the channel-comparison table; keep the underlying questions in the research instrument and speaker context.
+- Presentation follow-up: remove the visible What / Why / How labels, research questions and decorative rules from page 6. Treat each percentage and its meaning as one continuous headline block, followed by the channel-comparison table; keep the underlying questions in the research instrument and speaker context.
 - Status: current rehearsal-deck direction; selected directly by Ethan, not participant-validated.
 - Supersedes: the five separately plotted channel reveals on pages 5 and 6, and the grandmother-granddaughter page-7 scenario. The individual forms remain separate controls for actual research.
 - Reason: the team needs fewer speaking beats, one clearer audience tension and a solution statement that explains both the product and its intended advantage before the live demo.
@@ -1176,3 +1176,11 @@ Copy the mandatory judge-review table and conclusion from `WIKI/TEMPLATES.md`. A
 - Next evidence that could change the verdict: one matched-content comparison across the individual forms and Warm & Fuzzies, segmented by whether participants identify with the in-between need.
 - Recommendation: rehearse this simpler story now, but preserve the individual-channel research instrument and replace the grouped values only after results support the aggregation.
 - Revisit when: real data separates voice from video or letters from gifts; the audience examples do not share one need; or first-listener rehearsal misreads `private` or the product proposition as a proven claim.
+
+## 2026-09-05 - Replace the rehearsal deck's green accent with blue
+
+- Status: current deck-only visual direction, directly selected by Ethan.
+- Decision: supersede the earlier `#94A550` accent in the live HTML presentation with the existing deep brand blue `#081F4D`. Use `#254878` for smaller blue accent text and `#A8C5EE` where an accent must remain visible on deep-ink surfaces.
+- Scope: the presentation palette only. Historical transcript records and product-brand decisions remain unchanged.
+- Reason: Ethan directly rejected the green rehearsal accent after reviewing the simplified findings slide and asked for blue instead.
+- Accessibility boundary: do not use deep blue against the deep-ink slide background. The pale blue companion preserves visible progress, focus and highlighted closing text on dark slides.
