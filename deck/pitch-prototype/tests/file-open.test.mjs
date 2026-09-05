@@ -38,6 +38,17 @@ test('the latest meeting framing replaces attribution and unsupported market cla
   assert.doesNotMatch(source, /digital card/);
 });
 
+test('the newest follow-up simplifies research, restores personas and clears the demo slide', () => {
+  assert.match(source, /class="research-number">___%/);
+  assert.match(source, /feel they do not fully show the appreciation they feel/);
+  assert.doesNotMatch(source, /research-bridge/);
+  assert.match(source, /Grandmother[\s\S]*Granddaughter/);
+  assert.match(source, /Grandmother makes it now\. Granddaughter opens it later\./);
+  assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?<h2>Let us show you\.<\/h2>/);
+  assert.doesNotMatch(source, /demo-sequence/);
+  assert.doesNotMatch(source, /Live prototype · no video/);
+});
+
 test('every local image reference resolves from the standalone deck file', async () => {
   const paths = [...source.matchAll(/<img[^>]+src="([^"]+)"/g)].map((match) => match[1]);
   assert.ok(paths.length > 0, 'expected image references in the deck');

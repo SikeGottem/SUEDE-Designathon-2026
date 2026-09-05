@@ -85,23 +85,14 @@
     .gap-zone span { position:absolute; right:18px; bottom:20px; font-size:18px; line-height:1; letter-spacing:.05em; text-transform:uppercase; color:var(--rust); }
     .matrix-slide .headline { max-width:900px; font-size:70px; }
 
-    .research-story { position:absolute; left:95px; right:95px; top:225px; bottom:120px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-    .research-job { position:relative; padding:28px 28px 24px; border-top:3px solid currentColor; display:flex; flex-direction:column; }
-    .research-job:nth-child(2) { transform:translateY(18px); }
-    .research-job:nth-child(3) { transform:translateY(-10px); }
-    .research-job > span { font-size:20px; line-height:1; letter-spacing:.06em; text-transform:uppercase; color:var(--rust); }
-    .research-job h3 { margin-top:24px; font-size:44px; line-height:.9; font-weight:400; text-wrap:balance; }
-    .research-job strong { display:block; margin-top:26px; font-size:55px; line-height:.86; font-weight:400; color:var(--steel); }
-    .research-job p { margin-top:auto; padding-top:22px; border-top:1px solid rgb(8 31 77 / .3); font-size:19px; line-height:1.15; color:rgb(8 31 77 / .7); }
-    .research-bridge { position:absolute; left:190px; right:190px; bottom:65px; text-align:center; font-size:29px; line-height:.95; color:var(--rust); }
-
-    .when-flow { position:absolute; left:105px; right:105px; top:250px; bottom:125px; display:grid; grid-template-columns:1fr 115px 1.25fr 115px 1fr; gap:20px; align-items:center; }
-    .when-stage { min-height:330px; padding:28px 24px 24px; border-top:3px solid currentColor; display:flex; flex-direction:column; }
-    .when-stage span { font-size:18px; line-height:1; letter-spacing:.055em; text-transform:uppercase; color:var(--rust); }
-    .when-stage h3 { margin-top:30px; font-size:40px; line-height:.9; font-weight:400; text-wrap:balance; }
-    .when-stage p { margin-top:auto; font-size:20px; line-height:1.12; color:rgb(8 31 77 / .68); }
-    .when-arrow { height:2px; background:currentColor; position:relative; }
-    .when-arrow:after { content:""; position:absolute; right:0; top:-7px; width:14px; height:14px; border-top:2px solid currentColor; border-right:2px solid currentColor; transform:rotate(45deg); }
+    .research-story { position:absolute; left:95px; right:95px; top:108px; bottom:78px; display:grid; grid-template-columns:repeat(3,1fr); gap:36px; }
+    .research-job { position:relative; padding:27px 28px 24px; border-top:4px solid currentColor; display:flex; flex-direction:column; }
+    .research-job > span { font-size:28px; line-height:1; letter-spacing:.07em; text-transform:uppercase; color:var(--rust); }
+    .research-job h3 { margin-top:28px; min-height:124px; font-size:51px; line-height:.88; font-weight:400; text-wrap:balance; }
+    .research-job strong { display:block; margin-top:32px; min-height:116px; font-size:72px; line-height:.82; font-weight:400; color:var(--ink); }
+    .research-job strong.research-number { font-size:126px; color:var(--rust); letter-spacing:-.045em; }
+    .research-job strong.research-pending { color:var(--steel); letter-spacing:.035em; }
+    .research-answer { margin-top:auto; padding-top:26px; border-top:3px solid currentColor; font-size:37px; line-height:.9; color:var(--ink); text-wrap:balance; }
 
     .research-shift { position:absolute; left:120px; right:120px; top:245px; height:430px; display:grid; grid-template-columns:1fr 170px 1fr; gap:55px; align-items:center; }
     .research-question { font-size:52px; line-height:.93; border-top:2px solid currentColor; padding-top:22px; }
@@ -127,23 +118,24 @@
     .evidence-card p { margin-top:20px; font-size:23px; line-height:1.07; color:rgb(8 31 77 / .76); }
     .evidence-card cite { margin-top:auto; padding-top:20px; border-top:1px solid rgb(8 31 77 / .28); font-size:15px; line-height:1.2; font-style:normal; color:rgb(8 31 77 / .64); }
 
-    .market-slide .headline { max-width:1290px; font-size:66px; }
-    .target-market { position:absolute; left:115px; right:115px; top:196px; display:flex; align-items:baseline; gap:24px; padding:13px 18px 10px; border-top:2px solid currentColor; border-bottom:2px solid currentColor; }
-    .target-market span { flex:none; font-size:16px; line-height:1; letter-spacing:.055em; text-transform:uppercase; color:var(--rust); }
-    .target-market strong { font-size:29px; line-height:.95; font-weight:400; }
-    .relationship { position:absolute; inset:258px 115px 105px; }
-    .person { position:absolute; top:80px; width:300px; text-align:center; }
+    .persona-slide .headline { max-width:1260px; font-size:74px; }
+    .relationship { position:absolute; inset:225px 115px 82px; }
+    .person { position:absolute; top:52px; width:300px; text-align:center; }
     .person.grandma { left:20px; }
     .person.granddaughter { right:20px; }
-    .portrait { width:140px; height:140px; border:3px solid currentColor; border-radius:50%; display:grid; place-items:center; margin:0 auto 22px; font-size:76px; background:var(--cream); }
+    .portrait { position:relative; width:140px; height:140px; border:3px solid currentColor; border-radius:50%; margin:0 auto 22px; background:var(--cream); }
+    .portrait:before { content:""; position:absolute; left:50%; top:25px; width:45px; height:45px; border:3px solid currentColor; border-radius:50%; transform:translateX(-50%); background:var(--paper); }
+    .portrait:after { content:""; position:absolute; left:50%; bottom:20px; width:78px; height:39px; border:3px solid currentColor; border-bottom:0; border-radius:48px 48px 0 0; transform:translateX(-50%); background:var(--paper); }
+    .grandma .portrait { color:var(--rust); transform:rotate(-2deg); }
+    .granddaughter .portrait { color:var(--steel); transform:rotate(2deg); }
     .person h3 { font-size:52px; font-weight:400; }
-    .person p { margin-top:15px; font-size:23px; line-height:1.05; }
-    .thread { position:absolute; left:365px; right:365px; top:145px; height:3px; background:var(--rust); transform:rotate(-1.5deg); }
+    .person p { margin-top:15px; font-size:27px; line-height:1; }
+    .thread { position:absolute; left:365px; right:365px; top:118px; height:3px; background:var(--rust); transform:rotate(-1.5deg); }
     .thread:before,.thread:after { content:""; position:absolute; top:-9px; width:20px; height:20px; border:3px solid var(--rust); background:var(--paper); border-radius:50%; }
     .thread:before { left:-8px; } .thread:after { right:-8px; }
-    .relationship-beats { position:absolute; left:380px; right:380px; top:220px; display:grid; gap:14px; text-align:center; font-size:29px; line-height:.94; }
+    .relationship-beats { position:absolute; left:380px; right:380px; top:168px; display:grid; gap:11px; text-align:center; font-size:31px; line-height:.92; }
     .relationship-beats p { padding:10px 14px 7px; background:var(--paper); border-bottom:2px solid currentColor; }
-    .relationship-opportunity { position:absolute; left:350px; right:350px; bottom:0; padding:18px 22px 15px; text-align:center; font-size:35px; line-height:.92; color:var(--rust); border:2px dashed var(--rust); transform:rotate(-1deg); }
+    .relationship-opportunity { position:absolute; left:335px; right:335px; bottom:0; padding:19px 22px 15px; text-align:center; font-size:38px; line-height:.9; color:var(--rust); border:3px dashed var(--rust); transform:rotate(-1deg); }
 
     .process-strip { position:absolute; left:95px; right:95px; top:235px; display:grid; grid-template-columns:repeat(3,1fr); gap:48px; align-items:end; }
     .process-slide .headline { max-width:1380px; font-size:62px; }
@@ -172,10 +164,6 @@
 
     .demo-hold { height:100%; display:grid; place-items:center; text-align:center; padding:45px 90px 35px; }
     .demo-hold h2 { font-size:130px; line-height:.75; font-weight:400; letter-spacing:-.035em; }
-    .demo-sequence { margin-top:60px; display:flex; align-items:center; justify-content:center; gap:27px; font-size:41px; line-height:1; }
-    .demo-sequence i { width:70px; height:2px; background:var(--ochre); position:relative; }
-    .demo-sequence i:after { content:""; position:absolute; right:0; top:-6px; width:12px; height:12px; border-top:2px solid var(--ochre); border-right:2px solid var(--ochre); transform:rotate(45deg); }
-    .demo-hold p { margin-top:46px; font-size:29px; line-height:1; color:rgb(255 255 255 / .72); }
 
     .journey { position:absolute; left:90px; right:90px; top:220px; bottom:105px; display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:center; }
     .sender-journey { top:145px; }
@@ -242,19 +230,19 @@
   </article>
 
   <article class="slide" data-title="What · why · how" data-steps="3">
-    <button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">Before we call it a gap, we need three answers.</h2><div class="research-story"><section class="research-job build" data-step="1"><span>what</span><h3>Does the expression gap exist?</h3><strong>___%</strong><p>People who feel they do not fully show the appreciation they already feel.</p></section><section class="research-job build" data-step="2"><span>why</span><h3>What makes it feel out of place?</h3><strong>themes pending</strong><p>Do not pre-fill awkward, weird or too intense before participants answer.</p></section><section class="research-job build" data-step="3"><span>how</span><h3>Which formats strike the balance?</h3><strong>impact × effort × frequency</strong><p>Compare text, voice, video, a letter and a physical gift using the same message.</p></section></div><p class="research-bridge">Can we bring the impact of a letter closer to the ease of a text?</p><p class="source">Research structure from the latest team review · results still required</p><span class="status">06 / 10</span>
+    <button class="skip" aria-label="Advance build">next ↵</button><div class="research-story"><section class="research-job build" data-step="1"><span>what</span><h3>Does the expression gap exist?</h3><strong class="research-number">___%</strong><div class="research-answer">feel they do not fully show the appreciation they feel.</div></section><section class="research-job build" data-step="2"><span>why</span><h3>Why does it stay unspoken?</h3><strong class="research-pending">________</strong><div class="research-answer">the reason they hold back, in their own words.</div></section><section class="research-job build" data-step="3"><span>how</span><h3>What form fits the moment?</h3><strong class="research-pending">________</strong><div class="research-answer">best balances impact, effort and frequency.</div></section></div><span class="status">06 / 10</span>
   </article>
 
-  <article class="slide" data-title="When it matters" data-steps="3">
-    <button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">When the feeling is clear, but no channel fits the moment.</h2><div class="when-flow"><section class="when-stage build" data-step="1"><span>ordinary moment</span><h3>Someone crosses your mind.</h3><p>There is care, but no birthday, farewell or milestone telling you to act.</p></section><i class="when-arrow build" data-step="2" aria-hidden="true"></i><section class="when-stage build" data-step="2"><span>channel mismatch</span><h3>A text feels too small. A call needs both people free.</h3><p>A letter or gift carries meaning, but time, money and distance get in the way.</p></section><i class="when-arrow build" data-step="3" aria-hidden="true"></i><section class="when-stage build" data-step="3"><span>design requirement</span><h3>Make it now. Let them receive it later.</h3><p>Low sender friction, no receiver account and no demand for an immediate reply.</p></section></div><p class="source">Illustrative usage moment · not a validated universal behaviour</p><span class="status">07 / 10</span>
+  <article class="slide persona-slide" data-title="When it matters" data-steps="4">
+    <button class="skip" aria-label="Advance build">next ↵</button><h2 class="headline">Imagine a grandmother thinking of her granddaughter on an ordinary day.</h2><div class="relationship"><section class="person grandma build" data-step="1"><div class="portrait" aria-hidden="true"></div><h3>Grandmother</h3><p>She wants to show she is thinking of her.</p></section><div class="thread build" data-step="2" aria-hidden="true"></div><div class="relationship-beats"><p class="build" data-step="2">They live apart.</p><p class="build" data-step="3">There is no occasion.</p><p class="build" data-step="3">A call needs both of them free.</p></div><section class="person granddaughter build" data-step="2"><div class="portrait" aria-hidden="true"></div><h3>Granddaughter</h3><p>She can receive it when she has time.</p></section><p class="relationship-opportunity build" data-step="4">Grandmother makes it now. Granddaughter opens it later.</p></div><span class="status">07 / 10</span>
   </article>
 
   <article class="slide" data-title="Warm & Fuzzies" data-steps="2">
     <button class="skip" aria-label="Advance build">next ↵</button><div class="solution-reveal"><div><div class="solution-name build" data-step="1"><img src="../../prototype/public/assets/illustrations/cecilia/firefly-brand-mark.png" alt=""><h2>warm &amp;<br>fuzzies</h2></div><p class="solution-copy build" data-step="2">The impact of a letter, closer to the ease of a text.</p><p class="solution-detail build" data-step="2">Make one private object. Send a link. Let the receiver open it on their own terms—without making an account.</p></div><div class="device-wrap build" data-step="2"><img class="device large" src="assets/current-home.png" alt="Current Warm and Fuzzies home screen"></div></div><p class="source">Working coded prototype · the comparison remains to be tested</p><span class="status">08 / 10</span>
   </article>
 
-  <article class="slide ink" data-title="Live demo" data-steps="1">
-    <button class="skip" aria-label="Advance build">next ↵</button><div class="demo-hold"><div><h2>Let us show you.</h2><div class="demo-sequence build" data-step="1"><span>make</span><i aria-hidden="true"></i><span>seal</span><i aria-hidden="true"></i><span>give</span><i aria-hidden="true"></i><span>they decide</span></div><p class="build" data-step="1">Live prototype · no video · switch back here after the receiver opens it</p></div></div><span class="status">09 / 10</span>
+  <article class="slide ink" data-title="Live demo" data-steps="0">
+    <button class="skip" aria-label="Advance slide">next ↵</button><div class="demo-hold"><h2>Let us show you.</h2></div><span class="status">09 / 10</span>
   </article>
 
   <article class="slide ink" data-title="A thank-you for the room" data-steps="2">
@@ -266,7 +254,7 @@
   let index = 0, step = 0, pretextPromise;
   const params = new URLSearchParams(location.search), qSlide = Number(params.get('slide')), qStep = Number(params.get('step'));
   function fit(){ const scale=Math.min(innerWidth/1600,innerHeight/900); deck.style.transform=`translate(-50%,-50%) scale(${scale})`; }
-  async function typeset(){ if(location.protocol==='file:')return; try { const {prepare,layout}=await (pretextPromise??=import('./assets/pretext.js')); await document.fonts.ready; document.querySelectorAll('.headline,.problem-core h2,.research-job h3,.when-stage h3,.solution-copy,.solution-detail,.demo-hold h2,.handoff-copy h2').forEach(el=>{ const cs=getComputedStyle(el), width=el.clientWidth||1100; try { layout(prepare(el.textContent,cs.font),width,parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)); } catch(_){} }); } catch(_){} }
+  async function typeset(){ if(location.protocol==='file:')return; try { const {prepare,layout}=await (pretextPromise??=import('./assets/pretext.js')); await document.fonts.ready; document.querySelectorAll('.headline,.problem-core h2,.research-job h3,.research-answer,.person p,.solution-copy,.solution-detail,.demo-hold h2,.handoff-copy h2').forEach(el=>{ const cs=getComputedStyle(el), width=el.clientWidth||1100; try { layout(prepare(el.textContent,cs.font),width,parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)); } catch(_){} }); } catch(_){} }
   function updateURL(){ history.replaceState(null,'',`?slide=${index+1}&step=${step}`); }
   function render(){ slides.forEach((slide,i)=>slide.classList.toggle('active',i===index)); const active=slides[index]; active.querySelectorAll('.build').forEach(el=>el.classList.toggle('show',Number(el.dataset.step)<=step)); document.querySelector('#shell').classList.toggle('on-ink',active.classList.contains('ink')); hud.textContent=`${String(index+1).padStart(2,'0')} · ${active.dataset.title}`; progress.style.transform=`scaleX(${(index+(step/Math.max(1,Number(active.dataset.steps))))/slides.length})`; updateURL(); }
   function next(){ const max=Number(slides[index].dataset.steps)||0; if(step<max)step++; else if(index<slides.length-1){index++;step=0;} render(); }

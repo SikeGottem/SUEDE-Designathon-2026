@@ -24,13 +24,13 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 3. Plain problem statement
 4. Occasion-based permission and How Might We
 5. Corrected channel map: no digital card; text and voice share a cost level; handwritten letter precedes physical gift; the gap remains unmeasured
-6. What / Why / How research structure with blank evidence placeholders
-7. The **when** scenario, without a market or university-student pitch
+6. High-contrast What / Why / How findings with blank evidence placeholders and no small subtext
+7. The grandmother-granddaughter personas as the **when** scenario
 8. Warm & Fuzzies solution reveal
-9. One continuous live sender-to-receiver demonstration
+9. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
 10. Real team thank-you object, real team photo and verified QR handoff
 
-There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or standalone conclusion. Process is woven into the causal story: the problem creates the occasion question; the map exposes a possible gap; What / Why / How must prove and explain it; the scenario locates the moment; the live product demonstrates the resulting ritual.
+There is no separate research-plan slide, secondary-research slide, process slide, market slide, sender screenshot, receiver screenshot or standalone conclusion. Process is woven into the causal story: the problem creates the occasion question; the map exposes a possible gap; What / Why / How must prove and explain it; the personas locate the moment; the live product demonstrates the resulting ritual.
 
 The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. University students are not pitched as a target market. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
@@ -58,9 +58,9 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 - **Communication job:** make the occasion-only rule clear, show how the team will prove the gap, and then let the working product demonstrate one complete act of appreciation.
 - **Source anchors:** Cecelia's hand-drawn identity; Gaegu; the white/deep-ink product; the corrected channel order; blank evidence placeholders; the actual live handoff; the team's real thank-you object and photo.
 - **Rejected defaults:** no mentor-quote theatre, demographic persona card, secondary-research grid, fake percentage, fake QR, process diary, feature cards or screenshot carousel.
-- **Signature move:** the deck deliberately disappears for 105 seconds so the object can be made, given, opened and left under receiver control in real time.
+- **Signature move:** the transition slide says only “Let us show you.” Then the deck deliberately disappears for 105 seconds so the object can be made, given, opened and left under receiver control in real time.
 - **Restraint:** no opener counterpoint, product-feature recap or second conclusion after the thank-you handoff.
-- **Human decision:** the latest 21-minute team review explicitly cut the earlier 14-slide structure, corrected the map, replaced separate research slides with What / Why / How, reframed the persona as **when**, chose a live demo and made the real thank-you the ending.
+- **Human decision:** the 21-minute team review cut the earlier 14-slide structure. The newest seven-minute follow-up then removed slide 6's small subtext, restored the grandmother-granddaughter personas as **when**, and reduced the demo transition to one sentence.
 
 ## Judge review
 
