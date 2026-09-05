@@ -1,175 +1,35 @@
 /* Targeted visual refinements for the research, audience, and handoff slides. */
 
-/* Slide 04 — occasions form one social-script system; an ordinary day is the exception. */
-.occasion-slide .rule-layout {
-  gap: 24px;
-  padding: 22px 72px 48px;
-}
-
-.occasion-slide .rule-kicker {
-  margin-bottom: 12px;
-}
-
-.occasion-slide .rule-layout h2 {
-  max-width: 1410px;
-  font-size: 82px;
-  line-height: .84;
-}
-
-.permission-map {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 128px 330px;
-  gap: 32px;
-  align-items: center;
-  min-height: 390px;
-}
-
-.permission-label {
-  margin: 0 0 28px 14px;
-  color: var(--accent-ink);
-  font-size: 22px;
-  letter-spacing: .055em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.occasion-sequence {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.occasion-sequence::before {
-  content: "";
+.sr-only {
   position: absolute;
-  top: 58px;
-  left: 15%;
-  right: 15%;
-  height: 3px;
-  background: rgb(8 31 77 / .28);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.occasion-token {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  gap: 16px;
-  text-align: center;
+/* Slide 03 — show the team's starting hypothesis, then the process that changed it. */
+.framing-origin,
+.framing-discovery {
+  position: absolute;
+  inset: 74px 92px 68px;
+  transition: opacity 260ms var(--enter), translate 380ms var(--enter), visibility 0ms linear 260ms;
 }
 
-.occasion-mark {
-  position: relative;
-  z-index: 1;
-  width: 118px;
-  height: 118px;
+.framing-origin {
   display: grid;
   place-items: center;
-  border: 3px solid var(--ink);
-  border-radius: 50%;
-  background: var(--paper);
-}
-
-.occasion-mark svg {
-  width: 61px;
-  height: 61px;
-  fill: none;
-  stroke: var(--ink);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.7px;
-}
-
-.occasion-token strong,
-.ordinary-day strong {
-  color: var(--ink);
-  font-size: 39px;
-  font-weight: 400;
-  line-height: .86;
-}
-
-.permission-break {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 11px;
-  align-items: center;
-  color: var(--accent-ink);
-  font-size: 17px;
-  letter-spacing: .045em;
-  line-height: 1;
+  padding: 38px 110px 10px;
   text-align: center;
-  text-transform: uppercase;
-}
-
-.permission-break::before,
-.permission-break::after {
-  content: "";
-  height: 2px;
-  background: rgb(8 31 77 / .3);
-}
-
-.ordinary-day {
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  gap: 23px;
-  min-height: 232px;
-  padding: 28px 0 28px 38px;
-  border-left: 3px dashed rgb(8 31 77 / .45);
-}
-
-.ordinary-day strong {
-  color: var(--ink);
-  font-size: 54px;
-  font-weight: 400;
-  line-height: .8;
-}
-
-.ordinary-day ul {
-  display: grid;
-  gap: 11px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  color: var(--accent-ink);
-  font-size: 29px;
-  line-height: .92;
-}
-
-.ordinary-day li {
-  display: grid;
-  grid-template-columns: 14px auto;
-  gap: 10px;
-  align-items: center;
-}
-
-.ordinary-day li::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border: 2px solid var(--accent-ink);
-  border-radius: 50%;
-}
-
-.occasion-slide .hmw-bar {
-  padding: 16px 0 12px;
-  border-top: 3px solid var(--ink);
-  font-size: 36px;
-}
-
-.occasion-slide .occasion-source {
-  bottom: 19px;
-  max-width: 1320px;
-}
-
-/* Slide 03 — state the team's starting point without treating it as a finding. */
-.problem-slide .problem-core {
-  position: relative;
 }
 
 .problem-origin {
   position: absolute;
-  top: 118px;
+  top: 104px;
   left: 50%;
   translate: -50% 0;
   color: var(--accent-ink);
@@ -179,45 +39,192 @@
   text-transform: uppercase;
 }
 
+.framing-origin h2 {
+  max-width: 1280px;
+  color: var(--ink);
+  font-size: 102px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: .84;
+  text-wrap: balance;
+}
+
 .problem-emphasis {
   display: inline-block;
   color: inherit;
   transition: color 240ms var(--enter), transform 340ms var(--enter);
 }
 
-.problem-slide[data-current-step="1"] .problem-emphasis {
+.framing-slide[data-current-step="1"] .problem-emphasis {
   color: var(--accent-ink);
   transform: translateY(-3px);
 }
 
+.framing-discovery {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+  padding: 6px 58px 26px;
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 22px;
+  pointer-events: none;
+}
+
+.framing-slide:is([data-current-step="2"],[data-current-step="3"],[data-current-step="4"]) .framing-origin {
+  opacity: 0;
+  visibility: hidden;
+  translate: 0 -22px;
+  pointer-events: none;
+}
+
+.framing-slide:is([data-current-step="2"],[data-current-step="3"],[data-current-step="4"]) .framing-discovery {
+  opacity: 1;
+  visibility: visible;
+  translate: none;
+  pointer-events: auto;
+  transition-delay: 90ms, 90ms, 0ms;
+}
+
+.framing-heading {
+  transition: opacity 220ms var(--enter), transform 320ms var(--enter);
+}
+
+.framing-heading .rule-kicker {
+  margin-bottom: 11px;
+  color: var(--accent-ink);
+  font-size: 21px;
+  letter-spacing: .06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.framing-heading h2 {
+  max-width: 1320px;
+  color: var(--ink);
+  font-size: 76px;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  line-height: .84;
+  text-wrap: balance;
+}
+
+.permission-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3px minmax(0, 1fr);
+  gap: 56px;
+  align-items: stretch;
+  min-height: 342px;
+  padding: 12px 8px 4px;
+  transition: opacity 220ms var(--enter), filter 220ms var(--enter);
+}
+
+.occasion-side,
+.occasion-divider {
+  transition: opacity 220ms var(--enter), filter 220ms var(--enter), transform 320ms var(--enter);
+}
+
+.occasion-side {
+  display: grid;
+  align-content: center;
+  grid-template-rows: auto auto 1fr;
+  gap: 18px;
+  padding: 22px 34px 24px;
+}
+
+.occasion-kind {
+  margin: 0;
+  color: var(--accent-ink);
+  font-size: 21px;
+  letter-spacing: .075em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.occasion-side strong {
+  max-width: 540px;
+  color: var(--ink);
+  font-size: 57px;
+  font-weight: 400;
+  letter-spacing: -.02em;
+  line-height: .84;
+  text-wrap: balance;
+}
+
+.occasion-side ul {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink);
+  font-size: 35px;
+  line-height: .9;
+}
+
+.occasion-side li {
+  display: grid;
+  grid-template-columns: 17px auto;
+  gap: 13px;
+  align-items: center;
+}
+
+.occasion-side li::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border: 3px solid currentColor;
+  border-radius: 50%;
+}
+
+.occasion-divider {
+  width: 3px;
+  min-height: 286px;
+  align-self: center;
+  background: var(--ink);
+}
+
+.ordinary-side .occasion-kind,
+.ordinary-side ul {
+  color: var(--accent-ink);
+}
+
+.occasion-slide .hmw-bar {
+  padding: 15px 0 11px;
+  border-top: 3px solid var(--ink);
+  color: var(--ink);
+  font-size: 36px;
+  line-height: .95;
+}
+
+.occasion-slide .hmw-bar strong {
+  color: var(--accent-ink);
+  font-weight: 400;
+}
+
+.occasion-slide .occasion-source {
+  bottom: 19px;
+  max-width: 1320px;
+}
+
+.framing-slide[data-current-step="3"] .event-side {
+  opacity: .42;
+  filter: saturate(.65);
+}
+
+.framing-slide[data-current-step="4"] .framing-heading,
+.framing-slide[data-current-step="4"] .permission-map {
+  opacity: .24;
+  filter: saturate(.6);
+}
+
 /* Each click has one visual boss. Context remains present but deliberately quiet. */
-.occasion-slide .occasion-token,
 .matrix-slide .plot,
 .matrix-slide .plot-evidence,
-.occasion-slide .rule-layout > div:first-child,
 .matrix-slide .headline,
 .solution-slide .solution-statement h2 {
   transition: opacity 220ms var(--enter), filter 220ms var(--enter), color 220ms var(--enter), transform 320ms var(--enter);
-}
-
-.occasion-slide[data-current-step="2"] .occasion-token[data-step="1"],
-.occasion-slide[data-current-step="3"] .occasion-token[data-step="1"],
-.occasion-slide[data-current-step="3"] .occasion-token[data-step="2"],
-.occasion-slide[data-current-step="4"] .occasion-token,
-.occasion-slide[data-current-step="5"] .occasion-token,
-.occasion-slide[data-current-step="5"] .permission-break,
-.occasion-slide[data-current-step="5"] .ordinary-day {
-  opacity: .42;
-  filter: saturate(.7);
-}
-
-.occasion-slide[data-current-step="4"] .permission-label,
-.occasion-slide[data-current-step="5"] .permission-label {
-  opacity: .42;
-}
-
-.occasion-slide[data-current-step="5"] .rule-layout > div:first-child {
-  opacity: .42;
 }
 
 .matrix-slide[data-current-step="2"] .plot[data-step="1"],
@@ -393,7 +400,7 @@
   inset: -6px -10px -5px;
 }
 
-/* Slide 07 — uncluttered Goldilocks zones, with the text held inside its ring. */
+/* Slide 06 — Goldilocks rings expose the working gap between familiar formats. */
 .audience-ring { border-width: 6px; }
 
 .audience-ring.right { left: -190px; }
@@ -412,12 +419,6 @@
   left: 96px;
   top: 448px;
   width: 330px;
-}
-
-.audience-zone.center {
-  left: 690px;
-  top: 370px;
-  width: 400px;
 }
 
 .audience-zone.right {
@@ -444,63 +445,172 @@
   line-height: .9;
 }
 
-.audience-zone.center h2 {
+.market-gap-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--accent-on-ink);
+}
+
+.market-gap-wash.build { opacity: 0; }
+.market-gap-wash.build.show { opacity: .22; }
+
+.audience-zone.center.market-gap {
+  left: 604px;
+  top: 352px;
+  z-index: 3;
+  width: 560px;
+  text-align: center;
+}
+
+.market-gap h2 {
+  max-width: 460px;
+  margin: 0 auto;
   color: var(--ink);
-  font-size: 64px;
-  line-height: .82;
+  font-size: 104px;
   font-weight: 400;
   letter-spacing: -.025em;
+  line-height: .78;
   text-wrap: balance;
 }
 
-.audience-groups {
-  margin-top: 23px;
-  max-width: 390px;
+.audience-slide .source {
+  left: 92px;
+  max-width: 1220px;
+  font-size: 14px;
+}
+
+.audience-slide[data-current-step="3"] .audience-zone.left,
+.audience-slide[data-current-step="3"] .audience-zone.right {
+  opacity: .42;
+}
+
+.audience-slide[data-current-step="3"] .audience-ring {
+  opacity: .48;
+}
+
+/* Slide 07 — one concrete use case, supported by explicit rehearsal placeholders. */
+.maya-story {
+  position: absolute;
+  top: 88px;
+  left: 92px;
+  right: 92px;
+}
+
+.maya-kicker {
+  margin-bottom: 16px;
   color: var(--accent-ink);
-  font-size: 24px;
-  line-height: 1.02;
+  font-size: 20px;
+  letter-spacing: .075em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.maya-story h2 {
+  max-width: 1260px;
+  color: var(--ink);
+  font-size: 72px;
+  font-weight: 400;
+  letter-spacing: -.025em;
+  line-height: .83;
   text-wrap: balance;
 }
 
-.audience-consequence {
-  margin-top: 18px;
-  max-width: 340px;
+.maya-story h2 em,
+.maya-moment em {
+  color: var(--accent-ink);
+  font-style: normal;
+}
+
+.maya-moment {
+  position: relative;
+  display: inline-block;
+  margin-top: 22px;
   color: var(--ink);
-  font-size: 38px;
+  font-size: 42px;
+  line-height: .9;
+}
+
+.maya-moment::before {
+  content: "";
+  position: absolute;
+  right: -18px;
+  bottom: -5px;
+  left: 76px;
+  z-index: -1;
+  height: 18px;
+  background: var(--accent-on-ink);
+  opacity: .32;
+  transform: rotate(-1deg);
+}
+
+.maya-evidence {
+  position: absolute;
+  top: 415px;
+  left: 110px;
+  right: 110px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 124px;
+  min-height: 250px;
+  padding-bottom: 28px;
+  border-bottom: 3px solid var(--ink);
+}
+
+.maya-stat {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 12px 24px;
+  align-items: start;
+}
+
+.maya-stat.second { transform: translateY(40px); }
+
+.maya-stat-side {
+  grid-column: 1 / -1;
+  color: var(--accent-ink);
+  font-size: 18px;
+  letter-spacing: .07em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.maya-stat strong {
+  color: var(--accent-ink);
+  font-size: 136px;
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .72;
+}
+
+.maya-stat p {
+  max-width: 390px;
+  padding-top: 5px;
+  color: var(--ink);
+  font-size: 34px;
   line-height: .88;
   text-wrap: balance;
 }
 
-/* Slide 07 — one working need-state, with recruitment examples deliberately subordinate. */
-.audience-zone.center {
-  left: 640px;
-  top: 334px;
-  width: 480px;
+.maya-close {
+  position: absolute;
+  top: 717px;
+  left: 390px;
+  right: 390px;
+  color: var(--ink);
+  font-size: 42px;
+  line-height: .88;
+  text-align: center;
+  text-wrap: balance;
+  transition-delay: 140ms;
 }
 
-.audience-zone.center h2 {
-  font-size: 55px;
-  line-height: .83;
-  max-width: 470px;
-}
-
-.audience-consequence {
-  max-width: 430px;
-  color: var(--accent-ink);
-  font-size: 33px;
-}
-
-.audience-groups {
-  max-width: 430px;
-  color: rgb(8 31 77 / .56);
-  font-size: 18px;
-  line-height: 1.05;
-}
-
-.audience-slide[data-current-step="3"] .audience-zone.left,
-.audience-slide[data-current-step="3"] .audience-zone.right,
-.audience-slide[data-current-step="3"] .audience-ring {
-  opacity: .4;
+.maya-slide .source {
+  bottom: 27px;
+  max-width: 1240px;
+  font-size: 15px;
 }
 
 /* Slide 09 — digital's advantage is expressive range, not another generic screen. */
@@ -588,6 +698,169 @@
   transform: translateY(-30px);
 }
 
+/* Slide 09 — four literal ingredients resolve into one digital gift. */
+.gift-kicker {
+  position: absolute;
+  top: 54px;
+  left: 95px;
+  color: var(--accent-ink);
+  font-size: 18px;
+  letter-spacing: .075em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.gift-title {
+  position: absolute;
+  top: 86px;
+  left: 95px;
+  right: 95px;
+  max-width: 1320px;
+  color: var(--ink);
+  font-size: 90px;
+  font-weight: 400;
+  letter-spacing: -.032em;
+  line-height: .8;
+  text-wrap: balance;
+}
+
+.gift-title em {
+  color: var(--accent-ink);
+  font-style: normal;
+}
+
+.gift-stem {
+  position: absolute;
+  top: 190px;
+  left: 105px;
+  color: rgb(8 31 77 / .62);
+  font-size: 27px;
+  line-height: 1;
+}
+
+.gift-composition {
+  position: absolute;
+  inset: 232px 82px 58px 95px;
+  display: grid;
+  grid-template-columns: minmax(0, 925px) 90px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.gift-points {
+  align-self: stretch;
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gift-point {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-content: center;
+  column-gap: 16px;
+  padding: 5px 0;
+  transition: opacity 230ms var(--enter), translate 340ms var(--enter);
+}
+
+.gift-point::before {
+  content: "";
+  align-self: center;
+  grid-row: 1 / span 2;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--paper), 0 0 0 6px rgb(37 72 120 / .2);
+}
+
+.gift-point strong {
+  color: var(--ink);
+  font-size: 45px;
+  font-weight: 400;
+  letter-spacing: -.012em;
+  line-height: .83;
+  text-wrap: balance;
+}
+
+.gift-point small {
+  grid-column: 2;
+  margin-top: 9px;
+  color: var(--accent-ink);
+  font-size: 24px;
+  line-height: .9;
+}
+
+.gift-brace {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 470px;
+  color: rgb(8 31 77 / .27);
+  font-family: Georgia, serif;
+  font-size: 420px;
+  font-weight: 400;
+  line-height: .72;
+  transform: scaleY(1.32) rotate(-1deg);
+  transform-origin: center;
+}
+
+.gift-core {
+  display: grid;
+  justify-items: center;
+  margin: 0;
+  color: var(--ink);
+  text-align: center;
+  transform-origin: center;
+  transition: opacity 260ms var(--enter), translate 420ms var(--enter), transform 520ms var(--enter);
+}
+
+.gift-core img {
+  width: 292px;
+  height: 292px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(12%) sepia(41%) saturate(2200%) hue-rotate(184deg) brightness(77%) contrast(107%);
+}
+
+.gift-core figcaption {
+  margin-top: 9px;
+}
+
+.gift-core figcaption strong,
+.gift-core figcaption span {
+  display: block;
+  font-weight: 400;
+}
+
+.gift-core figcaption strong {
+  font-size: 48px;
+  line-height: .82;
+}
+
+.gift-core figcaption span {
+  margin-top: 10px;
+  color: var(--accent-ink);
+  font-size: 30px;
+  line-height: .9;
+}
+
+.product-outcomes-slide[data-current-step="2"] .gift-point:nth-child(1),
+.product-outcomes-slide[data-current-step="3"] .gift-point:nth-child(-n + 2) {
+  opacity: .54;
+}
+
+.product-outcomes-slide[data-current-step="4"] .gift-point.show {
+  opacity: 1;
+}
+
+.product-outcomes-slide[data-current-step="4"] .gift-core {
+  transform: scale(1.025);
+}
+
 /* Chrome is useful while rehearsing, but should vanish in presentation fullscreen. */
 :fullscreen #hud,
 :fullscreen #progress,
@@ -655,4 +928,73 @@
   color: rgb(255 255 255 / .68);
   font-size: 19px;
   line-height: 1;
+}
+
+/* Printed/PDF decks resolve staged slides to their final narrative state. */
+@media print {
+  .framing-origin {
+    display: none !important;
+  }
+
+  .framing-discovery {
+    opacity: 1 !important;
+    visibility: visible !important;
+    translate: none !important;
+    filter: none !important;
+  }
+
+  .framing-heading,
+  .permission-map {
+    opacity: .24 !important;
+    filter: saturate(.6) !important;
+  }
+
+  .framing-slide .hmw-bar {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .research-slide .target-score::after {
+    opacity: 1 !important;
+    transform: rotate(var(--ring-tilt, -4deg)) scale(1) !important;
+  }
+
+  .solution-slide .solution-statement h2 {
+    opacity: .18 !important;
+    transform: translateY(-24px) scale(.86) !important;
+  }
+
+  .solution-slide .expressive-range {
+    color: var(--ink) !important;
+    transform: translateY(-30px) !important;
+  }
+
+  .audience-slide .audience-zone.left,
+  .audience-slide .audience-zone.right {
+    opacity: .26 !important;
+  }
+
+  .audience-slide .audience-ring {
+    opacity: .48 !important;
+  }
+
+  .market-gap-wash.build {
+    opacity: .22 !important;
+  }
+
+  .gift-point,
+  .gift-brace,
+  .gift-core {
+    opacity: 1 !important;
+    visibility: visible !important;
+    translate: none !important;
+  }
+
+  .gift-point {
+    opacity: 1 !important;
+  }
+
+  .gift-core {
+    transform: scale(1.025) !important;
+  }
 }

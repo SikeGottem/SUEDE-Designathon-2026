@@ -5,8 +5,10 @@ import test from 'node:test';
 
 const deckUrl = new URL('../index.html', import.meta.url);
 const refinementsUrl = new URL('../refinements.css', import.meta.url);
+const demoQrUrl = new URL('../assets/live-demo-qr.svg', import.meta.url);
 const source = await readFile(deckUrl, 'utf8');
 const refinements = await readFile(refinementsUrl, 'utf8');
+const demoQr = await readFile(demoQrUrl, 'utf8');
 
 test('core scaling and navigation bootstrap without a static module import', () => {
   const bootScript = source.match(/<script>([\s\S]*?const deck = [\s\S]*?)<\/script>/);
@@ -16,6 +18,8 @@ test('core scaling and navigation bootstrap without a static module import', () 
   assert.match(bootScript[1], /function fit\(\)/);
   assert.match(bootScript[1], /function render\(\)/);
   assert.match(bootScript[1], /location\.protocol==='file:'/);
+  assert.match(bootScript[1], /step=Math\.min\(Number\(slides\[index\]\.dataset\.steps\)\|\|0/);
+  assert.match(source, /id="deck-announcer"[^>]*role="status"[^>]*aria-live="polite"/);
 });
 
 test('CSS centres the fixed canvas before JavaScript enhances its scale', () => {
@@ -25,21 +29,30 @@ test('CSS centres the fixed canvas before JavaScript enhances its scale', () => 
   );
 });
 
-test('the revised deck opens on a visible logo page and contains 10 live slides', () => {
-  assert.equal((source.match(/<article class="slide/g) ?? []).length, 10);
+test('the revised deck opens on a visible logo page and contains 11 live slides', () => {
+  assert.equal((source.match(/<article class="slide/g) ?? []).length, 11);
   assert.match(
     source,
     /<article class="slide logo-slide active"[^>]*>[\s\S]*?<div class="brand-lockup">/,
   );
   assert.match(source, /class="cover-thesis">Rethinking when we show appreciation\.<\/p>/);
-  assert.doesNotMatch(source, /11\s*\/\s*\d+/);
+  assert.match(source, /11\s*\/\s*11/);
+  assert.doesNotMatch(source, /12\s*\/\s*\d+/);
   assert.doesNotMatch(source, /data-title="(?:Team|Thank you|Thanks)"/i);
 });
 
-test('the latest meeting framing replaces attribution and unsupported market claims', () => {
-  assert.match(source, /We appreciate our friends and family\. We just do not always[\s\S]*?show it/);
-  assert.match(source, /class="problem-origin">where we started<\/p>/);
-  assert.match(source, /class="problem-emphasis">show it\.<\/span>/);
+test('the merged framing slide stages the occasion rule from the starting hypothesis', () => {
+  const framingSlide = source.match(/<article class="slide framing-slide occasion-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+
+  assert.match(framingSlide, /data-title="Where our framing changed" data-steps="4"/);
+  assert.match(framingSlide, /class="framing-origin"[\s\S]*?class="problem-origin">where we started<\/p>/);
+  assert.match(framingSlide, /We appreciate our friends and family\. We just do not always[\s\S]*?class="problem-emphasis">show it\.<\/span>/);
+  assert.match(framingSlide, /class="framing-discovery build" data-step="2"[\s\S]*?The unwritten rule: appreciation needs an occasion\./);
+  assert.match(framingSlide, /class="occasion-side event-side"[\s\S]*?<p class="occasion-kind">event<\/p>[\s\S]*?<strong>celebration \/ milestone<\/strong>[\s\S]*?<ul><li>expected<\/li><li>socially understood<\/li><li>a clear prompt<\/li><\/ul>/);
+  assert.match(framingSlide, /class="occasion-side ordinary-side build" data-step="3"[\s\S]*?<p class="occasion-kind">ordinary day<\/p>[\s\S]*?<strong>no obvious prompt<\/strong>[\s\S]*?<ul><li>awkward<\/li><li>too much<\/li><li>intense<\/li><\/ul>/);
+  assert.match(framingSlide, /<strong>How might we<\/strong> make ordinary-day appreciation easier to send\?/);
+  assert.equal((source.match(/class="slide framing-slide occasion-slide"/g) ?? []).length, 1);
+  assert.doesNotMatch(source, /class="slide problem-slide"/);
   assert.doesNotMatch(source, /Chloe put the problem this way/);
   assert.doesNotMatch(source, /Our first market/);
   assert.doesNotMatch(source, /digital card/);
@@ -69,46 +82,70 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   assert.equal((source.match(/class="target-score"/g) ?? []).length, 3);
   assert.doesNotMatch(source, /class="practice-flag"/);
   assert.doesNotMatch(source, /research-bridge/);
-  assert.match(source, /Who sits in the gap\?/);
+  assert.match(source, /data-title="The market gap" data-steps="3"/);
   assert.match(source, /<span>text<\/span>[\s\S]*?too awkward[\s\S]*?too casual/);
   assert.match(source, /<span>letter \/ gift<\/span>[\s\S]*?too much[\s\S]*?high friction · inaccessible/);
-  assert.match(source, /One thought\.<br>One close relationship\.<br>No format that fits\./);
-  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance family[\s\S]*close friends/);
-  assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-zone left[\s\S]*class="audience-zone center[\s\S]*class="audience-zone right/);
-  assert.doesNotMatch(source, /class="audience-target/);
+  assert.match(source, /class="audience-ring left[\s\S]*class="audience-ring right[\s\S]*class="audience-zone left[\s\S]*class="audience-zone center market-gap[\s\S]*class="audience-zone right/);
+  assert.match(source, /class="market-gap-wash build" data-step="3"/);
+  assert.match(source, /class="audience-zone center market-gap build" data-step="3">\s*<h2>Users are stuck in limbo\.<\/h2>/);
+  assert.doesNotMatch(source, /market-gap-label/);
+  assert.doesNotMatch(source, /market-gap-consequence|Neither option fits an ordinary day/);
+  assert.match(source, /Working need-state hypothesis—not validated market sizing or demand\./);
   assert.doesNotMatch(source, /Grandmother|Granddaughter/);
+  assert.match(source, /data-title="One use case" data-steps="3"/);
   assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?class="demo-follow"/);
   assert.match(source, /assets\/live-demo-qr\.svg/);
-  assert.match(source, /warm-and-fuzzies\.vercel\.app\/demo/);
-  assert.match(source, /10\s*\/\s*10/);
+  assert.match(source, /warm-and-fuzzies\.vercel\.app\/demo\/receive/);
+  assert.match(demoQr, /Encoding-verified receiver demo QR: https:\/\/warm-and-fuzzies\.vercel\.app\/demo\/receive/);
+  assert.match(demoQr, /xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+  assert.match(source, /11\s*\/\s*11/);
   assert.doesNotMatch(source, /demo-sequence/);
   assert.doesNotMatch(source, /Live prototype · no video/);
-  assert.match(source, /Warm &amp; Fuzzies is a private digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
+  assert.match(source, /Warm &amp; Fuzzies is a personal digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
   assert.doesNotMatch(source, /assets\/current-home\.png/);
   assert.doesNotMatch(source, /solution-detail|device-wrap/);
 });
 
 test('the approved process narrative uses one active focus at a time', () => {
-  assert.match(source, /We looked for what makes an ordinary day different\./);
-  assert.match(source, /How our framing changed/);
+  assert.match(source, /The unwritten rule: appreciation needs an occasion\./);
+  assert.match(source, /Where our framing changed/);
   assert.match(source, /Psychology gave us three mechanisms to test\./);
   assert.match(source, /mechanisms, not verdicts/);
   assert.match(source, /Goldilocks zone are working hypotheses/);
-  assert.match(refinements, /\.occasion-slide\[data-current-step="2"\] \.occasion-token\[data-step="1"\]/);
+  assert.match(refinements, /\.framing-slide:is\(\[data-current-step="2"\],\[data-current-step="3"\],\[data-current-step="4"\]\) \.framing-origin/);
+  assert.match(refinements, /\.framing-slide\[data-current-step="4"\] \.framing-heading/);
   assert.match(refinements, /\.matrix-slide\[data-current-step="4"\] \.plot:not\(\.target\)/);
   assert.match(refinements, /opacity: \.42/);
 });
 
-test('the need-state and solution explain why digital expression is useful', () => {
+test('the Goldilocks market gap and Maya use case remain separate and explicitly provisional', () => {
   const audienceSlide = source.match(/<article class="slide audience-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
-  const solutionSlide = source.match(/<article class="slide solution-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+  const mayaSlide = source.match(/<article class="slide maya-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
 
-  assert.match(audienceSlide, /One thought\.<br>One close relationship\.<br>No format that fits\./);
-  assert.match(audienceSlide, /Distance should not leave appreciation unspoken\./);
-  assert.match(audienceSlide, /Recruitment examples: uni students · long-distance family · close friends/);
-  assert.doesNotMatch(audienceSlide, /close family/);
+  assert.match(audienceSlide, /data-steps="3"/);
+  assert.match(audienceSlide, /class="audience-ring left build" data-step="1"/);
+  assert.match(audienceSlide, /class="audience-ring right build" data-step="2"/);
+  assert.match(audienceSlide, /class="market-gap-wash build" data-step="3"/);
+  assert.match(audienceSlide, /Users are stuck in limbo\./);
+  assert.doesNotMatch(audienceSlide, /market-gap-consequence|Neither option fits an ordinary day/);
+  assert.match(audienceSlide, /Working need-state hypothesis—not validated market sizing or demand\./);
+  assert.doesNotMatch(audienceSlide, /Maya|illustrative use case/);
+  assert.match(mayaSlide, /data-steps="3"/);
+  assert.match(mayaSlide, /one illustrative use case/);
+  assert.match(mayaSlide, /Maya<\/em> wants to thank someone for being so friendly during her first week at uni\./);
+  assert.match(mayaSlide, /class="maya-moment build" data-step="1">It is an <em>ordinary Tuesday\.<\/em>/);
+  assert.match(mayaSlide, /class="maya-stat build" data-step="2"><span class="maya-stat-side">text side<\/span><strong>72%<\/strong><p>said a text can feel too casual for meaningful appreciation\.<\/p>/);
+  assert.match(mayaSlide, /class="maya-stat second build" data-step="3"><span class="maya-stat-side">gift side<\/span><strong>78%<\/strong><p>said they have never received a gift “just because\.”<\/p>/);
+  assert.match(mayaSlide, /Maya is one of many people caught between these two options\./);
+  assert.match(mayaSlide, /72% and 78% are rehearsal placeholders—not verified primary-research findings\. Maya is illustrative\./);
+});
+
+test('the solution and product differentiation explain expressive range and the combined format', () => {
+  const solutionSlide = source.match(/<article class="slide solution-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+  const outcomeSlide = source.match(/<article class="slide product-outcomes-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+
   assert.match(solutionSlide, /data-steps="1"/);
-  assert.match(solutionSlide, /Warm &amp; Fuzzies is a private digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
+  assert.match(solutionSlide, /Warm &amp; Fuzzies is a personal digital keepsake that brings the[\s\S]*thoughtfulness of a letter[\s\S]*ease of a text/);
   assert.match(solutionSlide, /Because <em>digital<\/em> can hold more than words\./);
   for (const medium of ['writing', 'photo', 'voice', 'video', 'song']) {
     assert.match(solutionSlide, new RegExp(`>${medium}<`));
@@ -117,6 +154,17 @@ test('the need-state and solution explain why digital expression is useful', () 
   assert.match(solutionSlide, /class="expressive-media"/);
   assert.doesNotMatch(solutionSlide, /keepsake-paper|for Maya|one thought, in the form it needs/);
   assert.doesNotMatch(solutionSlide, /emoji|🏷|🎵|📷/u);
+  assert.match(outcomeSlide, /data-title="Why this format" data-steps="4"/);
+  assert.match(outcomeSlide, /Warm &amp; Fuzzies is a <em>digital gift\.<\/em>/);
+  assert.equal((outcomeSlide.match(/class="gift-point build"/g) ?? []).length, 4);
+  assert.match(outcomeSlide, /the personality of a handwritten letter/);
+  assert.match(outcomeSlide, /the dynamism of mixed media[\s\S]*writing · photo · voice · video · song/);
+  assert.match(outcomeSlide, /the ease of a text[\s\S]*one direct link · no receiver account/);
+  assert.match(outcomeSlide, /the sense of ownership from a gift[\s\S]*the receiver decides: keep · revisit · remove/);
+  assert.match(outcomeSlide, /class="gift-brace build" data-step="4"/);
+  assert.match(outcomeSlide, /class="gift-core build" data-step="4"[\s\S]*firefly-carrying-envelope\.png/);
+  assert.match(outcomeSlide, /receiver control, not legal ownership or permanent storage · emotional impact not yet measured/);
+  assert.doesNotMatch(source, /resolution-ring|resolution-core|Venn|product-(?:make|share|receive)\.png|current-home\.png|product-mechanics-slide|solution-detail|device-wrap/);
   assert.match(refinements, /:fullscreen #hud,[\s\S]*:fullscreen #progress,[\s\S]*:fullscreen \.skip,[\s\S]*:fullscreen \.status/);
 });
 
@@ -125,22 +173,30 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /When was the last time someone showed you appreciation/);
   assert.doesNotMatch(source, /appreciation—not for a birthday or event/);
   assert.doesNotMatch(source, /When was the last time you sent or received a letter/);
-  assert.match(source, /We looked for what makes an ordinary day different\./);
-  assert.match(source, /occasions provide a ready-made script/);
-  assert.match(source, /<strong>ordinary day<\/strong><ul><li>awkward<\/li><li>too much<\/li><li>intense<\/li><\/ul>/);
+  assert.match(source, /The unwritten rule: appreciation needs an occasion\./);
+  assert.match(source, /<p class="occasion-kind">event<\/p>[\s\S]*?<strong>celebration \/ milestone<\/strong>[\s\S]*?<ul><li>expected<\/li><li>socially understood<\/li><li>a clear prompt<\/li><\/ul>/);
+  assert.match(source, /<p class="occasion-kind">ordinary day<\/p>[\s\S]*?<strong>no obvious prompt<\/strong>[\s\S]*?<ul><li>awkward<\/li><li>too much<\/li><li>intense<\/li><\/ul>/);
   assert.match(source, /Kumar &amp; Epley, 2018 · Givi &amp; Galak, 2022/);
-  assert.equal((source.match(/class="occasion-mark"/g) ?? []).length, 3);
+  assert.doesNotMatch(source, /class="occasion-mark"|occasion-sequence|birthday<\/strong>|farewell<\/strong>/);
   assert.doesNotMatch(source, /Is everything okay\?/);
-  assert.doesNotMatch(source, /ordinary Tuesday/);
+  assert.match(source, /data-title="The market gap" data-steps="3"/);
+  assert.match(source, /Users are stuck in limbo\./);
+  assert.doesNotMatch(source, /market-gap-consequence|Neither option fits an ordinary day/);
+  assert.match(source, /data-title="One use case" data-steps="3"/);
+  assert.match(source, /Maya<\/em> wants to thank someone for being so friendly during her first week at uni\./);
+  assert.match(source, /72% and 78% are rehearsal placeholders—not verified primary-research findings\. Maya is illustrative\./);
   assert.doesNotMatch(source, /no ready-made script/);
   assert.doesNotMatch(source, /Senders can overestimate awkwardness\./);
   assert.doesNotMatch(source, /Ordinary-day care can still be welcome\./);
-  assert.match(source, /class="audience-groups"[\s\S]*uni students[\s\S]*long-distance family[\s\S]*close friends/);
-  assert.match(source, /data-title="Research synthesis" data-steps="4"/);
+  assert.match(source, /Contexts: university students · long-distance family · close friends/);
+  assert.match(source, /data-title="Research synthesis" data-steps="4"[\s\S]*?08 \/ 11/);
+  assert.match(source, /data-title="Warm (?:&|&amp;) Fuzzies" data-steps="1"[\s\S]*?09 \/ 11/);
+  assert.equal((source.match(/class="slide synthesis-slide"/g) ?? []).length, 1);
+  assert.equal((source.match(/class="slide solution-slide"/g) ?? []).length, 1);
   assert.match(source, /<span>if<\/span>[\s\S]*<span>and<\/span>[\s\S]*<span>then<\/span>[\s\S]*<span>therefore<\/span>/);
   assert.match(source, /Make showing appreciation feel normal on an ordinary day\./);
   assert.match(source, /Create the impact of gift-giving, with the low friction and repeatability of everyday digital contact\./);
-  assert.match(source, /10 \/ 10/);
+  assert.match(source, /11 \/ 11/);
   assert.doesNotMatch(source, />75%</);
 });
 
