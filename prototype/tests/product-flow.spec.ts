@@ -11,7 +11,7 @@ async function startSenderFlow(page: Page) {
 async function reachReceiverArrival(page: Page) {
   await page.goto("/");
   await page.getByRole("button", { name: "view sample arrival" }).click();
-  await expect(page.getByRole("heading", { name: "Ethan made something private for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
 }
 
 test("requires a specific recipient, reason, and self-authored note before a text-only object can be shared", async ({ page }) => {
@@ -61,7 +61,7 @@ test("lets a receiver defer, reopen, keep, close, cancel discard, discard, and r
   await page.getByRole("button", { name: "open when ready" }).click();
   await expect(page.getByRole("button", { name: "close for now" })).toBeVisible();
   await page.getByRole("button", { name: "close for now" }).click();
-  await expect(page.getByRole("heading", { name: "Ethan made something private for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
 
   await page.getByRole("button", { name: "open when ready" }).click();
   await page.getByRole("button", { name: "keep locally" }).click();
@@ -81,7 +81,7 @@ test("lets a receiver defer, reopen, keep, close, cancel discard, discard, and r
   await page.getByRole("button", { name: "discard local copy" }).last().click();
   await expect(page.getByRole("heading", { name: "local copy removed" })).toBeVisible();
   await page.getByRole("button", { name: "restore simulated object" }).click();
-  await expect(page.getByRole("heading", { name: "Ethan made something private for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
 });
 
 test("keeps keyboard focus visibly indicated on an app control", async ({ page }) => {

@@ -80,7 +80,8 @@ test("each draft gets an exact downloadable QR with no demo substitution", async
   const receiver = await context.newPage();
   await receiver.emulateMedia({ reducedMotion: "reduce" });
   await receiver.goto(firstLink);
-  await expect(receiver.getByRole("heading", { name: "Ethan made something private for you." })).toBeVisible();
+  await expect(receiver.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
+  await expect(receiver.getByRole("button", { name: "remove it", exact: true })).toBeVisible();
   await expect(receiver.getByRole("button", { name: /log in|sign up|create account/i })).toHaveCount(0);
   await receiver.close();
 });

@@ -46,8 +46,9 @@ async function reachHandoffFromPreview(page: Page) {
 async function openDemoReceive(page: Page) {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/demo/receive");
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect(page.getByText(`for ${canonicalRecipient}`, { exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "remove it", exact: true })).toBeVisible();
   await page.getByRole("button", { name: "open it", exact: true }).click();
   await expect(page.locator(".receiver-paper-final .authored-paper")).toBeVisible();
 }
@@ -131,7 +132,8 @@ test("the demo handoff sends the exact edited template through a v3 receiver URL
   try {
     await receiver.emulateMedia({ reducedMotion: "reduce" });
     await receiver.goto(url);
-    await expect(receiver.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+    await expect(receiver.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
+    await expect(receiver.getByRole("button", { name: "remove it", exact: true })).toBeVisible();
     await expect(receiver.getByText("for Noor", { exact: true })).toBeVisible();
     await expect(receiver.getByLabel("Double tap the plane to open")).toBeVisible();
     await receiver.getByRole("button", { name: "open it", exact: true }).click();
@@ -164,7 +166,7 @@ test("/demo/receive reloads back to the repeatable arrival journey", async ({ pa
   await expectCanonicalReceiver(page);
 
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect(page.getByText(`for ${canonicalRecipient}`, { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "open it", exact: true })).toBeVisible();
 });
@@ -179,11 +181,11 @@ test("/demo/receive keeps only in its ephemeral demo cabinet", async ({ page }) 
   await expect.poll(() => page.evaluate((key) => window.localStorage.getItem(key), normalCabinetKey)).toBe(normalCabinetValue);
 
   await page.getByRole("button", { name: "Make a new letter", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect(page.getByText(`for ${canonicalRecipient}`, { exact: true })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect.poll(() => page.evaluate((key) => window.localStorage.getItem(key), normalCabinetKey)).toBe(normalCabinetValue);
 });
 
@@ -196,7 +198,7 @@ test("demo receiver rejects legacy and malformed payload hashes instead of repla
   }
 
   await page.goto("/demo/");
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect(page.getByRole("button", { name: "open it", exact: true })).toBeVisible();
 });
 
@@ -206,7 +208,7 @@ test("the receiver demo cannot escape into the normal home or create flow", asyn
   await page.getByRole("button", { name: "another time", exact: true }).click();
   await expect(page.getByRole("heading", { name: "left for another time." })).toBeVisible();
   await page.getByRole("button", { name: "leave", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Ethan made something for you." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "you’ve got something from Ethan." })).toBeVisible();
   await expect(page.getByRole("button", { name: "make it for them", exact: true })).toHaveCount(0);
 });
 

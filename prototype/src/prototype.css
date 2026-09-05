@@ -177,10 +177,12 @@
 .home-page {
   position: relative;
   min-height: 700px;
+  overflow: hidden;
 }
 
 .home-bee-mark {
   position: absolute;
+  z-index: 3;
   top: 300px;
   left: 50%;
   width: 100px;
@@ -199,6 +201,7 @@
 
 .home-copy {
   position: absolute;
+  z-index: 3;
   top: 8px;
   right: 0;
   left: 0;
@@ -224,6 +227,7 @@
 
 .home-question {
   position: absolute;
+  z-index: 3;
   top: 407px;
   right: 0;
   left: 0;
@@ -248,6 +252,7 @@
 
 .home-invitation {
   position: absolute;
+  z-index: 4;
   right: 0;
   bottom: -5px;
   left: 0;
@@ -261,6 +266,40 @@
   font-size: 24px !important;
 }
 
+.home-reeds {
+  position: absolute;
+  z-index: 1;
+  right: -58px;
+  bottom: -78px;
+  left: -58px;
+  height: 372px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-reed {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 390px;
+  height: 410px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: brightness(0) saturate(100%) invert(61%) sepia(19%) saturate(803%) hue-rotate(27deg) brightness(96%) contrast(88%);
+}
+
+.home-reed-left {
+  left: -112px;
+  transform: rotate(-6deg);
+  transform-origin: 50% 100%;
+}
+
+.home-reed-right {
+  right: -112px;
+  transform: scaleX(-1) rotate(-6deg);
+  transform-origin: 50% 100%;
+}
+
 /* The first in-app state separates making from revisiting without becoming a dashboard. */
 .menu-page {
   position: relative;
@@ -270,6 +309,7 @@
 
 .menu-page > header {
   position: absolute;
+  z-index: 4;
   top: 12px;
   right: 0;
   left: 0;
@@ -281,10 +321,11 @@
 
 .menu-firefly {
   position: absolute;
-  top: 176px;
-  left: calc(50% - 90px);
-  width: 180px;
-  height: 180px;
+  z-index: 3;
+  top: 132px;
+  left: calc(50% - 135px);
+  width: 270px;
+  height: 270px;
   transform-origin: 50% 58%;
 }
 
@@ -301,6 +342,7 @@
 
 .menu-actions {
   position: absolute;
+  z-index: 4;
   right: 18px;
   bottom: 64px;
   left: 18px;
@@ -319,7 +361,27 @@
 }
 
 .menu-actions .line-mark {
-  width: 48px;
+  width: 42px;
+}
+
+.hub-pattern {
+  position: absolute;
+  z-index: 1;
+  top: 54px;
+  right: -20px;
+  bottom: 112px;
+  left: -20px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hub-pattern img {
+  position: absolute;
+  display: block;
+  height: auto;
+  opacity: .72;
+  mix-blend-mode: multiply;
+  filter: brightness(0) saturate(100%) invert(68%) sepia(89%) saturate(1179%) hue-rotate(337deg) brightness(99%) contrast(87%);
 }
 
 /* A new object starts with one person, so every later object and handoff is named rather than pre-filled. */
@@ -2337,12 +2399,17 @@
 
 /* Receiver arrival and gestures */
 .arrival-page {
+  position: relative;
   min-height: 700px;
-  overflow-x: clip;
+  overflow: hidden;
 }
 
 .arrival-page > header {
-  margin-top: 24px;
+  position: relative;
+  z-index: 5;
+  min-height: 100px;
+  margin-top: 8px;
+  pointer-events: none;
 }
 
 .arrival-page > header > span {
@@ -2362,8 +2429,9 @@
 .arrival-object {
   position: relative;
   display: grid;
-  min-height: 430px;
-  margin-top: 12px;
+  min-height: 438px;
+  margin: -2px -24px 0;
+  overflow: hidden;
   isolation: isolate;
   place-items: center;
 }
@@ -2375,30 +2443,75 @@
   object-fit: contain;
   mix-blend-mode: multiply;
   filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
-  opacity: 0.14;
+  opacity: 1;
   pointer-events: none;
 }
 
 .arrival-reeds {
-  bottom: 42px;
-  left: -66px;
-  width: 290px;
-  height: 330px;
+  bottom: -44px;
+  width: 250px;
+  height: 318px;
+  filter: brightness(0) saturate(100%) invert(61%) sepia(19%) saturate(803%) hue-rotate(27deg) brightness(96%) contrast(88%);
+  transform-origin: 50% 100%;
+}
+
+.arrival-reeds-left {
+  left: -82px;
+}
+
+.arrival-reeds-right {
+  right: -82px;
 }
 
 .arrival-clouds {
-  top: -38px;
-  right: -52px;
-  width: 330px;
-  height: 430px;
-  opacity: 0.11;
+  top: -70px;
+  right: -28px;
+  width: 440px;
+  height: 462px;
+  opacity: .92;
+}
+
+.arrival-firefly-reeds,
+.arrival-water {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arrival-wave {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% - 270px);
+  display: block;
+  width: 540px;
+  max-width: none;
+  height: auto;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.arrival-wave-a {
+  top: 156px;
+  filter: brightness(0) saturate(100%) invert(16%) sepia(49%) saturate(1312%) hue-rotate(184deg) brightness(85%) contrast(100%);
+}
+
+.arrival-wave-b {
+  top: 192px;
+  opacity: .72;
+  filter: brightness(0) saturate(100%) invert(55%) sepia(26%) saturate(600%) hue-rotate(145deg) brightness(98%) contrast(88%);
 }
 
 .arrival-options {
+  position: relative;
+  z-index: 5;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  width: min(292px, 100%);
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
   margin-top: auto;
 }
 
@@ -2407,8 +2520,8 @@
 }
 
 .arrival-options .unavailable-link {
-  color: color-mix(in srgb, var(--navy) 58%, white);
-  font-size: 13px;
+  color: var(--navy);
+  font-size: 18px;
 }
 
 /* White-to-navy threshold */
@@ -3615,8 +3728,10 @@
 .seal-stamp {
   position: absolute;
   z-index: 5;
-  right: 56px;
-  bottom: 40px;
+  top: 54%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
   display: grid;
   width: 76px;
   height: 76px;
@@ -3631,7 +3746,11 @@
   font-size: 14px !important;
   line-height: 0.82;
   text-align: center;
-  transform: rotate(4deg);
+  transform: translate(-50%, -50%) rotate(4deg);
+}
+
+.keepsake-app .seal-stamp:active {
+  transform: translate(-50%, -50%) rotate(4deg) scale(.97);
 }
 
 .seal-stamp.has-seal {
@@ -3884,9 +4003,12 @@
 .envelope-next {
   position: absolute;
   z-index: 12;
-  right: 50%;
+  right: 20px;
   bottom: calc(var(--mobile-safe-area-height) + 18px);
-  transform: translateX(50%);
+  left: 20px;
+  width: auto;
+  min-height: 56px;
+  transform: none;
   white-space: nowrap;
 }
 
@@ -4099,8 +4221,10 @@
 .sealed-artwork-stamp {
   position: absolute;
   z-index: 2;
-  right: 17%;
-  bottom: 15%;
+  top: 54%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
   display: grid;
   width: 20%;
   aspect-ratio: 1;
@@ -4108,7 +4232,7 @@
   border-radius: 50%;
   background: transparent;
   place-items: center;
-  transform: rotate(4deg);
+  transform: translate(-50%, -50%) rotate(4deg);
 }
 
 .sealed-stamp-base {
@@ -4439,11 +4563,19 @@
   padding-bottom: 72px;
 }
 
+.sent-completion {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  margin-top: 500px;
+}
+
 .sent-copy {
   position: relative;
   z-index: 3;
   width: fit-content;
-  margin: 438px auto 0;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .sent-secondary {
@@ -4451,7 +4583,7 @@
   z-index: 3;
   width: min(292px, 100%);
   justify-content: space-between;
-  margin: 18px auto 0;
+  margin: 36px auto 0;
   padding-top: 0;
 }
 
@@ -4466,6 +4598,29 @@
   pointer-events: none;
 }
 
+.delivery-sun {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: 98px;
+  height: 126px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: brightness(0) saturate(100%) invert(69%) sepia(86%) saturate(1111%) hue-rotate(337deg) brightness(102%) contrast(86%);
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+.sent-sun {
+  top: 30px;
+  right: 30px;
+}
+
+.arrival-sun {
+  top: -44px;
+  right: 22px;
+}
+
 .sent-reeds,
 .sent-plane-clouds {
   position: absolute;
@@ -4473,24 +4628,32 @@
   display: block;
   object-fit: contain;
   mix-blend-mode: multiply;
-  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(61%) sepia(19%) saturate(803%) hue-rotate(27deg) brightness(96%) contrast(88%);
   pointer-events: none;
 }
 
 .sent-reeds {
-  top: 94px;
-  left: -62px;
-  width: 300px;
-  height: 354px;
-  opacity: 0.2;
+  top: 172px;
+  width: 254px;
+  height: 332px;
+  transform-origin: 50% 100%;
+}
+
+.sent-reeds-left {
+  left: -80px;
+}
+
+.sent-reeds-right {
+  right: -80px;
 }
 
 .sent-plane-clouds {
-  top: -32px;
-  right: -44px;
-  width: 352px;
-  height: 456px;
-  opacity: 0.12;
+  top: -24px;
+  right: -42px;
+  width: 438px;
+  height: 478px;
+  opacity: .92;
+  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
 }
 
 .sent-letter-object {
@@ -4570,11 +4733,14 @@
   max-width: none;
   pointer-events: none;
   will-change: transform, opacity;
+  mix-blend-mode: multiply;
+  filter: brightness(0) saturate(100%) invert(16%) sepia(49%) saturate(1312%) hue-rotate(184deg) brightness(85%) contrast(100%);
 }
 
 .sent-water-departure-b {
   z-index: 1;
   width: 520px;
+  filter: brightness(0) saturate(100%) invert(55%) sepia(26%) saturate(600%) hue-rotate(145deg) brightness(98%) contrast(88%);
 }
 
 .sent-water-still {
@@ -4626,6 +4792,15 @@
   height: 100%;
   object-fit: contain;
   filter: none;
+}
+
+.arrival-carrier-button {
+  position: relative;
+}
+
+.arrival-carrier-button .arrival-delivery-mascot {
+  position: absolute;
+  inset: 20px 0 30px;
 }
 
 @media (prefers-reduced-motion: reduce) {

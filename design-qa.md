@@ -300,3 +300,34 @@ The Impeccable detector ran after the final UI edit but its HTML parser dependen
 - Strongest remaining AI tell: five evenly spaced media icons can still read as a generic feature row when presented without narration. The single headline, shared line and removal of all card/mockup containers keep it subordinate to the medium argument; the physical rehearsal must confirm first-listener recall.
 - Material human change after render: Ethan rejected the generated recipient-object composition and directly selected the stripped headline-plus-icons treatment.
 - Blocking evidence boundary: the retained 82%, 71%, ratings, coordinates and circle sizes remain invented rehearsal material. They must be replaced or removed before a judged delivery regardless of hierarchy or visual polish.
+
+---
+
+# Design QA — 6 September annotated app feedback
+
+## Target and evidence
+
+- Source of truth: Ethan's five annotated Home, hub, firefly, plane and bottle frames supplied in chat on 6 September, plus the immediately preceding envelope-stamp screenshot.
+- Final iPhone-surface captures: `prototype/.playwright-cli/element-2026-09-05T14-39-40-213Z.png` for Home, `prototype/.playwright-cli/element-2026-09-05T14-34-10-832Z.png` for the hub, `prototype/.playwright-cli/element-2026-09-05T14-34-49-415Z.png` for the envelope, `prototype/.playwright-cli/element-2026-09-05T14-38-21-902Z.png` for bottle arrival and `prototype/.playwright-cli/element-2026-09-05T14-40-54-360Z.png` for bottle completion.
+- Interaction verification: 18 focused Playwright checks passed across visual-feedback regressions, current feedback and both demo routes. The protected mobile runtime check, TypeScript/Vite build and Sites worker suite also passed.
+
+## Findings and corrections
+
+1. The personal stamp was anchored to the envelope's lower-right quadrant. Both the editable and sealed-preview stamps now share the centre seam, so the mark reads as the closure rather than a second mail object.
+2. `choose how it travels` used a text-sized hit box. The semantic button now spans the available row with a 56-pixel minimum height; left-edge and right-edge pointer checks both advance to carrier selection.
+3. Home was missing the annotated environmental anchor. Cecelia's real reeds now rise from the two lower corners behind the one CTA, while the existing wordmark, filled firefly and question retain the sparse hierarchy.
+4. The hub previously reused a smaller two-frame mascot treatment. It now performs one enlarged, bounded carrying-firefly entrance beneath a title that compresses into place; a sparse, irregular ochre firefly field stays static behind it. Reeds do not carry into the hub.
+5. One generic delivery path could not express all three carriers. Sender and receiver scenes now use one-shot carrier-specific choreography: wavy firefly pickup/arrival with reeds, plane drift with clouds, and bottle travel caused by two contained water layers. The shared sun makes one slight rotation and stops.
+6. The first bottle pass allowed water to cross the receiver prompt and to finish partly outside the scene. The final water stage sits behind the bottle, clears the prompt and uses small opposing translations while remaining clipped to the app surface.
+7. Sender completion controls previously appeared before the selected object had travelled. They now reveal after the carrier's delivery beat; reduced-motion users receive the completed static state immediately.
+8. Receiver copy now names the actual snapshot sender and offers `open it`, `another time` or `remove it`. Removal stays receiver-local and does not create a sender receipt.
+
+## Quality boundary
+
+- No path guides, generic particles, looping mascot motion, gradients, card shells or replacement illustrations were introduced.
+- The detector's only advisory was the existing two-axis grid used by the selectable grid-paper canvas; that is functional paper content rather than a decorative background.
+- No actionable P0, P1 or P2 mismatch remains in this scoped pass. The older open Impeccable hero round refers to a superseded Home-comp workflow and was not allowed to overwrite Ethan's newer annotated direction.
+
+## Final result
+
+passed for prototype alignment; the next useful check is a real-phone run of all three carrier scenes at presentation speed.
