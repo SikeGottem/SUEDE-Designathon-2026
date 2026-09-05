@@ -95,6 +95,10 @@
 }
 
 /* Slide 07 — uncluttered Goldilocks zones, with the text held inside its ring. */
+.audience-ring { border-width: 6px; }
+
+.audience-ring.right { left: -190px; }
+
 .audience-zone > span {
   display: block;
   margin-bottom: 16px;
@@ -106,21 +110,22 @@
 }
 
 .audience-zone.left {
-  left: 112px;
-  top: 454px;
-  width: 350px;
+  left: 96px;
+  top: 448px;
+  width: 330px;
 }
 
 .audience-zone.center {
-  left: 625px;
-  top: 386px;
-  width: 470px;
+  left: 690px;
+  top: 370px;
+  width: 400px;
 }
 
 .audience-zone.right {
-  left: 1215px;
-  top: 450px;
-  width: 294px;
+  left: auto;
+  right: 92px;
+  top: 448px;
+  width: 276px;
 }
 
 .audience-zone strong {
@@ -142,7 +147,7 @@
 
 .audience-zone.center h2 {
   color: var(--ink);
-  font-size: 58px;
+  font-size: 64px;
   line-height: .82;
   font-weight: 400;
   letter-spacing: -.025em;
@@ -150,17 +155,19 @@
 }
 
 .audience-groups {
-  margin-top: 28px;
+  margin-top: 23px;
+  max-width: 390px;
   color: var(--accent-ink);
-  font-size: 27px;
-  line-height: .96;
+  font-size: 24px;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
 .audience-consequence {
-  margin-top: 27px;
+  margin-top: 18px;
+  max-width: 340px;
   color: var(--ink);
-  font-size: 34px;
+  font-size: 38px;
   line-height: .88;
   text-wrap: balance;
 }
