@@ -5,12 +5,13 @@
 
 - All 25 transcript captures available in `WIKI/TRANSCRIPTS/` at the 4 September 2026 review cut-off were read in full, plus the folder README.
 - This pass also applied the two newest presentation-specific captures: [9ddc…](../WIKI/TRANSCRIPTS/2026-09-04-9ddc0551-abce-5be0-8dcd-faf67accd863.md) for the page-by-page deck review and [e0acf…](../WIKI/TRANSCRIPTS/2026-09-04-e0acf8d3-60e2-5585-bc2d-25087f016ae9.md) for the later problem and solution correction.
-- The 5 September revision treats the newest 33-minute mentor meeting, [ca9d…](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md), as the controlling critique for presentation changes. It supersedes earlier deck advice where the two conflict, but remains mentor guidance and team discussion rather than participant research.
+- The latest presentation review, [b390…](../WIKI/TRANSCRIPTS/2026-09-05-b39036cd-1c5b-5437-a7ed-197d5a750ae7.md), is now the controlling live-deck source. It supersedes earlier deck choices where they conflict: the Chloe quote, secondary/primary research split, market slide, process strip, static product walkthrough and anti-doomscroll branch leave the live pitch.
+- The preceding 33-minute mentor meeting, [ca9d…](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md), remains the source for the full Chloe quote, research challenge and mentor advice. It is not participant research.
 - The review covered direct mentions of decks and pitches as well as indirect decisions about the opening, evidence, humour, visual comparisons, demo choreography, audience participation, Q&A and what the team rejected.
 - Several Discord captures compress long discussions into a single timestamped line. Local recordings 14–20 also contain unattributed machine transcription. File and timestamp references are reliable retrieval pointers; uncertain speaker identity is not inferred.
 - No substantive presentation direction appeared in the Chronicle test captures or files `29cb…`, `bd6…`, `ce112…`, `1743…`, `1fe…`, `330…`, `9a…` and `9fb…`.
 
-## Exact mentor-endorsed problem framing
+## Exact mentor-endorsed problem framing — preserved off the live deck
 
 Ethan confirmed the following as Chloe's framing. Chronicle assigned the entire meeting to `ethan`, so the attribution comes from Ethan rather than independent speaker labels in the raw file. The exact machine-transcribed wording at [30:02](../WIKI/TRANSCRIPTS/2026-09-05-ca9dfe1e-6e07-56cc-8d66-5bdfeeb57225.md#L51) is:
 
@@ -22,46 +23,45 @@ The response immediately after it at [30:27](../WIKI/TRANSCRIPTS/2026-09-05-ca9d
 
 The transcript does **not** contain “that's perfect” at this point; the recorded approval is “I think that's it” and “you worded it very well.” `Birthday brief` is almost certainly a transcription error, but it must remain unchanged inside the verbatim quote.
 
-Deck-normalized version:
+The controlling b390 review removes Chloe attribution and quotation from the live deck. The full source remains here and in the appendix for provenance. The live story now uses two plain team-authored statements:
 
-> **Without an occasion, appreciation has no familiar social permission.** Birthdays, farewells and milestones prompt us to show it; an ordinary day does not.
+> **We appreciate our friends and family. We just do not always show it.**
 
-This is the lead problem statement, but it remains an evidence-informed working framing rather than a universal population fact.
+> **Appreciation needs an occasion.**
 
-## Mentor actionables applied to the presentation
+Both remain evidence-informed working framings rather than universal population facts.
 
-1. **Lead with the social rule, not the app.** The pitch now gives Chloe's shortest exact central clause—“there's no expectation or norm to show appreciation for friends and family”—its own slide, then compresses it into the occasion-based permission rule on the following slide. The complete machine-transcribed wording, including `birthday brief`, remains preserved in this source record and the speaker notes.
-2. **Open with the letter question.** Ask when the audience last sent and received a letter, then use its rarity to introduce the question rather than claim proof.
-3. **Use one direct How Might We.** “How might we create that permission on an ordinary day?” Keep reply pressure as a receiver-side requirement rather than diluting the central social-rule framing.
-4. **Make the why dominate.** The first nine slides establish the rule, alternatives, evidence, missing evidence, target context and design reasoning before the product reveal. The mentor's “80 percent problem” comment is treated as direction, not a literal rubric weight.
-5. **Correct the opportunity map.** Add video calls, alongside text, voice notes, digital cards or group boards, gifts and handwritten letters. Name the highlighted hypothesis `the ordinary-day gap` and show an intentionally blank `___%` marker labelled as pending a matched-format participant test. Never invent the percentage; every position and the gap itself remain hypotheses until measured.
-6. **Bring psychology and existing solutions into the argument.** Use the sourced gratitude-letter finding about anticipated awkwardness with its narrow boundary; add the voice-versus-text connection study as a control, not proof for this product. Use Hallmark and Kudoboard to show that current digital-card discovery is still organised around occasion categories, not to claim demand or advantage.
-7. **Show what evidence is absent.** The primary-research slide separates quantitative “what/how often,” qualitative “why/in what context,” and observed prototype behaviour. All stay visibly pending until the records exist.
-8. **Name the selected first market without pretending demand is validated.** The team selected university students maintaining long-distance connections with friends and family as the first market for research and design. That is a team targeting decision, not a prevalence, need or demand finding.
-9. **Tell one end-to-end situation.** Show the ordinary-day trigger, the sender's decision, the receiver's context and choice to open, and possible later revisiting. The grandmother and university-student granddaughter journey is explicitly illustrative, with no invented demographic detail or claimed behaviour.
-10. **Establish cadence.** Position Warm & Fuzzies as an occasional, unexpected and finite gesture—not continuous messaging, frequent back-and-forth or another social network.
-11. **Weave process through cause and effect.** Every material step should read `evidence or hypothesis -> conclusion -> design requirement -> product response`; the dedicated process slide shows actual artifacts rather than a diary.
-12. **Keep the solution explanation focused.** Introduce one mechanism, then demo the complete sender-to-receiver journey. Avoid a feature inventory.
-13. **Explain low-friction access honestly.** Receiver access by link is a prototype direction. Do not claim that sender apps, accounts, integrations or production delivery are resolved.
-14. **Replace permanence rhetoric with a receiver contract.** Say the sender's act is final and the receiver can keep, close or remove the prototype object. Do not say “own,” “immortalised,” “permanent” or “forever” until retention, identity, deletion and migration are actually defined.
-15. **Keep the audience handoff.** A verified QR/link and no-device alternative can demonstrate the receiver flow. Participation stays optional, generic, private, accessible and reply-free; reactions are not validation.
-16. **Separate the future anti-doomscroll direction from current proof.** A context-aware moment may optionally resurface a past note or message, or gently suggest sending something. It must be labelled unbuilt, untested and outside the current prototype demonstration; it must not shame, interrupt or manipulate users.
-17. **Close on the logic.** “Occasions currently grant permission. Warm & Fuzzies proposes an ordinary-day ritual.” Do not claim the prototype has already changed the norm.
+## Controlling b390 changes applied to the ten-slide live deck
 
-## Mentor actionables that a presentation edit cannot complete
+1. **Logo — 5 seconds.** Keep only product identity and required team details.
+2. **Letter question — 20 seconds.** Ask when the room last genuinely sent or received a letter outside a birthday or special event, just out of appreciation. Do not ask for raised hands and remove “we have never had more ways to talk.” Source: 02:52.
+3. **Plain problem — 15 seconds.** Replace the live Chloe quote with: “We appreciate our friends and family. We just do not always show it.” Keep the exact quote in this source record and the appendix only. Source: 02:52–04:20.
+4. **Occasion rule and HMW — 25 seconds.** Use “Appreciation needs an occasion,” show the social permission supplied by birthdays, farewells and milestones, then ask: “How might we create that permission on an ordinary day?” Source: 04:20–05:18.
+5. **Corrected opportunity map — 40 seconds.** Remove digital card; keep quick text and voice note on the same low-cost baseline; retain video call; swap the prior physical gift and handwritten-letter positions; correct the x and y axes; and leave `___%` blank. Every channel position and the highlighted ordinary-day gap remain team hypotheses. Source: 05:18–08:18.
+6. **What / Why / How — 45 seconds.** Merge the separate secondary- and primary-research slides. `WHAT` measures whether people feel they have not expressed the appreciation they feel. `WHY` investigates what stops them without pre-filling the answer. `HOW` compares formats by impact, effort and likely frequency. All result slots remain visibly pending because no completed primary research is recorded. Source: 08:18–17:21.
+7. **When scenario — 30 seconds.** Remove university-student and market language. Answer when the experience applies through one clearly illustrative ordinary-day scenario. The grandmother–granddaughter relationship may visualise the relationship without becoming a fabricated persona or demand claim. Source: 17:39–18:59.
+8. **Solution reveal — 20 seconds.** Introduce Warm & Fuzzies and the one-sentence link-based ritual only. Remove the process strip, feature inventory and anti-doomscroll direction from the main pitch. Source: 18:33–19:16.
+9. **One live demo — 105 seconds.** Replace process, sender and receiver screenshot slides with one real sender-to-receiver walkthrough. Do not show a product video as well; static captures are emergency fallback or appendix material only. Source: 19:16–20:12.
+10. **Team thank-you handoff — 35 seconds.** End with a real team-authored thank-you object, a consented team photo or selfie of its creation, the verified QR and URL, and a no-device fallback. A generic placeholder is not the final asset, and audience reaction is not validation. Source: 20:15.
 
-- Gather defensible quantitative evidence showing whether and how often the intended audience experiences the problem.
-- Conduct and document qualitative research explaining context, interpretation, awkwardness, reply pressure, existing behaviours and exceptions.
-- Recruit within the selected university-student market and establish whether long-distance friend and family connections actually share the need, contexts and constraints the team currently assumes.
-- Test the working prototype with that audience and record where people hesitate, what they misunderstand and what changed afterward.
-- Run a matched comparison against text, voice or video calls and a physical note or letter rather than assuming the digital object occupies a valuable gap.
-- Explore at least three mechanism-level responses, including an intervention in an existing channel and a non-app ritual, before claiming the current product is the strongest answer.
-- Decide the production delivery model: sender web or app, receiver link, account needs, forwarding, expiry, wrong-recipient recovery and adoption friction.
-- Define production identity, privacy, deletion, retention, storage cost, device migration and what receiver control legally and technically means.
-- Verify the QR and deployed receiver experience on a second device and prepare the no-device fallback.
-- Research and test the optional context-aware anti-doomscroll direction before building it: whether resurfacing a past note or message, or gently suggesting a new gesture, helps, annoys, shames or creates notification pressure. It remains outside current prototype proof.
+The live plan totals 340 seconds, leaving 20 seconds inside the six-minute heat limit.
 
-## What the team has said about the pitch
+## Work the deck cannot complete
+
+- Run the What / Why / How research before replacing any placeholder: document recruitment, sample, questions, method, exact results, exceptions and limitations.
+- Treat every example number spoken in b390—including 40, 100, 70 percent and 95 percent—as brainstorming, never data.
+- Compare the same appreciation through ordinary text, voice or video, a physical note or gift and Warm & Fuzzies before claiming that the highlighted gap exists or the product occupies it.
+- Interview senders and receivers separately about warmth, awkwardness, obligation, alarm, cultural context and when appreciation already works without a designed product.
+- Observe an unaided maker-to-receiver phone walkthrough, including correction, link opening, keep, close and removal; record the resulting product change.
+- Explore mechanism-level alternatives, including an intervention in an existing channel and a non-app ritual, before claiming the current product is the strongest answer.
+- Resolve the production delivery model, identity, privacy, forwarding, expiry, deletion, retention, storage cost, device migration, accessibility, wrong-recipient and failed-media behaviour.
+- Create the real team thank-you object, obtain consent for the team photo, deploy it, verify the QR at presentation distance and test the receiver flow on a second device.
+- Keep secondary psychology, competitor evidence, process artifacts, anti-doomscroll exploration and fuller technical caveats in the appendix or project backlog, not the ten-slide live pitch.
+- Verify the official 2026 judging rules and required AI or third-party disclosures.
+
+## Earlier transcript findings retained as background
+
+The directions below remain useful only where they do not conflict with b390's ten-slide live-deck decision.
 
 - **Show how each conclusion caused the next decision.**
   - Process should be woven through the argument rather than confined to a retrospective slide.
@@ -134,29 +134,37 @@ This is the lead problem statement, but it remains an evidence-informed working 
 
 ## Exact requested content
 
-1. Front page with team name, team number and member names.
-2. Opening question about the last meaningful letter or appreciation someone received.
-3. Ethan’s care-package and physical-letter story, subject to consent and access to the real object.
-4. The same words shown in ordinary messaging and in the designed experience.
-5. A comparison of communication formats.
-6. A direct answer to “Why not a physical letter?”
-7. Product states that demonstrate multimedia, authorship, ownership and revisitation.
-8. A clear opening or reveal sequence rather than decorative animation.
-9. A final generic, opt-in audience artefact reached through QR and a no-device alternative.
-10. Research, personas and problem framing in the presentation, with fuller process evidence in the appendix or Figma board.
-11. AI and third-party-use disclosure.
-12. Accurate, appealing Devpost images.
+The controlling live deck now contains exactly:
+
+1. Logo and required team details.
+2. The unprompted-letter question, with no raise-hands request or communication-abundance counterpoint.
+3. One plain appreciation-versus-expression problem statement.
+4. The occasion-based unwritten rule and one How Might We.
+5. The corrected five-channel hypothesis map and blank matched-format result.
+6. One honest What / Why / How evidence structure.
+7. One illustrative scenario answering when the experience applies.
+8. One concise Warm & Fuzzies reveal.
+9. One live sender-to-receiver demo.
+10. One real, team-authored thank-you handoff with a verified QR and no-device fallback.
+
+Chloe's full quote, secondary evidence, process artifacts, static walkthrough states, fuller trust and feasibility caveats, AI or third-party disclosure and demo backups remain in the appendix or supporting materials.
 
 The transcripts do not request a market-size slide, business model, roadmap, technical-architecture diagram, feature grid or competitor quadrant. None should be added by default.
 
 ## Changes of mind resolved for the deck
 
-- **Process diary versus product pitch:** product pitch wins; show only process that changed the design.
+- **Dedicated Chloe slide versus plain problem statement:** the plain team-authored statement wins in the live pitch; the exact quote remains in source notes and the appendix.
+- **Communication counterpoint versus direct opening:** the direct letter question wins; “we have never had more ways to talk” is removed.
+- **Secondary plus primary research slides versus What / Why / How:** one What / Why / How structure wins; it remains blocked until real results exist.
+- **Market versus moment:** answer when the experience applies; do not pitch university students or another market segment in the live deck.
+- **Process and screenshot walkthrough versus live demo:** one live demo wins; process and static states move to the appendix or fallback.
+- **Anti-doomscroll branch versus core ritual:** the core ritual wins in the live story; context-aware prompting leaves the main pitch.
+- **Digital card in the map versus the five controlling channels:** remove digital card; compare text, voice note, video call, handwritten letter and physical gift.
 - **App versus web/link:** unresolved; a mobile website was discussed for QR practicality, but the medium has not passed comparison.
 - **Letter versus artefact:** the team prefers broader multimedia territory, but no product mechanism is settled.
 - **Broad appreciation versus a male-specific audience:** no gender-specific claim is supported; recruit and test broadly.
 - **Physical is emotionally strongest versus digital can equal it:** this is the central test, not a fact to announce.
-- **Generic room demo versus judge-personalised demo:** judge research and personalisation were rejected as invasive. Keep any demo generic and opt-in.
+- **Generic handoff placeholder versus a real team-authored object:** the real team object wins; keep the message appropriate to the room rather than individually researching judges.
 - **Humour for memorability versus humour for explanation:** only explanatory humour remains.
 - **Animation versus clarity:** motion remains only when it explains sequence, state or causality.
 
@@ -173,14 +181,15 @@ The transcripts do not request a market-size slide, business model, roadmap, tec
 ## Strongest transcript-led narrative
 
 ```text
-Receive something meaningful
-→ notice why ordinary-day appreciation feels socially unusual
-→ compare what the same words mean in different containers
-→ derive the requirements for sincere, low-pressure care
-→ reveal one chosen mechanism
-→ watch the sender-to-receiver outcome happen
-→ show what real testing changed
-→ return to the audience as the receiver
+Remember an unprompted letter
+→ name the appreciation-expression gap
+→ reveal the occasion rule
+→ map the possible channel gap
+→ show the What / Why / How evidence still required
+→ locate one ordinary-day moment
+→ reveal Warm & Fuzzies
+→ demonstrate the complete ritual live
+→ give the room a real team-authored thank-you
 ```
 
-The strongest current visual spine is the emotional opening, the same-message comparison and the audience callback. The weakest link is the unproven jump from “physical letters feel meaningful” to “this particular digital experience changes the unwritten rule.”
+The strongest current spine is the direct opening, occasion rule, honest evidence gap, live demo and real audience callback. The weakest link remains the unproven jump from the team's format map to the claim that this digital experience changes action or interpretation.
