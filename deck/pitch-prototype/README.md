@@ -24,14 +24,14 @@ node --test deck/pitch-prototype/tests/file-open.test.mjs
 3. Plain problem statement
 4. Occasion-based permission and How Might We
 5. Impact / friction / frequency map across three presentation families, with bounded paper evidence and an unboxed Goldilocks target; numeric ratings stay off this slide
-6. The original three-column What / Why / How layout, with a full-height three-row grouped ratings table inside How and a fourth-click highlight pass
+6. Evidence-first research findings: 82%, 71%, and a full-height three-row grouped ratings table, followed by a fourth-click highlight pass
 7. Overlapping Goldilocks rings, with university students, long-distance connections, close friends and close family named inside the need-state gap between a text that feels too casual and a physical gesture that feels too difficult
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal
 10. “Let us show you.” followed immediately by one continuous live sender-to-receiver demonstration
 11. Real team thank-you object, real team photo and verified QR handoff
 
-There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; What / Why / How explains the team's specific problem; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
+There is no separate research-plan slide, secondary-research slide, process slide, market-size slide, sender screenshot, receiver screenshot or repeated conclusion. Process is woven into the causal story: the problem creates the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the need-state slide defines the intended audience; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; the live product demonstrates the proposed ritual.
 
 The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` as source context only. The live deck does not name Chloe or use a mentor quote. The newest review replaces the letter-led opener with a broader appreciation question because mentioning a letter reveals the solution format too early. University students, long-distance connections, close friends and close family appear inside one need-state overlap rather than as exclusive demographic markets. Context-aware anti-doomscroll prompting remains an unbuilt, untested backlog idea and does not appear in the main pitch.
 
@@ -43,7 +43,7 @@ The full 30:02 machine-transcribed mentor framing remains in `speaker-notes.md` 
 - **Why** investigates the occasion rule, awkwardness, channel mismatch and exceptions.
 - **How** groups quick text, voice/video and letter/gift for pitch clarity while retaining the individual forms as controls for the real matched-content study. The displayed group values do not prove equivalence. A later product comparison must test whether Warm & Fuzzies reaches the intended balance.
 - Team opinion, mentor reaction, published secondary research, practice values and prototype polish cannot become final primary evidence.
-- The latest follow-up fixes the primary instrument at the three visible What / Why / How questions. Further survey explanation belongs in the appendix.
+- The primary instrument still uses the What / Why / How questions, but the live slide now removes those prompts and presents only the resulting figures and comparison. Further survey explanation belongs in the appendix.
 - Psychology on text, voice, gratitude letters and perceived gift effort supports the map's channel-by-channel mechanism narration. Detailed methods, ownership evidence and limitations still belong in the appendix, and none can replace the primary percentages or qualitative themes.
 - The live demo proves only that the prototype can complete the demonstrated flow. It does not prove demand, sincerity, reduced awkwardness or social change.
 
@@ -73,10 +73,10 @@ If any input is missing, keep the slide visibly blocked. Do not use stock people
 | Lens | Effect | Evidence | Risk / unanswered question |
 | --- | --- | --- | --- |
 | Brief fit | strengthens | The live story names and redesigns the occasion-based unwritten rule. | Exact 2026 wording remains unconfirmed. |
-| Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, What / Why / How and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
+| Problem identification | strengthens | A plain problem statement, occasion mechanism, corrected map, direct research findings and one need-state audience form a causal chain. | Every primary value and the audience boundary remain unknown. |
 | Solution approach | strengthens | The live maker-to-receiver flow shows the mechanism and receiver-controlled ending directly. | The medium has not beaten any control in a completed matched-format test. |
 | Design innovation | strengthens | Making, sealing, giving and receiver-led opening form a clearer ritual than a static feature tour. | Without participant evidence, the experience may still be read as a decorated digital letter. |
-| Visual communication | strengthens | Eleven slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The What / Why / How placeholders and handoff blockers can look unfinished until real evidence and assets arrive. |
+| Visual communication | strengthens | Eleven slides remove redundant research, process and product screenshots; the longest evidence slide now pairs each claim with its study and boundary. | The rehearsal findings and handoff blockers can look unfinished until real evidence and assets arrive. |
 | Presentation skills | strengthens | The map receives 60 seconds of evidence-led narration, followed by a focused 100-second live demonstration and one real thank-you ending. | The evidence sequence must be rehearsed so the studies clarify rather than overwhelm the story. |
 | Evidence quality | weak | Unknowns are left blank and the live demo is not mislabelled as outcome evidence. | No completed primary evidence currently supports the gap, rule, audience or impact. |
 

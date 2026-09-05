@@ -39,12 +39,14 @@ test('the latest meeting framing replaces attribution and unsupported market cla
 });
 
 test('the newest follow-up simplifies research, defines the need-state audience and clears the demo slide', () => {
-  assert.match(source, /data-title="What · why · how" data-steps="4"/);
+  assert.match(source, /data-title="Research findings" data-steps="4"/);
   assert.match(source, /class="research-number">82%/);
   assert.match(source, /class="research-number">71%/);
+  assert.doesNotMatch(source, /Does the expression gap exist\?|Why does it stay unspoken\?|How do the forms compare\?/);
+  assert.doesNotMatch(source, /<span>what<\/span>|<span>why<\/span>|<span>how<\/span>/);
   assert.match(source, /feel they do not fully show the appreciation they feel/);
   assert.match(source, /class="mini-ratings-table"[\s\S]*impact \/5[\s\S]*friction \/5[\s\S]*frequency \/5/);
-  assert.match(source, /\.mini-ratings-table \{[^}]*min-height:390px[^}]*flex:1 1 auto/);
+  assert.match(source, /\.mini-ratings-table \{[^}]*min-height:590px[^}]*flex:1 1 auto/);
   assert.match(source, /quick text[\s\S]*voice note \/[\s\S]*video call[\s\S]*handwritten letter \/[\s\S]*physical gift/);
   assert.equal((source.match(/class="target-score"/g) ?? []).length, 3);
   assert.doesNotMatch(source, /class="practice-flag"/);
