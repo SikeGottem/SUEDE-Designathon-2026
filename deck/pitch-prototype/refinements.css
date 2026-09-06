@@ -997,9 +997,14 @@
 }
 
 .demo-url {
+  display: block;
+  max-width: 100%;
   color: var(--paper);
-  font-size: 30px;
-  line-height: .9;
+  font-size: 26px;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: .16em;
 }
 
 .demo-fallback {
