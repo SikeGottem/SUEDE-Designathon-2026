@@ -31,7 +31,7 @@ export function createBlobAdapter({ credentials = {}, fetchImpl = fetch, sdk = d
         allowOverwrite: false,
         cacheControlMaxAge: 31_536_000,
       });
-      return { slot: item.slot, pathname: item.pathname, url: presignedUrl, headers: { "Content-Type": item.mime } };
+      return { slot: item.slot, pathname: item.pathname, url: presignedUrl, headers: { "Content-Type": item.mime, "x-content-type": item.mime } };
     },
 
     async inspect(item, validUntil) {

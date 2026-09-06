@@ -1,6 +1,10 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Voice upload correction — 6 September 2026
+
+Vercel Blob infers `.webm` as `video/webm` unless its `x-content-type` header explicitly carries the planned `audio/webm`. The ordinary HTTP `Content-Type` header alone did not override that inference, so voice PUTs returned 403 and prevented subsequent song uploads. Signed upload responses now include both headers with the same validated MIME type; the exact MIME allow-list, byte limit and private access remain unchanged. A synthetic silent WebM reproduced the rejection; the database was only 102 KB, so no records were reset. Existing pending uploads can retry using fresh server-provided headers.
+
 ## Hosted-media delivery delta — 6 September 2026
 
 This section supersedes the earlier **normal-flow local-only** sharing boundary where it concerns supported hosted photos and audio. Normal safe-v3 text sharing and both demo routes remain unchanged. The implemented normal flow can now take up to four photos, one voice recording and one song with the exact keepsake to an unlisted receiver link/QR; video remains local-only. The receiver opens the same Cecelia/Gaegu envelope and carrier sequence, then sees the exact composed paper. There are no accounts, stable paired-demo records, autoplay, receipts, contacts, or new receiver UI.
