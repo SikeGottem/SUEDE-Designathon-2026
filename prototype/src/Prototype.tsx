@@ -9,6 +9,7 @@ import {
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
+  type CSSProperties,
 } from "react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
@@ -59,11 +60,16 @@ type LayerLayout = {
   rotation: number;
   scale: number;
 };
+type TextStyle = { ink: InkColor; align: "left" | "center" | "right"; size: "small" | "regular" | "large"; weight: "regular" | "emphasis" };
+type PhotoPiece = { id: string; asset: CaptureAsset; layout: LayerLayout; frame: "plain" | "polaroid" | "tape"; caption: string };
+type MarkPiece = { id: string; kind: StickerId; layout: LayerLayout; ink: InkColor };
+type Scrapbook = { photos: PhotoPiece[]; marks: MarkPiece[]; order: string[] };
 type TextBlock = {
   id: string;
   words: string;
   crossedOut: CrossOut[];
   layout: LayerLayout;
+  style?: TextStyle;
 };
 
 type KeepsakeSnapshot = {
@@ -87,6 +93,7 @@ type KeepsakeSnapshot = {
   inkColor: InkColor;
   layouts: Record<LayerId, LayerLayout>;
   textBlocks?: TextBlock[];
+  scrapbook?: Scrapbook;
 };
 
 const CECILIA = "/assets/illustrations/cecilia-collection/";
@@ -122,6 +129,8 @@ const PERSONAL_STAMP_KEY = "warm-fuzzies-personal-stamp-v1";
 const LINK_MAX = 12_000;
 const QR_MAX = 1_200;
 const MAX_TEXT_BLOCKS = 12;
+const MAX_PHOTOS = 4;
+const MAX_MARKS = 12;
 const carrierIds: CarrierId[] = ["bottle", "firefly", "plane"];
 const paperIds: PaperId[] = ["plain", "dotted", "grid", "ruled", "note"];
 const envelopeIds: EnvelopeId[] = ["mail", "night", "rust"];
@@ -185,15 +194,17 @@ function packTextBlocks(blocks: TextBlock[]) {
     block.words,
     block.crossedOut.map((range) => [range.start, range.end]),
     [block.layout.x, block.layout.y, block.layout.rotation, block.layout.scale],
+    ...(block.style ? [[block.style.ink, block.style.align, block.style.size, block.style.weight]] : []),
   ]);
 }
 
 function unpackTextBlocks(value: unknown): unknown {
   if (!Array.isArray(value)) return null;
   return value.map((block) => {
-    if (!Array.isArray(block) || block.length !== 4) return null;
+    if (!Array.isArray(block) || ![4, 5].includes(block.length)) return null;
     const layout = block[3];
     return {
+      ...(block.length === 5 ? { style: Array.isArray(block[4]) && block[4].length === 4 ? { ink: block[4][0], align: block[4][1], size: block[4][2], weight: block[4][3] } : null } : {}),
       id: block[0],
       words: block[1],
       crossedOut: unpackCrossedOut(block[2]),
@@ -229,12 +240,17 @@ function encodeSnapshot(snapshot: KeepsakeSnapshot) {
     }),
     snapshot.sealWeight ?? "bold",
     packTextBlocks(textBlocksFromSnapshot(snapshot)),
+    ...(snapshot.scrapbook ? [{
+      p: snapshot.scrapbook.photos.map((photo) => [photo.id, photo.asset, [photo.layout.x, photo.layout.y, photo.layout.rotation, photo.layout.scale], photo.frame, photo.caption]),
+      m: snapshot.scrapbook.marks.map((mark) => [mark.id, mark.kind, [mark.layout.x, mark.layout.y, mark.layout.rotation, mark.layout.scale], mark.ink]),
+      o: snapshot.scrapbook.order,
+    }] : []),
   ];
   return compressToEncodedURIComponent(JSON.stringify(compact));
 }
 
 function expandCompactSnapshot(value: unknown): unknown {
-  if (!Array.isArray(value) || ![18, 19, 20].includes(value.length) || !Array.isArray(value[17]) || value[17].length !== layerIds.length) return null;
+  if (!Array.isArray(value) || ![18, 19, 20, 21].includes(value.length) || !Array.isArray(value[17]) || value[17].length !== layerIds.length) return null;
   const layouts = Object.fromEntries(layerIds.map((layer, index) => {
     const layout = value[17][index];
     return [layer, Array.isArray(layout) && layout.length === 4
@@ -261,7 +277,8 @@ function expandCompactSnapshot(value: unknown): unknown {
     stickers: value[15],
     inkColor: value[16],
     layouts,
-    textBlocks: value.length === 20 ? unpackTextBlocks(value[19]) : undefined,
+    textBlocks: value.length >= 20 ? unpackTextBlocks(value[19]) : undefined,
+    ...(value.length === 21 ? { scrapbook: unpackScrapbook(value[20]) } : {}),
   };
 }
 
@@ -283,13 +300,15 @@ function isStrokeList(value: unknown) {
 function isCaptureAsset(value: unknown): value is CaptureAsset | null {
   if (value === null) return true;
   if (!isRecord(value) || !["photo", "video", "sample"].includes(String(value.kind))) return false;
-  if (value.kind === "sample") return value.url === undefined;
+  if (value.kind === "sample") return Object.keys(value).sort().join(",") === "kind";
+  if (Object.keys(value).sort().join(",") !== "kind,url") return false;
   return typeof value.url === "string" && value.url.startsWith("blob:") && value.url.length < 2_048;
 }
 
 function isAudioAsset(value: unknown): value is AudioAsset | null {
   if (value === null) return true;
   return isRecord(value)
+    && ["name,url", "durationSeconds,name,url"].includes(Object.keys(value).sort().join(","))
     && typeof value.url === "string"
     && value.url.startsWith("blob:")
     && value.url.length < 2_048
@@ -322,11 +341,51 @@ function isTextBlockList(value: unknown): value is TextBlock[] {
         && Number(range.start) >= 0
         && Number(range.start) < Number(range.end)
         && Number(range.end) <= (block.words as string).length)
-      || !isLayerLayout(block.layout)) return false;
+      || !isLayerLayout(block.layout)
+      || (block.style !== undefined && !isTextStyle(block.style))) return false;
     ids.add(block.id);
     totalLength += block.words.length;
     return totalLength <= 10_000;
   });
+}
+
+function unpackScrapbook(value: unknown): unknown {
+  if (!isRecord(value) || Object.keys(value).sort().join(",") !== "m,o,p" || !Array.isArray(value.p) || !Array.isArray(value.m)) return null;
+  const layout = (tuple: unknown) => Array.isArray(tuple) && tuple.length === 4 ? { x: tuple[0], y: tuple[1], rotation: tuple[2], scale: tuple[3] } : null;
+  return {
+    photos: value.p.map((photo) => Array.isArray(photo) && photo.length === 5 ? { id: photo[0], asset: photo[1], layout: layout(photo[2]), frame: photo[3], caption: photo[4] } : null),
+    marks: value.m.map((mark) => Array.isArray(mark) && mark.length === 4 ? { id: mark[0], kind: mark[1], layout: layout(mark[2]), ink: mark[3] } : null),
+    order: value.o,
+  };
+}
+
+function isItemId(value: unknown): value is string {
+  return typeof value === "string" && /^[a-zA-Z0-9][a-zA-Z0-9_-]{0,99}$/.test(value) && !["voice", "song", "__proto__", "prototype", "constructor"].includes(value);
+}
+
+function isTextStyle(value: unknown): value is TextStyle {
+  return isRecord(value) && Object.keys(value).sort().join(",") === "align,ink,size,weight"
+    && inkColors.includes(value.ink as InkColor) && ["left", "center", "right"].includes(String(value.align))
+    && ["small", "regular", "large"].includes(String(value.size)) && ["regular", "emphasis"].includes(String(value.weight));
+}
+
+function isScrapbook(value: unknown, snapshot: Record<string, unknown>): value is Scrapbook {
+  if (!isRecord(value) || Object.keys(value).sort().join(",") !== "marks,order,photos"
+    || !Array.isArray(value.photos) || value.photos.length > MAX_PHOTOS
+    || !Array.isArray(value.marks) || value.marks.length > MAX_MARKS || !Array.isArray(value.order)) return false;
+  const ids = new Set<string>();
+  const claimId = (id: unknown) => { if (!isItemId(id) || ids.has(id)) return false; ids.add(id); return true; };
+  if (!value.photos.every((photo) => isRecord(photo) && Object.keys(photo).sort().join(",") === "asset,caption,frame,id,layout"
+    && claimId(photo.id) && isRecord(photo.asset) && Object.keys(photo.asset).sort().join(",") === (photo.asset.kind === "sample" ? "kind" : "kind,url") && isCaptureAsset(photo.asset) && isLayerLayout(photo.layout) && Object.keys(photo.layout).sort().join(",") === "rotation,scale,x,y"
+    && ["plain", "polaroid", "tape"].includes(String(photo.frame)) && typeof photo.caption === "string" && photo.caption.length <= 100)) return false;
+  if (!value.marks.every((mark) => isRecord(mark) && Object.keys(mark).sort().join(",") === "id,ink,kind,layout"
+    && claimId(mark.id) && stickerIds.includes(mark.kind as StickerId) && inkColors.includes(mark.ink as InkColor) && isLayerLayout(mark.layout) && Object.keys(mark.layout).sort().join(",") === "rotation,scale,x,y")) return false;
+  const blocks = snapshot.textBlocks as TextBlock[] | undefined;
+  if (!(blocks ?? (snapshot.words ? [{ id: "text-legacy" }] : [])).every((block) => claimId(block.id))) return false;
+  if (snapshot.voice && (snapshot.pieces as PieceId[]).includes("voice")) ids.add("voice");
+  if (snapshot.song && (snapshot.pieces as PieceId[]).includes("song")) ids.add("song");
+  return value.order.length === ids.size && new Set(value.order).size === ids.size
+    && value.order.every((id) => typeof id === "string" && ids.has(id));
 }
 
 function isSafeSnapshot(value: unknown): value is KeepsakeSnapshot {
@@ -353,28 +412,44 @@ function isSafeSnapshot(value: unknown): value is KeepsakeSnapshot {
     || !isRecord(value.layouts)
     || !layerIds.every((layer) => isLayerLayout((value.layouts as Record<string, unknown>)[layer]))
     || (value.textBlocks !== undefined && !isTextBlockList(value.textBlocks))) return false;
-  return true;
+  return value.scrapbook === undefined || isScrapbook(value.scrapbook, value);
 }
 
 function textBlocksFromSnapshot(snapshot: KeepsakeSnapshot): TextBlock[] {
-  if (snapshot.textBlocks?.length) {
-    return snapshot.textBlocks.map((block) => ({
-      ...block,
-      crossedOut: block.crossedOut.map((range) => ({ ...range })),
-      layout: { ...block.layout },
-    }));
-  }
-  if (!snapshot.words) return [];
-  return [{
-    id: "text-legacy",
-    words: snapshot.words,
-    crossedOut: snapshot.crossedOut.map((range) => ({ ...range })),
-    layout: { ...snapshot.layouts.words },
-  }];
+  const blocks = snapshot.textBlocks && (snapshot.textBlocks.length > 0 || snapshot.scrapbook)
+    ? snapshot.textBlocks
+    : snapshot.words ? [{ id: "text-legacy", words: snapshot.words, crossedOut: snapshot.crossedOut, layout: snapshot.layouts.words }] : [];
+  // Older links allowed names that collide with material IDs; preserve their words under stable editor IDs.
+  const used = new Set(snapshot.scrapbook ? [] : ["photo", "voice", "song", ...snapshot.stickers.map((kind, index) => snapshot.stickers.indexOf(kind) === index ? kind : `${kind}-legacy-${index}`)]);
+  return blocks.map((block, index) => {
+    let id = block.id;
+    if (!snapshot.scrapbook && (!isItemId(id) || used.has(id))) {
+      let suffix = index;
+      do { id = `text-legacy-${suffix++}`; } while (used.has(id));
+    }
+    used.add(id);
+    return { ...block, id, crossedOut: block.crossedOut.map((range) => ({ ...range })), layout: { ...block.layout }, style: { ...textStyle(block, snapshot.inkColor) } };
+  });
 }
 
-function containsBlobMedia(snapshot: Pick<KeepsakeSnapshot, "capture" | "voice" | "song">) {
-  return [snapshot.capture?.url, snapshot.voice?.url, snapshot.song?.url].some((url) => url?.startsWith("blob:"));
+function textStyle(block: TextBlock, ink: InkColor): TextStyle {
+  return block.style ?? { ink, align: "left", size: "regular", weight: "regular" };
+}
+
+function completeOrder(order: string[], liveIds: string[]) {
+  const live = new Set(liveIds);
+  return [...new Set([...order.filter((id) => live.has(id)), ...liveIds])];
+}
+
+function scrapbookFromSnapshot(snapshot: KeepsakeSnapshot): Scrapbook {
+  const photos = snapshot.scrapbook?.photos ?? (snapshot.capture ? [{ id: "photo", asset: snapshot.capture, layout: snapshot.layouts.photo, frame: "tape" as const, caption: "" }] : []);
+  const marks = snapshot.scrapbook?.marks ?? snapshot.stickers.map((kind, index) => ({ id: snapshot.stickers.indexOf(kind) === index ? kind : `${kind}-legacy-${index}`, kind, layout: snapshot.layouts[kind], ink: snapshot.inkColor }));
+  const ids = [...photos.map((photo) => photo.id), ...textBlocksFromSnapshot(snapshot).map((block) => block.id), ...(snapshot.voice && snapshot.pieces.includes("voice") ? ["voice"] : []), ...(snapshot.song && snapshot.pieces.includes("song") ? ["song"] : []), ...marks.map((mark) => mark.id)];
+  return { photos: photos.map((photo) => ({ ...photo, asset: { ...photo.asset }, layout: { ...photo.layout } })), marks: marks.map((mark) => ({ ...mark, layout: { ...mark.layout } })), order: completeOrder(snapshot.scrapbook?.order ?? [], ids) };
+}
+
+function containsBlobMedia(snapshot: Pick<KeepsakeSnapshot, "capture" | "voice" | "song" | "scrapbook">) {
+  return [snapshot.capture?.url, snapshot.voice?.url, snapshot.song?.url, ...(snapshot.scrapbook?.photos.map((photo) => photo.asset.url) ?? [])].some((url) => url?.startsWith("blob:"));
 }
 
 function snapshotFromHash(): KeepsakeSnapshot | null {
@@ -497,6 +572,7 @@ function cloneSnapshot(snapshot: KeepsakeSnapshot): KeepsakeSnapshot {
     stickers: [...snapshot.stickers],
     layouts: Object.fromEntries(layerIds.map((layer) => [layer, { ...snapshot.layouts[layer] }])) as Record<LayerId, LayerLayout>,
     textBlocks: textBlocksFromSnapshot(snapshot),
+    scrapbook: scrapbookFromSnapshot(snapshot),
   };
 }
 
@@ -553,17 +629,18 @@ export default function Prototype() {
   const [removeOpen, setRemoveOpen] = useState(false);
   const [cabinetRemovingId, setCabinetRemovingId] = useState<string | null>(null);
   const [studioMode, setStudioMode] = useState<StudioMode>("compose");
-  const [captureAsset, setCaptureAsset] = useState<CaptureAsset | null>(() => linkedSnapshot?.capture ?? (seededPreview ? { kind: "sample" } : null));
+  const [photos, setPhotos] = useState<PhotoPiece[]>(() => linkedSnapshot ? scrapbookFromSnapshot(linkedSnapshot).photos : seededPreview ? scrapbookFromSnapshot(rehearsalArtifact).photos : []);
+  const captureAsset = photos[0]?.asset ?? null;
   const [voiceAsset, setVoiceAsset] = useState<AudioAsset | null>(() => linkedSnapshot?.voice ?? null);
   const [songAsset, setSongAsset] = useState<AudioAsset | null>(() => linkedSnapshot?.song ?? null);
   const [doodleStrokes, setDoodleStrokes] = useState<DoodleStroke[]>(() => linkedSnapshot?.doodles ?? []);
-  const [stickers, setStickers] = useState<StickerId[]>(() => linkedSnapshot?.stickers ?? []);
+  const [marks, setMarks] = useState<MarkPiece[]>(() => linkedSnapshot ? scrapbookFromSnapshot(linkedSnapshot).marks : []);
+  const [itemOrder, setItemOrder] = useState<string[]>(() => linkedSnapshot ? scrapbookFromSnapshot(linkedSnapshot).order : []);
+  const stickers = useMemo(() => [...new Set(marks.map((mark) => mark.kind))], [marks]);
   const [inkColor, setInkColor] = useState<InkColor>(() => linkedSnapshot?.inkColor ?? "navy");
   const [layerLayouts, setLayerLayouts] = useState<Record<LayerId, LayerLayout>>(() => linkedSnapshot?.layouts ?? defaultLayerLayouts);
   const [draftId, setDraftId] = useState(() => linkedSnapshot?.id ?? `wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
-  const captureAssetRef = useRef<CaptureAsset | null>(null);
-  const voiceAssetRef = useRef<AudioAsset | null>(null);
-  const songAssetRef = useRef<AudioAsset | null>(null);
+  const mediaUrlsRef = useRef<Set<string>>(new Set());
   const keyboard = useKeyboard();
   const reduceMotion = useReducedMotion();
   const carrier = carriers.find((item) => item.id === carrierId) ?? carriers[0];
@@ -604,29 +681,27 @@ export default function Prototype() {
       inkColor,
       layouts: { ...layerLayouts, words: primaryText?.layout ?? layerLayouts.words },
       textBlocks: authoredText,
+      scrapbook: { photos, marks, order: completeOrder(itemOrder, [...photos.map((photo) => photo.id), ...authoredText.map((block) => block.id), ...(voiceAsset && pieces.includes("voice") ? ["voice"] : []), ...(songAsset && pieces.includes("song") ? ["song"] : []), ...marks.map((mark) => mark.id)]) },
     };
-  }, [captureAsset, carrierId, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, sealWeight, songAsset, stickers, textBlocks, voiceAsset]);
+  }, [photos, marks, itemOrder, captureAsset, carrierId, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, sealWeight, songAsset, stickers, textBlocks, voiceAsset]);
 
   const applySnapshot = useCallback((snapshot: KeepsakeSnapshot) => {
     const next = cloneSnapshot(snapshot);
-    setActiveSnapshot(next); setDraftId(next.id); setRecipient(next.recipient); setTextBlocks(textBlocksFromSnapshot(next)); setPaper(next.paper); setCarrierId(next.carrier); setEnvelope(next.envelope); setSeal(next.seal); setSealWeight(next.sealWeight ?? "bold"); setPieces(next.pieces); setCaptureAsset(next.capture); setVoiceAsset(next.voice); setSongAsset(next.song); setDoodleStrokes(next.doodles); setStickers(next.stickers); setInkColor(next.inkColor); setLayerLayouts(next.layouts); captureAssetRef.current = next.capture; voiceAssetRef.current = next.voice; songAssetRef.current = next.song;
-  }, []);
-
-  const replaceCapture = useCallback((next: CaptureAsset | null) => {
-    const previous = captureAssetRef.current;
-    if (previous?.url?.startsWith("blob:")) URL.revokeObjectURL(previous.url);
-    captureAssetRef.current = next;
-    setCaptureAsset(next);
+    setActiveSnapshot(next); setDraftId(next.id); setRecipient(next.recipient); setTextBlocks(textBlocksFromSnapshot(next)); setPaper(next.paper); setCarrierId(next.carrier); setEnvelope(next.envelope); setSeal(next.seal); setSealWeight(next.sealWeight ?? "bold"); setPieces(next.pieces); setVoiceAsset(next.voice); setSongAsset(next.song); setDoodleStrokes(next.doodles); setInkColor(next.inkColor); setLayerLayouts(next.layouts);
+    const scrapbook = scrapbookFromSnapshot(next);
+    setPhotos(scrapbook.photos); setMarks(scrapbook.marks); setItemOrder(scrapbook.order);
   }, []);
 
   const replaceAudio = useCallback((kind: "voice" | "song", next: AudioAsset | null) => {
-    const assetRef = kind === "voice" ? voiceAssetRef : songAssetRef;
-    const previous = assetRef.current;
-    if (previous?.url.startsWith("blob:")) URL.revokeObjectURL(previous.url);
-    assetRef.current = next;
     if (kind === "voice") setVoiceAsset(next);
     else setSongAsset(next);
   }, []);
+
+  useEffect(() => {
+    const next = new Set([voiceAsset?.url, songAsset?.url, ...photos.map((photo) => photo.asset.url)].filter((url): url is string => Boolean(url?.startsWith("blob:"))));
+    mediaUrlsRef.current.forEach((url) => { if (!next.has(url)) URL.revokeObjectURL(url); });
+    mediaUrlsRef.current = next;
+  }, [photos, voiceAsset, songAsset]);
 
   const go = (requested: Phase) => {
     const presenterPhases: Phase[] = ["home", "menu", "recipient", "studio", "envelope", "carrier", "preview", "handoff", "sent"];
@@ -656,13 +731,7 @@ export default function Prototype() {
     };
   }, [phase, studioMode]);
 
-  useEffect(() => () => {
-    const current = captureAssetRef.current;
-    if (current?.url?.startsWith("blob:")) URL.revokeObjectURL(current.url);
-    [voiceAssetRef.current, songAssetRef.current].forEach((asset) => {
-      if (asset?.url.startsWith("blob:")) URL.revokeObjectURL(asset.url);
-    });
-  }, []);
+  useEffect(() => () => { mediaUrlsRef.current.forEach((url) => URL.revokeObjectURL(url)); }, []);
 
   const togglePiece = (piece: PieceId) => {
     setPieces((current) =>
@@ -682,11 +751,12 @@ export default function Prototype() {
     setSealWeight("bold");
     setCarrierId("bottle");
     setPieces([]);
-    replaceCapture(null);
+    setPhotos([]);
+    setItemOrder([]);
     replaceAudio("voice", null);
     replaceAudio("song", null);
     setDoodleStrokes([]);
-    setStickers([]);
+    setMarks([]);
     setInkColor("navy");
     setStudioMode("compose");
     setLayerLayouts(defaultLayerLayouts);
@@ -708,11 +778,11 @@ export default function Prototype() {
   };
 
   const saveToCabinet = (snapshot: KeepsakeSnapshot) => {
+    if (containsBlobMedia(snapshot)) return false;
     if (isRehearsalRoute) {
       setCabinet([cloneSnapshot(snapshot)]);
       return true;
     }
-    if (containsBlobMedia(snapshot)) return false;
     const next = [snapshot, ...cabinet.filter((item) => item.id !== snapshot.id)].slice(0, 12);
     try {
       window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
@@ -756,7 +826,7 @@ export default function Prototype() {
     document.getElementById(`carrier-${carriers[next].id}`)?.focus();
   };
 
-  const canPreview = recipient.trim() !== "" && Boolean(textBlocks.some((block) => block.words.trim()) || captureAsset || pieces.length || doodleStrokes.length || stickers.length);
+  const canPreview = recipient.trim() !== "" && Boolean(textBlocks.some((block) => block.words.trim()) || photos.length || voiceAsset || songAsset || doodleStrokes.length || marks.length);
   const navyPhase = ["removed"].includes(phase);
 
   return (
@@ -775,7 +845,7 @@ export default function Prototype() {
               <CarrierPicker key="carrier" selected={carrierId} onSelect={setCarrierId} onCycle={cycleCarrier} onKeyDown={handleCarrierKeys} onBack={() => go("envelope")} onNext={() => { setActiveSnapshot(currentSnapshot); go("preview"); }} />
             )}
             {phase === "studio" && (
-              <Studio key="studio" mode={studioMode} capture={captureAsset} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} stickers={stickers} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onCapture={replaceCapture} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onStickers={setStickers} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
+              <Studio key="studio" mode={studioMode} photos={photos} marks={marks} itemOrder={itemOrder} onPhotos={setPhotos} onMarks={setMarks} onOrder={setItemOrder} voice={voiceAsset} song={songAsset} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodleStrokes} inkColor={inkColor} cuesOpen={cuesOpen} layouts={layerLayouts} canPreview={canPreview} onMode={setStudioMode} onVoice={(asset) => replaceAudio("voice", asset)} onSong={(asset) => replaceAudio("song", asset)} onRecipient={setRecipient} onTextBlocks={setTextBlocks} onPaper={setPaper} onDoodles={setDoodleStrokes} onInkColor={setInkColor} onTogglePiece={togglePiece} onToggleCues={() => setCuesOpen((current) => !current)} onLayout={updateLayer} onBack={returnToMenu} onPreview={() => go("envelope")} />
             )}
             {phase === "envelope" && <EnvelopeStudio key="envelope" snapshot={currentSnapshot} onBack={() => go("studio")} onSeal={setSeal} seal={seal} sealWeight={sealWeight} onSealWeight={setSealWeight} savedSeal={savedSeal} onSaveSeal={savePersonalStamp} onNext={() => go("carrier")} />}
             {phase === "preview" && (
@@ -975,7 +1045,20 @@ function CarrierPicker({ selected, locked = false, onSelect, onCycle, onKeyDown,
   );
 }
 
-function Studio({ mode, locked = false, capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, cuesOpen, layouts, canPreview, onMode, onCapture, onVoice, onSong, onRecipient, onTextBlocks, onPaper, onDoodles, onStickers, onInkColor, onTogglePiece, onToggleCues, onLayout, onBack, onPreview }: { mode: StudioMode; locked?: boolean; capture: CaptureAsset | null; voice: AudioAsset | null; song: AudioAsset | null; recipient: string; textBlocks: TextBlock[]; paper: PaperId; pieces: PieceId[]; doodles: DoodleStroke[]; stickers: StickerId[]; inkColor: InkColor; cuesOpen: boolean; layouts: Record<LayerId, LayerLayout>; canPreview: boolean; onMode: (mode: StudioMode) => void; onCapture: (capture: CaptureAsset | null) => void; onVoice: (asset: AudioAsset | null) => void; onSong: (asset: AudioAsset | null) => void; onRecipient: (value: string) => void; onTextBlocks: (value: TextBlock[]) => void; onPaper: (value: PaperId) => void; onDoodles: (strokes: DoodleStroke[]) => void; onStickers: (stickers: StickerId[]) => void; onInkColor: (color: InkColor) => void; onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void; onLayout: (id: LayerId, layout: LayerLayout) => void; onBack: () => void; onPreview: () => void }) {
+type StudioProps = {
+  mode: StudioMode; locked?: boolean; photos: PhotoPiece[]; marks: MarkPiece[]; itemOrder: string[];
+  voice: AudioAsset | null; song: AudioAsset | null; recipient: string; textBlocks: TextBlock[];
+  paper: PaperId; pieces: PieceId[]; doodles: DoodleStroke[]; inkColor: InkColor; cuesOpen: boolean;
+  layouts: Record<LayerId, LayerLayout>; canPreview: boolean;
+  onMode: (mode: StudioMode) => void; onPhotos: (photos: PhotoPiece[]) => void; onMarks: (marks: MarkPiece[]) => void; onOrder: (ids: string[]) => void;
+  onVoice: (asset: AudioAsset | null) => void; onSong: (asset: AudioAsset | null) => void;
+  onRecipient: (value: string) => void; onTextBlocks: (value: TextBlock[]) => void; onPaper: (value: PaperId) => void;
+  onDoodles: (strokes: DoodleStroke[]) => void; onInkColor: (color: InkColor) => void;
+  onTogglePiece: (piece: PieceId) => void; onToggleCues: () => void;
+  onLayout: (id: LayerId, layout: LayerLayout) => void; onBack: () => void; onPreview: () => void;
+};
+
+function Studio({ mode, locked = false, photos, marks, itemOrder, voice, song, recipient, textBlocks, paper, pieces, doodles, inkColor, cuesOpen, layouts, canPreview, onMode, onPhotos, onMarks, onOrder, onVoice, onSong, onRecipient, onTextBlocks, onPaper, onDoodles, onInkColor, onTogglePiece, onToggleCues, onLayout, onBack, onPreview }: StudioProps) {
   const keyboard = useKeyboard();
   const [selectedLayer, setSelectedLayer] = useState<string | null>(null);
   const [editingTextId, setEditingTextId] = useState<string | null>(null);
@@ -984,7 +1067,9 @@ function Studio({ mode, locked = false, capture, voice, song, recipient, textBlo
   const [voiceRecorderOpen, setVoiceRecorderOpen] = useState(false);
   const [activePrompt, setActivePrompt] = useState("say the thing you usually leave unsaid");
   const [showGestureHint, setShowGestureHint] = useState(false);
-  const editingText = editingTextId !== null;
+  const items = paperItems({ photos, marks, textBlocks, voice, song, pieces, layouts, order: itemOrder });
+  const freshId = (prefix: string) => `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+  const placeLast = (id: string) => onOrder([...items.map((item) => item.id).filter((existing) => existing !== id), id]);
 
   useEffect(() => {
     if (mode !== "compose") return;
@@ -996,147 +1081,83 @@ function Studio({ mode, locked = false, capture, voice, song, recipient, textBlo
   const finishText = () => {
     keyboard.hide();
     if (editingTextId) onTextBlocks(textBlocks.filter((block) => block.id !== editingTextId || block.words.trim()));
-    setEditingTextId(null);
-    setSelectedLayer(null);
+    setEditingTextId(null); setSelectedLayer(null);
   };
-
-  const updateTextBlock = (id: string, patch: Partial<Omit<TextBlock, "id">>) => {
-    onTextBlocks(textBlocks.map((block) => block.id === id ? { ...block, ...patch } : block));
+  const selectLayer = (id: string | null) => {
+    keyboard.hide(); setEditingRecipient(false);
+    if (editingTextId) onTextBlocks(textBlocks.filter((block) => block.id !== editingTextId || block.words.trim()));
+    setEditingTextId(null); setSelectedLayer(id);
   };
-
+  const updateTextBlock = (id: string, patch: Partial<Omit<TextBlock, "id">>) => onTextBlocks(textBlocks.map((block) => block.id === id ? { ...block, ...patch } : block));
   const createTextBlock = (layout?: LayerLayout) => {
     if (textBlocks.length >= MAX_TEXT_BLOCKS) return;
     const index = textBlocks.length;
-    const id = `text-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-    const nextLayout = layout ?? {
-      x: index === 0 ? 0 : index % 2 === 0 ? 48 : -48,
-      y: index === 0 ? 0 : Math.min(220, 64 + index * 58),
-      rotation: index % 2 === 0 ? -1.5 : 1.5,
-      scale: 1,
-    };
-    onTextBlocks([...textBlocks, { id, words: "", crossedOut: [], layout: nextLayout }]);
-    setDrawingActive(false);
-    setSelectedLayer(id);
-    setEditingTextId(id);
+    const id = freshId("text");
+    const nextLayout = layout ?? { x: index === 0 ? 0 : index % 2 === 0 ? 48 : -48, y: index === 0 ? 0 : Math.min(160, 42 + index * 36), rotation: index % 2 === 0 ? -1.5 : 1.5, scale: 1 };
+    onTextBlocks([...textBlocks, { id, words: "", crossedOut: [], layout: nextLayout, style: { ink: inkColor, align: "left", size: "regular", weight: "regular" } }]);
+    placeLast(id); setDrawingActive(false); setSelectedLayer(id); setEditingTextId(id);
   };
-
-  const editTextBlock = (id: string) => {
-    setDrawingActive(false);
-    setSelectedLayer(id);
-    setEditingTextId(id);
+  const editTextBlock = (id: string) => { setDrawingActive(false); setSelectedLayer(id); setEditingTextId(id); };
+  const updateItemLayout = (id: string, layout: LayerLayout) => {
+    if (textBlocks.some((block) => block.id === id)) updateTextBlock(id, { layout });
+    else if (photos.some((photo) => photo.id === id)) onPhotos(photos.map((photo) => photo.id === id ? { ...photo, layout } : photo));
+    else if (marks.some((mark) => mark.id === id)) onMarks(marks.map((mark) => mark.id === id ? { ...mark, layout } : mark));
+    else if (id === "voice" || id === "song") onLayout(id, layout);
   };
-
   const removeLayer = (id: string) => {
+    keyboard.hide();
     if (textBlocks.some((block) => block.id === id)) onTextBlocks(textBlocks.filter((block) => block.id !== id));
-    else if (id === "photo") onCapture(null);
-    else if (id === "burst" || id === "ribbon" || id === "stamp") onStickers(stickers.filter((sticker) => sticker !== id));
-    else {
-      if (id === "voice") onVoice(null);
-      if (id === "song") onSong(null);
-      if (pieces.includes(id as PieceId)) onTogglePiece(id as PieceId);
-    }
+    else if (photos.some((photo) => photo.id === id)) onPhotos(photos.filter((photo) => photo.id !== id));
+    else if (marks.some((mark) => mark.id === id)) onMarks(marks.filter((mark) => mark.id !== id));
+    else { if (id === "voice") onVoice(null); if (id === "song") onSong(null); if (pieces.includes(id as PieceId)) onTogglePiece(id as PieceId); }
+    onOrder(items.map((item) => item.id).filter((existing) => existing !== id));
     if (editingTextId === id) setEditingTextId(null);
     setSelectedLayer(null);
   };
-
-  const keepVoice = (asset: AudioAsset) => {
-    onVoice(asset);
-    if (!pieces.includes("voice")) onTogglePiece("voice");
-    setVoiceRecorderOpen(false);
-    setSelectedLayer(null);
+  const duplicateLayer = (id: string) => {
+    const block = textBlocks.find((candidate) => candidate.id === id);
+    const mark = marks.find((candidate) => candidate.id === id);
+    const offset = (layout: LayerLayout) => ({ ...layout, x: Math.min(140, layout.x + 22), y: Math.min(180, layout.y + 24), rotation: layout.rotation + 3 });
+    const nextId = freshId(block ? "text" : "mark");
+    if (block && textBlocks.length < MAX_TEXT_BLOCKS) onTextBlocks([...textBlocks, { ...block, id: nextId, crossedOut: block.crossedOut.map((range) => ({ ...range })), style: { ...textStyle(block, inkColor) }, layout: offset(block.layout) }]);
+    else if (mark && marks.length < MAX_MARKS) onMarks([...marks, { ...mark, id: nextId, layout: offset(mark.layout) }]);
+    else return;
+    placeLast(nextId); setSelectedLayer(nextId);
   };
-
-  const keepSong = (file: File) => {
-    onSong({ url: URL.createObjectURL(file), name: file.name.replace(/\.[^.]+$/, "") || "chosen song" });
-    if (!pieces.includes("song")) onTogglePiece("song");
-    setSelectedLayer(null);
+  const reorder = (id: string, direction: -1 | 1) => {
+    const order = items.map((item) => item.id); const index = order.indexOf(id); const next = index + direction;
+    if (index < 0 || next < 0 || next >= order.length) return;
+    [order[index], order[next]] = [order[next], order[index]]; onOrder(order);
   };
-
-  const keepDoodle = (stroke: DoodleStroke) => {
-    onDoodles([...doodles, stroke]);
-    if (!pieces.includes("drawing")) onTogglePiece("drawing");
+  const keepVoice = (asset: AudioAsset) => { onVoice(asset); if (!pieces.includes("voice")) onTogglePiece("voice"); placeLast("voice"); setVoiceRecorderOpen(false); setSelectedLayer("voice"); };
+  const keepSong = (file: File) => { onSong({ url: URL.createObjectURL(file), name: file.name.replace(/\.[^.]+$/, "") || "chosen song" }); if (!pieces.includes("song")) onTogglePiece("song"); placeLast("song"); setSelectedLayer("song"); };
+  const keepDoodle = (stroke: DoodleStroke) => { onDoodles([...doodles, stroke]); if (!pieces.includes("drawing")) onTogglePiece("drawing"); };
+  const addSticker = (kind: StickerId) => {
+    if (marks.length >= MAX_MARKS) return;
+    const id = freshId("mark"); const count = marks.filter((mark) => mark.kind === kind).length;
+    onMarks([...marks, { id, kind, ink: inkColor, layout: { ...layouts[kind], x: layouts[kind].x - count * 18, y: layouts[kind].y + count * 20 } }]);
+    placeLast(id); setSelectedLayer(id);
   };
-
-  const addSticker = (sticker: StickerId) => {
-    if (!stickers.includes(sticker)) onStickers([...stickers, sticker]);
-    setSelectedLayer(sticker);
-  };
-
-  const undoDoodle = () => {
-    const next = doodles.slice(0, -1);
-    onDoodles(next);
-    if (next.length === 0 && pieces.includes("drawing")) onTogglePiece("drawing");
-  };
-
-  return (
-    <motion.section className={`experience-page studio-page studio-${mode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }}>
-      <AnimatePresence mode="wait" initial={false}>
-        {mode === "capture" ? (
-          <CaptureStage
-            key="capture"
-            capture={capture}
-            recipient={recipient}
-            onBack={() => onMode("compose")}
-            onKeep={() => onMode("compose")}
-            onCaptured={(asset) => { onCapture(asset); setSelectedLayer(null); onMode("compose"); }}
-          />
-        ) : (
-          <StoryComposer
-            key="compose"
-            locked={locked}
-            capture={capture}
-            voice={voice}
-            song={song}
-            recipient={recipient}
-            textBlocks={textBlocks}
-            paper={paper}
-            pieces={pieces}
-            doodles={doodles}
-            stickers={stickers}
-            inkColor={inkColor}
-            layouts={layouts}
-            selectedLayer={selectedLayer}
-            editingTextId={editingTextId}
-            editingRecipient={editingRecipient}
-            drawingActive={drawingActive}
-            voiceRecorderOpen={voiceRecorderOpen}
-            activePrompt={activePrompt}
-            cuesOpen={cuesOpen}
-            showGestureHint={showGestureHint}
-            canPreview={canPreview}
-            onSelectLayer={setSelectedLayer}
-            onLayout={onLayout}
-            onRemoveLayer={removeLayer}
-            onTextLayout={(id, layout) => updateTextBlock(id, { layout })}
-            onEditText={editTextBlock}
-            onCreateText={createTextBlock}
-            onTextWords={(id, words) => updateTextBlock(id, { words })}
-            onTextCrossedOut={(id, crossedOut) => updateTextBlock(id, { crossedOut })}
-            onPaper={onPaper}
-            onFinishText={finishText}
-            onToggleCues={onToggleCues}
-            onPrompt={setActivePrompt}
-            onEditRecipient={() => setEditingRecipient(true)}
-            onRecipient={onRecipient}
-            onFinishRecipient={() => { keyboard.hide(); setEditingRecipient(false); }}
-            onStartVoice={() => { keyboard.hide(); setDrawingActive(false); setEditingTextId(null); setVoiceRecorderOpen(true); }}
-            onCancelVoice={() => setVoiceRecorderOpen(false)}
-            onVoice={keepVoice}
-            onSongFile={keepSong}
-            onDraw={() => { keyboard.hide(); setEditingTextId(null); setSelectedLayer(null); setDrawingActive(true); }}
-            onDoneDrawing={() => setDrawingActive(false)}
-            onUndoDoodle={undoDoodle}
-            onDoodle={keepDoodle}
-            onAddSticker={addSticker}
-            onInkColor={onInkColor}
-            onCamera={() => { keyboard.hide(); setDrawingActive(false); onMode("capture"); }}
-            onBack={onBack}
-            onPreview={onPreview}
-          />
-        )}
-      </AnimatePresence>
-    </motion.section>
-  );
+  const undoDoodle = () => { const next = doodles.slice(0, -1); onDoodles(next); if (!next.length && pieces.includes("drawing")) onTogglePiece("drawing"); };
+  return <motion.section className={`experience-page studio-page studio-${mode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }}>
+    <AnimatePresence mode="wait" initial={false}>
+      {mode === "capture" ? <CaptureStage key="capture" capture={null} recipient={recipient} onBack={() => onMode("compose")} onKeep={() => onMode("compose")} onCaptured={(asset) => {
+        if (photos.length >= MAX_PHOTOS) { if (asset.url?.startsWith("blob:")) URL.revokeObjectURL(asset.url); onMode("compose"); return; }
+        const id = photos.length === 0 && !items.some((item) => item.id === "photo") ? "photo" : freshId("photo");
+        const count = photos.length;
+        onPhotos([...photos, { id, asset, layout: count === 0 ? { ...layouts.photo } : { x: count % 2 ? 56 : -60, y: -152 + count * 72, rotation: count % 2 ? 5 : -5, scale: .8 }, frame: "tape", caption: "" }]);
+        placeLast(id); setSelectedLayer(null); onMode("compose");
+      }} /> : <StoryComposer key="compose" locked={locked} items={items} photos={photos} marks={marks} voice={voice} song={song} recipient={recipient} textBlocks={textBlocks} paper={paper} pieces={pieces} doodles={doodles} inkColor={inkColor}
+        selectedLayer={selectedLayer} editingTextId={editingTextId} editingRecipient={editingRecipient} drawingActive={drawingActive} voiceRecorderOpen={voiceRecorderOpen} activePrompt={activePrompt} cuesOpen={cuesOpen} showGestureHint={showGestureHint} canPreview={canPreview}
+        onSelectLayer={selectLayer} onLayout={updateItemLayout} onRemoveLayer={removeLayer} onDuplicate={duplicateLayer} onReorder={reorder}
+        onTextStyle={(id, style) => updateTextBlock(id, { style })} onPhoto={(id, patch) => onPhotos(photos.map((photo) => photo.id === id ? { ...photo, ...patch } : photo))} onMarkInk={(id, ink) => onMarks(marks.map((mark) => mark.id === id ? { ...mark, ink } : mark))}
+        onEditText={editTextBlock} onCreateText={createTextBlock} onTextWords={(id, words) => updateTextBlock(id, { words })} onTextCrossedOut={(id, crossedOut) => updateTextBlock(id, { crossedOut })}
+        onPaper={onPaper} onFinishText={finishText} onToggleCues={onToggleCues} onPrompt={setActivePrompt} onEditRecipient={() => { selectLayer(null); setEditingRecipient(true); }} onRecipient={onRecipient} onFinishRecipient={() => { keyboard.hide(); setEditingRecipient(false); }}
+        onStartVoice={() => { selectLayer(null); setDrawingActive(false); setVoiceRecorderOpen(true); }} onCancelVoice={() => setVoiceRecorderOpen(false)} onVoice={keepVoice} onSongFile={keepSong}
+        onDraw={() => { selectLayer(null); setDrawingActive(true); }} onDoneDrawing={() => setDrawingActive(false)} onUndoDoodle={undoDoodle} onDoodle={keepDoodle} onAddSticker={addSticker} onInkColor={onInkColor}
+        onCamera={() => { if (photos.length >= MAX_PHOTOS) return; selectLayer(null); setDrawingActive(false); onMode("capture"); }} onBack={onBack} onPreview={() => { finishText(); onPreview(); }} />}
+    </AnimatePresence>
+  </motion.section>;
 }
 
 type CameraStatus = "requesting" | "waiting" | "live" | "denied" | "unsupported";
@@ -1325,6 +1346,7 @@ function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured }: { capt
       )}
 
       <footer className="capture-controls">
+        <p className="capture-local-note">Photos and videos stay on this device. Remove them before sharing a link or QR.</p>
         {cameraNote && <p className="camera-note" aria-live="polite">{cameraNote}</p>}
         <div className="capture-mode-switch" role="tablist" aria-label="Capture mode">
           <button type="button" role="tab" aria-selected={captureMode === "photo"} disabled={recording} onClick={() => setCaptureMode("photo")}>photo</button>
@@ -1337,128 +1359,195 @@ function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured }: { capt
         </div>
         <div className="capture-quiet-actions"><button type="button" onClick={useSample}>use sample moment</button><button type="button" onClick={onBack}>back to paper</button></div>
       </footer>
-      <input ref={fileRef} className="capture-file-input" type="file" accept="image/*,video/*" onChange={handleFile} tabIndex={-1} />
+      <input ref={fileRef} className="capture-file-input" type="file" accept="image/*,video/*" aria-label="Choose a photo or video" onChange={handleFile} tabIndex={-1} />
     </motion.div>
   );
 }
 
+type PaperItem =
+  | { id: string; kind: "text"; layout: LayerLayout; label: string; block: TextBlock }
+  | { id: string; kind: "photo"; layout: LayerLayout; label: string; photo: PhotoPiece }
+  | { id: string; kind: "mark"; layout: LayerLayout; label: string; mark: MarkPiece }
+  | { id: string; kind: "voice" | "song"; layout: LayerLayout; label: string; audio: AudioAsset };
+
+function paperItems({ photos, marks, textBlocks, voice, song, pieces, layouts, order }: {
+  photos: PhotoPiece[]; marks: MarkPiece[]; textBlocks: TextBlock[]; voice: AudioAsset | null; song: AudioAsset | null; pieces: PieceId[]; layouts: Record<LayerId, LayerLayout>; order: string[];
+}): PaperItem[] {
+  const items: PaperItem[] = [
+    ...photos.map((photo, index) => ({ id: photo.id, kind: "photo" as const, layout: photo.layout, label: `${photo.asset.kind === "video" ? "video" : "photo"}${index ? ` ${index + 1}` : ""}`, photo })),
+    ...textBlocks.map((block, index) => ({ id: block.id, kind: "text" as const, layout: block.layout, label: `text box ${index + 1}`, block })),
+    ...(voice && pieces.includes("voice") ? [{ id: "voice", kind: "voice" as const, layout: layouts.voice, label: "voice note", audio: voice }] : []),
+    ...(song && pieces.includes("song") ? [{ id: "song", kind: "song" as const, layout: layouts.song, label: "song", audio: song }] : []),
+    ...marks.map((mark) => ({ id: mark.id, kind: "mark" as const, layout: mark.layout, label: `${mark.kind} mark`, mark })),
+  ];
+  const exactOrder = completeOrder(order, items.map((item) => item.id));
+  return items.sort((a, b) => exactOrder.indexOf(a.id) - exactOrder.indexOf(b.id));
+}
+
+function itemAttributes(item: PaperItem, order: number, ink: InkColor) {
+  const style = item.kind === "text" ? textStyle(item.block, ink) : null;
+  return {
+    "data-item-kind": item.kind, "data-item-id": item.id, "data-layer-order": order,
+    "data-layout": `${item.layout.x},${item.layout.y},${item.layout.rotation},${item.layout.scale}`,
+    "data-text-block-id": item.kind === "text" ? item.id : undefined,
+    "data-ink": style?.ink ?? (item.kind === "mark" ? item.mark.ink : undefined),
+    "data-text-align": style?.align, "data-text-size": style?.size, "data-text-weight": style?.weight,
+    "data-frame": item.kind === "photo" ? item.photo.frame : undefined,
+    "data-mark-kind": item.kind === "mark" ? item.mark.kind : undefined,
+  };
+}
+
+function PaperItemContent({ item, receiver = false }: { item: PaperItem; receiver?: boolean }) {
+  if (item.kind === "text") return <RichWords value={item.block.words} crossedOut={item.block.crossedOut} className="story-words-visual" />;
+  if (item.kind === "photo") return <div className="story-photo-visual">{item.photo.frame === "tape" && <span className="paper-tape" aria-hidden="true" />}<CapturedMedia capture={item.photo.asset} interactive={receiver} className="story-paper-media" />{item.photo.caption && <p className="photo-caption">{item.photo.caption}</p>}</div>;
+  if (item.kind === "mark") return <StickerMark id={item.mark.kind} />;
+  return <AudioPaperPiece asset={item.audio} kind={item.kind} />;
+}
+
 type StoryComposerProps = {
-  locked?: boolean;
-  capture: CaptureAsset | null;
-  voice: AudioAsset | null;
-  song: AudioAsset | null;
-  recipient: string;
-  textBlocks: TextBlock[];
-  paper: PaperId;
-  pieces: PieceId[];
-  doodles: DoodleStroke[];
-  stickers: StickerId[];
-  inkColor: InkColor;
-  layouts: Record<LayerId, LayerLayout>;
-  selectedLayer: string | null;
-  editingTextId: string | null;
-  editingRecipient: boolean;
-  drawingActive: boolean;
-  voiceRecorderOpen: boolean;
-  activePrompt: string;
-  cuesOpen: boolean;
-  showGestureHint: boolean;
-  canPreview: boolean;
-  onSelectLayer: (id: string | null) => void;
-  onLayout: (id: LayerId, layout: LayerLayout) => void;
-  onRemoveLayer: (id: string) => void;
-  onTextLayout: (id: string, layout: LayerLayout) => void;
-  onEditText: (id: string) => void;
-  onCreateText: (layout?: LayerLayout) => void;
-  onTextWords: (id: string, value: string) => void;
-  onTextCrossedOut: (id: string, value: CrossOut[]) => void;
-  onPaper: (value: PaperId) => void;
-  onFinishText: () => void;
-  onToggleCues: () => void;
-  onPrompt: (prompt: string) => void;
-  onEditRecipient: () => void;
-  onRecipient: (value: string) => void;
-  onFinishRecipient: () => void;
-  onStartVoice: () => void;
-  onCancelVoice: () => void;
-  onVoice: (asset: AudioAsset) => void;
-  onSongFile: (file: File) => void;
-  onDraw: () => void;
-  onDoneDrawing: () => void;
-  onUndoDoodle: () => void;
-  onDoodle: (stroke: DoodleStroke) => void;
-  onAddSticker: (sticker: StickerId) => void;
-  onInkColor: (color: InkColor) => void;
-  onCamera: () => void;
-  onBack: () => void;
-  onPreview: () => void;
+  locked?: boolean; items: PaperItem[]; photos: PhotoPiece[]; marks: MarkPiece[]; voice: AudioAsset | null; song: AudioAsset | null;
+  recipient: string; textBlocks: TextBlock[]; paper: PaperId; pieces: PieceId[]; doodles: DoodleStroke[]; inkColor: InkColor;
+  selectedLayer: string | null; editingTextId: string | null; editingRecipient: boolean; drawingActive: boolean; voiceRecorderOpen: boolean;
+  activePrompt: string; cuesOpen: boolean; showGestureHint: boolean; canPreview: boolean;
+  onSelectLayer: (id: string | null) => void; onLayout: (id: string, layout: LayerLayout) => void;
+  onRemoveLayer: (id: string) => void; onDuplicate: (id: string) => void; onReorder: (id: string, direction: -1 | 1) => void;
+  onTextStyle: (id: string, style: TextStyle) => void; onPhoto: (id: string, patch: Partial<Pick<PhotoPiece, "frame" | "caption">>) => void; onMarkInk: (id: string, ink: InkColor) => void;
+  onEditText: (id: string) => void; onCreateText: (layout?: LayerLayout) => void; onTextWords: (id: string, value: string) => void; onTextCrossedOut: (id: string, value: CrossOut[]) => void;
+  onPaper: (value: PaperId) => void; onFinishText: () => void; onToggleCues: () => void; onPrompt: (prompt: string) => void;
+  onEditRecipient: () => void; onRecipient: (value: string) => void; onFinishRecipient: () => void;
+  onStartVoice: () => void; onCancelVoice: () => void; onVoice: (asset: AudioAsset) => void; onSongFile: (file: File) => void;
+  onDraw: () => void; onDoneDrawing: () => void; onUndoDoodle: () => void; onDoodle: (stroke: DoodleStroke) => void;
+  onAddSticker: (sticker: StickerId) => void; onInkColor: (color: InkColor) => void; onCamera: () => void; onBack: () => void; onPreview: () => void;
 };
 
-function StoryComposer({ locked = false, capture, voice, song, recipient, textBlocks, paper, pieces, doodles, stickers, inkColor, layouts, selectedLayer, editingTextId, editingRecipient, drawingActive, voiceRecorderOpen, activePrompt, cuesOpen, showGestureHint, canPreview, onSelectLayer, onLayout, onRemoveLayer, onTextLayout, onEditText, onCreateText, onTextWords, onTextCrossedOut, onPaper, onFinishText, onToggleCues, onPrompt, onEditRecipient, onRecipient, onFinishRecipient, onStartVoice, onCancelVoice, onVoice, onSongFile, onDraw, onDoneDrawing, onUndoDoodle, onDoodle, onAddSticker, onInkColor, onCamera, onBack, onPreview }: StoryComposerProps) {
+function StoryComposer({ locked = false, items, photos, marks, voice, song, recipient, textBlocks, paper, pieces, doodles, inkColor, selectedLayer, editingTextId, editingRecipient, drawingActive, voiceRecorderOpen, activePrompt, cuesOpen, showGestureHint, canPreview, onSelectLayer, onLayout, onRemoveLayer, onDuplicate, onReorder, onTextStyle, onPhoto, onMarkInk, onEditText, onCreateText, onTextWords, onTextCrossedOut, onPaper, onFinishText, onToggleCues, onPrompt, onEditRecipient, onRecipient, onFinishRecipient, onStartVoice, onCancelVoice, onVoice, onSongFile, onDraw, onDoneDrawing, onUndoDoodle, onDoodle, onAddSticker, onInkColor, onCamera, onBack, onPreview }: StoryComposerProps) {
   const editingText = editingTextId !== null;
-  const paperIsEmpty = !textBlocks.some((block) => block.words.trim()) && !capture && !voice && !song && !doodles.length && !stickers.length;
+  const selected = items.find((item) => item.id === selectedLayer);
+  const paperIsEmpty = !textBlocks.some((block) => block.words.trim()) && !photos.length && !voice && !song && !doodles.length && !marks.length;
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [viewOffset, setViewOffset] = useState(0);
+  const viewOffsetRef = useRef(0);
   const blankPaperPointer = useRef<{ pointerId: number; x: number; y: number } | null>(null);
+  // Move the editing view, never the authored coordinates, when the dock covers a piece.
   useEffect(() => {
-    const screen = document.querySelector<HTMLElement>("[data-phone-screen]");
-    screen?.scrollTo(0, 0);
+    const canvas = canvasRef.current;
+    const paper = canvas?.querySelector<HTMLElement>(".story-paper-sheet");
+    const piece = canvas?.querySelector<HTMLElement>(".story-layer.is-selected .story-layer-paper");
+    const dock = canvas?.querySelector<HTMLElement>(".scrapbook-item-tools");
+    const topbar = canvas?.querySelector<HTMLElement>(".story-topbar");
+    if (!canvas || !paper || !piece || !dock || !topbar || editingText) {
+      viewOffsetRef.current = 0; setViewOffset(0); return;
+    }
+    let timer = 0;
+    const framePiece = () => {
+      const scale = canvas.getBoundingClientRect().height / canvas.clientHeight;
+      if (!scale) return;
+      const bounds = piece.getBoundingClientRect();
+      const top = topbar.getBoundingClientRect().bottom + 52 * scale;
+      const bottom = dock.getBoundingClientRect().top - 54 * scale;
+      const originalTop = bounds.top - viewOffsetRef.current * scale;
+      const originalBottom = bounds.bottom - viewOffsetRef.current * scale;
+      const offset = bounds.height > bottom - top
+        ? (top - originalTop) / scale
+        : Math.max((top - originalTop) / scale, Math.min(0, (bottom - originalBottom) / scale));
+      viewOffsetRef.current = Math.round(offset);
+      setViewOffset(viewOffsetRef.current);
+    };
+    const scheduleFrame = () => {
+      window.clearTimeout(timer);
+      // Let a double tap finish before changing the view beneath the pointer.
+      timer = window.setTimeout(framePiece, 320);
+    };
+    const observer = new ResizeObserver(scheduleFrame);
+    observer.observe(canvas); observer.observe(piece); observer.observe(dock);
+    scheduleFrame();
+    return () => { observer.disconnect(); window.clearTimeout(timer); };
+  }, [selectedLayer, editingText]);
+  useEffect(() => {
+    const screen = document.querySelector<HTMLElement>("[data-phone-screen]"); screen?.scrollTo(0, 0);
     const frame = window.requestAnimationFrame(() => screen?.scrollTo(0, 0));
     return () => window.cancelAnimationFrame(frame);
   }, []);
   const startWritingOnPaper = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (locked || drawingActive || editingText) return;
-    const target = event.target as HTMLElement;
-    if (target.closest("button, input, textarea, audio, video, [role='group']")) return;
+    if (locked || drawingActive || editingText || editingRecipient) return;
+    if ((event.target as HTMLElement).closest("button, input, textarea, audio, video, [role='group']")) return;
     blankPaperPointer.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY };
   };
   const finishWritingOnPaper = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const start = blankPaperPointer.current;
-    blankPaperPointer.current = null;
+    const start = blankPaperPointer.current; blankPaperPointer.current = null;
     if (!start || start.pointerId !== event.pointerId || Math.hypot(event.clientX - start.x, event.clientY - start.y) > 8) return;
+    if (selectedLayer) { onSelectLayer(null); return; }
     const bounds = event.currentTarget.getBoundingClientRect();
-    const x = Math.max(-bounds.width / 2 + 30, Math.min(bounds.width / 2 - 30, event.clientX - bounds.left - bounds.width / 2));
-    const y = Math.max(-bounds.height / 2 + 50, Math.min(bounds.height / 2 - 54, event.clientY - bounds.top - bounds.height / 2));
+    const scaleX = event.currentTarget.clientWidth / bounds.width; const scaleY = event.currentTarget.clientHeight / bounds.height;
+    const x = Math.max(-event.currentTarget.clientWidth / 2 + 30, Math.min(event.currentTarget.clientWidth / 2 - 30, (event.clientX - bounds.left - bounds.width / 2) * scaleX));
+    const y = Math.max(-event.currentTarget.clientHeight / 2 + 50, Math.min(event.currentTarget.clientHeight / 2 - 54, (event.clientY - bounds.top - bounds.height / 2) * scaleY));
     onCreateText({ x, y, rotation: textBlocks.length % 2 === 0 ? -1.5 : 1.5, scale: 1 });
   };
+  return <motion.div className={`story-composer story-paper-first ${drawingActive ? "is-drawing" : ""} ${editingText ? "is-editing-text" : ""} ${selected && !editingText ? "has-selected-piece" : ""}`} data-ink={inkColor} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }} data-scroll-drag="ignore">
+    <div ref={canvasRef} className="story-canvas" aria-label="Full-screen paper keepsake canvas">
+      <header className="story-topbar">
+        <button type="button" aria-label="Leave the message maker" onClick={onBack}><CloseMark /></button>
+        {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" disabled={locked} onClick={onEditRecipient}>for {recipient || "someone"}</button>}
+        <button className="story-done" type="button" disabled={!canPreview} aria-label="Next: fold and decorate the envelope" onClick={onPreview}>next <Mark /></button>
+      </header>
+      <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} style={{ translate: `0 ${viewOffset}px` }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .24 }} onPointerDown={startWritingOnPaper} onPointerUp={finishWritingOnPaper} onPointerCancel={() => { blankPaperPointer.current = null; }}>
+        {paper === "ruled" && <PaperRuling />}
+        {paperIsEmpty && !locked && !editingText && !editingRecipient && !drawingActive && !voiceRecorderOpen && <button className="paper-start-hint" type="button" onClick={() => onCreateText()}><span>start with a few words</span><small>then arrange the little things that are yours</small></button>}
+        {drawingActive ? <DoodleSurface strokes={doodles} onStroke={onDoodle} /> : doodles.length ? <DoodleArtwork strokes={doodles} className="story-doodle-artwork" /> : null}
+        <AnimatePresence>
+          {items.map((item, order) => {
+            const isEditing = item.kind === "text" && editingTextId === item.id;
+            if (item.kind === "text" && !item.block.words.trim() && !isEditing) return null;
+            return <CanvasLayer key={item.id} id={item.id} item={item} order={order} ink={inkColor} className={`story-layer-${item.kind} ${item.kind === "mark" ? `story-layer-${item.mark.kind}` : ""}`} locked={locked} label={item.label} layout={item.layout} selected={selectedLayer === item.id} editing={isEditing} resizable onSelect={onSelectLayer} onLayout={onLayout} onRemove={onRemoveLayer} onEdit={item.kind === "text" ? () => onEditText(item.id) : undefined}>
+              {isEditing && item.kind === "text" ? <RichHandwritingEditor label={`Write directly on the paper in ${item.label}. Backspace crosses out text; use undo cross-out to restore it.`} value={item.block.words} crossedOut={item.block.crossedOut} placeholder={activePrompt} onChange={(words) => onTextWords(item.id, words)} onCrossedOut={(crossed) => onTextCrossedOut(item.id, crossed)} /> : <PaperItemContent item={item} />}
+            </CanvasLayer>;
+          })}
+        </AnimatePresence>
+      </motion.div>
+      <AnimatePresence>{voiceRecorderOpen && <VoiceRecorder onCancel={onCancelVoice} onRecorded={onVoice} />}</AnimatePresence>
+      <p className="story-mode-status" aria-live="polite">{drawingActive ? `doodling · ${doodles.length} ${doodles.length === 1 ? "stroke" : "strokes"}` : editingText ? "writing directly on the paper" : ""}</p>
+      <AnimatePresence>{showGestureHint && !paperIsEmpty && !editingText && !drawingActive && !selected && <motion.p className="story-gesture-tip" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>tap a piece to make it yours</motion.p>}</AnimatePresence>
+      {!locked && !editingText && !drawingActive && !voiceRecorderOpen && !editingRecipient && items.length > 0 && <button className="scrapbook-layer-cycle" type="button" aria-label="Select next piece" onClick={() => { const index = items.findIndex((item) => item.id === selectedLayer); onSelectLayer(items[(index + 1) % items.length].id); }}><span aria-hidden="true">▱</span>{selected ? `${items.findIndex((item) => item.id === selected.id) + 1} / ${items.length}` : `${items.length} ${items.length === 1 ? "piece" : "pieces"}`}</button>}
+      {!locked && !voiceRecorderOpen && !editingRecipient && (selected && !editingText && !drawingActive ? <ScrapbookItemTools key={selected.id} item={selected} ink={inkColor} index={items.findIndex((item) => item.id === selected.id)} count={items.length} canDuplicate={selected.kind === "text" ? textBlocks.length < MAX_TEXT_BLOCKS : selected.kind === "mark" && marks.length < MAX_MARKS} onDone={() => onSelectLayer(null)} onLayout={(layout) => onLayout(selected.id, layout)} onRemove={() => onRemoveLayer(selected.id)} onDuplicate={() => onDuplicate(selected.id)} onReorder={(direction) => onReorder(selected.id, direction)} onEdit={() => onEditText(selected.id)} onTextStyle={(style) => onTextStyle(selected.id, style)} onPhoto={(patch) => onPhoto(selected.id, patch)} onMarkInk={(ink) => onMarkInk(selected.id, ink)} /> : <StoryToolRail hasWords={textBlocks.some((block) => block.words.trim())} canAddText={textBlocks.length < MAX_TEXT_BLOCKS} paper={paper} capture={photos[0]?.asset ?? null} photoCount={photos.length} markCount={marks.length} voice={voice} song={song} pieces={pieces} inkColor={inkColor} drawingActive={drawingActive} editingText={editingText} cuesOpen={cuesOpen} activePrompt={activePrompt} canUndoDoodle={doodles.length > 0} onText={() => onCreateText()} onFinishText={onFinishText} onToggleCues={onToggleCues} onPrompt={onPrompt} onPaper={onPaper} onDraw={onDraw} onDoneDrawing={onDoneDrawing} onUndoDoodle={onUndoDoodle} onCamera={onCamera} onVoice={onStartVoice} onSongFile={onSongFile} onAddSticker={onAddSticker} onInkColor={onInkColor} />)}
+    </div>
+  </motion.div>;
+}
 
-  return (
-    <motion.div className={`story-composer story-paper-first ${drawingActive ? "is-drawing" : ""} ${editingText ? "is-editing-text" : ""}`} data-ink={inkColor} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} data-scroll-drag="ignore">
-      <div className="story-canvas" aria-label="Full-screen paper keepsake canvas">
-        <header className="story-topbar">
-          <button type="button" aria-label="Leave the message maker" onClick={onBack}><CloseMark /></button>
-          {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" disabled={locked} onClick={onEditRecipient}>for {recipient || "someone"}</button>}
-          <button className="story-done" type="button" disabled={!canPreview} aria-label="Next: fold and decorate the envelope" onClick={onPreview}>next <Mark /></button>
-        </header>
+function InkChoices({ ink, onChange }: { ink: InkColor; onChange: (ink: InkColor) => void }) {
+  return <div className="story-colour-palette" role="group" aria-label="Ink colour">{inkColors.map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={ink === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onChange(color)}><span /></button>)}</div>;
+}
 
-        <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} initial={{ opacity: 0, transform: "translate3d(0, 10px, 0) scale(.99)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startWritingOnPaper} onPointerUp={finishWritingOnPaper} onPointerCancel={() => { blankPaperPointer.current = null; }}>
-          {paper === "ruled" && <PaperRuling />}
-
-          {paperIsEmpty && !locked && !editingText && !editingRecipient && !drawingActive && !voiceRecorderOpen && <button className="paper-start-hint" type="button" onClick={() => onCreateText()}><span>start with a few words</span><small>or tap anywhere on the paper</small></button>}
-
-          {drawingActive ? <DoodleSurface strokes={doodles} onStroke={onDoodle} /> : doodles.length > 0 ? <DoodleArtwork strokes={doodles} className="story-doodle-artwork" /> : null}
-
-          <AnimatePresence>
-            {capture && <CanvasLayer key="photo" id="photo" locked={locked} label={capture.kind === "video" ? "video" : "photo"} layout={layouts.photo} selected={selectedLayer === "photo"} resizable onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("photo", layout)} onRemove={onRemoveLayer}><div className="story-photo-visual"><span className="paper-tape" aria-hidden="true" /><CapturedMedia capture={capture} className="story-paper-media" /></div></CanvasLayer>}
-            {textBlocks.map((block, index) => {
-              const isEditing = editingTextId === block.id;
-              if (!block.words.trim() && !isEditing) return null;
-              const label = `text box ${index + 1}`;
-              return <CanvasLayer key={block.id} id={block.id} locked={locked} className="story-layer-text" dataTextBlockId={block.id} label={label} layout={block.layout} selected={selectedLayer === block.id} editing={isEditing} resizable onSelect={onSelectLayer} onLayout={onTextLayout} onRemove={onRemoveLayer} onEdit={() => onEditText(block.id)}>{isEditing ? <RichHandwritingEditor label={`Write directly on the paper in ${label}. Backspace crosses out text; use undo cross-out to restore it.`} value={block.words} crossedOut={block.crossedOut} placeholder={activePrompt} onChange={(value) => onTextWords(block.id, value)} onCrossedOut={(value) => onTextCrossedOut(block.id, value)} /> : <RichWords value={block.words} crossedOut={block.crossedOut} className="story-words-visual" />}</CanvasLayer>;
-            })}
-            {voice && pieces.includes("voice") && <CanvasLayer key="voice" id="voice" locked={locked} label="voice note" layout={layouts.voice} selected={selectedLayer === "voice"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("voice", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={voice} kind="voice" /></CanvasLayer>}
-            {song && pieces.includes("song") && <CanvasLayer key="song" id="song" locked={locked} label="song" layout={layouts.song} selected={selectedLayer === "song"} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout("song", layout)} onRemove={onRemoveLayer}><AudioPaperPiece asset={song} kind="song" /></CanvasLayer>}
-            {stickers.map((sticker) => <CanvasLayer key={sticker} id={sticker} locked={locked} label={`${sticker} mark`} layout={layouts[sticker]} selected={selectedLayer === sticker} onSelect={onSelectLayer} onLayout={(_, layout) => onLayout(sticker, layout)} onRemove={onRemoveLayer}><StickerMark id={sticker} /></CanvasLayer>)}
-          </AnimatePresence>
-        </motion.div>
-
-        <AnimatePresence>{voiceRecorderOpen && <VoiceRecorder onCancel={onCancelVoice} onRecorded={onVoice} />}</AnimatePresence>
-
-        <p className="story-mode-status" aria-live="polite">{drawingActive ? `doodling · ${doodles.length} ${doodles.length === 1 ? "stroke" : "strokes"}` : editingText ? "writing directly on the paper" : ""}</p>
-        <AnimatePresence>{showGestureHint && !paperIsEmpty && !editingText && !drawingActive && <motion.p className="story-gesture-tip" initial={{ opacity: 0, transform: "translateY(5px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>move it anywhere. corners turn and resize.</motion.p>}</AnimatePresence>
-
-        {!locked && <StoryToolRail hasWords={textBlocks.some((block) => block.words.trim())} canAddText={textBlocks.length < MAX_TEXT_BLOCKS} paper={paper} capture={capture} voice={voice} song={song} pieces={pieces} stickers={stickers} inkColor={inkColor} drawingActive={drawingActive} editingText={editingText} cuesOpen={cuesOpen} activePrompt={activePrompt} canUndoDoodle={doodles.length > 0} onText={() => onCreateText()} onFinishText={onFinishText} onToggleCues={onToggleCues} onPrompt={onPrompt} onPaper={onPaper} onDraw={onDraw} onDoneDrawing={onDoneDrawing} onUndoDoodle={onUndoDoodle} onCamera={onCamera} onVoice={onStartVoice} onSongFile={onSongFile} onAddSticker={onAddSticker} onInkColor={onInkColor} />}
-      </div>
-    </motion.div>
-  );
+function ScrapbookItemTools({ item, ink, index, count, canDuplicate, onDone, onLayout, onRemove, onDuplicate, onReorder, onEdit, onTextStyle, onPhoto, onMarkInk }: {
+  item: PaperItem; ink: InkColor; index: number; count: number; canDuplicate: boolean; onDone: () => void; onLayout: (layout: LayerLayout) => void;
+  onRemove: () => void; onDuplicate: () => void; onReorder: (direction: -1 | 1) => void; onEdit: () => void;
+  onTextStyle: (style: TextStyle) => void; onPhoto: (patch: Partial<Pick<PhotoPiece, "frame" | "caption">>) => void; onMarkInk: (ink: InkColor) => void;
+}) {
+  const [tab, setTab] = useState<"look" | "arrange">(item.kind === "voice" || item.kind === "song" ? "arrange" : "look");
+  const [captionOpen, setCaptionOpen] = useState(false);
+  const keyboard = useKeyboard();
+  const style = item.kind === "text" ? textStyle(item.block, ink) : null;
+  const setStyle = (patch: Partial<TextStyle>) => { if (style) onTextStyle({ ...style, ...patch }); };
+  const finishCaption = () => { keyboard.hide(); setCaptionOpen(false); };
+  const changeTab = (next: "look" | "arrange") => { finishCaption(); setTab(next); };
+  const nudge = (x: number, y: number) => onLayout({ ...item.layout, x: Math.max(-160, Math.min(160, item.layout.x + x)), y: Math.max(-320, Math.min(270, item.layout.y + y)) });
+  return <section className={`story-tool-dock scrapbook-item-tools ${captionOpen ? "is-captioning" : ""}`} aria-label="Customise selected item">
+    <div className="scrapbook-tools-heading"><span>{item.label}</span><div role="tablist" aria-label="Piece controls">{item.kind !== "voice" && item.kind !== "song" && <button type="button" role="tab" aria-selected={tab === "look"} onClick={() => changeTab("look")}>look</button>}<button type="button" role="tab" aria-selected={tab === "arrange"} onClick={() => changeTab("arrange")}>arrange</button></div><button className="scrapbook-done" type="button" aria-label="Done customising" onClick={() => { finishCaption(); onDone(); }}>done</button></div>
+    {tab === "look" && item.kind === "text" && style && <div className="scrapbook-look-controls">
+      <div className="scrapbook-style-row"><InkChoices ink={style.ink} onChange={(ink) => setStyle({ ink })} /><button type="button" className="scrapbook-edit-words" onClick={onEdit}>edit words</button></div>
+      <div className="scrapbook-style-row"><div className="scrapbook-choice" role="group" aria-label="Text size">{(["small", "regular", "large"] as const).map((size) => <button key={size} type="button" aria-pressed={style.size === size} onClick={() => setStyle({ size })}>{size}</button>)}</div><button type="button" aria-label={style.weight === "emphasis" ? "regular weight" : "emphasis"} aria-pressed={style.weight === "emphasis"} onClick={() => setStyle({ weight: style.weight === "emphasis" ? "regular" : "emphasis" })}><b>bold</b></button></div>
+      <div className="scrapbook-style-row"><div className="scrapbook-choice scrapbook-alignment" role="group" aria-label="Text alignment">{(["left", "center", "right"] as const).map((align) => <button key={align} type="button" aria-label={`Align text ${align}`} aria-pressed={style.align === align} onClick={() => setStyle({ align })}><svg viewBox="0 0 24 20" aria-hidden="true"><path d={`M3 3h18M${align === "right" ? 9 : align === "center" ? 6 : 3} 9h12M3 15h18`} /></svg></button>)}</div><button type="button" disabled={!canDuplicate} onClick={onDuplicate}>duplicate</button><button type="button" onClick={onRemove}>remove</button></div>
+    </div>}
+    {tab === "look" && item.kind === "photo" && <div className="scrapbook-look-controls">
+      {!captionOpen && <div className="scrapbook-style-row scrapbook-photo-frames" role="group" aria-label="Photo frame">{(["plain", "polaroid", "tape"] as const).map((frame) => <button key={frame} type="button" aria-pressed={item.photo.frame === frame} onClick={() => onPhoto({ frame })}><span className={`scrapbook-frame-preview frame-${frame}`} aria-hidden="true" />{frame}</button>)}</div>}
+      {captionOpen ? <div className="scrapbook-caption-editor"><KeyboardInput autoFocus aria-label="Photo caption" maxLength={100} value={item.photo.caption} placeholder="a few words about this moment" onChange={(event) => onPhoto({ caption: event.target.value })} /><button type="button" onClick={finishCaption}>done caption</button></div> : <div className="scrapbook-action-row"><button type="button" onClick={() => setCaptionOpen(true)}>{item.photo.caption ? "edit caption" : "caption"}</button><span>{item.photo.asset.kind === "sample" ? "sample moment" : "on this device"}</span><button type="button" onClick={onRemove}>remove</button></div>}
+    </div>}
+    {tab === "look" && item.kind === "mark" && <div className="scrapbook-look-controls"><div className="scrapbook-style-row"><InkChoices ink={item.mark.ink} onChange={onMarkInk} /><span className="scrapbook-mark-preview"><StickerMark id={item.mark.kind} /></span></div><div className="scrapbook-action-row"><button type="button" disabled={!canDuplicate} onClick={onDuplicate}>duplicate</button><button type="button" onClick={onRemove}>remove</button></div></div>}
+    {tab === "arrange" && <div className="scrapbook-arrange-controls">
+      <div className="scrapbook-action-row"><button type="button" disabled={index === 0} onClick={() => onReorder(-1)}>backward</button><span>overlap</span><button type="button" disabled={index === count - 1} onClick={() => onReorder(1)}>forward</button></div>
+      <div className="scrapbook-style-row scrapbook-transform-row"><button type="button" aria-label="turn left" onClick={() => onLayout({ ...item.layout, rotation: item.layout.rotation - 6 })}>↶</button><button type="button" onClick={() => onLayout({ ...item.layout, scale: Math.max(.52, Number((item.layout.scale - .1).toFixed(3))) })}>smaller</button><button type="button" onClick={() => onLayout({ ...item.layout, scale: Math.min(1.9, Number((item.layout.scale + .1).toFixed(3))) })}>larger</button><button type="button" aria-label="turn right" onClick={() => onLayout({ ...item.layout, rotation: item.layout.rotation + 6 })}>↷</button></div>
+      <div className="scrapbook-style-row scrapbook-nudge-row" role="group" aria-label="Move selected piece"><button type="button" aria-label="Move left" onClick={() => nudge(-12, 0)}>←</button><button type="button" aria-label="Move up" onClick={() => nudge(0, -12)}>↑</button><button type="button" aria-label="Move down" onClick={() => nudge(0, 12)}>↓</button><button type="button" aria-label="Move right" onClick={() => nudge(12, 0)}>→</button><button type="button" onClick={onRemove}>remove</button></div>
+    </div>}
+  </section>;
 }
 
 function PaperRuling() {
@@ -1617,15 +1706,12 @@ function DoodleSurface({ strokes, onStroke, label = "Draw directly on the paper 
 }
 
 function AuthoredPaper({ snapshot, className = "", receiver = false }: { snapshot: KeepsakeSnapshot; className?: string; receiver?: boolean }) {
-  const textBlocks = textBlocksFromSnapshot(snapshot);
+  const scrapbook = scrapbookFromSnapshot(snapshot);
+  const items = paperItems({ ...scrapbook, textBlocks: textBlocksFromSnapshot(snapshot), voice: snapshot.voice, song: snapshot.song, pieces: snapshot.pieces, layouts: snapshot.layouts });
   return <article className={`authored-paper story-paper-sheet paper-${snapshot.paper} ${className}`} data-ink={snapshot.inkColor} aria-label={`A keepsake for ${snapshot.recipient}`}>
     {snapshot.paper === "ruled" && <PaperRuling />}
-    {snapshot.capture && <div className="story-layer story-layer-photo authored-photo" style={{ transform: `translate(${snapshot.layouts.photo.x}px, ${snapshot.layouts.photo.y}px)` }}><div className="story-layer-paper" style={{ transform: `rotate(${snapshot.layouts.photo.rotation}deg) scale(${snapshot.layouts.photo.scale})` }}><div className="story-photo-visual"><span className="paper-tape" aria-hidden="true" /><CapturedMedia capture={snapshot.capture} interactive={receiver} className="story-paper-media" /></div></div></div>}
-    {textBlocks.map((block) => <div key={block.id} className="story-layer story-layer-text authored-words" data-text-block-id={block.id} data-layout={`${block.layout.x},${block.layout.y},${block.layout.rotation},${block.layout.scale}`} style={{ transform: `translate(${block.layout.x}px, ${block.layout.y}px)` }}><div className="story-layer-paper" style={{ transform: `rotate(${block.layout.rotation}deg) scale(${block.layout.scale})` }}><RichWords value={block.words} crossedOut={block.crossedOut} className="story-words-visual" /></div></div>)}
     {snapshot.doodles.length > 0 && <DoodleArtwork strokes={snapshot.doodles} className="story-doodle-artwork" />}
-    {snapshot.voice && snapshot.pieces.includes("voice") && <div className="story-layer story-layer-voice authored-voice" style={{ transform: `translate(${snapshot.layouts.voice.x}px, ${snapshot.layouts.voice.y}px) rotate(${snapshot.layouts.voice.rotation}deg) scale(${snapshot.layouts.voice.scale})` }}><AudioPaperPiece asset={snapshot.voice} kind="voice" /></div>}
-    {snapshot.song && snapshot.pieces.includes("song") && <div className="story-layer story-layer-song authored-song" style={{ transform: `translate(${snapshot.layouts.song.x}px, ${snapshot.layouts.song.y}px) rotate(${snapshot.layouts.song.rotation}deg) scale(${snapshot.layouts.song.scale})` }}><AudioPaperPiece asset={snapshot.song} kind="song" /></div>}
-    {snapshot.stickers.map((sticker) => <div key={sticker} className={`story-layer story-layer-${sticker} authored-sticker`} style={{ transform: `translate(${snapshot.layouts[sticker].x}px, ${snapshot.layouts[sticker].y}px) rotate(${snapshot.layouts[sticker].rotation}deg) scale(${snapshot.layouts[sticker].scale})` }}><StickerMark id={sticker} /></div>)}
+    {items.map((item, order) => <div key={item.id} className={`story-layer story-layer-${item.kind} ${item.kind === "mark" ? `story-layer-${item.mark.kind}` : ""} authored-${item.kind === "text" ? "words" : item.kind}`} {...itemAttributes(item, order, snapshot.inkColor)} style={{ zIndex: order + 10, transform: `translate(${item.layout.x}px, ${item.layout.y}px)` }}><div className="story-layer-paper" style={{ transform: `rotate(${item.layout.rotation}deg) scale(${item.layout.scale})` }}><PaperItemContent item={item} receiver={receiver} /></div></div>)}
   </article>;
 }
 
@@ -1709,7 +1795,7 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, locked = false,
   );
 }
 
-function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selected, editing = false, resizable = false, locked = false, children, onSelect, onLayout, onRemove, onEdit }: { id: string; className?: string; dataTextBlockId?: string; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; resizable?: boolean; locked?: boolean; children: ReactNode; onSelect: (id: string | null) => void; onLayout: (id: string, layout: LayerLayout) => void; onRemove: (id: string) => void; onEdit?: () => void }) {
+function CanvasLayer({ id, item, order, ink, className = "", label, layout, selected, editing = false, resizable = false, locked = false, children, onSelect, onLayout, onRemove, onEdit }: { id: string; item: PaperItem; order: number; ink: InkColor; className?: string; label: string; layout: LayerLayout; selected: boolean; editing?: boolean; resizable?: boolean; locked?: boolean; children: ReactNode; onSelect: (id: string | null) => void; onLayout: (id: string, layout: LayerLayout) => void; onRemove: (id: string) => void; onEdit?: () => void }) {
   const layerRef = useRef<HTMLDivElement>(null);
   const moveRef = useRef({ pointerId: -1, startX: 0, startY: 0, startLayout: layout, moved: false });
   const rotationRef = useRef({ pointerId: -1, startAngle: 0, startRotation: 0, moved: false });
@@ -1718,7 +1804,7 @@ function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selec
     x: Math.max(-(layerRef.current?.parentElement?.clientWidth ?? 384) / 2 + 24, Math.min((layerRef.current?.parentElement?.clientWidth ?? 384) / 2 - 24, x)),
     y: Math.max(-(layerRef.current?.parentElement?.clientHeight ?? 760) / 2 + 42, Math.min((layerRef.current?.parentElement?.clientHeight ?? 760) / 2 - 54, y)),
   });
-  const clampScale = (scale: number) => Math.max(0.52, Math.min(id === "photo" ? 1.75 : 1.9, scale));
+  const clampScale = (scale: number) => Math.max(0.52, Math.min(item.kind === "photo" ? 1.75 : 1.9, scale));
   const startMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (locked || editing || (event.pointerType === "mouse" && event.button !== 0)) return;
     if ((event.target as HTMLElement).closest("button, input, textarea, audio, video")) return;
@@ -1729,8 +1815,10 @@ function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selec
   const move = (event: ReactPointerEvent<HTMLDivElement>) => {
     const session = moveRef.current;
     if (session.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - session.startX;
-    const deltaY = event.clientY - session.startY;
+    const parent = layerRef.current?.parentElement;
+    const bounds = parent?.getBoundingClientRect();
+    const deltaX = (event.clientX - session.startX) * (bounds?.width ? (parent?.clientWidth ?? bounds.width) / bounds.width : 1);
+    const deltaY = (event.clientY - session.startY) * (bounds?.height ? (parent?.clientHeight ?? bounds.height) / bounds.height : 1);
     if (Math.hypot(deltaX, deltaY) > 2) session.moved = true;
     if (!session.moved) return;
     event.preventDefault();
@@ -1795,8 +1883,10 @@ function CanvasLayer({ id, className = "", dataTextBlockId, label, layout, selec
     resizeRef.current.pointerId = -1;
   };
   return (
-    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} data-text-block-id={dataTextBlockId} data-layout={`${layout.x},${layout.y},${layout.rotation},${layout.scale}`} role="group" aria-label={locked || editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={locked || editing ? -1 : 0} style={{ x: layout.x, y: layout.y }} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={() => { if (!locked && !editing) onSelect(id); }} onDoubleClick={locked ? undefined : onEdit} onKeyDown={(event) => {
-      if (locked || editing) return;
+    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} {...itemAttributes(item, order, ink)} role="group" aria-label={locked || editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={locked || editing ? -1 : 0} style={{ x: layout.x, y: layout.y, zIndex: order + 10 } as CSSProperties} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={(event) => { if (!locked && !editing && !(event.target as HTMLElement).closest("button, input, textarea, audio, video")) onSelect(id); }} onDoubleClick={locked ? undefined : onEdit} onKeyDown={(event) => {
+      if (locked || editing || event.target !== event.currentTarget) return;
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onSelect(id); return; }
+      if (event.key === "Escape") { event.preventDefault(); onSelect(null); return; }
       const movement = event.shiftKey ? 18 : 6;
       if (event.key === "ArrowLeft") onLayout(id, { ...layout, ...clampPosition(layout.x - movement, layout.y) });
       else if (event.key === "ArrowRight") onLayout(id, { ...layout, ...clampPosition(layout.x + movement, layout.y) });
@@ -1830,7 +1920,7 @@ function StickerMark({ id }: { id: StickerId }) {
   </svg>;
 }
 
-function StoryToolRail({ hasWords, canAddText, paper, capture, voice, song, pieces, stickers, inkColor, drawingActive, editingText, cuesOpen, activePrompt, canUndoDoodle, onText, onFinishText, onToggleCues, onPrompt, onPaper, onDraw, onDoneDrawing, onUndoDoodle, onCamera, onVoice, onSongFile, onAddSticker, onInkColor }: { hasWords: boolean; canAddText: boolean; paper: PaperId; capture: CaptureAsset | null; voice: AudioAsset | null; song: AudioAsset | null; pieces: PieceId[]; stickers: StickerId[]; inkColor: InkColor; drawingActive: boolean; editingText: boolean; cuesOpen: boolean; activePrompt: string; canUndoDoodle: boolean; onText: () => void; onFinishText: () => void; onToggleCues: () => void; onPrompt: (prompt: string) => void; onPaper: (paper: PaperId) => void; onDraw: () => void; onDoneDrawing: () => void; onUndoDoodle: () => void; onCamera: () => void; onVoice: () => void; onSongFile: (file: File) => void; onAddSticker: (sticker: StickerId) => void; onInkColor: (color: InkColor) => void }) {
+function StoryToolRail({ hasWords, canAddText, paper, capture, voice, song, pieces, photoCount, markCount, inkColor, drawingActive, editingText, cuesOpen, activePrompt, canUndoDoodle, onText, onFinishText, onToggleCues, onPrompt, onPaper, onDraw, onDoneDrawing, onUndoDoodle, onCamera, onVoice, onSongFile, onAddSticker, onInkColor }: { hasWords: boolean; canAddText: boolean; paper: PaperId; capture: CaptureAsset | null; voice: AudioAsset | null; song: AudioAsset | null; pieces: PieceId[]; photoCount: number; markCount: number; inkColor: InkColor; drawingActive: boolean; editingText: boolean; cuesOpen: boolean; activePrompt: string; canUndoDoodle: boolean; onText: () => void; onFinishText: () => void; onToggleCues: () => void; onPrompt: (prompt: string) => void; onPaper: (paper: PaperId) => void; onDraw: () => void; onDoneDrawing: () => void; onUndoDoodle: () => void; onCamera: () => void; onVoice: () => void; onSongFile: (file: File) => void; onAddSticker: (sticker: StickerId) => void; onInkColor: (color: InkColor) => void }) {
   const [addOpen, setAddOpen] = useState(false);
   const [songImportOpen, setSongImportOpen] = useState(false);
   const songInputRef = useRef<HTMLInputElement>(null);
@@ -1839,7 +1929,7 @@ function StoryToolRail({ hasWords, canAddText, paper, capture, voice, song, piec
     <div className="story-tool-dock">
       {!editingText && !drawingActive && addOpen && songImportOpen && <div className="song-import-note" role="region" aria-label="Add a song"><p>choose an audio file</p><small>Audio stays on this device. Remove it before sharing a link or QR.</small><div><button type="button" onClick={() => songInputRef.current?.click()}>choose file</button><button type="button" onClick={() => setSongImportOpen(false)}>not now</button></div></div>}
       <AnimatePresence>
-        {!editingText && !drawingActive && addOpen && <motion.div className="story-add-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}><div className="paper-choice" role="group" aria-label="Paper character">{(["plain", "dotted", "grid"] as PaperId[]).map((choice) => <button key={choice} type="button" aria-pressed={paper === choice} onClick={() => onPaper(choice)}>{choice}</button>)}</div><Carousel ariaLabel="Creative materials" contentClassName="story-tool-rail"><button type="button" aria-pressed={Boolean(capture)} onClick={() => { setAddOpen(false); onCamera(); }}><CameraMark /><span>photo</span></button><button type="button" aria-pressed={Boolean(voice && pieces.includes("voice"))} onClick={() => { setAddOpen(false); onVoice(); }}><MaterialIcon id="voice" /><span>{voice ? "new voice" : "voice"}</span></button><button type="button" aria-pressed={Boolean(song && pieces.includes("song"))} aria-expanded={songImportOpen} onClick={() => setSongImportOpen((current) => !current)}><MaterialIcon id="song" /><span>{song ? "new song" : "song"}</span></button></Carousel><div className="story-authored-tools" aria-label="Colour and hand-drawn mark tools"><div className="story-colour-palette" role="group" aria-label="Ink colour"><span>ink</span>{(["navy", "forest", "rust", "plum", "ochre"] as InkColor[]).map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={inkColor === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onInkColor(color)}><span /></button>)}</div><Carousel ariaLabel="Hand-drawn marks" contentClassName="story-sticker-rail">{(["burst", "ribbon", "stamp"] as StickerId[]).map((sticker) => { const placed = stickers.includes(sticker); return <button key={sticker} type="button" data-placed={placed || undefined} aria-label={placed ? `Select ${sticker} mark on paper` : `Add ${sticker} mark`} onClick={() => onAddSticker(sticker)}><StickerMark id={sticker} /><span>{sticker}</span></button>; })}</Carousel></div></motion.div>}
+        {!editingText && !drawingActive && addOpen && <motion.div className="story-add-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}><div className="paper-choice" role="group" aria-label="Paper character">{(["plain", "dotted", "grid"] as PaperId[]).map((choice) => <button key={choice} type="button" aria-pressed={paper === choice} onClick={() => onPaper(choice)}>{choice}</button>)}</div><Carousel ariaLabel="Creative materials" contentClassName="story-tool-rail"><button type="button" aria-label="photo" disabled={photoCount >= MAX_PHOTOS} aria-pressed={Boolean(capture)} onClick={() => { setAddOpen(false); onCamera(); }}><CameraMark /><span>photo</span><small>{photoCount} / {MAX_PHOTOS}</small></button><button type="button" aria-pressed={Boolean(voice && pieces.includes("voice"))} onClick={() => { setAddOpen(false); onVoice(); }}><MaterialIcon id="voice" /><span>{voice ? "new voice" : "voice"}</span></button><button type="button" aria-pressed={Boolean(song && pieces.includes("song"))} aria-expanded={songImportOpen} onClick={() => setSongImportOpen((current) => !current)}><MaterialIcon id="song" /><span>{song ? "new song" : "song"}</span></button></Carousel><div className="story-authored-tools" aria-label="Colour and hand-drawn mark tools"><div className="story-colour-palette" role="group" aria-label="Ink colour"><span>ink</span>{(["navy", "forest", "rust", "plum", "ochre"] as InkColor[]).map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={inkColor === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onInkColor(color)}><span /></button>)}</div><Carousel ariaLabel="Hand-drawn marks" contentClassName="story-sticker-rail">{(["burst", "ribbon", "stamp"] as StickerId[]).map((sticker) => { return <button key={sticker} type="button" disabled={markCount >= MAX_MARKS} aria-label={`Add ${sticker} mark`} onClick={() => onAddSticker(sticker)}><StickerMark id={sticker} /><span>{sticker}</span></button>; })}</Carousel><span className="scrapbook-mark-count">{markCount} / {MAX_MARKS} marks</span></div></motion.div>}
         {editingText && cuesOpen && <motion.div className="story-add-tray story-prompt-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }}><Carousel ariaLabel="Writing prompts" contentClassName="story-prompt-rail">{prompts.map((prompt) => <button key={prompt} className={prompt === activePrompt ? "is-current" : ""} type="button" onClick={() => onPrompt(prompt)}>{prompt}</button>)}</Carousel></motion.div>}
       </AnimatePresence>
       {editingText ? <div className="story-primary-tools story-context-tools"><button type="button" aria-expanded={cuesOpen} onClick={onToggleCues}><span>{cuesOpen ? "hide nudges" : "need a nudge?"}</span></button><button type="button" onClick={onFinishText}><span>done writing</span><Mark /></button></div> : drawingActive ? <div className="story-primary-tools story-context-tools"><button type="button" disabled={!canUndoDoodle} onClick={onUndoDoodle}>undo stroke</button><span className="drawing-now"><MaterialIcon id="drawing" /> draw anywhere</span><button type="button" onClick={onDoneDrawing}>done</button></div> : <div className="story-primary-tools">

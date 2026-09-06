@@ -1631,7 +1631,7 @@
   max-width: 100%;
   padding: 4px 8px;
   background: transparent;
-  font-size: clamp(28px, 7.5vw, 35px);
+  font-size: 28px;
   line-height: 1.02;
   text-align: left;
   -webkit-text-stroke: 0.22px currentColor;
@@ -1645,7 +1645,7 @@
   overflow: hidden;
   background: transparent !important;
   caret-color: var(--navy);
-  font-size: clamp(28px, 7.5vw, 35px) !important;
+  font-size: 28px !important;
   line-height: 1.02 !important;
   text-align: left;
   resize: none;
@@ -3499,7 +3499,7 @@
   min-height: 108px;
   padding: 4px 8px;
   font-family: "Gaegu", "Ugly Handwriting", cursive;
-  font-size: clamp(28px, 7.5vw, 35px) !important;
+  font-size: 28px !important;
   font-weight: 400;
   line-height: 1.02 !important;
   letter-spacing: normal;
@@ -5355,4 +5355,229 @@
   color: var(--navy);
   font-size: 14px;
   line-height: 1.35;
+}
+
+/* Each personal piece carries the same ink, material and arrangement in maker and receiver. */
+.story-layer[data-ink="navy"] { --maker-ink: var(--navy); }
+.story-layer[data-ink="forest"] { --maker-ink: var(--ink-olive); }
+.story-layer[data-ink="rust"] { --maker-ink: var(--ink-rust); }
+.story-layer[data-ink="plum"] { --maker-ink: var(--ink-slate); }
+.story-layer[data-ink="ochre"] { --maker-ink: var(--ink-ochre); }
+.story-layer[data-text-size="small"] { --piece-font-size: 22px; }
+.story-layer[data-text-size="regular"] { --piece-font-size: 28px; }
+.story-layer[data-text-size="large"] { --piece-font-size: 42px; }
+.story-layer[data-text-align="left"] { --piece-text-align: left; }
+.story-layer[data-text-align="center"] { --piece-text-align: center; }
+.story-layer[data-text-align="right"] { --piece-text-align: right; }
+.story-layer[data-text-weight="regular"] { --piece-text-stroke: .22px; }
+.story-layer[data-text-weight="emphasis"] { --piece-text-stroke: .65px; }
+.story-layer-text .story-words-visual,
+.story-layer-text .rich-text-mirror,
+.story-layer-text .rich-text-editor .story-words-input {
+  font-size: var(--piece-font-size, 28px) !important;
+  text-align: var(--piece-text-align, left);
+  -webkit-text-stroke-width: var(--piece-text-stroke, .22px);
+}
+.story-layer-text .story-words-visual,
+.story-layer-text .rich-text-mirror {
+  color: var(--maker-ink);
+}
+.story-layer-mark {
+  width: 78px;
+  margin-left: -39px;
+}
+.story-layer-photo[data-frame="plain"] .story-photo-visual {
+  padding: 0;
+  box-shadow: none;
+}
+.story-layer-photo[data-frame="plain"] .photo-caption {
+  padding: 5px 2px 0;
+}
+.story-layer-photo[data-frame="polaroid"] .story-photo-visual,
+.story-layer-photo[data-frame="tape"] .story-photo-visual {
+  padding: 7px 7px 25px;
+}
+.story-layer-photo:has(.photo-caption) .story-photo-visual {
+  padding-bottom: 5px;
+}
+.story-layer-photo[data-frame="plain"]:has(.photo-caption) .story-photo-visual {
+  padding-bottom: 0;
+}
+.keepsake-app .photo-caption {
+  min-height: 24px;
+  margin-top: 5px;
+  padding: 0 3px;
+  color: var(--navy);
+  font-size: 20px;
+  line-height: 1.05;
+  text-align: center;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.story-layer:focus-visible .story-layer-paper::after {
+  border-color: var(--navy);
+}
+.story-layer.is-selected .story-layer-paper::after {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--navy) 40%, transparent);
+}
+.story-layer-remove,
+.story-layer-rotate,
+.story-layer-resize {
+  width: 44px;
+  height: 44px;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  background: var(--paper) !important;
+}
+.story-layer-remove,
+.story-layer-rotate { top: -49px; }
+.story-layer-resize { bottom: -49px; }
+.story-layer-edit { top: -49px; }
+.story-composer .story-topbar { z-index: 70; }
+.story-composer .story-tool-dock { z-index: 70; background: var(--paper); }
+.story-composer .story-doodle-artwork,
+.authored-paper > .story-doodle-artwork { z-index: 50; }
+.story-composer .doodle-surface { z-index: 60; }
+.story-composer .story-mode-status,
+.story-composer .story-gesture-tip { z-index: 65; }
+
+/* The bottom edge changes with the selected material instead of surrounding the paper with tools. */
+.scrapbook-item-tools {
+  position: absolute;
+  z-index: 72;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0 20px calc(var(--mobile-safe-area-height) + 9px);
+  border-top: 1px solid color-mix(in srgb, var(--navy) 23%, transparent);
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: 0 -5px 22px rgb(8 31 77 / 3%);
+}
+.scrapbook-tools-heading {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 7px;
+}
+.scrapbook-tools-heading > span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.scrapbook-tools-heading [role="tablist"] { display: flex; }
+.scrapbook-tools-heading button {
+  min-width: 48px;
+  padding: 0 8px;
+  font-size: 17px;
+}
+.scrapbook-tools-heading [role="tab"][aria-selected="true"] {
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 1px;
+}
+.scrapbook-tools-heading .scrapbook-done {
+  margin-left: 2px;
+  padding-right: 0;
+  font-size: 19px;
+}
+.scrapbook-style-row,
+.scrapbook-action-row {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.scrapbook-style-row > button,
+.scrapbook-action-row > button,
+.scrapbook-choice > button {
+  min-height: 44px;
+  padding: 0 7px;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.scrapbook-style-row .story-colour-palette {
+  width: auto;
+  justify-content: flex-start;
+}
+.scrapbook-item-tools .ink-swatch {
+  width: 44px;
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+.scrapbook-item-tools .ink-swatch > span { width: 16px; height: 16px; }
+.scrapbook-style-row .scrapbook-edit-words { margin-left: auto; padding-right: 0; }
+.scrapbook-choice { display: flex; align-items: center; gap: 5px; }
+.scrapbook-choice > button[aria-pressed="true"],
+.scrapbook-style-row > button[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+.scrapbook-choice[aria-label="Text size"] { flex: 1; justify-content: space-between; margin-right: 10px; }
+.scrapbook-style-row b { font-weight: 400; -webkit-text-stroke: .65px; }
+.scrapbook-alignment { gap: 0; }
+.scrapbook-alignment svg { width: 21px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+.scrapbook-alignment > button[aria-pressed="true"] { background: color-mix(in srgb, var(--navy) 6%, white); }
+.scrapbook-action-row > span { font-size: 14px; color: var(--muted-ink); }
+.scrapbook-action-row > button:first-child { padding-left: 0; }
+.scrapbook-action-row > button:last-child { padding-right: 0; }
+.scrapbook-photo-frames { justify-content: space-around; padding: 4px 0 8px; }
+.scrapbook-photo-frames > button { display: flex; align-items: center; gap: 10px; min-height: 62px; }
+.scrapbook-frame-preview { position: relative; width: 23px; height: 26px; background: color-mix(in srgb, var(--brand-slate) 30%, white); }
+.scrapbook-frame-preview.frame-polaroid,
+.scrapbook-frame-preview.frame-tape { border: 3px solid white; border-bottom-width: 8px; box-shadow: 0 1px 4px rgb(8 31 77 / 24%); }
+.scrapbook-frame-preview.frame-tape::after { position: absolute; top: -6px; left: 2px; width: 14px; height: 6px; background: var(--brand-cream); content: ""; transform: rotate(-8deg); }
+.scrapbook-mark-preview { width: 32px; margin-right: 9px; }
+.scrapbook-caption-editor { display: flex; gap: 8px; min-height: 55px; align-items: center; }
+.scrapbook-caption-editor input { width: 0; min-width: 0; flex: 1; min-height: 44px; font-size: 20px; border-bottom: 1px solid color-mix(in srgb, var(--navy) 30%, transparent); }
+.scrapbook-caption-editor button { font-size: 17px; white-space: nowrap; }
+.scrapbook-transform-row,
+.scrapbook-nudge-row { justify-content: space-between; }
+.scrapbook-transform-row > button:first-child,
+.scrapbook-transform-row > button:last-child,
+.scrapbook-nudge-row > button:not(:last-child) { font-size: 24px; }
+.scrapbook-nudge-row > button:last-child { margin-left: auto; padding-right: 0; }
+.scrapbook-layer-cycle {
+  position: absolute;
+  z-index: 71;
+  top: 116px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 0 7px !important;
+  background: var(--paper) !important;
+  color: var(--navy);
+  font-size: 16px !important;
+}
+.scrapbook-layer-cycle > span { font-family: var(--sans); font-size: 24px; }
+.story-tool-rail button { position: relative; }
+.story-tool-rail button > small { font-size: 12px; color: var(--muted-ink); }
+.keepsake-app .story-tool-rail button > span { color: var(--navy); font-size: 16px; }
+.scrapbook-mark-count { width: 100%; padding-top: 5px; font-size: 13px; text-align: center; color: var(--muted-ink); }
+.capture-local-note {
+  max-width: 310px;
+  margin: 0 auto 9px !important;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1.12;
+  text-align: center;
+}
+.capture-live .capture-local-note { color: white; }
+.mobile-page[data-keyboard-visible="true"] .scrapbook-layer-cycle { display: none; }
+.mobile-page[data-keyboard-visible="true"] .scrapbook-item-tools { padding-bottom: 8px; }
+@media (max-width: 360px) {
+  .scrapbook-item-tools { padding-right: 12px; padding-left: 12px; }
+  .scrapbook-tools-heading { gap: 2px; }
+  .scrapbook-tools-heading > span { font-size: 18px; }
+  .scrapbook-tools-heading button { padding: 0 6px; }
+  .scrapbook-style-row { gap: 3px; }
+  .scrapbook-style-row > button { font-size: 16px; }
 }
