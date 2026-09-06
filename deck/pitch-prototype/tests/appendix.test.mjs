@@ -73,6 +73,13 @@ test('appendix is a separate 13-page route and cannot change the live deck count
   assert.match(appendix, /new URLSearchParams\(location\.search\)/);
   assert.match(appendix, /params\.get\(['"]slide['"]\)/);
   assert.match(appendix, /(?:index\.html\?slide=11(?:&|&amp;)step=0|index\.html\?slide=11)/);
+  assert.equal((appendix.match(/data-primary-research-slot="true"/g) ?? []).length, 1, 'appendix exposes exactly one controlled primary-research insertion slot');
+  assert.match(appendix, /question and scale endpoints are not legible/i, 'the held survey capture must state why it is not yet safe to claim');
+  assert.doesNotMatch(appendix, /(?:82|71|59\.3|33\.3)%/, 'unverified and rehearsal survey percentages must stay out of the appendix');
+  assert.match(appendix, /Anyone with the bearer link can open it\./, 'appendix must disclose the bearer-link privacy boundary');
+  assert.match(appendix, /Local photo, video, voice, or song files cannot travel across devices\./, 'appendix must disclose the local-media transport boundary');
+  assert.match(appendix, /Release gate before 2 PM/, 'appendix must preserve the final live-demo release gate');
+  assert.match(appendix, /This protocol has not yet been run\./, 'planned matched-format testing cannot be presented as completed evidence');
 
   const localImages = [...appendix.matchAll(/<img\s+[^>]*src="([^"]+)"/g)]
     .map((match) => match[1])

@@ -39,23 +39,23 @@ http://127.0.0.1:4176/deck/pitch-prototype/appendix.html?slide=A1
 
 Use Left / Right, Page Up / Page Down, Home / End, or the on-screen controls to move. Press `I` for a complete appendix index and `F` for fullscreen. Every page has a deterministic deep link such as `?slide=A7`; the one return control goes back to live slide 11. Print exposes all 13 pages as separate 16:9 sheets.
 
-The appendix mirrors the 2025 winner's repeated editorial research-slide grammar: a large title, a small amount of legible source material or a raw artifact, and intentionally blank research templates where work has not yet been completed. It retains Warm & Fuzzies' identity; it does not copy the winner's wording, palette or illustrations. Its pages are:
+The appendix mirrors the 2025 winner's repeated editorial research-slide grammar: a large title, readable source material or a raw artifact, and a clear separation between completed proof and open research. It retains Warm & Fuzzies' identity; it does not copy the winner's wording, palette or illustrations. Its pages are:
 
 1. Appendix divider
 2. Unpacking the brief
 3. Secondary research I
 4. Secondary research II
-5. Research questions and problem statement
-6. Interview question structure — blank template
-7. Interview findings — blank template
-8. Survey findings I — blank template
-9. Survey findings II — blank template
-10. Task-based interview findings — blank template
+5. Evidence ledger
+6. The single controlled primary-research insertion slot
+7. Product flow through current prototype captures
+8. Working behaviour and technical boundaries
+9. Demo readiness, recovery QR and release gates
+10. The matched-format test needed to distinguish the product from existing channels
 11. Wireframing and process artifacts
 12. Visual direction and current prototype
-13. References, credits and disclosure blanks
+13. References, credits and the remaining submission metadata
 
-No completed primary study currently validates the expression gap, occasion rule, market, audience, product outcome or superiority. The blank templates are intentional: no interview, survey or task-based finding is fabricated for presentation polish. Published studies support adjacent mechanisms only, and prototype screenshots prove implemented behaviour only.
+No completed primary study currently validates the expression gap, occasion rule, market, audience, product outcome or superiority. A6 is the only page allowed to accept a primary finding, and only after the raw artifact shows the exact question, response labels, counts, method, exception and limitation. Published studies support adjacent mechanisms only, and prototype screenshots prove implemented behaviour only.
 
 Run the standalone regression check with:
 
