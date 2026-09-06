@@ -207,7 +207,7 @@
     @page { size:1600px 900px; margin:0; }
     @media print { html,body { print-color-adjust:exact; -webkit-print-color-adjust:exact; } #shell { display:block; height:auto; } #deck { position:relative; left:0; top:0; width:1600px!important; height:auto; transform:none!important; overflow:visible; } .slide { display:block!important; position:relative; width:1600px; height:900px; overflow:hidden; break-after:page; page-break-after:always; } .logo-slide { display:grid!important; } .build { opacity:1!important; translate:none!important; } #hud,#progress,.skip { display:none!important; } }
   </style>
-  <link rel="stylesheet" href="refinements.css">
+  <link rel="stylesheet" href="refinements.css?v=20260906-table-review">
 </head>
 <body>
 <main id="shell"><section id="deck" aria-label="Exploratory Warm and Fuzzies pitch deck">
@@ -272,21 +272,17 @@
 
   <article class="slide maya-slide" data-title="One use case" data-steps="3">
     <button class="skip" aria-label="Advance build">next ↵</button>
-    <header class="maya-story">
-      <p class="maya-kicker">one illustrative use case</p>
-      <h2><em>Maya</em> wants to thank someone for being so friendly during her first week at uni.</h2>
-      <p class="maya-moment build" data-step="1">It is an <em>ordinary Tuesday.</em></p>
-    </header>
-    <div class="maya-evidence" aria-label="Temporary rehearsal figures: 72 percent said a text can feel too casual for meaningful appreciation, and 78 percent said they have never received a gift just because.">
-      <section class="maya-stat build" data-step="2"><span class="maya-stat-side">text side</span><strong>72%</strong><p>said a text can feel too casual for meaningful appreciation.</p></section>
-      <section class="maya-stat second build" data-step="3"><span class="maya-stat-side">gift side</span><strong>78%</strong><p>said they have never received a gift “just because.”</p></section>
+    <header class="maya-story"><p class="maya-kicker">one illustrative use case</p><h2><em>Maya</em> wants to thank someone for being so friendly during her first week at uni.</h2><p class="maya-moment build" data-step="1">It is an <em>ordinary Tuesday.</em></p></header>
+    <div class="maya-evidence" aria-label="In the 51-response reasons question, 19.6 percent selected I don't know what to do. Maya is an illustrative scenario, not a participant.">
+      <section class="maya-stat build" data-step="2"><span class="maya-stat-side">in our survey</span><strong>19.6%</strong><p>selected not knowing what to do as a reason for not expressing gratitude to friends.</p></section>
+      <section class="maya-response build" data-step="3"><span class="maya-stat-side">the response they selected</span><p>“I don’t know<br>what to do.”</p></section>
     </div>
-    <p class="maya-close build" data-step="3">Maya is one of many people caught between these two options.</p>
-    <p class="source">72% and 78% are rehearsal placeholders—not verified primary-research findings. Maya is illustrative.</p><span class="status">07 / 11</span>
+    <p class="maya-close build" data-step="3">How could we make that thank-you easier to send?</p>
+    <p class="source">Team survey · 51 responses to the reasons question · Original chart: appendix A5. Maya is illustrative; this is a self-reported barrier.</p><span class="status">07 / 11</span>
   </article>
 
   <article class="slide synthesis-slide" data-title="Research synthesis" data-steps="4">
-    <button class="skip" aria-label="Advance build">next ↵</button><div class="synthesis-layout"><p class="synthesis-kicker">When the results connect</p><div class="synthesis-chain"><div class="synthesis-line build" data-step="1"><span>if</span><strong style="font-size:80px">80.4%</strong><p>said they do not or cannot fully express their appreciation</p></div><div class="synthesis-line build" data-step="2"><span>and</span><strong style="font-size:80px">56.9%</strong><p>selected awkwardness as a reason they do not express gratitude to friends</p></div><div class="synthesis-conclusion build" data-step="3"><span>then</span><strong>Make showing appreciation feel normal on an ordinary day.</strong></div><div class="synthesis-therefore build" data-step="4"><span>therefore</span><strong>Create the impact of gift-giving, with the low friction and repeatability of everyday digital contact.</strong></div></div></div><p class="source">Team survey · 51 responses to each question. Self-reported findings; the design aims below remain untested.</p><span class="status">08 / 11</span>
+    <button class="skip" aria-label="Advance build">next ↵</button><div class="synthesis-layout"><p class="synthesis-kicker">When the results connect</p><div class="synthesis-chain"><div class="synthesis-line build" data-step="1"><span>if</span><p>appreciation can go unexpressed</p></div><div class="synthesis-line build" data-step="2"><span>and</span><p>awkwardness can get in the way</p></div><div class="synthesis-conclusion build" data-step="3"><span>then</span><strong>Make showing appreciation feel normal on an ordinary day.</strong></div><div class="synthesis-therefore build" data-step="4"><span>therefore</span><strong>Create the impact of gift-giving, with the low friction and repeatability of everyday digital contact.</strong></div></div></div><p class="source">Synthesis of the survey findings · A design direction, not a tested outcome.</p><span class="status">08 / 11</span>
   </article>
 
   <article class="slide solution-slide" data-title="Warm & Fuzzies" data-steps="1">
@@ -295,36 +291,15 @@
 
   <article class="slide product-outcomes-slide" data-title="How the product answers the gap" data-steps="4">
     <button class="skip" aria-label="Advance build">next ↵</button>
-    <p class="response-kicker">closing the loop</p>
-    <h2 class="response-title">How Warm &amp; Fuzzies answers the gap.</h2>
-    <div class="response-ledger" role="img" aria-label="A causal comparison showing the strengths Warm and Fuzzies borrows from four familiar formats, the working prototype mechanism that implements each quality, and the gap that mechanism answers. A handwritten letter becomes an authored canvas, making the result personal rather than generic. Mixed media becomes five media types in one keepsake, letting the form fit the thought. Text becomes one direct browser link without a receiver account or download, so the receiver opens without setup. Gift-like ownership becomes receiver control over keeping, revisiting or removing the keepsake. Together these mechanisms form one digital gift designed for impact, low friction and repeatability.">
-      <div class="response-head" aria-hidden="true"><span>strength we borrow</span><span>working prototype mechanism</span><span>gap it answers</span></div>
-      <section class="response-row build" data-step="1">
-        <div class="response-source"><span>from a</span><strong>handwritten letter</strong></div>
-        <div class="response-mechanism"><strong>an authored canvas</strong><small>your words · layout · personal mark</small></div>
-        <div class="response-result"><strong>personal, not generic</strong><small>authorship stays visible</small></div>
-      </section>
-      <section class="response-row build" data-step="2">
-        <div class="response-source"><span>from</span><strong>mixed media</strong></div>
-        <div class="response-mechanism"><strong>five media types in one keepsake</strong><small>writing · photo · voice · video · song</small></div>
-        <div class="response-result"><strong>more than words</strong><small>the form fits the thought</small></div>
-      </section>
-      <section class="response-row build" data-step="3">
-        <div class="response-source"><span>from a</span><strong>text</strong></div>
-        <div class="response-mechanism"><strong>one direct browser link</strong><small>no receiver account · no download</small></div>
-        <div class="response-result"><strong>opens without setup</strong><small>as easily as a text</small></div>
-      </section>
-      <section class="response-row build" data-step="4">
-        <div class="response-source"><span>from a</span><strong>gift</strong></div>
-        <div class="response-mechanism"><strong>a receiver-controlled keepsake</strong><small>keep · revisit · remove</small></div>
-        <div class="response-result"><strong>the receiver decides what remains</strong><small>keep · revisit · remove</small></div>
-      </section>
-      <div class="response-summary build" data-step="4">
-        <div class="response-brand"><img src="../../prototype/public/assets/illustrations/cecilia/firefly-carrying-envelope.png" alt=""><span><strong>warm &amp; fuzzies</strong><small>one digital gift</small></span></div>
-        <div class="response-targets"><span><strong>impact</strong><small>authorship + expressive range</small></span><span><strong>low friction</strong><small>one link + no setup</small></span><span><strong>repeatability</strong><small>ordinary-day entry + revisit</small></span></div>
-      </div>
+    <h2 class="product-table-title">Warm &amp; Fuzzies brings them together.</h2>
+    <div class="comparison-ledger product-table" aria-label="Qualitative format comparison, not survey scores. Three familiar formats followed by the Warm and Fuzzies response, comparing personal expression, delivery and keeping.">
+      <div class="ledger-header"><span>form</span><span>personal expression</span><span>delivery</span><span>keeping</span></div>
+      <section class="ledger-row build" data-step="1"><div class="ledger-form"><img class="ledger-icon" src="assets/channel-quick-text.svg" alt=""><span>quick text</span></div><div class="ledger-scores"><div><strong>Your words</strong></div><div><strong>Send in chat</strong></div><div><strong>In a thread</strong></div></div></section>
+      <section class="ledger-row voice build" data-step="2"><div class="ledger-form"><img class="ledger-icon" src="assets/channel-voice-video.svg" alt=""><span>voice note /<br>video call</span></div><div class="ledger-scores"><div><strong>Voice / presence</strong></div><div><strong>Record / arrange<br>a call</strong></div><div><strong>Depends on<br>recording</strong></div></div></section>
+      <section class="ledger-row build" data-step="3"><div class="ledger-form"><img class="ledger-icon envelope" src="../../prototype/public/assets/illustrations/cecilia/envelope-mail-02.png" alt=""><span>handwritten letter /<br>physical gift</span></div><div class="ledger-scores"><div><strong>A physical form</strong></div><div><strong>Make / buy<br>&amp; deliver</strong></div><div><strong>A physical object</strong></div></div></section>
+      <section class="ledger-row product-table-answer build" data-step="4"><div class="ledger-form"><img class="ledger-icon" src="../../prototype/public/assets/illustrations/cecilia/firefly-carrying-envelope.png" alt=""><span>warm &amp; fuzzies</span></div><div class="ledger-scores"><div><strong>Your own canvas</strong></div><div><strong>One browser link</strong><small>no receiver account</small></div><div><strong>Keep · revisit<br>· remove</strong></div></div></section>
     </div>
-    <p class="source">Current prototype mechanisms · Goldilocks outcomes are design targets, not measured results · receiver control is not legal ownership or permanent storage.</p><span class="status">10 / 11</span>
+    <p class="source">Format capabilities, not survey scores or measured superiority · Warm &amp; Fuzzies keeping uses browser storage.</p><span class="status">10 / 11</span>
   </article>
 
   <article class="slide ink" data-title="Live demo" data-steps="0">

@@ -95,8 +95,8 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   assert.match(source, /data-title="One use case" data-steps="3"/);
   assert.match(source, /data-title="Live demo" data-steps="0"[\s\S]*?class="demo-follow"/);
   assert.match(source, /assets\/live-demo-qr\.svg/);
-  assert.match(source, /warm-and-fuzzies\.vercel\.app\/demo\/receive/);
-  assert.match(demoQr, /Encoding-verified receiver demo QR: https:\/\/warm-and-fuzzies\.vercel\.app\/demo\/receive/);
+  assert.ok(source.includes("https://warm-and-fuzzies.vercel.app/for/tfzPjf3Ircv5SCWiJsq1oFtbxBbPjK2q"));
+  assert.ok(demoQr.includes("https://warm-and-fuzzies.vercel.app/for/tfzPjf3Ircv5SCWiJsq1oFtbxBbPjK2q"));
   assert.match(demoQr, /xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
   assert.match(source, /11\s*\/\s*11/);
   assert.doesNotMatch(source, /demo-sequence/);
@@ -134,10 +134,11 @@ test('the Goldilocks market gap and Maya use case remain separate and explicitly
   assert.match(mayaSlide, /one illustrative use case/);
   assert.match(mayaSlide, /Maya<\/em> wants to thank someone for being so friendly during her first week at uni\./);
   assert.match(mayaSlide, /class="maya-moment build" data-step="1">It is an <em>ordinary Tuesday\.<\/em>/);
-  assert.match(mayaSlide, /class="maya-stat build" data-step="2"><span class="maya-stat-side">text side<\/span><strong>72%<\/strong><p>said a text can feel too casual for meaningful appreciation\.<\/p>/);
-  assert.match(mayaSlide, /class="maya-stat second build" data-step="3"><span class="maya-stat-side">gift side<\/span><strong>78%<\/strong><p>said they have never received a gift “just because\.”<\/p>/);
-  assert.match(mayaSlide, /Maya is one of many people caught between these two options\./);
-  assert.match(mayaSlide, /72% and 78% are rehearsal placeholders—not verified primary-research findings\. Maya is illustrative\./);
+  assert.match(mayaSlide, /in our survey<\/span><strong>19\.6%<\/strong>/);
+  assert.match(mayaSlide, /the response they selected[\s\S]*I don’t know/);
+  assert.match(mayaSlide, /How could we make that thank-you easier to send\?/);
+  assert.match(mayaSlide, /51 responses to the reasons question · Original chart: appendix A5\. Maya is illustrative; this is a self-reported barrier\./);
+  assert.doesNotMatch(mayaSlide, /72%|78%|text side|gift side|never received a gift|text can feel too casual/);
 });
 
 test('the solution and product differentiation explain expressive range and the combined format', () => {
@@ -154,16 +155,12 @@ test('the solution and product differentiation explain expressive range and the 
   assert.match(solutionSlide, /class="expressive-media"/);
   assert.doesNotMatch(solutionSlide, /keepsake-paper|for Maya|one thought, in the form it needs/);
   assert.doesNotMatch(solutionSlide, /emoji|🏷|🎵|📷/u);
-  assert.match(outcomeSlide, /data-title="How the product answers the gap" data-steps="4"/);
-  assert.match(outcomeSlide, /How Warm &amp; Fuzzies answers the gap\./);
-  assert.equal((outcomeSlide.match(/class="response-row build"/g) ?? []).length, 4);
-  assert.match(outcomeSlide, /handwritten letter[\s\S]*an authored canvas[\s\S]*personal, not generic/);
-  assert.match(outcomeSlide, /mixed media[\s\S]*five media types in one keepsake[\s\S]*writing · photo · voice · video · song/);
-  assert.match(outcomeSlide, /one direct browser link[\s\S]*no receiver account · no download[\s\S]*opens without setup/);
-  assert.match(outcomeSlide, /receiver-controlled keepsake[\s\S]*keep · revisit · remove[\s\S]*the receiver decides what remains/);
-  assert.match(outcomeSlide, /class="response-summary build" data-step="4"[\s\S]*firefly-carrying-envelope\.png/);
-  assert.match(outcomeSlide, /impact[\s\S]*low friction[\s\S]*repeatability/);
-  assert.match(outcomeSlide, /Goldilocks outcomes are design targets, not measured results · receiver control is not legal ownership or permanent storage/);
+  assert.match(outcomeSlide, /data-steps="4"/);
+  assert.equal((outcomeSlide.match(/class="ledger-row/g) ?? []).length, 4);
+  assert.match(outcomeSlide, /comparison-ledger product-table/);
+  assert.match(outcomeSlide, /product-table-answer/);
+  assert.match(outcomeSlide, /Your own canvas[\s\S]*One browser link[\s\S]*Keep · revisit/);
+  assert.doesNotMatch(outcomeSlide, /gap-arrow|gap-row|\d+\.\d+/);
   assert.doesNotMatch(source, /resolution-ring|resolution-core|Venn|product-(?:make|share|receive)\.png|current-home\.png|product-mechanics-slide|solution-detail|device-wrap/);
   assert.match(refinements, /:fullscreen #hud,[\s\S]*:fullscreen #progress,[\s\S]*:fullscreen \.skip,[\s\S]*:fullscreen \.status/);
 });
@@ -184,7 +181,7 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, /market-gap-consequence|Neither option fits an ordinary day/);
   assert.match(source, /data-title="One use case" data-steps="3"/);
   assert.match(source, /Maya<\/em> wants to thank someone for being so friendly during her first week at uni\./);
-  assert.match(source, /72% and 78% are rehearsal placeholders—not verified primary-research findings\. Maya is illustrative\./);
+  assert.match(source, /51 responses to the reasons question · Original chart: appendix A5\. Maya is illustrative; this is a self-reported barrier\./);
   assert.doesNotMatch(source, /no ready-made script/);
   assert.doesNotMatch(source, /Senders can overestimate awkwardness\./);
   assert.doesNotMatch(source, /Ordinary-day care can still be welcome\./);
@@ -200,7 +197,7 @@ test('the latest review uses a problem-first opener and preserves the full synth
   assert.doesNotMatch(source, />75%</);
 });
 
-test('the channel map reveals local evidence with disclosed rehearsal ratings', () => {
+test('the channel map separates published mechanisms from hypothesized positions', () => {
   const mapSlide = source.match(/<article class="slide matrix-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
 
   assert.equal((source.match(/class="plot-evidence"/g) ?? []).length, 3);
@@ -226,8 +223,6 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.doesNotMatch(source, /class="practice-ratings"/);
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
-  assert.match(source, /class="ledger-header"[\s\S]*?impact \/ 5[\s\S]*?friction \/ 5[\s\S]*?frequency \/ 5/);
-  assert.match(source, /Survey: 51 responses to each question[\s\S]*Channel ratings remain rehearsal placeholders\./);
   assert.match(source, /--accent:#081f4d/);
   assert.match(source, /--accent-ink:#254878/);
   assert.match(source, /--accent-on-ink:#a8c5ee/);
@@ -245,16 +240,14 @@ test('every local image reference resolves from the standalone deck file', async
 });
 
 // The exact percentage belongs to its original question, not a broader occasion claim.
-test('verified survey percentages retain their question and base', () => {
-  const research = source.match(/<article class="slide research-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
-  const synthesis = source.match(/<article class="slide synthesis-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
-  for (const slide of [research, synthesis]) {
-    assert.match(slide, /80\.4%/);
-    assert.match(slide, /56\.9%/);
-    assert.match(slide, /51 responses to each question/);
-    assert.match(slide, /selected awkwardness as a reason they do not express gratitude to friends/);
-    assert.doesNotMatch(slide, />82%|>71%/);
-    assert.doesNotMatch(slide, /say ordinary-day appreciation can feel awkward or out of place/);
-  }
-  assert.match(research, /Channel ratings remain rehearsal placeholders/);
+test('main-deck statistics appear once with verified question context', () => {
+  const slides = [...source.matchAll(/<article class="slide[^>]*>[\s\S]*?<\/article>/g)].map(m => m[0]);
+  const visible = slides.join('').replace(/<[^>]+>/g, ' ');
+  assert.equal((visible.match(/80\.4%/g) ?? []).length, 1);
+  assert.equal((visible.match(/19\.6%/g) ?? []).length, 1);
+  assert.equal((visible.match(/56\.9%/g) ?? []).length, 1);
+  assert.doesNotMatch(visible, /72%|78%/);
+  assert.match(slides[4], /51 responses to each question/);
+  assert.match(slides[6], /51 responses to the reasons question/);
+  assert.doesNotMatch(slides[7], /\d+%/);
 });

@@ -1,0 +1,68 @@
+{
+  "source": "figma-branding-board-1x.png",
+  "figma_file": "F0qchN6uQpsBrZ8jU63rq2",
+  "page": "163:54",
+  "exported": "2026-09-06, approximately 13:15 Australia/Sydney",
+  "dimensions": [
+    14170,
+    9658
+  ],
+  "sha256": "bb838d59fc62e0e9dfff28c5bb53f6e96425b922309b2abf5a72a31040083bc2",
+  "operation": "Exact rectangular crops, no redrawing, recolouring or generative alteration. Coordinates are left, top, right, bottom in original pixels.",
+  "crops": {
+    "sketchbook": [
+      8070,
+      1800,
+      9550,
+      3850
+    ],
+    "outline": [
+      8040,
+      80,
+      9580,
+      1780
+    ],
+    "logo-process": [
+      900,
+      1800,
+      7980,
+      3850
+    ],
+    "doodle-sheet": [
+      900,
+      3970,
+      5230,
+      5575
+    ],
+    "paper-waves": [
+      900,
+      6250,
+      5230,
+      7440
+    ],
+    "palette-first": [
+      5230,
+      3980,
+      11400,
+      5570
+    ],
+    "palette-secondary": [
+      7140,
+      5700,
+      13780,
+      7440
+    ],
+    "palette-primary": [
+      7130,
+      7550,
+      13780,
+      9270
+    ],
+    "typography": [
+      5340,
+      6720,
+      7100,
+      8440
+    ]
+  }
+}

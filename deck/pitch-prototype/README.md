@@ -1,6 +1,12 @@
 <!-- Orientation: usage, evidence boundaries and review status for the 11-slide Warm & Fuzzies HTML live deck. -->
 # Warm & Fuzzies live pitch
 
+## Open on Darius’s computer
+
+Pull the complete repository with `git pull --ff-only origin main`, then open `deck/pitch-prototype/index.html` in a browser. No Node installation or app build is required. Keep the downloaded folders together so the bundled fonts, images and appendix remain available. Use the arrow keys to advance and `F` for fullscreen. Internet is needed to open the live keepsake.
+
+Slide 11’s QR and clickable link both open [the selected keepsake](https://warm-and-fuzzies.vercel.app/for/tfzPjf3Ircv5SCWiJsq1oFtbxBbPjK2q).
+
 This is an HTML-only 11-slide live presentation. `index.html` is the working presentation artifact; no Figma source is included or claimed. The planned talk ends at 4:55, leaving 1:05 inside the six-minute heat limit. The product proposition is made specific through current capabilities, then the flow is proved through a shared live maker-to-receiver demo.
 
 The full judge review, 2025 winner comparison and next-level narrative are in [`NEXT_LEVEL_REVIEW.md`](NEXT_LEVEL_REVIEW.md). The approved portions described below are now implemented in the live deck.
@@ -76,7 +82,7 @@ node --test deck/pitch-prototype/tests/appendix.test.mjs
 8. The original If / And / Then synthesis with one added Therefore design requirement
 9. Warm & Fuzzies solution reveal and the digital expressive spectrum
 10. `How Warm & Fuzzies answers the gap.` followed by four source → working mechanism → response rows; the final firefly strip maps those mechanisms to impact, low friction and repeatability as design targets
-11. “Follow along.” with an encoding-verified `/demo/receive` QR, followed immediately by one continuous live sender-to-receiver demonstration
+11. “Follow along.” with the selected keepsake QR and clickable link, followed immediately by one continuous live sender-to-receiver demonstration
 
 There is no separate research-plan slide, secondary-research slide, market-size slide, demographic profile, thank-you slide or repeated conclusion. Process is woven into the causal story: the starting hypothesis visibly changes into the occasion question; the map compares impact, friction and frequency while connecting each grouped family to bounded published evidence; the evidence-first findings slide presents the team's specific problem directly; the Goldilocks rings identify a working market gap; the separate Maya scenario makes that gap tangible; page 8 preserves the If / And / Then deduction and adds the resulting Therefore design requirement; page 10 shows exactly how implemented product mechanisms respond to the earlier format gap; the public QR and live product then prove the proposed flow.
 
@@ -96,7 +102,7 @@ The full 30:02 machine-transcribed framing remains in `speaker-notes.md` as sour
 
 ## Live-demo QR
 
-Slide 11 includes a real QR encoding `https://warm-and-fuzzies.vercel.app/demo/receive`. Before presenting, the team must still:
+Slide 11 includes a real QR encoding `https://warm-and-fuzzies.vercel.app/for/tfzPjf3Ircv5SCWiJsq1oFtbxBbPjK2q`. Before presenting, the team must still:
 
 1. Scan it from the projected slide on a second physical phone.
 2. Confirm the event network can load the public route.

@@ -11,6 +11,10 @@ const repoRoot = resolve(fileURLToPath(new URL('../../../', import.meta.url)));
 const deckRoot = join(repoRoot, 'deck/pitch-prototype');
 const mainDeckPath = join(deckRoot, 'index.html');
 const appendixPath = join(deckRoot, 'appendix.html');
+const appendixSource = await readFile(appendixPath, 'utf8');
+const pageCount = (appendixSource.match(/<article class="appendix-slide/g) ?? []).length;
+const pageIds = Array.from({ length: pageCount }, (_, index) => `A${index + 1}`);
+const label = (id) => `${id} / A${pageCount}`;
 const prototypeRequire = createRequire(new URL('../../../prototype/package.json', import.meta.url));
 
 const contentTypes = {
@@ -52,7 +56,7 @@ async function startStaticServer() {
   };
 }
 
-test('appendix is a separate 13-page route and cannot change the live deck count', async () => {
+test('appendix is a separate evidence route and cannot change the live deck count', async () => {
   await access(appendixPath);
   const [mainDeck, appendix] = await Promise.all([readFile(mainDeckPath, 'utf8'), readFile(appendixPath, 'utf8')]);
 
@@ -61,24 +65,33 @@ test('appendix is a separate 13-page route and cannot change the live deck count
   assert.doesNotMatch(mainDeck, /<article class="appendix-slide/);
   assert.doesNotMatch(mainDeck, /appendix\.html/);
 
-  const expectedPageIds = Array.from({ length: 13 }, (_, index) => `A${index + 1}`);
-  assert.equal((appendix.match(/<article class="appendix-slide/g) ?? []).length, 13, 'appendix contains 13 separately numbered pages');
+  const expectedPageIds = pageIds;
+  assert.equal((appendix.match(/<article class="appendix-slide/g) ?? []).length, 25, 'the reviewed appendix contains 25 separately numbered pages');
   assert.deepEqual(
     [...appendix.matchAll(/<article class="appendix-slide[^>]*\sid="(A\d+)"/g)].map((match) => match[1]),
     expectedPageIds,
     'appendix page IDs should be complete and sequential',
   );
-  assert.match(appendix, /A1\s*\/\s*A13/);
-  assert.match(appendix, /A7\s*\/\s*A13/);
+  assert.ok(appendix.includes(label('A1')), 'initial counter reflects all pages');
   assert.match(appendix, /new URLSearchParams\(location\.search\)/);
   assert.match(appendix, /params\.get\(['"]slide['"]\)/);
   assert.match(appendix, /(?:index\.html\?slide=11(?:&|&amp;)step=0|index\.html\?slide=11)/);
-  assert.equal((appendix.match(/data-primary-research-slot="true"/g) ?? []).length, 1, 'appendix exposes exactly one controlled primary-research insertion slot');
-  assert.match(appendix, /question and scale endpoints are not legible/i, 'the held survey capture must state why it is not yet safe to claim');
-  assert.doesNotMatch(appendix, /(?:82|71|59\.3|33\.3)%/, 'unverified and rehearsal survey percentages must stay out of the appendix');
+  assert.deepEqual([...new Set([...appendix.matchAll(/src="(assets\/appendix\/survey-0[12]\.png)"/g)].map((match) => match[1]))].sort(), ['assets/appendix/survey-01.png', 'assets/appendix/survey-02.png'], 'appendix exposes both original survey captures, including readable detail crops');
+  assert.match(appendix, /endpoint (?:labels|meanings) are (?:absent|not visible)/, 'occasion result must retain the missing-endpoint caveat');
+  assert.match(appendix, /80\.4%/);
+  assert.match(appendix, /56\.9%/);
+  assert.match(appendix, /51 responses/);
+  assert.doesNotMatch(appendix, /(?:82|71|72|78)%/, 'rehearsal percentages must stay out of the appendix');
+  assert.doesNotMatch(appendix, /One safe insert slot|Complete before submission|blank-chart|PLACEHOLDER/);
+  assert.match(appendix, /Annotated team visual feedback/);
+  assert.match(appendix, /iteration-wireframes\.png/);
+  assert.match(appendix, /iteration-sending\.png/);
+  assert.match(appendix, /iteration-annotations\.png/);
   assert.match(appendix, /Anyone with the bearer link can open it\./, 'appendix must disclose the bearer-link privacy boundary');
   assert.match(appendix, /Local photo, video, voice, or song files cannot travel across devices\./, 'appendix must disclose the local-media transport boundary');
-  assert.match(appendix, /Release gate before 2 PM/, 'appendix must preserve the final live-demo release gate');
+  assert.match(appendix, /Technical rehearsal still required/, 'technical rehearsal remains explicitly outstanding');
+  assert.doesNotMatch(appendix, /A little more|behind the feeling|One thought, from maker|What the prototype can prove/, 'supporting appendix must not restore the rejected pitch slogans');
+  assert.match(appendix, /class="research-title" id="a5-title">Survey Findings<\/h1>/);
   assert.match(appendix, /This protocol has not yet been run\./, 'planned matched-format testing cannot be presented as completed evidence');
 
   const localImages = [...appendix.matchAll(/<img\s+[^>]*src="([^"]+)"/g)]
@@ -131,7 +144,7 @@ test('main deck hard-stops at slide 11 while appendix deep-links to A7 and retur
     }
 
     await page.goto(`${staticServer.origin}/deck/pitch-prototype/appendix.html?slide=A7`, { waitUntil: 'networkidle' });
-    await assertPageLabel(page, '.page-counter', 'A7 / A13');
+    await assertPageLabel(page, '.page-counter', label('A7'));
     assert.match(page.url(), /appendix\.html\?slide=A7$/);
 
     await page.keyboard.press('Tab');
@@ -144,7 +157,7 @@ test('main deck hard-stops at slide 11 while appendix deep-links to A7 and retur
     assert.equal(await page.locator('.index-button').getAttribute('aria-expanded'), 'true');
     assert.deepEqual(
       await page.locator('[data-jump]').evaluateAll((buttons) => buttons.map((button) => button.dataset.jump)),
-      Array.from({ length: 13 }, (_, index) => `A${index + 1}`),
+      pageIds,
       'index jump IDs should exactly match appendix page IDs in order',
     );
     assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('data-jump')), 'A7', 'index should focus the current page');
@@ -152,16 +165,16 @@ test('main deck hard-stops at slide 11 while appendix deep-links to A7 and retur
     assert.equal(await page.locator('#appendix-index').getAttribute('aria-hidden'), 'true');
 
     await page.keyboard.press('ArrowRight');
-    await assertPageLabel(page, '.page-counter', 'A8 / A13');
+    await assertPageLabel(page, '.page-counter', label('A8'));
     await page.keyboard.press('Home');
-    await assertPageLabel(page, '.page-counter', 'A1 / A13');
+    await assertPageLabel(page, '.page-counter', label('A1'));
     await page.keyboard.press('End');
-    await assertPageLabel(page, '.page-counter', 'A13 / A13');
+    await assertPageLabel(page, '.page-counter', label(`A${pageCount}`));
     await page.keyboard.press('ArrowRight');
-    await assertPageLabel(page, '.page-counter', 'A13 / A13');
+    await assertPageLabel(page, '.page-counter', label(`A${pageCount}`));
 
     await page.emulateMedia({ media: 'print' });
-    assert.equal(await page.locator('.appendix-slide').evaluateAll((slides) => slides.filter((slide) => getComputedStyle(slide).display !== 'none').length), 13, 'print media should expose every appendix page');
+    assert.equal(await page.locator('.appendix-slide').evaluateAll((slides) => slides.filter((slide) => getComputedStyle(slide).display !== 'none').length), pageCount, 'print media should expose every appendix page');
     await page.emulateMedia({ media: 'screen' });
 
     const returnLink = page.locator('a[href*="index.html?slide=11"]');
@@ -203,7 +216,7 @@ test('appendix remains complete when opened directly from the filesystem', async
     page.on('requestfailed', (request) => errors.push(`requestfailed: ${request.url()}`));
 
     await page.goto(`${pathToFileURL(appendixPath).href}?slide=A7`, { waitUntil: 'load' });
-    await assertPageLabel(page, '.page-counter', 'A7 / A13');
+    await assertPageLabel(page, '.page-counter', label('A7'));
     await page.waitForFunction(() => [...document.images].every((image) => image.complete));
     const brokenImages = await page.locator('img').evaluateAll((images) => images.filter((image) => image.naturalWidth === 0).map((image) => image.src));
     assert.deepEqual(brokenImages, [], `all direct-file appendix images should load:\n${brokenImages.join('\n')}`);

@@ -1,0 +1,25 @@
+{
+  "orientation": "Exact pixel crop rectangles in original 5836\u00d79292 Figma export; no source pixels altered within crops.",
+  "source": "figma-iteration-board-1x.png",
+  "sha256": "9fab78c6d1e88fe3f7310cfaf16c28bc5eb7dda369e5e79d1c224a72037e4c5d",
+  "rectangles_xyxy": {
+    "iteration-wireframes": [
+      1000,
+      980,
+      3650,
+      1890
+    ],
+    "iteration-sending": [
+      0,
+      5280,
+      3090,
+      6010
+    ],
+    "iteration-annotations": [
+      330,
+      7300,
+      2950,
+      8250
+    ]
+  }
+}
