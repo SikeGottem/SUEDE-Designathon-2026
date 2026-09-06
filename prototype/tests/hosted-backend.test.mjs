@@ -47,20 +47,17 @@ test("validation rejects arbitrary URLs, videos, unknown nested keys, missing sl
   }
 });
 
-test("start requires presenter capability and idempotently returns only missing uploads", async () => {
+test("public start remains strictly validated and idempotently returns only missing uploads", async () => {
   const fixture = harness();
-  await assert.rejects(
-    fixture.service.start(request("wrong"), publishBody()),
-    (error) => error instanceof HostedServiceError && error.status === 401,
-  );
+  await assert.rejects(fixture.service.start({}), HostedValidationError);
 
-  const first = await fixture.service.start(request(presenterKey), publishBody());
+  const first = await fixture.service.start(publishBody());
   assert.equal(first.draftId.length, 24);
   assert.deepEqual(first.uploads.map((item) => item.slot), ["photo-0", "voice", "song"]);
   assert.ok(first.uploads.every((item) => item.pathname.startsWith(`pending/${first.draftId}/`)));
   fixture.blob.land(first.uploads[0], signatureFor("image/png"));
 
-  const retry = await fixture.service.start(request(presenterKey), publishBody());
+  const retry = await fixture.service.start(publishBody());
   assert.equal(retry.draftId, first.draftId);
   assert.deepEqual(retry.uploads.map((item) => item.slot), ["voice", "song"]);
   assert.equal(retry.uploads[0].pathname, first.uploads[1].pathname);
@@ -68,24 +65,24 @@ test("start requires presenter capability and idempotently returns only missing 
   const changed = publishBody();
   changed.snapshot.words = "different immutable content";
   await assert.rejects(
-    fixture.service.start(request(presenterKey), changed),
+    fixture.service.start(changed),
     (error) => error.code === "IDEMPOTENCY_CONFLICT",
   );
 });
 
 test("start fails closed when an existing path has wrong bytes or signature", async () => {
   const fixture = harness();
-  const first = await fixture.service.start(request(presenterKey), publishBody());
+  const first = await fixture.service.start(publishBody());
   fixture.blob.land(first.uploads[0], signatureFor("image/jpeg"));
   await assert.rejects(
-    fixture.service.start(request(presenterKey), publishBody()),
+    fixture.service.start(publishBody()),
     (error) => error.code === "MEDIA_CONFLICT" && error.details.slot === "photo-0",
   );
 });
 
 test("finalize verifies every object, publishes once, and GET signs only stored paths", async () => {
   const fixture = harness();
-  const first = await fixture.service.start(request(presenterKey), publishBody());
+  const first = await fixture.service.start(publishBody());
   fixture.blob.land(first.uploads[0], signatureFor("image/png"));
   await assert.rejects(
     fixture.service.finalize(request(draftToken), { draftId: first.draftId }),
@@ -113,9 +110,14 @@ test("finalize verifies every object, publishes once, and GET signs only stored 
 test("cleanup lease wins safely over expired finalize and deletes only planned paths", async () => {
   let now = 10_000;
   const fixture = harness(() => now);
-  const first = await fixture.service.start(request(presenterKey), publishBody());
+  const first = await fixture.service.start(publishBody());
   fixture.blob.land(first.uploads[0], signatureFor("image/png"));
   now += HOSTED_LIMITS.sessionTtlMs + 1;
+  await assert.rejects(
+    fixture.service.cleanup(request("wrong")),
+    (error) => error instanceof HostedServiceError && error.status === 401 && error.code === "UNAUTHORIZED",
+  );
+  assert.deepEqual(fixture.blob.deleted, []);
   const result = await fixture.service.cleanup(request(presenterKey));
   assert.deepEqual(result, { cleaned: 1, failed: 0 });
   assert.deepEqual(fixture.blob.deleted.sort(), first.uploads.map((item) => item.pathname).sort());
@@ -328,13 +330,13 @@ function signatureFor(mime) {
 test("retried PUT authorizations never outlive the pending session", async () => {
   let now = 10_000;
   const fixture = harness(() => now);
-  await fixture.service.start(request(presenterKey), publishBody());
+  await fixture.service.start(publishBody());
   const sessionExpiry = now + HOSTED_LIMITS.sessionTtlMs;
   now = sessionExpiry - 1_000;
   const expiries = [];
   const sign = fixture.blob.signUpload.bind(fixture.blob);
   fixture.blob.signUpload = (item, validUntil) => { expiries.push(validUntil); return sign(item); };
-  await fixture.service.start(request(presenterKey), publishBody());
+  await fixture.service.start(publishBody());
   assert.equal(expiries.length, 3);
   assert.ok(expiries.every((value) => value <= sessionExpiry));
 });

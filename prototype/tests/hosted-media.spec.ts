@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.route("**/api/publish-start", async (route) => {
     const request = route.request();
-    expect(request.headers().authorization).toBe("Bearer presenter-code");
+    expect(request.headers().authorization).toBeUndefined();
     const body = request.postDataJSON();
     expect(body.media).toHaveLength(1);
     expect(body.media[0]).toMatchObject({ slot: "photo-0", mime: "image/png" });
@@ -37,7 +37,7 @@ test("publishes an exact hosted object, copies its URL, and isolates the next re
   await page.getByRole("button", { name: "choose how it travels" }).click();
   await page.getByRole("button", { name: "see it ready to give" }).click();
   await page.getByRole("button", { name: "give this privately" }).click();
-  await page.getByLabel("presenter code").fill("presenter-code");
+  await expect(page.getByLabel("presenter code")).toHaveCount(0);
   await page.getByRole("button", { name: /prepare to give/ }).click();
   const receiverLink = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   expect(receiverLink).toMatch(/\/for\/A{32}$/);

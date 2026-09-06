@@ -935,7 +935,7 @@ export default function Prototype() {
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} publishedPath={publishResult?.snapshotKey === handoffSnapshotKey ? publishResult.path : null} onBack={() => go("preview")} onEdit={() => go("studio")} onPublish={async (code) => { const result = await publishHostedKeepsake(activeSnapshot ?? currentSnapshot as unknown as Record<string, unknown>, code); setPublishResult({ ...result, snapshotKey: handoffSnapshotKey }); setCopied(false); return result.path; }} onCopy={async (url) => { setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} publishedPath={publishResult?.snapshotKey === handoffSnapshotKey ? publishResult.path : null} onBack={() => go("preview")} onEdit={() => go("studio")} onPublish={async () => { const result = await publishHostedKeepsake(activeSnapshot ?? currentSnapshot as unknown as Record<string, unknown>); setPublishResult({ ...result, snapshotKey: handoffSnapshotKey }); setCopied(false); return result.path; }} onCopy={async (url) => { setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFinish={() => go("sent")} />
             )}
             {phase === "receiver-loading" && <Page key="receiver-loading" className="receiver-loading-page"><p role="status">getting this keepsake ready…</p></Page>}
             {phase === "sent" && (
@@ -2135,13 +2135,12 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
   return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body courier-firefly-carrying" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={artwork.firefly.carrying} alt="" /></div></div>;
 }
 
-function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoReceiver, publishedPath, onBack, onEdit, onPublish, onCopy, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; reduceMotion: boolean; demoReceiver?: boolean; publishedPath: string | null; onBack: () => void; onEdit: () => void; onPublish: (code: string) => Promise<string>; onCopy: (url: string) => Promise<boolean>; onFinish: () => void }) {
+function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoReceiver, publishedPath, onBack, onEdit, onPublish, onCopy, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; reduceMotion: boolean; demoReceiver?: boolean; publishedPath: string | null; onBack: () => void; onEdit: () => void; onPublish: () => Promise<string>; onCopy: (url: string) => Promise<boolean>; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
   const [qrPresented, setQrPresented] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
   const [manualCopyReady, setManualCopyReady] = useState(false);
   const [manualCopyConfirmed, setManualCopyConfirmed] = useState(false);
-  const [presenterCode, setPresenterCode] = useState("");
   const [publishing, setPublishing] = useState(false);
   const [publishError, setPublishError] = useState("");
   const linkInputRef = useRef<HTMLInputElement>(null);
@@ -2189,7 +2188,7 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
   };
   const publish = async () => {
     setPublishing(true); setPublishError("");
-    try { await onPublish(presenterCode); } catch (error) { setPublishError(error instanceof Error ? error.message : "This keepsake could not be prepared. Try again."); } finally { setPublishing(false); }
+    try { await onPublish(); } catch (error) { setPublishError(error instanceof Error ? error.message : "This keepsake could not be prepared. Try again."); } finally { setPublishing(false); }
   };
   useEffect(() => {
     if (copyFailed && url) { linkInputRef.current?.focus(); linkInputRef.current?.select(); }
@@ -2213,7 +2212,7 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{unavailable ? blockedState.heading : `give this to ${recipient}.`}</h1></header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
-      {localMedia && !publishedPath && !demoReceiver && <section className="hosted-publish" aria-label="Prepare this keepsake to give"><p>Take the photos and audio with the letter.</p><label>presenter code<input type="password" autoComplete="off" value={presenterCode} onChange={(event) => setPresenterCode(event.target.value)} /></label><button className="drawn-action" type="button" disabled={publishing} onClick={() => { void publish(); }}>{publishing ? "getting it ready…" : "prepare to give"} <Mark /></button><button className="quiet-link" type="button" onClick={onEdit}>review local media</button>{publishError && <p role="alert">{publishError}</p>}<small>Video stays on this device for now.</small></section>}
+      {localMedia && !publishedPath && !demoReceiver && <section className="hosted-publish" aria-label="Prepare this keepsake to give"><p>Take the photos and audio with the letter.</p><button className="drawn-action" type="button" disabled={publishing} onClick={() => { void publish(); }}>{publishing ? "getting it ready…" : "prepare to give"} <Mark /></button><button className="quiet-link" type="button" onClick={onEdit}>review local media</button>{publishError && <p role="alert">{publishError}</p>}<small>Video stays on this device for now.</small></section>}
       <div className="handoff-link-tools">
         <div className={`private-link ${unavailable ? `handoff-link-blocked ${localMedia && !demoReceiver ? "handoff-media-pending" : "link-failed"}` : ""}`}>
           {unavailable ? <span role="status">{blockedState.body}</span> : <input ref={linkInputRef} type="text" readOnly value={url} aria-label="Receiver link" onFocus={(event) => { setManualCopyReady(true); event.currentTarget.select(); }} onClick={(event) => event.currentTarget.select()} />}

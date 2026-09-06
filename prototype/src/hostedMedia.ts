@@ -69,15 +69,14 @@ export async function prepareHostedPublish(snapshot: Record<string, unknown>) {
   return { prepared, uploads };
 }
 
-export async function publishHostedKeepsake(snapshot: Record<string, unknown>, presenterCode: string) {
-  if (!presenterCode.trim()) throw new Error("Enter the presenter code to prepare this keepsake.");
+export async function publishHostedKeepsake(snapshot: Record<string, unknown>) {
   const { prepared, uploads } = await prepareHostedPublish(snapshot);
   const key = JSON.stringify({ originalMedia: [snapshot.capture, snapshot.voice, snapshot.song, (snapshot.scrapbook as { photos?: unknown[] } | undefined)?.photos], prepared, media: uploads.map(({ slot, mime, bytes, filename }) => ({ slot, mime, bytes, filename })) });
   if (!pending || pending.key !== key) pending = { key, draftToken: randomToken(), idempotencyKey: crypto.randomUUID() };
   // Start is idempotent and deliberately repeated: it refreshes short-lived URLs and returns only missing slots.
   {
-    const response = await fetch("/api/publish-start", { method: "POST", headers: { Authorization: `Bearer ${presenterCode.trim()}`, "Content-Type": "application/json" }, body: JSON.stringify({ snapshot: prepared, media: uploads.map(({ slot, mime, bytes, filename }) => ({ slot, mime, bytes, filename })), idempotencyKey: pending.idempotencyKey, draftToken: pending.draftToken }) });
-    if (!response.ok) throw new Error("This keepsake could not be prepared. Check the presenter code and try again.");
+    const response = await fetch("/api/publish-start", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ snapshot: prepared, media: uploads.map(({ slot, mime, bytes, filename }) => ({ slot, mime, bytes, filename })), idempotencyKey: pending.idempotencyKey, draftToken: pending.draftToken }) });
+    if (!response.ok) throw new Error("This keepsake could not be prepared. Try again.");
     const body = await response.json() as { draftId: string; uploads: PublishSession["uploads"] };
     pending = { ...pending, draftId: body.draftId, prepared, uploads: body.uploads };
   }

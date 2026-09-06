@@ -15,8 +15,7 @@ import { HostedServiceError } from "./errors.mjs";
 export function createHostedKeepsakeService({ db, blob, presenterKey, clock = Date.now, ids = defaultIds } = {}) {
   return {
     authorizePresenter(request) { requirePresenter(request, presenterKey); },
-    async start(request, input) {
-      requirePresenter(request, presenterKey);
+    async start(input) {
       const body = validateStartPayload(input);
       const now = clock();
       const requestHash = sha256(canonicalJson({ snapshot: body.snapshot, media: body.media }));

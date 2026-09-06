@@ -6,10 +6,10 @@ Only record choices that change direction, investment or the story. Every conseq
 ## 2026-09-06 - Allow a bounded hosted-media handoff for normal keepsakes
 
 - Status: current
-- Decision: allow a presenter to publish one immutable, exact normal keepsake with up to four photos, voice and song to an unlisted 192-bit receiver link/QR. Preserve the existing paper, Cecelia/Gaegu envelope, courier, opening and cabinet. Keep video local-only; retain the local-safe normal text path and unchanged `/demo/create` and `/demo/receive` fixture behaviour.
+- Decision: allow any maker to publish one immutable, exact normal keepsake with up to four photos, voice and song to an unlisted 192-bit receiver link/QR. Preserve the existing paper, Cecelia/Gaegu envelope, courier, opening and cabinet. Keep video local-only; retain the local-safe normal text path and unchanged `/demo/create` and `/demo/receive` fixture behaviour.
 - Reason: the prototype's care-package mechanism needs selected media to arrive with the same authored object across devices. The bounded hosted path makes that critical demonstration real without turning this disposable exploration into an account product or stable paired demo.
 - Evidence: [hosted-media implementation record](../prototype/HOSTED_MEDIA.md); local build, 10 backend tests and 35 combined browser regressions passed; a real private-Blob/Turso PNG, voice-WAV and song-WAV fixture passed both locally and on the production URL on 6 September 2026, transferring from normal creation into a fresh browser context, playing on receiver taps, surviving reload and replaying from cabinet revisit. The decision preflight was conducted in `Media-sharing-preflight.md`; its portable findings are captured below. This proves the technical path, not user desire, privacy outcomes or physical-device readiness.
-- Consequence: supported media can travel with one exact receiver artifact. Presenter-only publishing and manual cleanup use server-only credentials; receiver access is link possession. The published record is immutable; a cabinet removal deletes only the browser-local reference. Limits are four 8 MiB photos, a 12 MiB voice, a 20 MiB song and 32 MiB total; 10 starts/hour, 10 pending, 100 published; one-hour pending expiry, five-minute-capped uploads and ten-minute reads.
+- Consequence: supported media can travel with one exact receiver artifact. Publishing is public without a code; manual cleanup alone requires an operator credential. Finalize retains its draft owner token and receiver access is link possession. The published record is immutable; a cabinet removal deletes only the browser-local reference. Limits are four 8 MiB photos, a 12 MiB voice, a 20 MiB song and 32 MiB total; 10 starts/hour, 10 pending, 100 published; one-hour pending expiry, five-minute-capped uploads and ten-minute reads.
 - Supersedes: the earlier normal-flow local-only media boundary in `prototype/IMPLEMENTATION_NOTES.md` and `prototype/AGENTS.md`, only for this bounded hosted path. Local-safe v3 sharing, local video, and the demo fallback remain current.
 - Revisit when: a real-phone mic/QR scan or participant walkthrough exposes a trust, accessibility or flow failure.
 
@@ -29,27 +29,29 @@ Only record choices that change direction, investment or the story. Every conseq
 
 | Challenge lens | Strongest challenge | Evidence-backed answer | Blocking unknown |
 | --- | --- | --- |
-| Assumption and inversion | Must richer sharing mean accounts and permanent social infrastructure? | No: presenter preparation plus an unlisted receiver capability keeps the flow bounded. | Whether even this infrastructure is necessary after user testing. |
+| Assumption and inversion | Must richer sharing mean accounts and permanent social infrastructure? | No: maker preparation plus an unlisted receiver capability keeps the flow bounded. | Whether even this infrastructure is necessary after user testing. |
 | Behaviour and context | Does it still fit a private appreciation handoff? | The named receiver, envelope, courier and deliberate opening remain intact. | Sender/receiver interpretation has not been tested. |
 | Medium necessity | Why not use a local link only? | Local blob media cannot cross devices; real media transfer is the tested technical need. | A non-digital or simpler exchange may better answer the brief. |
 | Alternatives | Could a physical gift, direct share or public cloud link work? | Those remain valid comparators; this path preserves one composed object and ritual. | No comparative participant evidence. |
-| Human specificity | Who is burdened by presenter control and link possession? | A maker explicitly prepares one gift; a receiver needs no account. | Forwarded links and presenter-code friction may affect trust. |
+| Human specificity | Who is burdened by public quotas and link possession? | A maker explicitly prepares one gift; a receiver needs no account. | Forwarded links may affect trust; anonymous visitors can exhaust shared quotas. |
 | Inclusion and accessibility | Can critical media and QR steps work for all receivers? | Playback requires an intentional tap and browser controls; no autoplay. | Screen reader, real phone, camera QR and hearing-access checks remain. |
 | Trust, safety and privacy | Could “private” be mistaken for secure identity-bound delivery? | Docs/UI must say unlisted link possession, no authentication or encryption. | Link forwarding and retention expectations require user testing. |
 | Failure and recovery | What happens to late, mismatched or incomplete uploads? | Expiry, validation, exact-plan checks, errors and presenter cleanup are implemented. | Production provider failure modes are not yet exercised. |
 | Feasibility and demo truth | Does the path genuinely work? | Real Blob/Turso fixture passed locally and on production; regressions passed. | Physical-device proof remains pending. |
 | Incentives and second-order effects | Could it become a surveillance or engagement channel? | No accounts, receipts, analytics, notifications or autoplay were added. | Unlisted links still encourage responsibility for forwarding. |
-| Simplicity and retellability | Can the value be explained simply? | “Make one keepsake, give its exact link, open it later” remains the core story. | Presenter code and limits need rehearsal so they do not dominate the pitch. |
+| Simplicity and retellability | Can the value be explained simply? | “Make one keepsake, give its exact link, open it later” remains the core story. | Shared limits need rehearsal so they do not interrupt the pitch. |
 | Authorship and distinctiveness | Does AI implementation replace human design judgment? | Ethan set the hosted-media scope and constraints; the team preserved Cecelia's assets, Gaegu system and the authored ritual. AI assisted implementation; it is not user research or validation. | Record tool/asset disclosure and obtain human/participant critique before final claims. |
 
 - Verdict: Proceed with conditions
-- Work permitted by this verdict: use the verified production presenter flow for technical rehearsal and continue physical-device and participant checks.
+- Work permitted by this verdict: use the bounded public publishing flow for technical rehearsal and continue physical-device and participant checks.
 - Blocking conditions: do not claim authenticated privacy, encryption, retention guarantees, physical-phone validation or user validation; preserve demo/local-safe paths and complete real-device checks before claiming physical QR/microphone readiness.
 - Weakest judging angle: evidence quality, because technical success is not participant evidence.
-- Main trade-off: real cross-device media improves demo truth while adding presenter friction and possession-link privacy risk.
+- Main trade-off: real cross-device media improves demo truth while adding shared-quota exposure and possession-link privacy risk.
 - Next evidence that could change the verdict: one real-phone end-to-end share, QR camera scan and short sender/receiver walkthrough.
-- Recommendation: keep the deployed presenter flow bounded, describe its unlisted-link boundary honestly, and test whether the richer handoff helps the intended social moment.
+- Recommendation: keep public publishing bounded, describe its unlisted-link boundary honestly, and test whether the richer handoff helps the intended social moment.
 - Release evidence: source `abd0a0b` pushed to GitHub; Vercel prebuilt production deployment aliased to https://warm-and-fuzzies.vercel.app; live normal-create → image/voice/song → exact receiver link/QR → clean-context playback → refresh → cabinet-reopen fixture passed in 33.5 seconds on 6 September 2026. This is automated technical evidence, not a physical camera scan, microphone capture or participant result.
+
+- Public-upload correction — 6 September: Ethan explicitly requested removing the presenter-code gate and approved any visitor consuming the existing shared upload/storage allowance. This supersedes the earlier presenter-only rule. The seven judging and twelve challenge lenses above remain applicable; lower maker friction strengthens the existing solution, while public quota exhaustion is the additional feasibility/recovery risk. Cleanup and draft ownership remain guarded. The backend focused tests passed before Ethan asked to stop testing; the code-free production release is pending, and Ethan will perform the live check. No new user-validation claim is made.
 
 ## 2026-09-03 - Make GitHub synchronization mandatory
 
