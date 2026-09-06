@@ -1,6 +1,14 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Audio piece editing — 6 September
+
+Voice and song pieces now separate their playback button from the selectable card. Tapping the card selects it; dragging its surface and using the existing arrange controls changes position, size, rotation and overlap. Playback has a dedicated 44px button and retains keyboard activation. The selected piece’s controls allow recording again, choosing another song and removal. Successful replacement preserves the existing layout and overlap order; cancelling retains the original audio. A changed audio source resets the playback state.
+
+Local audio still cannot travel in cross-device links or persist in the cabinet. This correction does not add hosted storage or change that limit.
+
+Verification: the focused audio test passes across desktop and a 390 × 844 coarse-pointer phone context, covering touch selection, pointer dragging, arrange controls, valid WAV playback through Enter/Space, song replacement with preserved layout/order, and cancellation of synthetic voice re-recording. The ten existing scrapbook checks pass, as do the production build, protected runtime guard and four hosting tests. Phone controls were visually inspected. Synthetic recording checks the editor flow; physical microphone hardware and native Safari were not independently tested.
+
 ## Envelope contrast correction — 6 September
 
 The prepared demo retains its legacy `night` snapshot value for link compatibility, but its stamp editor and sealed preview now use the current transparent envelope surface and deep-ink authored linework. Three obsolete night-specific CSS overrides caused a rectangular navy fill in the editor and pale linework in the preview; those overrides were removed. Cecelia's source artwork, the personal seal, stored data and interaction geometry are unchanged. Desktop and 390 × 844 touch-phone checks cover both views, including loaded assets, matching line treatment, preserved stamp and absence of page overflow.

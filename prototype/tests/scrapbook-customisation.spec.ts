@@ -47,6 +47,124 @@ function itemSignature(container: Locator) {
 
 test.beforeEach(async ({ page }) => { await page.emulateMedia({ reducedMotion: "reduce" }); });
 
+function silentWav(seconds = 2) {
+  const rate = 8000;
+  const dataSize = rate * seconds;
+  const wav = Buffer.alloc(44 + dataSize);
+  wav.write("RIFF", 0); wav.writeUInt32LE(36 + dataSize, 4); wav.write("WAVEfmt ", 8); wav.writeUInt32LE(16, 16);
+  wav.writeUInt16LE(1, 20); wav.writeUInt16LE(1, 22); wav.writeUInt32LE(rate, 24); wav.writeUInt32LE(rate, 28);
+  wav.writeUInt16LE(1, 32); wav.writeUInt16LE(8, 34); wav.write("data", 36); wav.writeUInt32LE(dataSize, 40);
+  wav.fill(128, 44);
+  return wav;
+}
+
+async function installSyntheticRecorder(page: Page) {
+  await page.addInitScript(() => {
+    const stream = { getTracks: () => [{ stop: () => undefined }] };
+    Object.defineProperty(navigator, "mediaDevices", { configurable: true, value: { getUserMedia: async () => stream } });
+    class SyntheticRecorder {
+      static isTypeSupported() { return true; }
+      mimeType = "audio/wav";
+      ondataavailable: ((event: BlobEvent) => void) | null = null;
+      onstop: (() => void) | null = null;
+      constructor(_stream: MediaStream) {}
+      start() {}
+      stop() { this.ondataavailable?.({ data: new Blob([new Uint8Array(64)], { type: this.mimeType }) } as BlobEvent); this.onstop?.(); }
+    }
+    Object.defineProperty(window, "MediaRecorder", { configurable: true, value: SyntheticRecorder });
+  });
+}
+
+test("audio pieces select, arrange, play, and replace independently on desktop and a coarse phone", async ({ browser }) => {
+  test.setTimeout(45_000);
+  const devices = [
+    { name: "desktop", options: { viewport: { width: 1100, height: 1100 } } },
+    { name: "coarse phone", options: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true } },
+  ] as const;
+
+  for (const device of devices) {
+    const context = await browser.newContext(device.options);
+    const page = await context.newPage();
+    try {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await installSyntheticRecorder(page);
+      await startComposer(page);
+      await page.getByRole("button", { name: "add", exact: true }).click();
+      await page.getByRole("button", { name: "song", exact: true }).click();
+      await page.getByRole("button", { name: "choose file", exact: true }).click();
+      await page.getByLabel("Choose an audio file for this keepsake").setInputFiles({
+        name: "first-song.wav", mimeType: "audio/wav", buffer: silentWav(),
+      });
+
+      const piece = page.locator('[data-item-kind="song"]');
+      await expect(piece).toHaveCount(1);
+      await expect(page.getByRole("region", { name: "Customise selected item" })).toBeVisible();
+      await page.getByRole("button", { name: "Done customising" }).click();
+
+      // The card remains a normal selectable piece while its dedicated play button stays playback-only.
+      const cardLabel = piece.locator(":scope > .story-layer-paper > .audio-paper-piece > span");
+      if (device.name === "coarse phone") await cardLabel.tap();
+      else await cardLabel.click();
+      const tools = page.getByRole("region", { name: "Customise selected item" });
+      await expect(tools).toBeVisible();
+      const beforeDrag = await piece.getAttribute("data-layout");
+      const labelBox = await cardLabel.boundingBox();
+      expect(labelBox).not.toBeNull();
+      await page.mouse.move(labelBox!.x + labelBox!.width / 2, labelBox!.y + labelBox!.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(labelBox!.x + labelBox!.width / 2 + 28, labelBox!.y + labelBox!.height / 2 + 18, { steps: 3 });
+      await page.mouse.up();
+      await expect(piece).not.toHaveAttribute("data-layout", beforeDrag!);
+      await tools.getByRole("tab", { name: "arrange" }).click();
+      const beforeNudge = await piece.getAttribute("data-layout");
+      await tools.getByRole("button", { name: "Move right" }).click();
+      await expect(piece).not.toHaveAttribute("data-layout", beforeNudge!);
+      const arrangedLayout = await piece.getAttribute("data-layout");
+      await tools.getByRole("button", { name: "Done customising" }).click();
+      const playback = piece.locator(".audio-paper-playback");
+      await playback.focus();
+      await page.keyboard.press("Enter");
+      await expect(playback).toHaveAttribute("aria-label", /Pause song/);
+      await page.keyboard.press("Space");
+      await expect(playback).toHaveAttribute("aria-label", /Play song/);
+      await expect(tools).toHaveCount(0);
+
+      await page.getByRole("button", { name: "add", exact: true }).click();
+      await page.getByRole("button", { name: "Add burst mark" }).click();
+      await page.getByRole("button", { name: "Done customising" }).click();
+      if (device.name === "coarse phone") await cardLabel.tap();
+      else await cardLabel.click();
+      const originalOrder = await piece.getAttribute("data-layer-order");
+      await tools.getByRole("button", { name: "choose another song" }).click();
+      await page.getByLabel("Choose a replacement audio file").setInputFiles({
+        name: "replacement-song.wav", mimeType: "audio/wav", buffer: silentWav(),
+      });
+      await expect(piece).toContainText("replacement-song");
+      await expect(piece).toHaveAttribute("data-layout", arrangedLayout!);
+      await expect(piece).toHaveAttribute("data-layer-order", originalOrder!);
+
+      await tools.getByRole("button", { name: "Done customising" }).click();
+      await page.getByRole("button", { name: "add", exact: true }).click();
+      await page.getByRole("button", { name: "voice", exact: true }).click();
+      await page.getByRole("button", { name: "start recording" }).click();
+      await page.getByRole("button", { name: "keep this voice" }).click();
+      const voice = page.locator('[data-item-kind="voice"]');
+      await expect(voice).toHaveCount(1);
+      await page.getByRole("button", { name: "Done customising" }).click();
+      const voiceLabel = voice.locator(":scope > .story-layer-paper > .audio-paper-piece > span");
+      if (device.name === "coarse phone") await voiceLabel.tap();
+      else await voiceLabel.click();
+      const voiceLayout = await voice.getAttribute("data-layout");
+      await tools.getByRole("button", { name: "record again" }).click();
+      await page.getByRole("button", { name: "cancel", exact: true }).click();
+      await expect(voice).toHaveAttribute("data-layout", voiceLayout!);
+      await expect(voice).toContainText("voice note");
+    } finally {
+      await context.close();
+    }
+  }
+});
+
 test("adds independent photos up to four, then styles, captions, and removes only the selected photo", async ({ page }) => {
   await startComposer(page);
   for (let count = 0; count < 4; count += 1) await addSamplePhoto(page);
