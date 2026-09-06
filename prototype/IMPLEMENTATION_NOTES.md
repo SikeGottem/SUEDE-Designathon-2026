@@ -1,6 +1,20 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Pitch-day usability review — 6 September
+
+This pass preserves the team-selected landing, two-branch hub, Gaegu, Cecelia artwork and finite-object sequence. It is a targeted refinement of the existing test stimulus, not a new selected visual direction or evidence of user impact.
+
+- An empty paper now offers a quiet, keyboard-operable writing cue. It disappears during creation and is never included in the serialized object or prepared demo artifact.
+- Ink swatches now display their actual five ink colours; the global button reset previously made them all appear navy. The expanded materials tray has a solid white surface and readable labels.
+- The fixed phone composition now corrects browser focus scrolling of the outer shell. This prevents clipped top controls and the already-dismissed keyboard appearing again after editing; protected runtime files remain unchanged.
+- Song opens a visible audio-file chooser explanation before the native picker. Audio is still a local file, not a music-service integration. Its local-only limit is stated before import; existing blocked-share behavior remains.
+- Presenting the exact QR now allows the maker to finish giving without also copying the URL. This is a manual finishing action, not evidence that anyone scanned or received the object.
+- Clipboard success is only shown after the browser confirms the write. A failed or unavailable clipboard offers the selectable exact link and QR instead of claiming a successful copy.
+- Carrier copy now describes the distinct journeys without promising a cork-pull or different opening ritual that is not implemented. Handoff text states plainly that anyone with the link/QR can open it, and the prototype does not send it or report opening.
+- Preflight judge verdict: **Proceed with conditions**, preserving the authored-object and receiver-choice mechanism. Evidence quality remains the weakest criterion. A real second-device rehearsal and intended maker/receiver testing remain human evidence work.
+- Verification: production TypeScript/Vite build, four Sites contract checks and all 28 runtime-integrity checks passed. The in-app browser covered the normal sender/receiver/cabinet loop and targeted refinements. Four focused regression cases are discoverable in `tests/pitch-readiness.spec.ts`; automated browser execution was blocked before assertions by the macOS sandbox denying Chromium's Mach port registration. Do not count those cases as passed. Physical camera/microphone capture and second-phone QR scanning remain unverified.
+
 ## Authority and status
 
 - The current build follows [the friendship-appreciation product specification](../WIKI/FRIENDSHIP_APPRECIATION_PRODUCT_SPEC.md), including its scoped carrier-and-receiving test.
