@@ -64,13 +64,13 @@ test('the final research, audience, and demo markup keeps the agreed presentatio
   assert.match(source, /data-title="Research findings" data-steps="4"/);
   assert.match(source, /class="research-title">Survey results<\/h2>/);
   assert.match(source, /class="research-dimension">what<\/span>[\s\S]*?class="research-dimension">why<\/span>[\s\S]*?class="research-dimension">how<\/span>/);
-  assert.match(source, /class="research-number">82%/);
-  assert.match(source, /class="research-number">71%/);
+  assert.match(source, /class="research-number">80\.4%/);
+  assert.match(source, /class="research-number">56\.9%/);
   assert.doesNotMatch(source, /Does the expression gap exist\?|Why does it stay unspoken\?|How do the forms compare\?/);
   assert.doesNotMatch(source, /<span>what<\/span>|<span>why<\/span>|<span>how<\/span>/);
   assert.doesNotMatch(source, /\.research-job \{[^}]*border-top/);
   assert.doesNotMatch(source, /\.research-answer \{[^}]*border-top/);
-  assert.match(source, /feel they do not fully show the appreciation they feel/);
+  assert.match(source, /said they do not or cannot fully express their appreciation/);
   assert.match(researchSlide, /class="research-job has-ledger build"/);
   assert.match(researchSlide, /class="comparison-ledger"/);
   assert.equal((researchSlide.match(/class="ledger-row/g) ?? []).length, 3);
@@ -227,7 +227,7 @@ test('the channel map reveals local evidence with disclosed rehearsal ratings', 
   assert.doesNotMatch(source, /quick text<small>2\.2/);
   assert.match(source, /<strong>goldilocks zone<\/strong><small>high impact · low friction · repeatable<\/small>/);
   assert.match(source, /class="ledger-header"[\s\S]*?impact \/ 5[\s\S]*?friction \/ 5[\s\S]*?frequency \/ 5/);
-  assert.match(source, /Temporary rehearsal figures—not survey findings\. Replace before judging\./);
+  assert.match(source, /Survey: 51 responses to each question[\s\S]*Channel ratings remain rehearsal placeholders\./);
   assert.match(source, /--accent:#081f4d/);
   assert.match(source, /--accent-ink:#254878/);
   assert.match(source, /--accent-on-ink:#a8c5ee/);
@@ -242,4 +242,19 @@ test('every local image reference resolves from the standalone deck file', async
   const paths = [...source.matchAll(/<img[^>]+src="([^"]+)"/g)].map((match) => match[1]);
   assert.ok(paths.length > 0, 'expected image references in the deck');
   await Promise.all(paths.map((path) => access(new URL(path, deckUrl))));
+});
+
+// The exact percentage belongs to its original question, not a broader occasion claim.
+test('verified survey percentages retain their question and base', () => {
+  const research = source.match(/<article class="slide research-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+  const synthesis = source.match(/<article class="slide synthesis-slide"[\s\S]*?<\/article>/)?.[0] ?? '';
+  for (const slide of [research, synthesis]) {
+    assert.match(slide, /80\.4%/);
+    assert.match(slide, /56\.9%/);
+    assert.match(slide, /51 responses to each question/);
+    assert.match(slide, /selected awkwardness as a reason they do not express gratitude to friends/);
+    assert.doesNotMatch(slide, />82%|>71%/);
+    assert.doesNotMatch(slide, /say ordinary-day appreciation can feel awkward or out of place/);
+  }
+  assert.match(research, /Channel ratings remain rehearsal placeholders/);
 });
