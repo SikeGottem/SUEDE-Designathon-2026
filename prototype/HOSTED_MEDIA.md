@@ -3,7 +3,7 @@
 
 ## Status
 
-**Deployed and verified at https://warm-and-fuzzies.vercel.app on 6 September 2026.** Public publishing is enabled by Ethan’s explicit 6 September correction: any visitor may prepare media without a code or account, using the existing shared limits. The code-free release is awaiting deployment; Ethan will perform the live test.
+**Deployed and verified at https://warm-and-fuzzies.vercel.app on 6 September 2026.** Public publishing is enabled by Ethan’s explicit 6 September correction: any visitor may prepare media without a code or account, using the existing shared limits. The code-free release was deployed on 6 September from source commit `7533a6a`; Ethan will perform the live test.
 
 The normal maker can prepare one exact finished keepsake for its named receiver. It preserves the Cecelia/Gaegu paper, envelope, carrier, opening and cabinet experience: hosting moves supported media with that same object, rather than introducing an account, inbox, paired demo or a new receiver surface. The result is an unlisted capability link at `/for/<192-bit receiver id>`: anyone holding it can open the keepsake. The receiver needs no account; media never autoplays; no receipt is sent.
 
