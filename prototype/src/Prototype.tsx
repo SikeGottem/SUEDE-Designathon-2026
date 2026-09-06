@@ -714,6 +714,7 @@ export default function Prototype() {
     keyboard.hide();
     setRemoveOpen(false);
     setCabinetRemovingId(null);
+    if (next === "handoff") { setCopied(false); setShareFailed(false); }
     setPhase(next);
   };
 
@@ -852,7 +853,7 @@ export default function Prototype() {
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} onBack={() => go("preview")} onCopy={async () => { const snapshot = activeSnapshot ?? currentSnapshot; if (!isSafeSnapshot(snapshot) || containsBlobMedia(snapshot)) { setShareFailed(true); return false; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return false; } const receiverPath = isRehearsalCreate ? "/demo/receive" : `/for/${snapshot.id}`; const url = `${window.location.origin}${receiverPath}#v3.${payload}`; setShareFailed(false); setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} failed={shareFailed} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} onBack={() => go("preview")} onEdit={() => go("studio")} onCopy={async () => { const snapshot = activeSnapshot ?? currentSnapshot; if (!isSafeSnapshot(snapshot) || containsBlobMedia(snapshot)) { setShareFailed(true); return false; } const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) { setShareFailed(true); return false; } const receiverPath = isRehearsalCreate ? "/demo/receive" : `/for/${snapshot.id}`; const url = `${window.location.origin}${receiverPath}#v3.${payload}`; setShareFailed(false); setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFail={() => { setCopied(false); setShareFailed(true); }} onFinish={() => go("sent")} />
             )}
             {phase === "sent" && (
               <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnToMenu} />
@@ -2019,10 +2020,13 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
   return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body courier-firefly-carrying" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={artwork.firefly.carrying} alt="" /></div></div>;
 }
 
-function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, demoReceiver, onBack, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; demoReceiver?: boolean; onBack: () => void; onCopy: () => Promise<boolean>; onFail: () => void; onFinish: () => void }) {
+function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, demoReceiver, onBack, onEdit, onCopy, onFail, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; failed: boolean; reduceMotion: boolean; demoReceiver?: boolean; onBack: () => void; onEdit: () => void; onCopy: () => Promise<boolean>; onFail: () => void; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
   const [qrPresented, setQrPresented] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
+  const [manualCopyReady, setManualCopyReady] = useState(false);
+  const [manualCopyConfirmed, setManualCopyConfirmed] = useState(false);
+  const linkInputRef = useRef<HTMLInputElement>(null);
   const qrDialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!qrOpen) return;
@@ -2044,6 +2048,26 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, d
   const receiverPath = demoReceiver ? "/demo/receive" : `/for/${snapshot.id}`;
   const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}${receiverPath}#v3.${encoded}` : "";
   const qrIsExact = Boolean(url) && url.length <= QR_MAX;
+  const unavailable = !url || failed;
+  const unavailableReason = containsBlobMedia(snapshot)
+    ? "This keepsake includes local media that cannot travel in a link. Return to your paper and remove uploaded photos, video or audio to share the exact remaining page."
+    : !isSafeSnapshot(snapshot)
+      ? "This draft contains details that cannot travel in a link. Return to your paper to edit it."
+      : !url ? "This keepsake is too detailed for this prototype link. Return to your paper to simplify it."
+        : "This is the demo's broken-link test. Try copying again to return to the working link.";
+  const selectLink = () => {
+    setManualCopyReady(true);
+    linkInputRef.current?.focus();
+    linkInputRef.current?.select();
+  };
+  const copyLink = async () => {
+    const success = await onCopy();
+    setCopyFailed(!success);
+    if (!success) setManualCopyReady(true);
+  };
+  useEffect(() => {
+    if (copyFailed && url && !failed) { linkInputRef.current?.focus(); linkInputRef.current?.select(); }
+  }, [copyFailed, failed, url]);
   const saveQr = () => {
     const svg = qrDialogRef.current?.querySelector(":scope > svg");
     if (!svg || !qrIsExact) return;
@@ -2061,11 +2085,21 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, d
   return (
     <Page className="handoff-page">
       <TopLine onBack={onBack} label="back to the object" />
-      <header><h1>{failed ? "the link did not make it." : `give this to ${recipient}.`}</h1>{failed && <p>Nothing left this screen. Your object is still here.</p>}</header>
+      <header><h1>{unavailable ? "your page needs one more step." : `give this to ${recipient}.`}</h1></header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
-      <div className="handoff-link-tools"><div className={`private-link ${failed ? "link-failed handoff-link-blocked" : ""}`}><span>{failed ? (containsBlobMedia(snapshot) ? "Link creation is blocked: this keepsake includes local media that cannot travel in a link." : !isSafeSnapshot(snapshot) ? "Link creation is blocked: this draft contains details that cannot safely travel in a link." : "Link unavailable: this keepsake is too large or too detailed for this prototype link.") : url}</span><button type="button" aria-label="Copy generated receiver link" onClick={() => { void onCopy().then((success) => setCopyFailed(!success)); }}>{copied ? "copied" : failed ? "try again" : "copy"}</button></div>{url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => { setQrPresented(true); setQrOpen(true); }} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}</div>
-      {copyFailed && !failed && <p className="copy-recovery-note" role="status">Copy did not work here. Select the link to copy it, or show the QR.</p>}
-      {(copied || qrPresented) && url && !failed ? <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button> : <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
+      <div className="handoff-link-tools">
+        <div className={`private-link ${unavailable ? "link-failed handoff-link-blocked" : ""}`}>
+          {unavailable ? <span role="status">{unavailableReason}</span> : <input ref={linkInputRef} type="text" readOnly value={url} aria-label="Receiver link" onFocus={(event) => { setManualCopyReady(true); event.currentTarget.select(); }} onClick={(event) => event.currentTarget.select()} />}
+          <button type="button" aria-label="Copy generated receiver link" disabled={!url} onClick={() => { void copyLink(); }}>{copied ? "copied" : failed ? "try again" : "copy"}</button>
+        </div>
+        {url && !failed && (qrIsExact ? <button className="handoff-qr" type="button" onClick={() => { setQrPresented(true); setQrOpen(true); }} aria-label="Open receiver QR for this keepsake" data-keepsake-id={snapshot.id}><QRCodeSVG value={url} size={88} level="L" marginSize={1} bgColor="#ffffff" fgColor="#081f4d" title="Receiver QR for this keepsake" /><span>scan it</span></button> : <p className="handoff-qr-limit" role="status">exact link only<small>too detailed for a reliable QR</small></p>)}
+      </div>
+      {url && !failed && <div className="handoff-link-actions"><button type="button" onClick={selectLink}>select link</button><a href={url} target="_blank" rel="noopener noreferrer">open receiver</a></div>}
+      {copyFailed && !unavailable && <p className="copy-recovery-note" role="status">Your link is ready. Copy it from the selected field, or use the QR.</p>}
+      {manualCopyReady && !copied && !qrPresented && !manualCopyConfirmed && !unavailable && <button className="quiet-link manual-copy-confirm" type="button" onClick={() => setManualCopyConfirmed(true)}>I copied the link</button>}
+      {(copied || qrPresented || manualCopyConfirmed) && !unavailable && <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button>}
+      {unavailable && <button className="drawn-action" type="button" onClick={onEdit}>back to your paper <Mark /></button>}
+      {demoReceiver && !unavailable && !copied && !qrPresented && !manualCopyConfirmed && <button className="quiet-link failure-test" type="button" onClick={onFail}>show the broken-link state</button>}
       <p className="system-note">Anyone with the link or QR can open it. Share it yourself; this prototype does not send it or tell you when it is opened.</p>
       {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && qrIsExact && <motion.div ref={qrDialogRef} className="qr-dialog" role="dialog" aria-modal="true" aria-label="Receiver QR for this keepsake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={url} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title="Scan to open this keepsake" /><p>scan to give this to {recipient}.</p><small>This code belongs to this keepsake. Anyone who scans it opens the same sealed object—no account needed.</small><button className="quiet-link qr-save" type="button" onClick={saveQr}>save this QR</button></motion.div>}</AnimatePresence>, document.body)}
     </Page>

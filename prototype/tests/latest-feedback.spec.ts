@@ -30,7 +30,7 @@ test("a new keepsake asks who it is for and carries that name to the receiver", 
   await page.getByRole("button", { name: "give this privately" }).click();
   await expect(page.getByRole("heading", { name: "give this to Chloe Wu." })).toBeVisible();
 
-  const receiverLink = await page.locator(".private-link span").innerText();
+  const receiverLink = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   const receiver = await context.newPage();
   await receiver.emulateMedia({ reducedMotion: "reduce" });
   await receiver.goto(receiverLink);
@@ -53,7 +53,7 @@ test("the folded envelope always advances to carrier choice", async ({ page }) =
 test("each draft gets an exact downloadable QR with no demo substitution", async ({ page, context }) => {
   await page.goto("/?screen=handoff");
 
-  const firstLink = await page.locator(".private-link span").innerText();
+  const firstLink = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   const firstQrPath = await page.locator(".handoff-qr svg path").nth(1).getAttribute("d");
   expect(firstLink).toContain("/for/");
   expect(firstLink).not.toContain("/demo");
@@ -72,7 +72,7 @@ test("each draft gets an exact downloadable QR with no demo substitution", async
   await page.getByRole("button", { name: "Close receiver QR" }).click();
 
   await page.reload();
-  const secondLink = await page.locator(".private-link span").innerText();
+  const secondLink = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   const secondQrPath = await page.locator(".handoff-qr svg path").nth(1).getAttribute("d");
   expect(secondLink).not.toBe(firstLink);
   expect(secondQrPath).not.toBe(firstQrPath);

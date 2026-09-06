@@ -1,6 +1,16 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Live handoff recovery — 6 September
+
+A live Vercel report made handoff reliability the release priority. A new ordinary text-only keepsake was created, copied and opened with its exact message on the deployed receiver; the ten deployed demo-route checks also passed again. This did not reproduce Ethan's exact reported failure. Source and browser review exposed concrete failure paths, which this patch addresses:
+
+- The normal handoff no longer exposes the deliberate broken-link test; that stimulus is restricted to the prepared demo.
+- A valid URL is a full selectable read-only field, with Select Link and Open Receiver actions. Clipboard denial leaves the exact URL usable and selects it after rendering. An explicit manual-copy acknowledgement permits finishing when neither clipboard permission nor a dense-object QR is available; it does not claim the browser copied or delivered anything.
+- Copy/failed state resets every time a handoff begins, so a newly edited page cannot inherit the previous version's copied status.
+- Local media, invalid drafts and excessive payload size show a specific explanation immediately instead of an empty field. Unsupported media stays intact on the device, with a route back to the paper; it is never silently dropped or uploaded.
+- Optional motion work is parked outside the repository. This patch changes handoff behavior only and retains the independently verified scrapbook redesign.
+
 ## Customisable scrapbook — 6 September
 
 Ethan's full scrapbook request is implemented as a single personal page with contextual Look/Arrange controls. It retains the team typography, palette, drawings and write–fold–stamp–carry–receive sequence.

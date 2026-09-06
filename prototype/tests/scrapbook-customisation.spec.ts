@@ -135,7 +135,7 @@ test("preserves ordered scrapbook pieces through the exact receiver URL and brow
   const source = page.locator(".story-paper-sheet");
   const expected = await itemSignature(source);
   await continueToHandoff(page);
-  const url = await page.locator(".private-link span").innerText();
+  const url = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   expect(url).toContain("#v3.");
 
   const receiver = await context.newPage();
@@ -214,7 +214,7 @@ test("keeps a local imported photo on-device, blocks its handoff, and does not m
   await expect(page.getByRole("region", { name: "Customise selected item" })).toBeVisible();
   expect(await page.locator("[data-phone-screen]").evaluate((screen) => screen.scrollTop)).toBe(0);
   await continueToHandoff(page);
-  await page.getByRole("button", { name: "Copy generated receiver link" }).click();
+  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toBeDisabled();
   await expect(page.locator(".private-link span")).toContainText("includes local media that cannot travel in a link");
 });
 

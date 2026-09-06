@@ -145,7 +145,7 @@ test("keeps both text blocks' content and layout in the exact receiver link", as
   await page.getByRole("button", { name: "choose how it travels" }).click();
   await page.getByRole("button", { name: "see it ready to give" }).click();
   await page.getByRole("button", { name: "give this privately" }).click();
-  const receiverUrl = await page.locator(".private-link span").innerText();
+  const receiverUrl = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   expect(receiverUrl).toContain("/for/");
 
   const receiver = await context.newPage();

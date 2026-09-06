@@ -12,7 +12,7 @@ async function startEmptyComposer(page: Page) {
 
 async function seededHandoff(page: Page) {
   await page.goto("/?screen=handoff");
-  await expect(page.locator(".private-link span")).toContainText("/for/");
+  await expect(page.getByRole("textbox", { name: "Receiver link" })).toHaveValue(/\/for\//);
 }
 
 test.beforeEach(async ({ page }) => {
@@ -57,7 +57,7 @@ test("makes the local-song limitation clear and keeps the five ink choices visua
   await page.getByRole("button", { name: "choose how it travels" }).click();
   await page.getByRole("button", { name: "see it ready to give" }).click();
   await page.getByRole("button", { name: "give this privately" }).click();
-  await page.getByRole("button", { name: "Copy generated receiver link" }).click();
+  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toBeDisabled();
   await expect(page.locator(".private-link span")).toContainText("includes local media that cannot travel in a link");
   await expect(page.getByRole("button", { name: "finish giving" })).toHaveCount(0);
 });
@@ -72,7 +72,7 @@ test("uses QR as the honest fallback when clipboard copying fails", async ({ pag
   await seededHandoff(page);
 
   await page.getByRole("button", { name: "Copy generated receiver link" }).click();
-  await expect(page.getByText("Copy did not work here. Select the link to copy it, or show the QR.")).toBeVisible();
+  await expect(page.getByText("Your link is ready. Copy it from the selected field, or use the QR.")).toBeVisible();
   await expect(page.getByRole("button", { name: "finish giving" })).toHaveCount(0);
 
   await page.getByRole("button", { name: "Open receiver QR for this keepsake" }).click();
