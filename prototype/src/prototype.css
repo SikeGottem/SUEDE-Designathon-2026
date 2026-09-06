@@ -3655,6 +3655,7 @@
   font-size: 17px;
 }
 
+/* Legacy night snapshots use the same clear authored envelope as the current maker. */
 .envelope-canvas {
   position: relative;
   align-self: center;
@@ -3681,11 +3682,6 @@
   mix-blend-mode: multiply;
   filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
   pointer-events: none;
-}
-
-.envelope-canvas[data-envelope="night"] {
-  background: var(--navy-deep);
-  color: var(--warm-white);
 }
 
 .envelope-canvas[data-envelope="rust"] {
@@ -4081,10 +4077,6 @@
   color: var(--navy);
 }
 
-.sealed-envelope-artwork[data-envelope="night"] {
-  color: var(--warm-white);
-}
-
 .sealed-envelope-artwork[data-envelope="rust"] {
   color: var(--envelope-rust-ink);
 }
@@ -4117,10 +4109,6 @@
   height: auto;
   filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
   pointer-events: none;
-}
-
-[data-envelope="night"] > .sealed-envelope-source {
-  filter: brightness(0) saturate(100%) invert(98%) sepia(25%) saturate(537%) hue-rotate(347deg) brightness(108%) contrast(95%);
 }
 
 [data-envelope="rust"] > .sealed-envelope-source {

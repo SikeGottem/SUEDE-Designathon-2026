@@ -1,6 +1,10 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Envelope contrast correction — 6 September
+
+The prepared demo retains its legacy `night` snapshot value for link compatibility, but its stamp editor and sealed preview now use the current transparent envelope surface and deep-ink authored linework. Three obsolete night-specific CSS overrides caused a rectangular navy fill in the editor and pale linework in the preview; those overrides were removed. Cecelia's source artwork, the personal seal, stored data and interaction geometry are unchanged. Desktop and 390 × 844 touch-phone checks cover both views, including loaded assets, matching line treatment, preserved stamp and absence of page overflow.
+
 ## Motion continuity — 6 September
 
 Ethan reported that motion felt disconnected across the whole app. This pass applies the same physical language to making, carrying and opening the existing finite keepsake; it does not change the chosen brand or invent another product flow.
