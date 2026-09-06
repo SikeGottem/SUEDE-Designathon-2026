@@ -35,6 +35,55 @@ test("an ordinary generated link opens the exact page without exposing the failu
   await receiver.close();
 });
 
+test("removing local media restores an exact link and QR without silently dropping it", async ({ page, context }) => {
+  const words = "The words remain after the local photo is removed.";
+  await page.goto("/");
+  await page.getByRole("button", { name: "make it for them", exact: true }).click();
+  await page.getByRole("button", { name: "create something", exact: true }).click();
+  await page.getByLabel("Who is this for?").fill("Local media check");
+  await page.getByRole("button", { name: "Start making for Local media check", exact: true }).click();
+  await page.getByRole("button", { name: /start with a few words/ }).click();
+  await page.getByLabel(/Write directly on the paper/).fill(words);
+  await page.getByRole("button", { name: "done writing", exact: true }).click();
+  await page.getByRole("button", { name: "add", exact: true }).click();
+  await page.getByRole("button", { name: "photo", exact: true }).click();
+  await page.getByLabel("Choose a photo or video").setInputFiles({
+    name: "local-moment.jpg",
+    mimeType: "image/jpeg",
+    buffer: Buffer.from([0xff, 0xd8, 0xff, 0xd9]),
+  });
+  await page.getByRole("button", { name: "Next: fold and decorate the envelope", exact: true }).click();
+  await page.getByRole("button", { name: "choose how it travels", exact: true }).click();
+  await page.getByRole("button", { name: "see it ready to give", exact: true }).click();
+  await page.getByRole("button", { name: "give this privately", exact: true }).click();
+
+  await expect(page.getByRole("heading", { name: "remove local media to share this page." })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("1 photo available only in this tab");
+  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toHaveCount(0);
+  await page.getByRole("button", { name: "review local media", exact: true }).click();
+  await page.locator('[data-item-kind="photo"]').click();
+  await page.getByRole("region", { name: "Customise selected item" }).getByRole("button", { name: "remove", exact: true }).click();
+
+  await page.getByRole("button", { name: "Next: fold and decorate the envelope", exact: true }).click();
+  await page.getByRole("button", { name: "choose how it travels", exact: true }).click();
+  await page.getByRole("button", { name: "see it ready to give", exact: true }).click();
+  await page.getByRole("button", { name: "give this privately", exact: true }).click();
+  const link = page.getByRole("textbox", { name: "Receiver link" });
+  const url = await link.inputValue();
+  await expect(page.getByRole("button", { name: "Open receiver QR for this keepsake" })).toBeVisible();
+
+  const receiver = await context.newPage();
+  try {
+    await receiver.emulateMedia({ reducedMotion: "reduce" });
+    await receiver.goto(url);
+    await receiver.getByRole("button", { name: "open it", exact: true }).click();
+    await expect(receiver.locator(".receiver-paper-final .story-layer-text")).toHaveText(words);
+    await expect(receiver.locator(".receiver-paper-final .story-layer-photo")).toHaveCount(0);
+  } finally {
+    await receiver.close();
+  }
+});
+
 test("a dense exact link has manual-copy recovery when clipboard access and QR are unavailable", async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(navigator, "clipboard", { configurable: true, value: undefined }); });
   let state = 17;

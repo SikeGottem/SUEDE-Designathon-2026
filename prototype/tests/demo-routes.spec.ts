@@ -126,7 +126,7 @@ test("the demo handoff sends the exact edited template through a v3 receiver URL
 
   const url = await page.getByRole("textbox", { name: "Receiver link" }).inputValue();
   expect(url).toMatch(/\/demo\/receive#v3\./);
-  await expect(page.getByRole("button", { name: "show the broken-link state", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "show the broken-link state", exact: true })).toHaveCount(0);
 
   const receiver = await browser.newPage();
   try {

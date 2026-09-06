@@ -5572,8 +5572,17 @@
   text-underline-offset: 4px;
 }
 .handoff-page .manual-copy-confirm { margin-top: 6px; }
-.handoff-page .handoff-link-blocked { margin-top: 12px; }
-.handoff-link-blocked > span { font-size: 17px; line-height: 1.18; }
+/* A blocked handoff explains the required action in full instead of truncating it like a URL. */
+.handoff-link-tools:has(.handoff-link-blocked) { grid-template-columns: minmax(0, 1fr); }
+.handoff-page .handoff-link-blocked { margin-top: 12px; opacity: 1; }
+.handoff-link-blocked > span {
+  overflow: visible;
+  font-size: 18px;
+  line-height: 1.3;
+  text-overflow: clip;
+  white-space: normal;
+}
+.voice-recorder .voice-local-note { font-size: 15px; line-height: 1.25; }
 
 /* Physical paper unfolds into the same final sheet without a crossfade or content gap. */
 .receiver-fold-panels { filter: none; }

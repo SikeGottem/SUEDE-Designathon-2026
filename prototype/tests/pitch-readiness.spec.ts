@@ -57,8 +57,10 @@ test("makes the local-song limitation clear and keeps the five ink choices visua
   await page.getByRole("button", { name: "choose how it travels" }).click();
   await page.getByRole("button", { name: "see it ready to give" }).click();
   await page.getByRole("button", { name: "give this privately" }).click();
-  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toBeDisabled();
-  await expect(page.locator(".private-link span")).toContainText("includes local media that cannot travel in a link");
+  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toHaveCount(0);
+  await expect(page.locator(".private-link span")).toContainText("1 song");
+  await expect(page.locator(".private-link span")).toContainText("available only in this tab");
+  await expect(page.getByRole("button", { name: "review local media", exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "finish giving" })).toHaveCount(0);
 });
 

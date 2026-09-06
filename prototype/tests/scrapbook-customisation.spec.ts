@@ -332,8 +332,10 @@ test("keeps a local imported photo on-device, blocks its handoff, and does not m
   await expect(page.getByRole("region", { name: "Customise selected item" })).toBeVisible();
   expect(await page.locator("[data-phone-screen]").evaluate((screen) => screen.scrollTop)).toBe(0);
   await continueToHandoff(page);
-  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toBeDisabled();
-  await expect(page.locator(".private-link span")).toContainText("includes local media that cannot travel in a link");
+  await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toHaveCount(0);
+  await expect(page.locator(".private-link span")).toContainText("1 photo");
+  await expect(page.locator(".private-link span")).toContainText("available only in this tab");
+  await expect(page.getByRole("button", { name: "review local media", exact: true })).toBeVisible();
 });
 
 test("keeps selected-item controls within a coarse-pointer 390 by 844 phone viewport", async ({ browser }) => {
