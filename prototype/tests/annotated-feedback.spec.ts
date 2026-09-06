@@ -35,13 +35,14 @@ test.describe("annotated visual feedback", () => {
     expect(sun.y + sun.height).toBeLessThanOrEqual(screen.y + screen.height);
   });
 
-  test("uses the authored firefly mesh rather than repeated outline figures on the hub", async ({ page }) => {
+  test("keeps the hub courier without the decorative firefly background", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("button", { name: "make it for them" }).click();
 
-    const pattern = page.getByTestId("hub-pattern");
-    await expect(pattern.locator(`img[src="${COLLECTION}couriers/firefly-mesh.png"]`)).toBeVisible();
-    await expect(pattern.locator(`img[src="${COLLECTION}couriers/firefly-outline.png"]`)).toHaveCount(0);
+    await expect(page.getByTestId("hub-pattern")).toHaveCount(0);
+    await expect(page.getByTestId("hub-firefly")).toBeVisible();
+    await expect(page.getByRole("button", { name: "create something" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "look in your box" })).toBeVisible();
   });
 
   test("shows a winged, coloured authored firefly when that carrier is selected", async ({ page }) => {

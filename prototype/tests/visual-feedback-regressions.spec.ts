@@ -51,7 +51,7 @@ test.describe("visual-feedback regressions", () => {
 
     await page.getByRole("button", { name: "make it for them" }).click();
     await expect(page.getByTestId("hub-firefly")).toBeVisible();
-    await expect(page.getByTestId("hub-pattern")).toBeVisible();
+    await expect(page.getByTestId("hub-pattern")).toHaveCount(0);
     await expect(page.getByTestId("home-reeds")).toHaveCount(0);
   });
 });

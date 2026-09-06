@@ -11,7 +11,7 @@ The canonical source files are byte-for-byte copies of the unique PNGs supplied 
 | `B1.png` | `couriers/firefly-outline.png` | Quiet idle/landing firefly state | Active — landing and carrier state |
 | `F1.png` | `couriers/firefly-filled-a.png` | Firefly wing-frame A for flight motion | Active — picker hero and one-shot flight motion |
 | `F2.png` | `couriers/firefly-filled-b.png` | Firefly wing-frame B for flight motion | Active — one-shot flight motion |
-| `firefly mesh.png` | `couriers/firefly-mesh.png` | Authored small-firefly field | Active — static ochre hub field |
+| `firefly mesh.png` | `couriers/firefly-mesh.png` | Authored small-firefly field | Parked — decorative hub field removed at Ethan’s request on 6 September |
 | `ggggg.png` | `couriers/firefly-carrying.png` | Carrying firefly for the hub and courier scenes | Active — enlarged hub focal object; sender/receiver courier handoff, departure, and arrival |
 | `bottle.png` | `containers/bottle-classic.png` | Bottle carrier selection and cabinet thumbnail | Active — sealed bottle carrier state |
 | `bottle.2.png` | `containers/bottle-alt.png` | Alternate bottle carrier/material state | Parked |

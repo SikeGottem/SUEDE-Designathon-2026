@@ -126,7 +126,6 @@ const artwork = {
     filledA: `${CECILIA}couriers/firefly-filled-a.png`,
     filledB: `${CECILIA}couriers/firefly-filled-b.png`,
     carrying: `${CECILIA}couriers/firefly-carrying.png`,
-    mesh: `${CECILIA}couriers/firefly-mesh.png`,
   },
   containers: {
     bottleReady: `${CECILIA}containers/bottle-classic.png`,
@@ -990,9 +989,6 @@ function Menu({ reduceMotion, createOnly = false, onCreate, onLetters }: { reduc
   return (
     <Page className="menu-page">
       <motion.header initial={false} animate={{ opacity: 1 }}><span>warm &amp; fuzzies</span></motion.header>
-      <div className="hub-pattern" data-testid="hub-pattern" aria-hidden="true">
-        <img className="hub-pattern-mesh" src={artwork.firefly.mesh} alt="" draggable={false} data-asset-slot="hub-firefly-mesh" />
-      </div>
       <motion.div data-testid="hub-firefly" className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? 0 : motionTiming.hub, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
         <DeliveryMascot />
       </motion.div>

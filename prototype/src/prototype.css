@@ -364,34 +364,6 @@
   width: 42px;
 }
 
-.hub-pattern {
-  position: absolute;
-  z-index: 1;
-  top: 62px;
-  right: -34px;
-  bottom: 118px;
-  left: -34px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hub-pattern img {
-  position: absolute;
-  display: block;
-  height: auto;
-  opacity: .78;
-  mix-blend-mode: multiply;
-  filter: brightness(0) saturate(100%) invert(68%) sepia(89%) saturate(1179%) hue-rotate(337deg) brightness(99%) contrast(87%);
-}
-
-.hub-pattern .hub-pattern-mesh {
-  top: 48%;
-  left: 50%;
-  width: 620px;
-  max-width: none;
-  transform: translate(-50%, -50%) rotate(-1deg);
-}
-
 /* A new object starts with one person, so every later object and handoff is named rather than pre-filled. */
 .recipient-page {
   min-height: 0;
