@@ -9,7 +9,7 @@ The maker enters a presenter code to start an idempotent publish session. Server
 
 Limits: four photos at 8 MiB each, voice at 12 MiB, song at 20 MiB and 32 MiB total; 10 starts/hour, 10 pending sessions, 100 published keepsakes; pending expiry one hour; upload URL at most five minutes and capped by session expiry; receiver read URL ten minutes. The server validates snapshot shape, supported MIME/signature, exact planned pathname, byte count and ETag before finalization. The scoped database token uses only read/add/update operations required by the two tables and expires around 6 October 2026; no credential is recorded here.
 
-Verification is local and real-provider-backed: build, 10 backend tests and 35 combined browser regressions passed. A real private-Blob/Turso fixture moved PNG, voice WAV and song WAV into a fresh browser context; each played only after a user tap, survived reload and played again on cabinet revisit. Stale URL reuse, fragment override, copy failure, late PUT expiry and response buffering were addressed. Production environment configuration, public deployment, physical phone/mic capture and camera QR scanning remain unverified. See [HOSTED_MEDIA.md](HOSTED_MEDIA.md) for the full release boundary and [the settled decision](../WIKI/DECISIONS.md).
+Build, 10 backend tests and 35 combined browser regressions passed. The real private-Blob/Turso fixture passed locally and on https://warm-and-fuzzies.vercel.app after production deployment on 6 September 2026: normal creation uploaded PNG, voice WAV and song WAV, produced an exact link/QR, and opened in a fresh browser context. The image loaded and both audio items played only after user taps, survived reload and played again on cabinet revisit. Stale URL reuse, fragment override, copy failure, late PUT expiry and request buffering were addressed. Production configuration and the public route are verified; physical phone/mic capture and camera QR scanning remain unverified. See [HOSTED_MEDIA.md](HOSTED_MEDIA.md) for the full release boundary and [the settled decision](../WIKI/DECISIONS.md).
 
 ## Clear one-time handoff — 6 September
 
@@ -144,7 +144,7 @@ This pass preserves the team-selected landing, two-branch hub, Gaegu, Cecelia ar
 
 ## Intentionally absent or simulated
 
-- real login, contacts, service-grade private delivery, authentication, music licensing/playback, encryption, hosted deletion, notification or analytics. The bounded presenter-operated server upload, immutable published storage, expiry and size limits are implemented as documented above, but are not deployed or a product-grade retention promise;
+- real login, contacts, service-grade private delivery, authentication, music licensing/playback, encryption, hosted deletion, notification or analytics. The bounded presenter-operated server upload, immutable published storage, expiry and size limits are implemented as documented above, and deployed, without a product-grade retention promise;
 - real permissions, link expiry, wrong-recipient recovery, content moderation, abuse reporting, consent controls, or deployed-product accessibility guarantees;
 - final name, complete brand system beyond Cecelia's current palette/type board, final material/mark/sticker masters, final visual polish, or Figma reconstruction;
 - a claim that the carrier set, cabinet, no-reply language, or any opening ritual has been validated with intended users.
