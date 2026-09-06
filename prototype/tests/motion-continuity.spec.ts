@@ -63,21 +63,36 @@ test("the sender fold reaches the stamp workbench on a direct entry", async ({ p
 
 test("the receiver unfolds exact paper at full size before exposing its controls", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
+  // Capture ephemeral geometry in the browser before network/load timing can outlast the fold.
+  await page.addInitScript(() => {
+    const observer = new MutationObserver(() => {
+      const finalPaper = document.querySelector<HTMLElement>(".receiver-paper-final .authored-paper");
+      const panels = Array.from(document.querySelectorAll<HTMLElement>(".paper-fold-face > .authored-paper"));
+      if (!finalPaper?.clientHeight || panels.length !== 3 || panels.some((panel) => !panel.clientHeight)) return;
+      (window as Window & { foldGeometry?: unknown }).foldGeometry = {
+        text: finalPaper.textContent,
+        width: finalPaper.clientWidth,
+        height: finalPaper.clientHeight,
+        panels: panels.map((panel) => ({ text: panel.textContent, width: panel.clientWidth, height: panel.clientHeight })),
+      };
+      observer.disconnect();
+    });
+    observer.observe(document, { childList: true, subtree: true });
+  });
   await page.goto("/?screen=opening");
-  const finalPaper = page.locator(".receiver-paper-final .authored-paper");
-  const exactCopy = await finalPaper.textContent();
-  await expect(page.locator(".paper-fold-open")).toBeVisible();
-  const surfaces = page.locator(".paper-fold-face > .authored-paper");
-  const finalBounds = await finalPaper.boundingBox();
-  for (let index = 0; index < 3; index += 1) {
-    await expect(surfaces.nth(index)).toHaveText(exactCopy ?? "");
-    const logicalSize = await surfaces.nth(index).evaluate((element) => [element.clientWidth, element.clientHeight]);
-    expect(logicalSize[0]).toBeCloseTo(finalBounds!.width, 0);
-    expect(logicalSize[1]).toBeCloseTo(finalBounds!.height, 0);
+  const geometry = await page.evaluate(() => (window as Window & { foldGeometry?: {
+    text: string; width: number; height: number; panels: { text: string; width: number; height: number }[];
+  } }).foldGeometry);
+  expect(geometry).toBeTruthy();
+  expect(geometry!.text.trim()).toBeTruthy();
+  for (const panel of geometry!.panels) {
+    expect(panel.text).toBe(geometry!.text);
+    expect(panel.width).toBeCloseTo(geometry!.width, 0);
+    expect(panel.height).toBeCloseTo(geometry!.height, 0);
   }
   await expect(page.locator("[data-opening-state='opened']")).toBeVisible();
   await expect(page.locator(".receiver-fold-panels")).toHaveCount(0);
-  await expect(finalPaper).toHaveText(exactCopy ?? "");
+  await expect(page.locator(".receiver-paper-final .authored-paper")).toHaveText(geometry!.text);
   await expect(page.getByRole("button", { name: "what should this become?", exact: true })).toBeVisible();
 });
 
