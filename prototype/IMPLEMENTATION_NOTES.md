@@ -1,6 +1,16 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Hosted-media delivery delta — 6 September 2026
+
+This section supersedes the earlier **normal-flow local-only** sharing boundary where it concerns supported hosted photos and audio. Normal safe-v3 text sharing and both demo routes remain unchanged. The implemented normal flow can now take up to four photos, one voice recording and one song with the exact keepsake to an unlisted receiver link/QR; video remains local-only. The receiver opens the same Cecelia/Gaegu envelope and carrier sequence, then sees the exact composed paper. There are no accounts, stable paired-demo records, autoplay, receipts, contacts, or new receiver UI.
+
+The maker enters a presenter code to start an idempotent publish session. Server-only Turso/libSQL and private Blob storage hold a validated immutable snapshot plus its exact private media paths. A 192-bit receiver capability at `/for/<id>` is public to anyone who holds it; this is unlisted access, not authentication or encryption. Receiver reads are freshly signed and become revocable browser-local object URLs. Cabinet removal only drops the local reference; it does not delete the hosted keepsake. Expired unpublished sessions can be manually cleaned up by the presenter.
+
+Limits: four photos at 8 MiB each, voice at 12 MiB, song at 20 MiB and 32 MiB total; 10 starts/hour, 10 pending sessions, 100 published keepsakes; pending expiry one hour; upload URL at most five minutes and capped by session expiry; receiver read URL ten minutes. The server validates snapshot shape, supported MIME/signature, exact planned pathname, byte count and ETag before finalization. The scoped database token uses only read/add/update operations required by the two tables and expires around 6 October 2026; no credential is recorded here.
+
+Verification is local and real-provider-backed: build, 10 backend tests and 35 combined browser regressions passed. A real private-Blob/Turso fixture moved PNG, voice WAV and song WAV into a fresh browser context; each played only after a user tap, survived reload and played again on cabinet revisit. Stale URL reuse, fragment override, copy failure, late PUT expiry and response buffering were addressed. Production environment configuration, public deployment, physical phone/mic capture and camera QR scanning remain unverified. See [HOSTED_MEDIA.md](HOSTED_MEDIA.md) for the full release boundary and [the settled decision](../WIKI/DECISIONS.md).
+
 ## Clear one-time handoff — 6 September
 
 The presentation uses one custom object from the ordinary creator and its exact generated receiver URL/QR. No stable paired-demo backend is being added. The URL contains the serializable design; copying that full URL or saving its QR is the one-time handoff. Personal stamping is optional and the carrier already has a valid default.
@@ -13,7 +23,7 @@ A live production check reproduced the local-photo gate and recovered by manuall
 
 Voice and song pieces now separate their playback button from the selectable card. Tapping the card selects it; dragging its surface and using the existing arrange controls changes position, size, rotation and overlap. Playback has a dedicated 44px button and retains keyboard activation. The selected piece’s controls allow recording again, choosing another song and removal. Successful replacement preserves the existing layout and overlap order; cancelling retains the original audio. A changed audio source resets the playback state.
 
-Local audio still cannot travel in cross-device links or persist in the cabinet. This correction does not add hosted storage or change that limit.
+At the time of this editing correction, audio stayed local for bearer links and local cabinet persistence. The later hosted-media delivery delta above supersedes that limit only for the bounded presenter-prepared path; this correction itself did not change it.
 
 Verification: the focused audio test passes across desktop and a 390 × 844 coarse-pointer phone context, covering touch selection, pointer dragging, arrange controls, valid WAV playback through Enter/Space, song replacement with preserved layout/order, and cancellation of synthetic voice re-recording. The ten existing scrapbook checks pass, as do the production build, protected runtime guard and four hosting tests. Phone controls were visually inspected. Synthetic recording checks the editor flow; physical microphone hardware and native Safari were not independently tested.
 
@@ -51,7 +61,7 @@ Ethan's full scrapbook request is implemented as a single personal page with con
 - Pieces move, resize and rotate directly or through keyboard-accessible controls. Backward/forward controls persist layer order; the piece selector recovers covered items. Doodles remain one foreground drawing plane.
 - Selected-item controls stay at the bottom. When necessary, the editing view pans temporarily to reveal the selected piece; saved coordinates are unchanged. Regular handwriting uses 28 logical pixels, preventing the outer desktop viewport from changing line wrapping. Oversized pieces can still exceed the visible editing window; makers can reduce their size with the controls.
 - The same renderer carries styled text, frames, captions, marks and order through folding, exact receiver links and the local cabinet. The optional twenty-first compact field preserves the v3 route and old 18/19/20-field payloads. Empty legacy text arrays and colliding legacy item IDs migrate without losing words. Malformed rich content resolves to unavailable.
-- Every media instance participates in local-media blocking and object-URL cleanup. Local blob photo/video/voice/song content cannot become a cross-device link/QR or durable cabinet item. No storage service, upload, authentication, private delivery or receipts were added. Limits remain 12,000 encoded payload characters and 1,200 total URL characters for a QR.
+- Historical local-only note, superseded for the bounded hosted-media path above: every media instance participated in local-media blocking and object-URL cleanup. Local blob photo/video/voice/song content could not become a cross-device link/QR or durable cabinet item. No storage service, upload, authentication, private delivery or receipts were then added. Bearer-link limits remain 12,000 encoded payload characters and 1,200 total URL characters for a QR.
 - Verification: 28 integrated Chromium checks passed, including rich sender-to-receiver/cabinet round trips, old-link migration, repeated materials, local media rejection and coarse-pointer phone controls. A separate desktop/phone framing check covers complete selected-note visibility, unchanged saved placement and the receiver paragraph. TypeScript/Vite build, all 28 protected runtime integrity checks and all four Sites packaging checks passed. The earlier sandbox restriction on Chromium was resolved for these runs.
 - Independent transport review found no remaining blocker. Visual review confirms the whole canonical note remains visible and photo captions sit inside the chosen frame. This is implementation verification, not evidence of friendship impact. Physical camera/microphone capture and scanning the final exact QR on a second phone remain unverified. The prepared sample remains illustrative; any genuine demonstration memory must be chosen and authored by the team.
 
@@ -134,7 +144,7 @@ This pass preserves the team-selected landing, two-branch hub, Gaegu, Cecelia ar
 
 ## Intentionally absent or simulated
 
-- real login, contacts, service-grade private delivery, authentication, server upload, durable recording/storage, music licensing/playback, encryption, deletion, notification, expiry, size-limit policy, or analytics;
+- real login, contacts, service-grade private delivery, authentication, music licensing/playback, encryption, hosted deletion, notification or analytics. The bounded presenter-operated server upload, immutable published storage, expiry and size limits are implemented as documented above, but are not deployed or a product-grade retention promise;
 - real permissions, link expiry, wrong-recipient recovery, content moderation, abuse reporting, consent controls, or deployed-product accessibility guarantees;
 - final name, complete brand system beyond Cecelia's current palette/type board, final material/mark/sticker masters, final visual polish, or Figma reconstruction;
 - a claim that the carrier set, cabinet, no-reply language, or any opening ritual has been validated with intended users.

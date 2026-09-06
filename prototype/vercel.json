@@ -4,8 +4,32 @@
   "outputDirectory": "dist/client",
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/for/:id", "destination": "/index.html" },
-    { "source": "/demo/:path*", "destination": "/index.html" },
-    { "source": "/demo", "destination": "/index.html" }
+    {
+      "source": "/for/:id",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/demo",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/for/:id",
+      "headers": [
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
   ]
 }

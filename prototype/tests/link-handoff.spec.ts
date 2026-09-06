@@ -57,8 +57,8 @@ test("removing local media restores an exact link and QR without silently droppi
   await page.getByRole("button", { name: "see it ready to give", exact: true }).click();
   await page.getByRole("button", { name: "give this privately", exact: true }).click();
 
-  await expect(page.getByRole("heading", { name: "remove local media to share this page." })).toBeVisible();
-  await expect(page.getByRole("status")).toContainText("1 photo available only in this tab");
+  await expect(page.getByRole("heading", { name: "prepare this page to give." })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("1 photo ready to prepare");
   await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toHaveCount(0);
   await page.getByRole("button", { name: "review local media", exact: true }).click();
   await page.locator('[data-item-kind="photo"]').click();

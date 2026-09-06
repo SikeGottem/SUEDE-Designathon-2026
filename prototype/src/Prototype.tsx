@@ -17,6 +17,7 @@ import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from
 import { QRCodeSVG } from "qrcode.react";
 import { createPortal } from "react-dom";
 import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
+import { loadHostedKeepsake, publishHostedKeepsake } from "./hostedMedia";
 
 // Editing responds immediately; physical paper and carrier scenes share a deliberate cadence.
 const motionEase = { ui: [0.23, 1, 0.32, 1], travel: [0.77, 0, 0.175, 1] } as const;
@@ -49,6 +50,7 @@ type Phase =
   | "carrier"
   | "preview"
   | "handoff"
+  | "receiver-loading"
   | "sent"
   | "arrival"
   | "deferred"
@@ -118,6 +120,8 @@ type KeepsakeSnapshot = {
   textBlocks?: TextBlock[];
   scrapbook?: Scrapbook;
 };
+type HostedCabinetReference = { kind: "hosted"; receiverId: string; id: string; sender: string; recipient: string; carrier: CarrierId };
+type CabinetItem = KeepsakeSnapshot | HostedCabinetReference;
 
 const CECILIA = "/assets/illustrations/cecilia-collection/";
 const artwork = {
@@ -147,6 +151,7 @@ const artwork = {
   },
 } as const;
 const CABINET_KEY = "warm-fuzzies-cabinet-v1";
+const HOSTED_CABINET_KEY = "warm-fuzzies-hosted-cabinet-v1";
 const PERSONAL_STAMP_KEY = "warm-fuzzies-personal-stamp-v1";
 const LINK_MAX = 12_000;
 const QR_MAX = 1_200;
@@ -510,6 +515,17 @@ function loadCabinet() {
   } catch { return [] as KeepsakeSnapshot[]; }
 }
 
+function isHostedCabinetReference(value: unknown): value is HostedCabinetReference {
+  return isRecord(value) && value.kind === "hosted" && typeof value.receiverId === "string" && /^[A-Za-z0-9_-]{32}$/.test(value.receiverId)
+    && typeof value.id === "string" && typeof value.sender === "string" && typeof value.recipient === "string" && carrierIds.includes(value.carrier as CarrierId);
+}
+function loadHostedCabinet() {
+  if (typeof window === "undefined") return [] as HostedCabinetReference[];
+  try { const parsed: unknown = JSON.parse(window.localStorage.getItem(HOSTED_CABINET_KEY) ?? "[]"); return Array.isArray(parsed) ? parsed.filter(isHostedCabinetReference).slice(0, 12) : []; } catch { return [] as HostedCabinetReference[]; }
+}
+function isHostedItem(item: CabinetItem): item is HostedCabinetReference { return "kind" in item && item.kind === "hosted"; }
+function cabinetItemId(item: CabinetItem) { return isHostedItem(item) ? `hosted:${item.receiverId}` : item.id; }
+
 function loadPersonalStamp(): PersonalStamp | null {
   if (typeof window === "undefined") return null;
   try {
@@ -559,8 +575,8 @@ const pieceLabels: Record<PieceId, string> = {
 const defaultLayerLayouts: Record<LayerId, LayerLayout> = {
   words: { x: 0, y: 82, rotation: -1.5, scale: 1 },
   photo: { x: -34, y: -176, rotation: -3, scale: 1 },
-  voice: { x: -42, y: 160, rotation: 2, scale: 1 },
-  song: { x: 42, y: 168, rotation: -2.5, scale: 1 },
+  voice: { x: -42, y: 130, rotation: 2, scale: 1 },
+  song: { x: 42, y: 232, rotation: -2.5, scale: 1 },
   burst: { x: 86, y: -178, rotation: 7, scale: 1 },
   ribbon: { x: -92, y: 112, rotation: -8, scale: 1 },
   stamp: { x: 92, y: 126, rotation: 5, scale: 1 },
@@ -617,6 +633,12 @@ function rehearsalRouteFromPath(): "create" | "receive" | null {
   return null;
 }
 
+function hostedReceiverIdFromPath() {
+  if (typeof window === "undefined") return null;
+  const match = window.location.pathname.match(/^\/for\/([A-Za-z0-9_-]{32})\/?$/);
+  return match?.[1] ?? null;
+}
+
 function phaseFromQuery(): Phase | null {
   if (typeof window === "undefined") return null;
   const value = new URLSearchParams(window.location.search).get("screen");
@@ -630,18 +652,19 @@ export default function Prototype() {
   const isDemoReceiver = rehearsalRoute === "receive";
   const isRehearsalRoute = rehearsalRoute !== null;
   const requestedPhase = isRehearsalCreate ? null : phaseFromQuery();
+  const hostedReceiverId = !rehearsalRoute && typeof window !== "undefined" ? hostedReceiverIdFromPath() : null;
   const hashPresent = !isRehearsalCreate && !isDemoReceiver && typeof window !== "undefined" && (window.location.hash.startsWith("#v1.") || window.location.hash.startsWith("#v2.") || window.location.hash.startsWith("#v3."));
   const demoPayloadAttempted = isDemoReceiver && typeof window !== "undefined" && /^#v[123]\./.test(window.location.hash);
   const demoSnapshot = isDemoReceiver && window.location.hash.startsWith("#v3.") ? snapshotFromHash() : null;
   const demoPayloadInvalid = demoPayloadAttempted && !demoSnapshot;
   const linkedSnapshot = isDemoReceiver
     ? demoSnapshot ?? cloneSnapshot(rehearsalArtifact)
-    : isRehearsalCreate
+    : isRehearsalCreate || hostedReceiverId
       ? null
       : snapshotFromHash();
   const seededPreview = !rehearsalRoute && Boolean(requestedPhase && !["home", "menu", "recipient"].includes(requestedPhase));
   // Normal bearer fragments win over query previews; demo receive only accepts valid v3 artifacts and otherwise opens its fallback.
-  const [phase, setPhase] = useState<Phase>(() => isRehearsalCreate ? "home" : demoPayloadInvalid ? "unavailable" : linkedSnapshot ? "arrival" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
+  const [phase, setPhase] = useState<Phase>(() => isRehearsalCreate ? "home" : demoPayloadInvalid ? "unavailable" : linkedSnapshot ? "arrival" : hostedReceiverId ? "receiver-loading" : (hashPresent ? "unavailable" : requestedPhase ?? "home"));
   const [carrierId, setCarrierId] = useState<CarrierId>(() => linkedSnapshot?.carrier ?? "bottle");
   const [recipient, setRecipient] = useState(() => linkedSnapshot?.recipient ?? (isRehearsalCreate ? rehearsalArtifact.recipient : seededPreview ? "Maya" : ""));
   const [textBlocks, setTextBlocks] = useState<TextBlock[]>(() => linkedSnapshot
@@ -655,9 +678,13 @@ export default function Prototype() {
   const [pieces, setPieces] = useState<PieceId[]>(() => linkedSnapshot?.pieces ?? (seededPreview ? ["photo"] : []));
   const [cuesOpen, setCuesOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [cabinet, setCabinet] = useState<KeepsakeSnapshot[]>(() => isRehearsalRoute ? [] : loadCabinet());
-  const [lastRemoved, setLastRemoved] = useState<KeepsakeSnapshot | null>(null);
+  const [cabinet, setCabinet] = useState<CabinetItem[]>(() => isRehearsalRoute ? [] : [...loadCabinet(), ...loadHostedCabinet()]);
+  const [lastRemoved, setLastRemoved] = useState<CabinetItem | null>(null);
   const [activeSnapshot, setActiveSnapshot] = useState<KeepsakeSnapshot | null>(linkedSnapshot);
+  const [activeHostedReference, setActiveHostedReference] = useState<HostedCabinetReference | null>(null);
+  const [hostedLoadingId, setHostedLoadingId] = useState<string | null>(() => hostedReceiverId);
+  const [hostedLoadError, setHostedLoadError] = useState("");
+  const [publishResult, setPublishResult] = useState<{ receiverId: string; path: string; snapshotKey: string } | null>(null);
   const [removeOpen, setRemoveOpen] = useState(false);
   const [cabinetRemovingId, setCabinetRemovingId] = useState<string | null>(null);
   const [studioMode, setStudioMode] = useState<StudioMode>("compose");
@@ -717,12 +744,28 @@ export default function Prototype() {
     };
   }, [photos, marks, itemOrder, captureAsset, carrierId, doodleStrokes, draftId, envelope, inkColor, layerLayouts, paper, pieces, recipient, seal, sealWeight, songAsset, stickers, textBlocks, voiceAsset]);
 
+  const handoffSnapshot = activeSnapshot ?? currentSnapshot;
+  const handoffSnapshotKey = JSON.stringify(handoffSnapshot);
+
   const applySnapshot = useCallback((snapshot: KeepsakeSnapshot) => {
     const next = cloneSnapshot(snapshot);
     setActiveSnapshot(next); setDraftId(next.id); setRecipient(next.recipient); setTextBlocks(textBlocksFromSnapshot(next)); setPaper(next.paper); setCarrierId(next.carrier); setEnvelope(next.envelope); setSeal(next.seal); setSealWeight(next.sealWeight ?? "bold"); setPieces(next.pieces); setVoiceAsset(next.voice); setSongAsset(next.song); setDoodleStrokes(next.doodles); setInkColor(next.inkColor); setLayerLayouts(next.layouts);
     const scrapbook = scrapbookFromSnapshot(next);
     setPhotos(scrapbook.photos); setMarks(scrapbook.marks); setItemOrder(scrapbook.order);
   }, []);
+
+  useEffect(() => {
+    if (!hostedLoadingId || phase !== "receiver-loading") return;
+    let active = true;
+    setHostedLoadError("");
+    void loadHostedKeepsake(hostedLoadingId).then((hosted) => {
+      if (!active || !isSafeSnapshot(hosted.snapshot)) { hosted.objectUrls.forEach((url) => URL.revokeObjectURL(url)); if (active) setPhase("unavailable"); return; }
+      applySnapshot(hosted.snapshot);
+      setActiveHostedReference({ kind: "hosted", receiverId: hosted.receiverId, id: String(hosted.snapshot.id), sender: String(hosted.snapshot.sender), recipient: String(hosted.snapshot.recipient), carrier: hosted.snapshot.carrier as CarrierId });
+      setPhase("arrival");
+    }).catch(() => { if (active) { setHostedLoadError("This keepsake could not be loaded right now. No part of it has been shown."); setPhase("unavailable"); } });
+    return () => { active = false; };
+  }, [applySnapshot, hostedLoadingId, phase]);
 
   const replaceAudio = useCallback((kind: "voice" | "song", next: AudioAsset | null) => {
     if (kind === "voice") setVoiceAsset(next);
@@ -737,7 +780,7 @@ export default function Prototype() {
 
   const go = (requested: Phase) => {
     const presenterPhases: Phase[] = ["home", "menu", "recipient", "studio", "envelope", "carrier", "preview", "handoff", "sent"];
-    const receiverPhases: Phase[] = ["arrival", "opening", "reveal", "cabinet", "deferred", "unavailable", "removed"];
+    const receiverPhases: Phase[] = ["receiver-loading", "arrival", "opening", "reveal", "cabinet", "deferred", "unavailable", "removed"];
     const next = isRehearsalCreate && !presenterPhases.includes(requested)
       ? "home"
       : isDemoReceiver && !receiverPhases.includes(requested)
@@ -775,6 +818,7 @@ export default function Prototype() {
   };
 
   const resetDraft = () => {
+    setPublishResult(null);
     setRecipient(isRehearsalCreate ? rehearsalArtifact.recipient : "");
     setDraftId(`wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
     setTextBlocks([]);
@@ -796,6 +840,7 @@ export default function Prototype() {
     setCuesOpen(false);
     setCopied(false);
     setActiveSnapshot(null);
+    setActiveHostedReference(null);
     go("recipient");
   };
 
@@ -810,29 +855,35 @@ export default function Prototype() {
   };
 
   const saveToCabinet = (snapshot: KeepsakeSnapshot) => {
+    if (activeHostedReference) {
+      const next = [activeHostedReference, ...cabinet.filter((item) => cabinetItemId(item) !== cabinetItemId(activeHostedReference))].slice(0, 12);
+      if (!isRehearsalRoute) { try { window.localStorage.setItem(HOSTED_CABINET_KEY, JSON.stringify(next.filter(isHostedItem))); } catch { return false; } }
+      setCabinet(next); return true;
+    }
     if (containsBlobMedia(snapshot)) return false;
     if (isRehearsalRoute) {
       setCabinet([cloneSnapshot(snapshot)]);
       return true;
     }
-    const next = [snapshot, ...cabinet.filter((item) => item.id !== snapshot.id)].slice(0, 12);
+    const next = [snapshot, ...cabinet.filter((item) => !isHostedItem(item) && item.id !== snapshot.id)].slice(0, 12);
     try {
-      window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
+      window.localStorage.setItem(CABINET_KEY, JSON.stringify(next.filter((item): item is KeepsakeSnapshot => !isHostedItem(item))));
     } catch { return false; }
     setCabinet(next);
     return true;
   };
 
   const removeFromCabinet = (id: string) => {
-    const removed = cabinet.find((item) => item.id === id) ?? null;
-    const next = cabinet.filter((item) => item.id !== id);
+    const removed = cabinet.find((item) => cabinetItemId(item) === id) ?? null;
+    const next = cabinet.filter((item) => cabinetItemId(item) !== id);
     if (isRehearsalRoute) {
       if (removed) setLastRemoved(removed);
       setCabinet(next);
       return true;
     }
     try {
-      window.localStorage.setItem(CABINET_KEY, JSON.stringify(next));
+      window.localStorage.setItem(CABINET_KEY, JSON.stringify(next.filter((item): item is KeepsakeSnapshot => !isHostedItem(item))));
+      window.localStorage.setItem(HOSTED_CABINET_KEY, JSON.stringify(next.filter(isHostedItem)));
     } catch { return false; }
     if (removed) setLastRemoved(removed);
     setCabinet(next);
@@ -884,26 +935,27 @@ export default function Prototype() {
               <Preview key="preview" snapshot={activeSnapshot ?? currentSnapshot} onEdit={() => go("envelope")} onChangeCarrier={() => go("carrier")} onGive={() => go("handoff")} />
             )}
             {phase === "handoff" && (
-              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} onBack={() => go("preview")} onEdit={() => go("studio")} onCopy={async () => { const snapshot = activeSnapshot ?? currentSnapshot; if (!isSafeSnapshot(snapshot) || containsBlobMedia(snapshot)) return false; const payload = encodeSnapshot(snapshot); if (payload.length > LINK_MAX) return false; const receiverPath = isRehearsalCreate ? "/demo/receive" : `/for/${snapshot.id}`; const url = `${window.location.origin}${receiverPath}#v3.${payload}`; setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFinish={() => go("sent")} />
+              <Handoff key="handoff" snapshot={activeSnapshot ?? currentSnapshot} recipient={recipient} carrier={carrier} copied={copied} reduceMotion={Boolean(reduceMotion)} demoReceiver={isRehearsalCreate} publishedPath={publishResult?.snapshotKey === handoffSnapshotKey ? publishResult.path : null} onBack={() => go("preview")} onEdit={() => go("studio")} onPublish={async (code) => { const result = await publishHostedKeepsake(activeSnapshot ?? currentSnapshot as unknown as Record<string, unknown>, code); setPublishResult({ ...result, snapshotKey: handoffSnapshotKey }); setCopied(false); return result.path; }} onCopy={async (url) => { setCopied(false); try { if (!navigator.clipboard?.writeText) return false; await navigator.clipboard.writeText(url); setCopied(true); return true; } catch { return false; } }} onFinish={() => go("sent")} />
             )}
+            {phase === "receiver-loading" && <Page key="receiver-loading" className="receiver-loading-page"><p role="status">getting this keepsake ready…</p></Page>}
             {phase === "sent" && (
               <Sent key="sent" recipient={recipient} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onAgain={resetDraft} onLeave={returnToMenu} />
             )}
             {phase === "arrival" && (
-              <Arrival key="arrival" recipient={recipient} senderName={(activeSnapshot ?? currentSnapshot).sender} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />
+              <Arrival key="arrival" recipient={recipient} senderName={(activeSnapshot ?? currentSnapshot).sender} carrier={carrier} reduceMotion={Boolean(reduceMotion)} onOpen={() => go("opening")} onDefer={() => go("deferred")} onRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; const item = activeHostedReference ?? snapshot; setLastRemoved(item); removeFromCabinet(cabinetItemId(item)); go("removed"); }} />
             )}
             {phase === "deferred" && (
               <QuietExit key="deferred" title="left for another time." body={`${sender} is not told. There is no reminder.`} action="return to it" onAction={() => go("arrival")} onLeave={() => go("home")} />
             )}
             {phase === "unavailable" && (
-              <QuietExit key="unavailable" title="this one cannot be opened." body="No content has been shown. This link is incomplete or could not be read." action="back to the sample" onAction={() => go("arrival")} onLeave={() => go("home")} />
+              <QuietExit key="unavailable" title="this one cannot be opened." body={hostedLoadError || "No content has been shown. This link is incomplete or could not be read."} action={hostedLoadingId ? "try again" : "back to the sample"} onAction={() => hostedLoadingId ? go("receiver-loading") : go("arrival")} onLeave={() => go("home")} />
             )}
-            {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; setLastRemoved(snapshot); removeFromCabinet(snapshot.id); go("removed"); }} />}
-            {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(activeSnapshot.id); go("removed"); }} />}
+            {phase === "opening" && <Opening key="opening" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion={Boolean(reduceMotion)} onKeep={() => { const snapshot = activeSnapshot ?? currentSnapshot; if (!saveToCabinet(snapshot)) return false; setActiveSnapshot(snapshot); go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { const snapshot = activeSnapshot ?? currentSnapshot; const item = activeHostedReference ?? snapshot; setLastRemoved(item); removeFromCabinet(cabinetItemId(item)); go("removed"); }} />}
+            {phase === "reveal" && <Opening key="reveal" snapshot={activeSnapshot ?? currentSnapshot} removeOpen={removeOpen} reduceMotion onKeep={() => { go("cabinet"); return true; }} onClose={() => go("deferred")} onRemove={() => setRemoveOpen(true)} onCancelRemove={() => setRemoveOpen(false)} onConfirmRemove={() => { if (activeSnapshot) removeFromCabinet(cabinetItemId(activeHostedReference ?? activeSnapshot)); go("removed"); }} />}
             {phase === "cabinet" && (
-              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onHome={returnToMenu} onMake={isDemoReceiver ? () => { applySnapshot(rehearsalArtifact); go("arrival"); } : resetDraft} onOpen={(item) => { applySnapshot(item); go("reveal"); }} onRemove={(item) => setCabinetRemovingId(item.id)} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(item.id); setCabinetRemovingId(null); }} />
+              <Cabinet key="cabinet" items={cabinet} removingId={cabinetRemovingId} onHome={returnToMenu} onMake={isDemoReceiver ? () => { applySnapshot(rehearsalArtifact); go("arrival"); } : resetDraft} onOpen={(item) => { if (isHostedItem(item)) { setHostedLoadingId(item.receiverId); setActiveHostedReference(null); go("receiver-loading"); } else { setActiveHostedReference(null); applySnapshot(item); go("reveal"); } }} onRemove={(item) => setCabinetRemovingId(cabinetItemId(item))} onCancelRemove={() => setCabinetRemovingId(null)} onConfirmRemove={(item) => { removeFromCabinet(cabinetItemId(item)); setCabinetRemovingId(null); }} />
             )}
-            {phase === "removed" && <Removed key="removed" onLeave={returnToMenu} onRestore={() => { if (lastRemoved) { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); } go("arrival"); }} />}
+            {phase === "removed" && <Removed key="removed" onLeave={returnToMenu} onRestore={() => { if (lastRemoved) { if (isHostedItem(lastRemoved)) { setHostedLoadingId(lastRemoved.receiverId); setActiveHostedReference(null); go("receiver-loading"); } else { saveToCabinet(lastRemoved); applySnapshot(lastRemoved); go("arrival"); } } }} />}
           </AnimatePresence>
         </main>
       </MobileScroll>
@@ -1375,7 +1427,7 @@ function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured }: { capt
       )}
 
       <footer className="capture-controls">
-        <p className="capture-local-note">Photos and videos stay on this device. Remove them before sharing a link or QR.</p>
+        <p className="capture-local-note">Photos stay here until you prepare the keepsake to give. Video stays on this device.</p>
         {cameraNote && <p className="camera-note" aria-live="polite">{cameraNote}</p>}
         <div className="capture-mode-switch" role="tablist" aria-label="Capture mode">
           <button type="button" role="tab" aria-selected={captureMode === "photo"} disabled={recording} onClick={() => setCaptureMode("photo")}>photo</button>
@@ -1990,7 +2042,7 @@ function StoryToolRail({ hasWords, canAddText, paper, capture, voice, song, piec
   const prompts = ["a favourite memory", "what they taught you", "one word for them", "one small thing you notice"];
   return (
     <div className="story-tool-dock">
-      {!editingText && !drawingActive && addOpen && songImportOpen && <div className="song-import-note" role="region" aria-label="Add a song"><p>choose an audio file</p><small>Audio stays on this device. Remove it before sharing a link or QR.</small><div><button type="button" onClick={() => songInputRef.current?.click()}>choose file</button><button type="button" onClick={() => setSongImportOpen(false)}>not now</button></div></div>}
+      {!editingText && !drawingActive && addOpen && songImportOpen && <div className="song-import-note" role="region" aria-label="Add a song"><p>choose an audio file</p><small>It stays on this device until you prepare the keepsake to give.</small><div><button type="button" onClick={() => songInputRef.current?.click()}>choose file</button><button type="button" onClick={() => setSongImportOpen(false)}>not now</button></div></div>}
       <AnimatePresence>
         {!editingText && !drawingActive && addOpen && <motion.div className="story-add-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }} transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}><div className="paper-choice" role="group" aria-label="Paper character">{(["plain", "dotted", "grid"] as PaperId[]).map((choice) => <button key={choice} type="button" aria-pressed={paper === choice} onClick={() => onPaper(choice)}>{choice}</button>)}</div><Carousel ariaLabel="Creative materials" contentClassName="story-tool-rail"><button type="button" aria-label="photo" disabled={photoCount >= MAX_PHOTOS} aria-pressed={Boolean(capture)} onClick={() => { setAddOpen(false); onCamera(); }}><CameraMark /><span>photo</span><small>{photoCount} / {MAX_PHOTOS}</small></button><button type="button" aria-pressed={Boolean(voice && pieces.includes("voice"))} onClick={() => { setAddOpen(false); onVoice(); }}><MaterialIcon id="voice" /><span>{voice ? "new voice" : "voice"}</span></button><button type="button" aria-pressed={Boolean(song && pieces.includes("song"))} aria-expanded={songImportOpen} onClick={() => setSongImportOpen((current) => !current)}><MaterialIcon id="song" /><span>{song ? "new song" : "song"}</span></button></Carousel><div className="story-authored-tools" aria-label="Colour and hand-drawn mark tools"><div className="story-colour-palette" role="group" aria-label="Ink colour"><span>ink</span>{(["navy", "forest", "rust", "plum", "ochre"] as InkColor[]).map((color) => <button key={color} className={`ink-swatch ink-${color}`} type="button" aria-pressed={inkColor === color} aria-label={`Use ${inkLabels[color]} ink`} onClick={() => onInkColor(color)}><span /></button>)}</div><Carousel ariaLabel="Hand-drawn marks" contentClassName="story-sticker-rail">{(["burst", "ribbon", "stamp"] as StickerId[]).map((sticker) => { return <button key={sticker} type="button" disabled={markCount >= MAX_MARKS} aria-label={`Add ${sticker} mark`} onClick={() => onAddSticker(sticker)}><StickerMark id={sticker} /><span>{sticker}</span></button>; })}</Carousel><span className="scrapbook-mark-count">{markCount} / {MAX_MARKS} marks</span></div></motion.div>}
         {editingText && cuesOpen && <motion.div className="story-add-tray story-prompt-tray" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(6px)" }}><Carousel ariaLabel="Writing prompts" contentClassName="story-prompt-rail">{prompts.map((prompt) => <button key={prompt} className={prompt === activePrompt ? "is-current" : ""} type="button" onClick={() => onPrompt(prompt)}>{prompt}</button>)}</Carousel></motion.div>}
@@ -2046,7 +2098,7 @@ function VoiceRecorder({ onCancel, onRecorded }: { onCancel: () => void; onRecor
       recorderRef.current = recorder; recorder.start(200); setSeconds(0); setStatus("recording"); navigator.vibrate?.(8);
     } catch { setStatus("error"); }
   };
-  return <motion.div className="voice-recorder" role="dialog" aria-modal="true" aria-label="Record a voice note" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(8px)" }} transition={{ duration: 0.18 }}><p>{status === "requesting" ? "opening your microphone…" : status === "ready" ? "say it in your own voice." : status === "recording" ? `recording · ${seconds}s` : status === "unsupported" ? "voice recording is not available here." : "we could not use the microphone."}</p><small className="voice-local-note">Voice notes stay on this device. Remove one before sharing a link or QR.</small>{status === "ready" && <button className="drawn-action" type="button" onClick={start}>start recording <Mark /></button>}{status === "recording" && <button className="drawn-action" type="button" onClick={() => recorderRef.current?.stop()}>keep this voice <Mark /></button>}<button className="quiet-link" type="button" onClick={close}>{status === "unsupported" || status === "error" ? "back to paper" : "cancel"}</button></motion.div>;
+  return <motion.div className="voice-recorder" role="dialog" aria-modal="true" aria-label="Record a voice note" initial={{ opacity: 0, transform: "translateY(10px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={{ opacity: 0, transform: "translateY(8px)" }} transition={{ duration: 0.18 }}><p>{status === "requesting" ? "opening your microphone…" : status === "ready" ? "say it in your own voice." : status === "recording" ? `recording · ${seconds}s` : status === "unsupported" ? "voice recording is not available here." : "we could not use the microphone."}</p><small className="voice-local-note">It stays on this device until you prepare the keepsake to give.</small>{status === "ready" && <button className="drawn-action" type="button" onClick={start}>start recording <Mark /></button>}{status === "recording" && <button className="drawn-action" type="button" onClick={() => recorderRef.current?.stop()}>keep this voice <Mark /></button>}<button className="quiet-link" type="button" onClick={close}>{status === "unsupported" || status === "error" ? "back to paper" : "cancel"}</button></motion.div>;
 }
 
 function CapturedMedia({ capture, className = "", interactive = false }: { capture: CaptureAsset | null; className?: string; interactive?: boolean }) {
@@ -2083,12 +2135,15 @@ function Courier({ carrier, state }: { carrier: Carrier; state: "pickup" | "depa
   return <div className={`courier courier-${state} courier-firefly`} aria-hidden="true"><div className="courier-body courier-firefly-carrying" data-asset-slot="courier-firefly"><img className="courier-firefly-frame courier-firefly-brand-frame" src={artwork.firefly.carrying} alt="" /></div></div>;
 }
 
-function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoReceiver, onBack, onEdit, onCopy, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; reduceMotion: boolean; demoReceiver?: boolean; onBack: () => void; onEdit: () => void; onCopy: () => Promise<boolean>; onFinish: () => void }) {
+function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoReceiver, publishedPath, onBack, onEdit, onPublish, onCopy, onFinish }: { snapshot: KeepsakeSnapshot; recipient: string; carrier: Carrier; copied: boolean; reduceMotion: boolean; demoReceiver?: boolean; publishedPath: string | null; onBack: () => void; onEdit: () => void; onPublish: (code: string) => Promise<string>; onCopy: (url: string) => Promise<boolean>; onFinish: () => void }) {
   const [qrOpen, setQrOpen] = useState(false);
   const [qrPresented, setQrPresented] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
   const [manualCopyReady, setManualCopyReady] = useState(false);
   const [manualCopyConfirmed, setManualCopyConfirmed] = useState(false);
+  const [presenterCode, setPresenterCode] = useState("");
+  const [publishing, setPublishing] = useState(false);
+  const [publishError, setPublishError] = useState("");
   const linkInputRef = useRef<HTMLInputElement>(null);
   const qrDialogRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -2111,11 +2166,12 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
   const localMedia = safeSnapshot && containsBlobMedia(snapshot);
   const encoded = safeSnapshot && !localMedia ? encodeSnapshot(snapshot) : "";
   const receiverPath = demoReceiver ? "/demo/receive" : `/for/${snapshot.id}`;
-  const url = encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}${receiverPath}#v3.${encoded}` : "";
+  const hostedUrl = publishedPath ? `${typeof window === "undefined" ? "" : window.location.origin}${publishedPath}` : "";
+  const url = hostedUrl || (encoded && encoded.length <= LINK_MAX ? `${typeof window === "undefined" ? "" : window.location.origin}${receiverPath}#v3.${encoded}` : "");
   const qrIsExact = Boolean(url) && url.length <= QR_MAX;
   const unavailable = !url;
   const blockedState = localMedia
-    ? { heading: "remove local media to share this page.", body: `This page has ${localMediaSummary(snapshot)} available only in this tab. Remove these pieces from your paper to make a receiver link or QR.`, action: "review local media" }
+    ? { heading: demoReceiver ? "remove local media to share this page." : "prepare this page to give.", body: demoReceiver ? `This page has ${localMediaSummary(snapshot)} available only in this tab. Remove these pieces from your paper to make a receiver link or QR.` : `This page has ${localMediaSummary(snapshot)} ready to prepare for this receiver link.`, action: "review local media" }
     : !safeSnapshot
       ? { heading: "this page has a detail to fix.", body: "One part of this draft cannot travel in a link. Return to your paper and edit it before you share.", action: "review your paper" }
       : encoded.length > LINK_MAX
@@ -2127,9 +2183,13 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
     linkInputRef.current?.select();
   };
   const copyLink = async () => {
-    const success = await onCopy();
+    const success = await onCopy(url);
     setCopyFailed(!success);
     if (!success) setManualCopyReady(true);
+  };
+  const publish = async () => {
+    setPublishing(true); setPublishError("");
+    try { await onPublish(presenterCode); } catch (error) { setPublishError(error instanceof Error ? error.message : "This keepsake could not be prepared. Try again."); } finally { setPublishing(false); }
   };
   useEffect(() => {
     if (copyFailed && url) { linkInputRef.current?.focus(); linkInputRef.current?.select(); }
@@ -2153,8 +2213,9 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{unavailable ? blockedState.heading : `give this to ${recipient}.`}</h1></header>
       <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
+      {localMedia && !publishedPath && !demoReceiver && <section className="hosted-publish" aria-label="Prepare this keepsake to give"><p>Take the photos and audio with the letter.</p><label>presenter code<input type="password" autoComplete="off" value={presenterCode} onChange={(event) => setPresenterCode(event.target.value)} /></label><button className="drawn-action" type="button" disabled={publishing} onClick={() => { void publish(); }}>{publishing ? "getting it ready…" : "prepare to give"} <Mark /></button><button className="quiet-link" type="button" onClick={onEdit}>review local media</button>{publishError && <p role="alert">{publishError}</p>}<small>Video stays on this device for now.</small></section>}
       <div className="handoff-link-tools">
-        <div className={`private-link ${unavailable ? "link-failed handoff-link-blocked" : ""}`}>
+        <div className={`private-link ${unavailable ? `handoff-link-blocked ${localMedia && !demoReceiver ? "handoff-media-pending" : "link-failed"}` : ""}`}>
           {unavailable ? <span role="status">{blockedState.body}</span> : <input ref={linkInputRef} type="text" readOnly value={url} aria-label="Receiver link" onFocus={(event) => { setManualCopyReady(true); event.currentTarget.select(); }} onClick={(event) => event.currentTarget.select()} />}
           {url && <button type="button" aria-label="Copy generated receiver link" onClick={() => { void copyLink(); }}>{copied ? "copied" : "copy"}</button>}
         </div>
@@ -2164,7 +2225,7 @@ function Handoff({ snapshot, recipient, carrier, copied, reduceMotion, demoRecei
       {copyFailed && !unavailable && <p className="copy-recovery-note" role="status">Your link is ready. Copy it from the selected field, or use the QR.</p>}
       {manualCopyReady && !copied && !qrPresented && !manualCopyConfirmed && !unavailable && <button className="quiet-link manual-copy-confirm" type="button" onClick={() => setManualCopyConfirmed(true)}>I copied the link</button>}
       {(copied || qrPresented || manualCopyConfirmed) && !unavailable && <button className="drawn-action" type="button" onClick={onFinish}>finish giving <Mark /></button>}
-      {unavailable && <button className="drawn-action" type="button" onClick={onEdit}>{blockedState.action} <Mark /></button>}
+      {unavailable && !(localMedia && !demoReceiver) && <button className="drawn-action" type="button" onClick={onEdit}>{blockedState.action} <Mark /></button>}
       <p className="system-note">Anyone with the link or QR can open it. Share it yourself; this prototype does not send it or tell you when it is opened.</p>
       {typeof document !== "undefined" && createPortal(<AnimatePresence>{qrOpen && qrIsExact && <motion.div ref={qrDialogRef} className="qr-dialog" role="dialog" aria-modal="true" aria-label="Receiver QR for this keepsake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }} onKeyDown={(event) => { if (event.key === "Escape") setQrOpen(false); }}><button className="qr-dialog-close" type="button" autoFocus onClick={() => setQrOpen(false)} aria-label="Close receiver QR"><CloseMark /></button><QRCodeSVG value={url} size={350} level="L" marginSize={3} bgColor="#ffffff" fgColor="#081f4d" title="Scan to open this keepsake" /><p>scan to give this to {recipient}.</p><small>This code belongs to this keepsake. Anyone who scans it opens the same sealed object—no account needed.</small><button className="quiet-link qr-save" type="button" onClick={saveQr}>save this QR</button></motion.div>}</AnimatePresence>, document.body)}
     </Page>
@@ -2299,7 +2360,7 @@ function Reveal(props: ReceiverObjectProps) {
   return <Page className="reveal-page"><ReceiverObject {...props} /></Page>;
 }
 
-function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: KeepsakeSnapshot[]; removingId: string | null; onHome: () => void; onMake: () => void; onOpen: (item: KeepsakeSnapshot) => void; onRemove: (item: KeepsakeSnapshot) => void; onCancelRemove: () => void; onConfirmRemove: (item: KeepsakeSnapshot) => void }) {
+function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancelRemove, onConfirmRemove }: { items: CabinetItem[]; removingId: string | null; onHome: () => void; onMake: () => void; onOpen: (item: CabinetItem) => void; onRemove: (item: CabinetItem) => void; onCancelRemove: () => void; onConfirmRemove: (item: CabinetItem) => void }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [page, setPage] = useState(0);
   const pageSize = 4;
@@ -2316,7 +2377,7 @@ function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancel
     <Page className="cabinet-page">
       <header><h1 ref={headingRef} tabIndex={-1}>things you kept.</h1></header>
       <div className="cabinet-field">
-        {items.length ? visibleItems.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
+        {items.length ? visibleItems.map((item) => <motion.div key={cabinetItemId(item)} className="cabinet-item cabinet-object" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === cabinetItemId(item) ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
       {pageCount > 1 && <nav className="cabinet-pagination" aria-label="Kept letter pages"><button type="button" onClick={() => setPage((current) => Math.max(0, current - 1))} disabled={page === 0}>previous</button><span aria-live="polite">{page + 1} of {pageCount}</span><button type="button" onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))} disabled={page === pageCount - 1}>next</button></nav>}
       <AppBottomNav lettersCurrent onHome={onHome} onMake={onMake} onLetters={returnToLetters} />

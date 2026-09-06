@@ -18,7 +18,7 @@ async function startComposer(page: Page) {
 async function addSamplePhoto(page: Page) {
   await page.getByRole("button", { name: "add", exact: true }).click();
   await page.getByRole("button", { name: "photo", exact: true }).click();
-  await expect(page.getByText("Photos and videos stay on this device.")).toBeVisible();
+  await expect(page.getByText("Photos stay here until you prepare the keepsake to give.")).toBeVisible();
   await page.getByRole("button", { name: "use sample moment" }).click();
 }
 
@@ -317,7 +317,7 @@ test("rejects a rich link when a later photo contains local blob media", async (
   await expect(page.getByRole("heading", { name: "this one cannot be opened." })).toBeVisible();
 });
 
-test("keeps a local imported photo on-device, blocks its handoff, and does not make the phone scroll", async ({ page }) => {
+test("keeps a local imported photo ready to prepare and does not make the phone scroll", async ({ page }) => {
   await startComposer(page);
   await page.getByRole("button", { name: "add", exact: true }).click();
   await page.getByRole("button", { name: "photo", exact: true }).click();
@@ -334,7 +334,7 @@ test("keeps a local imported photo on-device, blocks its handoff, and does not m
   await continueToHandoff(page);
   await expect(page.getByRole("button", { name: "Copy generated receiver link" })).toHaveCount(0);
   await expect(page.locator(".private-link span")).toContainText("1 photo");
-  await expect(page.locator(".private-link span")).toContainText("available only in this tab");
+  await expect(page.locator(".private-link span")).toContainText("ready to prepare");
   await expect(page.getByRole("button", { name: "review local media", exact: true })).toBeVisible();
 });
 

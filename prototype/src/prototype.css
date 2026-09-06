@@ -5572,6 +5572,21 @@
   text-underline-offset: 4px;
 }
 .handoff-page .manual-copy-confirm { margin-top: 6px; }
+.hosted-publish {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 12px 2px 2px;
+  border-top: 1px solid color-mix(in srgb, var(--navy) 35%, transparent);
+}
+.hosted-publish > p { margin: 0; font-size: 18px; line-height: 1.05; }
+.hosted-publish label { display: grid; gap: 3px; font-size: 15px; }
+.hosted-publish input { min-height: 38px; padding: 4px 8px; border: 1.5px solid var(--navy); background: var(--paper); color: var(--navy); font: inherit; font-size: 20px; }
+.hosted-publish .drawn-action { width: 100%; min-height: 46px; margin-top: 2px; font-size: 21px !important; }
+.hosted-publish small { color: var(--muted-ink); font-size: 14px; line-height: 1.1; }
+.hosted-publish [role="alert"] { color: #7a392d; font-size: 16px; }
+.receiver-loading-page { display: grid; min-height: 100%; place-items: center; padding: 40px; text-align: center; }
+.receiver-loading-page p { font-size: 24px; }
 /* A blocked handoff explains the required action in full instead of truncating it like a URL. */
 .handoff-link-tools:has(.handoff-link-blocked) { grid-template-columns: minmax(0, 1fr); }
 .handoff-page .handoff-link-blocked { margin-top: 12px; opacity: 1; }
@@ -5650,3 +5665,6 @@
 .arrival-drop-copy > p { margin: 0; font-size: 23px; line-height: .95; text-align: center; }
 .arrival-drop-copy > p small { font-size: 15px; }
 .arrival-drop-copy .direct-open { margin-top: 8px; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Preparing supported media is a normal handoff step, with errors reserved for failed requests. */
+.handoff-page .handoff-media-pending { color: var(--navy); border-color: color-mix(in srgb, var(--navy) 35%, transparent); }
