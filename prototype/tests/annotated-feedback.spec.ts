@@ -91,7 +91,8 @@ test.describe("annotated visual feedback", () => {
     await page.getByRole("radio", { name: "plane", exact: true }).click();
     await page.getByRole("button", { name: "see it ready to give", exact: true }).click();
     await page.getByRole("button", { name: "give this privately", exact: true }).click();
-    await page.getByRole("button", { name: "Copy generated receiver link" }).click();
+    await page.getByRole("button", { name: "Open receiver QR for this keepsake" }).click();
+    await page.getByRole("button", { name: "Close receiver QR" }).click();
     await page.getByRole("button", { name: "finish giving", exact: true }).click();
     // The scene needs independent cloud pieces, rather than one pre-composed cloud backdrop.
     const clouds = page.locator('[data-asset-slot="plane-cloud"]');

@@ -3541,7 +3541,7 @@
 
 .rich-text-mirror .handwriting-glyph {
   display: inline;
-  animation: handwriting-land 130ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation: none;
 }
 
 .writing-status {
@@ -3571,10 +3571,6 @@
   visibility: hidden;
 }
 
-@keyframes handwriting-land {
-  from { opacity: 0.2; transform: translateY(2px) rotate(-1deg); }
-  to { opacity: 1; transform: translateY(0) rotate(0deg); }
-}
 
 .envelope-page {
   position: absolute;
@@ -3611,67 +3607,58 @@
   font-size: 17px;
 }
 
+/* Both directions hinge the same thirds of the actual authored paper. */
 .envelope-fold-preview {
   position: absolute;
   z-index: 14;
-  inset: 106px 18px 78px;
-  display: grid;
-  place-items: center;
-  perspective: 1100px;
+  inset: 0;
+  perspective: 1200px;
   pointer-events: none;
 }
-
-.envelope-fold-preview > p {
-  position: absolute;
-  right: 0;
-  bottom: 14px;
-  left: 0;
-  font-size: 17px;
-  text-align: center;
-}
-
-.folding-paper-shell {
-  position: relative;
-  width: min(320px, calc(100vw - 52px));
-  height: min(510px, calc(100vh - 230px));
-  transform-style: preserve-3d;
-}
-
-.folding-paper-shell > .authored-paper,
-.fold-leaf,
-.fold-leaf .authored-paper {
+.paper-fold {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.folding-paper-shell .authored-paper {
-  border: 1px solid color-mix(in srgb, var(--navy) 14%, transparent);
-  box-shadow: 0 8px 22px rgba(8, 34, 75, 0.12);
-}
-
-.fold-leaf {
-  z-index: 3;
-  overflow: hidden;
-  backface-visibility: hidden;
+  transform-origin: 50% 50%;
   transform-style: preserve-3d;
 }
-
-.fold-leaf-left {
-  clip-path: inset(0 50% 0 0);
-  transform-origin: 50% 50%;
+.paper-fold-panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 33.333333%;
+  transform-style: preserve-3d;
 }
-
-.fold-leaf-right {
-  clip-path: inset(0 0 0 50%);
-  transform-origin: 50% 50%;
+.paper-fold-panel-top { top: 0; z-index: 4; transform-origin: 50% 100%; }
+.paper-fold-panel-middle { top: 33.333333%; z-index: 2; }
+.paper-fold-panel-bottom { top: 66.666666%; z-index: 3; transform-origin: 50% 0; }
+.paper-fold-face,
+.paper-fold-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background: var(--paper);
+  outline: 1px solid color-mix(in srgb, var(--navy) 12%, transparent);
 }
-
-.fold-leaf-bottom {
-  clip-path: inset(50% 0 0);
-  transform-origin: 50% 50%;
+.paper-fold-back { transform: rotateX(180deg); }
+.paper-fold-back.paper-ruled { background: var(--brand-cream); }
+.paper-fold-face > .authored-paper {
+  position: absolute;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  width: 100%;
+  height: 300%;
+  min-height: 300%;
+  border: 0;
+  box-shadow: none;
 }
+.paper-fold-panel-middle .paper-fold-face > .authored-paper { top: -100%; }
+.paper-fold-panel-bottom .paper-fold-face > .authored-paper { top: -200%; }
+.envelope-page:has(.envelope-fold-preview) > .top-line { opacity: 0; }
+.envelope-fold-status { z-index: 16; }
 
 .envelope-workbench {
   position: absolute;
@@ -5618,3 +5605,70 @@
 .handoff-page .manual-copy-confirm { margin-top: 6px; }
 .handoff-page .handoff-link-blocked { margin-top: 12px; }
 .handoff-link-blocked > span { font-size: 17px; line-height: 1.18; }
+
+/* Physical paper unfolds into the same final sheet without a crossfade or content gap. */
+.receiver-fold-panels { filter: none; }
+.opening-envelope { background: var(--paper); }
+.opening-sealed-object { z-index: 8; }
+@media (prefers-reduced-motion: reduce) {
+  .paper-fold { transform: none; }
+}
+
+/* One carrier persists through arrival; authored clouds share the departure scene language. */
+.arrival-plane-clouds {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arrival-plane-cloud {
+  position: absolute;
+  display: block;
+  max-width: none;
+  object-fit: contain;
+  opacity: .92;
+  filter: brightness(0) saturate(100%) invert(15%) sepia(30%) saturate(2118%) hue-rotate(181deg) brightness(83%) contrast(100%);
+  pointer-events: none;
+}
+
+.arrival-plane-cloud-top { top: 44px; left: -26px; width: 220px; height: 86px; }
+.arrival-plane-cloud-middle { top: 132px; left: -32px; width: 210px; height: 90px; }
+.arrival-plane-cloud-bottom { top: 230px; right: -22px; width: 174px; height: 58px; }
+
+.arrival-carrier-journey {
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  left: 50%;
+  width: 208px;
+  height: 272px;
+  margin-left: -104px;
+  transform-origin: 50% 50%;
+}
+
+.arrival-carrier-journey .arrival-carrier-button {
+  display: grid;
+  width: 208px;
+  height: 272px;
+  place-items: center;
+  touch-action: manipulation;
+}
+
+.arrival-carrier-journey .arrival-carrier-button:disabled { cursor: default; }
+.arrival-carrier-journey .arrival-carrier-button .carrier-icon { width: 188px; height: 232px; }
+
+.arrival-drop-copy {
+  position: absolute;
+  z-index: 3;
+  top: 296px;
+  right: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+}
+
+.arrival-drop-copy > p { margin: 0; font-size: 23px; line-height: .95; text-align: center; }
+.arrival-drop-copy > p small { font-size: 15px; }
+.arrival-drop-copy .direct-open { margin-top: 8px; font-size: 15px; text-decoration: underline; text-underline-offset: 4px; }

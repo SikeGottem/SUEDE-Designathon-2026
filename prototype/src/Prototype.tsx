@@ -5,17 +5,40 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ChangeEvent as ReactChangeEvent,
   type KeyboardEvent as ReactKeyboardEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
   type CSSProperties,
 } from "react";
-import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
 import { QRCodeSVG } from "qrcode.react";
 import { createPortal } from "react-dom";
 import { Carousel, KeyboardInput, KeyboardTextarea, MobileScroll, useKeyboard } from "./mobile";
+
+// Editing responds immediately; physical paper and carrier scenes share a deliberate cadence.
+const motionEase = { ui: [0.23, 1, 0.32, 1], travel: [0.77, 0, 0.175, 1] } as const;
+const motionTiming = {
+  enter: .18, exit: .12, fold: 1.32, open: 1.32, hub: 1.2,
+  departure: { bottle: 5.8, firefly: 5.2, plane: 4.8 },
+  arrival: { bottle: 2.8, firefly: 3.2, plane: 2.6 },
+} as const;
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+function subscribeReducedMotion(listener: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const media = window.matchMedia(reducedMotionQuery);
+  if (media.addEventListener) {
+    media.addEventListener("change", listener);
+    return () => media.removeEventListener("change", listener);
+  }
+  media.addListener(listener);
+  return () => media.removeListener(listener);
+}
+function getReducedMotionSnapshot() { return typeof window !== "undefined" && window.matchMedia(reducedMotionQuery).matches; }
+function useLiveReducedMotion() { return useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, () => false); }
 
 type Phase =
   | "home"
@@ -642,7 +665,7 @@ export default function Prototype() {
   const [draftId, setDraftId] = useState(() => linkedSnapshot?.id ?? `wf-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`);
   const mediaUrlsRef = useRef<Set<string>>(new Set());
   const keyboard = useKeyboard();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useLiveReducedMotion();
   const carrier = carriers.find((item) => item.id === carrierId) ?? carriers[0];
 
   useEffect(() => {
@@ -883,7 +906,7 @@ export default function Prototype() {
 function Page({ children, className = "" }: { children: ReactNode; className?: string }) {
   const handsOffToOpening = className.includes("arrival-page");
   return (
-    <motion.section className={`experience-page ${className}`} initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} exit={handsOffToOpening ? { opacity: 1, transform: "translateY(0)" } : { opacity: 0, transform: "translateY(-5px)" }} transition={{ duration: handsOffToOpening ? .08 : 0.2, ease: [0.23, 1, 0.32, 1] }}>
+    <motion.section className={`experience-page ${className}`} initial={{ opacity: handsOffToOpening ? 1 : 0 }} animate={{ opacity: 1 }} exit={{ opacity: handsOffToOpening ? 1 : 0 }} transition={{ duration: handsOffToOpening ? 0 : motionTiming.enter, ease: motionEase.ui }}>
       {children}
     </motion.section>
   );
@@ -930,8 +953,8 @@ function Home({ reduceMotion, onEnter }: { reduceMotion: boolean; onEnter: () =>
           alt=""
           draggable={false}
           data-asset-slot="home-bee"
-          initial={{ opacity: 0, y: -8, rotate: -4 }}
-          animate={{ opacity: 1, y: 0, rotate: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.08, duration: 0.22, ease: [0.23, 1, 0.32, 1] }}
         />
       </div>
@@ -940,9 +963,9 @@ function Home({ reduceMotion, onEnter }: { reduceMotion: boolean; onEnter: () =>
         className="home-reeds"
         data-testid="home-reeds"
         aria-hidden="true"
-        initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 28px, 0) scale(.96)" }}
-        animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }}
-        transition={{ delay: reduceMotion ? 0 : .18, duration: reduceMotion ? .01 : .72, ease: [0.23, 1, 0.32, 1] }}
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: motionTiming.enter, ease: motionEase.ui }}
       >
         <img className="home-reed home-reed-left" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="home-reeds-left" />
         <img className="home-reed home-reed-right" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="home-reeds-right" />
@@ -966,16 +989,16 @@ function Menu({ reduceMotion, createOnly = false, onCreate, onLetters }: { reduc
   };
   return (
     <Page className="menu-page">
-      <motion.header initial={reduceMotion ? false : { opacity: .55, transform: "translate3d(0, 88px, 0) scale(2.35)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: reduceMotion ? .01 : .72, ease: [0.23, 1, 0.32, 1] }}><span>warm &amp; fuzzies</span></motion.header>
+      <motion.header initial={false} animate={{ opacity: 1 }}><span>warm &amp; fuzzies</span></motion.header>
       <div className="hub-pattern" data-testid="hub-pattern" aria-hidden="true">
         <img className="hub-pattern-mesh" src={artwork.firefly.mesh} alt="" draggable={false} data-asset-slot="hub-firefly-mesh" />
       </div>
-      <motion.div data-testid="hub-firefly" className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : 3.6, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
+      <motion.div data-testid="hub-firefly" className="menu-firefly" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(-210px, 170px, 0) rotate(-18deg) scale(.72)" }} animate={flyIn} transition={{ opacity: { duration: reduceMotion ? .01 : .5, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? 0 : motionTiming.hub, times: reduceMotion ? undefined : [0, .62, .84, 1], ease: [0.77, 0, 0.175, 1] } }} aria-hidden="true">
         <DeliveryMascot />
       </motion.div>
       <div className="menu-actions">
-        <motion.button className="drawn-action" type="button" onClick={onCreate} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .72, duration: .26 }}>create something <Mark /></motion.button>
-        {!createOnly && <motion.button className="drawn-action" type="button" onClick={onLetters} initial={reduceMotion ? false : { opacity: 0, y: 9 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reduceMotion ? 0 : .88, duration: .26 }}>look in your box <Mark /></motion.button>}
+        <motion.button className="drawn-action" type="button" onClick={onCreate} initial={false}>create something <Mark /></motion.button>
+        {!createOnly && <motion.button className="drawn-action" type="button" onClick={onLetters} initial={false}>look in your box <Mark /></motion.button>}
       </div>
     </Page>
   );
@@ -1028,7 +1051,7 @@ function CarrierPicker({ selected, locked = false, onSelect, onCycle, onKeyDown,
       <header className="carrier-heading"><p>pick how it arrives.</p><span>same letter. a different little journey.</span></header>
       <div className="carrier-stage">
         <button className="stage-arrow stage-arrow-left" type="button" aria-label="Previous carrier" disabled={locked} onClick={() => onCycle(-1)}><Mark direction="left" /></button>
-        <motion.div key={selected} className="hero-carrier" initial={{ opacity: 0, transform: "translateY(10px) rotate(-2deg) scale(0.97)" }} animate={{ opacity: 1, transform: "translateY(0) rotate(0deg) scale(1)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}>
+        <motion.div key={selected} className="hero-carrier" initial={false} animate={{ opacity: 1 }}>
           <CarrierIcon id={selected} size="hero" />
         </motion.div>
         <button className="stage-arrow stage-arrow-right" type="button" aria-label="Next carrier" disabled={locked} onClick={() => onCycle(1)}><Mark /></button>
@@ -1140,7 +1163,7 @@ function Studio({ mode, locked = false, photos, marks, itemOrder, voice, song, r
     placeLast(id); setSelectedLayer(id);
   };
   const undoDoodle = () => { const next = doodles.slice(0, -1); onDoodles(next); if (!next.length && pieces.includes("drawing")) onTogglePiece("drawing"); };
-  return <motion.section className={`experience-page studio-page studio-${mode}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }}>
+  return <motion.section className={`experience-page studio-page studio-${mode}`} initial={false} animate={{ opacity: 1 }} exit={{ opacity: 1 }}>
     <AnimatePresence mode="wait" initial={false}>
       {mode === "capture" ? <CaptureStage key="capture" capture={null} recipient={recipient} onBack={() => onMode("compose")} onKeep={() => onMode("compose")} onCaptured={(asset) => {
         if (photos.length >= MAX_PHOTOS) { if (asset.url?.startsWith("blob:")) URL.revokeObjectURL(asset.url); onMode("compose"); return; }
@@ -1332,7 +1355,7 @@ function CaptureStage({ capture, recipient, onBack, onKeep, onCaptured }: { capt
   const statusCopy = status === "requesting" ? "opening your camera…" : status === "waiting" ? "camera permission is still waiting." : status === "denied" ? "camera permission is off." : "this browser cannot open a camera here.";
 
   return (
-    <motion.div className={`capture-stage capture-${status}`} data-recording={recording ? "true" : "false"} initial={{ opacity: 0, transform: "scale(1.015)" }} animate={{ opacity: 1, transform: "scale(1)" }} exit={{ opacity: 0, transform: "scale(0.99)" }} transition={{ duration: 0.24, ease: [0.23, 1, 0.32, 1] }} data-scroll-drag="ignore">
+    <motion.div className={`capture-stage capture-${status}`} data-recording={recording ? "true" : "false"} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }} data-scroll-drag="ignore">
       <video ref={videoRef} className={`camera-feed ${facingMode === "user" ? "camera-mirrored" : ""}`} autoPlay muted playsInline aria-label="Live camera preview" />
       <div className="capture-scrim" aria-hidden="true" />
       <header className="capture-topbar"><button type="button" aria-label="Back to the paper" onClick={onBack}><CloseMark /></button><span>add a moment for {recipient || "someone"}</span>{capture ? <button type="button" onClick={onKeep}>keep current</button> : <span aria-hidden="true" />}</header>
@@ -1425,6 +1448,8 @@ function StoryComposer({ locked = false, items, photos, marks, voice, song, reci
   const editingText = editingTextId !== null;
   const selected = items.find((item) => item.id === selectedLayer);
   const paperIsEmpty = !textBlocks.some((block) => block.words.trim()) && !photos.length && !voice && !song && !doodles.length && !marks.length;
+  const reduceViewMotion = useLiveReducedMotion();
+  const [pointerFraming, setPointerFraming] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
   const [viewOffset, setViewOffset] = useState(0);
   const viewOffsetRef = useRef(0);
@@ -1485,13 +1510,13 @@ function StoryComposer({ locked = false, items, photos, marks, voice, song, reci
     onCreateText({ x, y, rotation: textBlocks.length % 2 === 0 ? -1.5 : 1.5, scale: 1 });
   };
   return <motion.div className={`story-composer story-paper-first ${drawingActive ? "is-drawing" : ""} ${editingText ? "is-editing-text" : ""} ${selected && !editingText ? "has-selected-piece" : ""}`} data-ink={inkColor} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }} data-scroll-drag="ignore">
-    <div ref={canvasRef} className="story-canvas" aria-label="Full-screen paper keepsake canvas">
+    <div ref={canvasRef} className="story-canvas" onPointerDownCapture={() => setPointerFraming(true)} onKeyDownCapture={() => setPointerFraming(false)} aria-label="Full-screen paper keepsake canvas">
       <header className="story-topbar">
         <button type="button" aria-label="Leave the message maker" onClick={onBack}><CloseMark /></button>
         {editingRecipient ? <div className="recipient-editor"><span>for</span><KeyboardInput autoFocus aria-label="Who is this for?" value={recipient} placeholder="someone" autoComplete="off" onChange={(event) => onRecipient(event.target.value)} onBlur={onFinishRecipient} /><button type="button" onClick={onFinishRecipient}>done</button></div> : <button className="story-recipient" type="button" disabled={locked} onClick={onEditRecipient}>for {recipient || "someone"}</button>}
         <button className="story-done" type="button" disabled={!canPreview} aria-label="Next: fold and decorate the envelope" onClick={onPreview}>next <Mark /></button>
       </header>
-      <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} style={{ translate: `0 ${viewOffset}px` }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .24 }} onPointerDown={startWritingOnPaper} onPointerUp={finishWritingOnPaper} onPointerCancel={() => { blankPaperPointer.current = null; }}>
+      <motion.div className={`story-paper-sheet authored-paper paper-${paper}`} style={{ translate: `0 ${viewOffset}px`, transition: pointerFraming && !reduceViewMotion ? "translate 180ms cubic-bezier(0.23, 1, 0.32, 1)" : "none" }} initial={false} onPointerDown={startWritingOnPaper} onPointerUp={finishWritingOnPaper} onPointerCancel={() => { blankPaperPointer.current = null; }}>
         {paper === "ruled" && <PaperRuling />}
         {paperIsEmpty && !locked && !editingText && !editingRecipient && !drawingActive && !voiceRecorderOpen && <button className="paper-start-hint" type="button" onClick={() => onCreateText()}><span>start with a few words</span><small>then arrange the little things that are yours</small></button>}
         {drawingActive ? <DoodleSurface strokes={doodles} onStroke={onDoodle} /> : doodles.length ? <DoodleArtwork strokes={doodles} className="story-doodle-artwork" /> : null}
@@ -1727,12 +1752,52 @@ function EnvelopeFoldLines() {
   </svg>;
 }
 
+function PaperFold({ snapshot, direction, onComplete }: { snapshot: KeepsakeSnapshot; direction: "fold" | "open"; onComplete: () => void }) {
+  const reduceMotion = useLiveReducedMotion();
+  const closing = direction === "fold";
+  const duration = closing ? motionTiming.fold : motionTiming.open;
+  const [started, setStarted] = useState(false);
+  const completedRef = useRef(false);
+  const complete = () => {
+    if ((!started && !reduceMotion) || completedRef.current) return;
+    completedRef.current = true;
+    onComplete();
+  };
+  useEffect(() => {
+    if (reduceMotion) { complete(); return; }
+    const frame = window.requestAnimationFrame(() => setStarted(true));
+    // Motion can suppress first-mount completion under the parent presence tree;
+    // this is a lifecycle fallback, not a second visual sequence.
+    const fallback = window.setTimeout(() => {
+      if (!completedRef.current) { completedRef.current = true; onComplete(); }
+    }, (duration * 1000) + 34);
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(fallback); };
+  }, [duration, reduceMotion]);
+  return <motion.div className={`paper-fold paper-fold-${direction}`} data-fold-direction={direction}
+    initial={false}
+    animate={{ transform: !started || reduceMotion ? (closing ? "translate3d(0, 0, 0) scale(1)" : "translate3d(0, 0, 0) scale(.62)") : closing
+      ? ["translate3d(0, 0, 0) scale(1)", "translate3d(0, 0, 0) scale(1)", "translate3d(0, 0, 0) scale(.62)"]
+      : ["translate3d(0, 0, 0) scale(.62)", "translate3d(0, 0, 0) scale(.62)", "translate3d(0, 0, 0) scale(1)"] }}
+    transition={{ duration: reduceMotion ? .01 : duration, times: closing ? [0, .76, 1] : [0, .12, 1], ease: motionEase.travel }} onAnimationComplete={complete}>
+    {(["top", "middle", "bottom"] as const).map((part) => {
+      const foldedRotation = part === "top" ? 180 : -180;
+      return <motion.div key={part} className={`paper-fold-panel paper-fold-panel-${part}`}
+        initial={false}
+        animate={{ transform: `rotateX(${!started || reduceMotion ? (!closing && part !== "middle" ? foldedRotation : 0) : (closing && part !== "middle" ? foldedRotation : 0)}deg)` }}
+        transition={{ delay: reduceMotion ? 0 : part === "middle" ? 0 : closing ? part === "bottom" ? .12 : .58 : part === "top" ? .12 : .58, duration: reduceMotion ? .01 : .5, ease: motionEase.travel }}>
+        <div className="paper-fold-face"><AuthoredPaper snapshot={snapshot} /></div>
+        <div className={`paper-fold-back paper-${snapshot.paper}`} />
+      </motion.div>;
+    })}
+  </motion.div>;
+}
+
 function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, locked = false, onSeal, onSealWeight, onSaveSeal, onBack, onNext }: { snapshot: KeepsakeSnapshot; seal: DoodleStroke[]; sealWeight: SealWeight; savedSeal: PersonalStamp | null; locked?: boolean; onSeal: (value: DoodleStroke[]) => void; onSealWeight: (weight: SealWeight) => void; onSaveSeal: (value: DoodleStroke[], weight: SealWeight) => void; onBack: () => void; onNext: () => void }) {
-  const reduced = useReducedMotion();
+  const reduced = useLiveReducedMotion();
   const [folded, setFolded] = useState(Boolean(reduced));
   const [sealOpen, setSealOpen] = useState(false);
   const canReuseStamp = seal.length === 0 && Boolean(savedSeal?.strokes.length);
-  useEffect(() => { if (reduced) return; const timer = window.setTimeout(() => setFolded(true), 1480); return () => window.clearTimeout(timer); }, [reduced]);
+  useEffect(() => { if (reduced) setFolded(true); }, [reduced]);
   useEffect(() => {
     if (!sealOpen) return;
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -1754,22 +1819,10 @@ function EnvelopeStudio({ snapshot, seal, sealWeight, savedSeal, locked = false,
   return (
     <Page className="envelope-page">
       <TopLine onBack={onBack} label="back to your paper" />
-      <AnimatePresence>
-        {!folded && (
-          <motion.div className="envelope-fold-preview" exit={{ opacity: 0 }} transition={{ duration: .18 }}>
-            <motion.div className="folding-paper-shell" initial={reduced ? false : { transform: "translateY(18px) scale(.88) rotate(0deg)" }} animate={reduced ? { transform: "translateY(70px) scale(.34) rotate(-3deg)" } : { transform: ["translateY(18px) scale(.88) rotate(0deg)", "translateY(18px) scale(.88) rotate(0deg)", "translateY(70px) scale(.34) rotate(-3deg)"], opacity: [1, 1, .72] }} transition={{ duration: 1.36, times: [0, .65, 1], ease: [0.77, 0, 0.175, 1] }}>
-              <AuthoredPaper snapshot={snapshot} className="fold-paper-base" />
-              <motion.div className="fold-leaf fold-leaf-left" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(178deg)" }} transition={{ delay: .18, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
-              <motion.div className="fold-leaf fold-leaf-right" initial={false} animate={reduced ? { transform: "rotateY(0deg)" } : { transform: "rotateY(-178deg)" }} transition={{ delay: .24, duration: .58, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
-              <motion.div className="fold-leaf fold-leaf-bottom" initial={false} animate={reduced ? { transform: "rotateX(0deg)" } : { transform: "rotateX(-178deg)" }} transition={{ delay: .76, duration: .5, ease: [0.77, 0, 0.175, 1] }} aria-hidden="true"><AuthoredPaper snapshot={snapshot} /></motion.div>
-            </motion.div>
-            <p>your page folds with every mark still in place.</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {!folded && <div className="envelope-fold-preview" aria-hidden="true"><PaperFold snapshot={snapshot} direction="fold" onComplete={() => setFolded(true)} /></div>}
       <AnimatePresence>
         {folded && (
-          <motion.section className="envelope-workbench" aria-label="Add a personal stamp to the envelope" initial={{ opacity: 0, transform: "translateY(14px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: .32, ease: [0.23, 1, .32, 1] }}>
+          <motion.section className="envelope-workbench" aria-label="Add a personal stamp to the envelope" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}>
             <header><h1>leave your mark.</h1><p>The envelope stays simple. The stamp is yours.</p></header>
             <div className="envelope-canvas" data-envelope={snapshot.envelope}>
               <img className="envelope-canvas-source" src={artwork.containers.envelope} alt="" draggable={false} data-asset-slot="envelope-exterior" />
@@ -1884,7 +1937,7 @@ function CanvasLayer({ id, item, order, ink, className = "", label, layout, sele
     resizeRef.current.pointerId = -1;
   };
   return (
-    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} {...itemAttributes(item, order, ink)} role="group" aria-label={locked || editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={locked || editing ? -1 : 0} style={{ x: layout.x, y: layout.y, zIndex: order + 10 } as CSSProperties} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={(event) => { if (!locked && !editing && !(event.target as HTMLElement).closest("button, input, textarea, audio, video")) onSelect(id); }} onDoubleClick={locked ? undefined : onEdit} onKeyDown={(event) => {
+    <motion.div ref={layerRef} className={`story-layer story-layer-${id} ${className} ${selected ? "is-selected" : ""} ${editing ? "is-editing" : ""}`} {...itemAttributes(item, order, ink)} role="group" aria-label={locked || editing ? label : `${label}. Drag to move; use the corner handles to rotate or resize.`} tabIndex={locked || editing ? -1 : 0} style={{ transform: `translate3d(${layout.x}px, ${layout.y}px, 0)`, zIndex: order + 10 } as CSSProperties} initial={false} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: motionTiming.exit, ease: motionEase.ui }} onPointerDown={startMove} onPointerMove={move} onPointerUp={finishMove} onPointerCancel={finishMove} onClick={(event) => { if (!locked && !editing && !(event.target as HTMLElement).closest("button, input, textarea, audio, video")) onSelect(id); }} onDoubleClick={locked ? undefined : onEdit} onKeyDown={(event) => {
       if (locked || editing || event.target !== event.currentTarget) return;
       if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onSelect(id); return; }
       if (event.key === "Escape") { event.preventDefault(); onSelect(null); return; }
@@ -2004,7 +2057,7 @@ function Preview({ snapshot, onEdit, onChangeCarrier, onGive }: { snapshot: Keep
     <Page className="preview-page">
       <TopLine onBack={onEdit} label="edit the inside" />
       <div className="preview-identities"><span>for {snapshot.recipient}</span><span>from {snapshot.sender}</span></div>
-      <motion.div className="sealed-preview" initial={{ opacity: 0, transform: "translate3d(0, 18px, 0) rotate(-3deg) scale(.95)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" }} transition={{ duration: 0.42, ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
+      <motion.div className="sealed-preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>
       <div className="preview-copy"><h1>one thing, ready to give.</h1></div>
       <button className="quiet-link" type="button" onClick={onChangeCarrier}>choose another way for it to arrive</button>
       <button className="drawn-action preview-next" type="button" onClick={onGive}>give this privately <Mark /></button>
@@ -2086,7 +2139,7 @@ function Handoff({ snapshot, recipient, carrier, copied, failed, reduceMotion, d
     <Page className="handoff-page">
       <TopLine onBack={onBack} label="back to the object" />
       <header><h1>{unavailable ? "your page needs one more step." : `give this to ${recipient}.`}</h1></header>
-      <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 14px, 0) rotate(-2deg)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
+      <motion.div className="handoff-object" aria-label={`Your ${carrier.shortLabel} is ready to give`} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
       <div className="handoff-link-tools">
         <div className={`private-link ${unavailable ? "link-failed handoff-link-blocked" : ""}`}>
           {unavailable ? <span role="status">{unavailableReason}</span> : <input ref={linkInputRef} type="text" readOnly value={url} aria-label="Receiver link" onFocus={(event) => { setManualCopyReady(true); event.currentTarget.select(); }} onClick={(event) => event.currentTarget.select()} />}
@@ -2113,61 +2166,36 @@ function DeliveryMascot({ className = "" }: { className?: string }) {
 function Sent({ recipient, carrier, reduceMotion, onAgain, onLeave }: { recipient: string; carrier: Carrier; reduceMotion: boolean; onAgain: () => void; onLeave: () => void }) {
   const [departureStarted, setDepartureStarted] = useState(reduceMotion);
   const [sentComplete, setSentComplete] = useState(reduceMotion);
-  const departureSeconds = carrier.id === "bottle" ? 5.8 : carrier.id === "firefly" ? 5.2 : 4.8;
+  const completedRef = useRef(reduceMotion);
+  const departureSeconds = motionTiming.departure[carrier.id];
   useEffect(() => {
-    setDepartureStarted(reduceMotion);
-    setSentComplete(reduceMotion);
-    if (reduceMotion) return;
+    if (reduceMotion) {
+      completedRef.current = true;
+      setDepartureStarted(true);
+      setSentComplete(true);
+      return;
+    }
+    if (completedRef.current) return;
+    setDepartureStarted(false);
+    setSentComplete(false);
     const frame = window.requestAnimationFrame(() => setDepartureStarted(true));
-    const timer = window.setTimeout(() => setSentComplete(true), departureSeconds * 1000);
-    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer); };
-  }, [carrier.id, departureSeconds, reduceMotion]);
+    return () => window.cancelAnimationFrame(frame);
+  }, [carrier.id, reduceMotion]);
+  const completeDeparture = () => {
+    if (!departureStarted || completedRef.current) return;
+    completedRef.current = true;
+    setSentComplete(true);
+  };
+  const departureTransition = { duration: departureSeconds, ease: motionEase.travel };
   return (
     <Page className="sent-page">
       <div className="sent-delivery-stage" data-carrier={carrier.id} data-delivery-stage={sentComplete ? "complete" : reduceMotion ? "still" : "departing"} aria-hidden="true">
-        <motion.img className="delivery-sun sent-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="delivery-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] } }} />
-        {carrier.id === "firefly" && <>
-          <motion.img className="sent-reeds sent-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-left" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-3deg) translate3d(0, 12px, 0)", "rotate(2deg) translate3d(0, 0, 0)", "rotate(-1deg) translate3d(0, 0, 0)", "rotate(0deg) translate3d(0, 0, 0)"] : "rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .38, .72, 1], ease: [0.23, 1, 0.32, 1] }} />
-          <motion.img className="sent-reeds sent-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-right" initial={reduceMotion ? false : { opacity: 0, transform: "scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)", "scaleX(-1) rotate(2deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(-1deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)"] : "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .34, .68, 1], ease: [0.23, 1, 0.32, 1] }} />
-        </>}
-        {carrier.id === "plane" && <div className="sent-plane-clouds" aria-hidden="true">
-          <motion.img className="sent-plane-cloud sent-plane-cloud-top" src={artwork.environment.planeCloudTop} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(42px, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(42px, 12px, 0)", "translate3d(8px, 2px, 0)", "translate3d(-28px, -8px, 0)"] : "translate3d(-28px, -8px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
-          <motion.img className="sent-plane-cloud sent-plane-cloud-middle" src={artwork.environment.planeCloudMiddle} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(44px, 0, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(44px, 0, 0)", "translate3d(10px, 5px, 0)", "translate3d(-34px, 12px, 0)"] : "translate3d(-34px, 12px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
-          <motion.img className="sent-plane-cloud sent-plane-cloud-bottom" src={artwork.environment.planeCloudBottom} alt="" draggable={false} data-asset-slot="plane-cloud" initial={reduceMotion ? false : { opacity: 1, transform: "translate3d(-38px, -4px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["translate3d(-38px, -4px, 0)", "translate3d(4px, 7px, 0)", "translate3d(42px, 18px, 0)"] : "translate3d(42px, 18px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />
-        </div>}
-        {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" /><CarrierIcon id={carrier.id} size="sealed" /></> : carrier.id === "firefly" ? <span className="sent-firefly-carrying sent-delivery-still"><DeliveryMascot /></span> : <CarrierIcon id={carrier.id} size="sealed" /> : carrier.id === "firefly" ? (
-          <>
-            <motion.img
-              className="sent-letter-object"
-              src={artwork.containers.envelope}
-              alt=""
-              draggable={false}
-              initial={false}
-              animate={departureStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(-3px, 1px, 0) rotate(-1.5deg) scale(1.01)", "translate3d(0, -2px, 0) rotate(0deg) scale(.96)", "translate3d(0, -8px, 0) rotate(2deg) scale(.78)"] } : { opacity: 1, transform: "translate3d(0, 0, 0) rotate(-1deg) scale(1)" }}
-              transition={{ duration: 5.2, times: [0, .36, .52, .68], ease: [0.77, 0, 0.175, 1] }}
-            />
-            <motion.div
-              className="sent-pickup-courier"
-              initial={false}
-              animate={departureStarted ? { opacity: [0, 1, 1, 1, 1, 1, 0], transform: ["translate3d(360px, 6px, 0) rotate(13deg) scale(.68)", "translate3d(286px, 54px, 0) rotate(5deg) scale(.76)", "translate3d(224px, 24px, 0) rotate(-4deg) scale(.8)", "translate3d(142px, 104px, 0) rotate(4deg) scale(.84)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.84)", "translate3d(248px, 108px, 0) rotate(6deg) scale(.78)", "translate3d(422px, -12px, 0) rotate(14deg) scale(.66)"] } : { opacity: 0, transform: "translate3d(360px, 6px, 0) rotate(13deg) scale(.68)" }}
-              transition={{ duration: departureSeconds, times: [0, .16, .29, .42, .56, .74, 1], ease: [0.77, 0, 0.175, 1] }}
-            >
-              <motion.span className="sent-firefly-empty" initial={false} animate={departureStarted ? { opacity: [1, 1, 0, 0] } : { opacity: 1 }} transition={{ duration: 5.2, times: [0, .45, .53, 1], ease: [0.23, 1, 0.32, 1] }}><img className="sent-firefly-wing-frame sent-firefly-wing-one" src={artwork.firefly.filledA} alt="" draggable={false} /><img className="sent-firefly-wing-frame sent-firefly-wing-two" src={artwork.firefly.filledB} alt="" draggable={false} /></motion.span>
-              <motion.span className="sent-firefly-carrying" initial={false} animate={departureStarted ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: 5.2, times: [0, .47, .55, 1], ease: [0.23, 1, 0.32, 1] }}><DeliveryMascot /></motion.span>
-            </motion.div>
-          </>
-        ) : carrier.id === "bottle" ? <>
-          <motion.img className="sent-water-departure sent-water-departure-a" src={artwork.environment.waveA} alt="" draggable={false} data-asset-slot="bottle-water" initial={false} animate={departureStarted ? { opacity: [0, .72, .72, .72, .68], transform: ["translate3d(-24px, 216px, 0) scale(.94)", "translate3d(-10px, 212px, 0) scale(.94)", "translate3d(-36px, 218px, 0) scale(.94)", "translate3d(-14px, 210px, 0) scale(.94)", "translate3d(-24px, 216px, 0) scale(.94)"] } : { opacity: 0, transform: "translate3d(-24px, 216px, 0) scale(.94)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
-          <motion.img className="sent-water-departure sent-water-departure-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [0, .44, .44, .44, .4], transform: ["translate3d(-40px, 244px, 0) scale(.9)", "translate3d(-56px, 242px, 0) scale(.9)", "translate3d(-28px, 248px, 0) scale(.9)", "translate3d(-50px, 242px, 0) scale(.9)", "translate3d(-40px, 244px, 0) scale(.9)"] } : { opacity: 0, transform: "translate3d(-40px, 244px, 0) scale(.9)" }} transition={{ duration: 5.8, times: [0, .12, .46, .75, 1], ease: [0.77, 0, 0.175, 1] }} />
-          <motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 1, 0], transform: ["translate3d(128px, 112px, 0) scale(.92)", "translate3d(128px, 168px, 0) scale(.92)", "translate3d(128px, 252px, 0) scale(.92)", "translate3d(128px, 354px, 0) scale(.92)", "translate3d(128px, 540px, 0) scale(.92)"] } : { opacity: 1, transform: "translate3d(128px, 112px, 0) scale(.92)" }} transition={{ duration: departureSeconds, times: [0, .22, .48, .75, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>
-        </> : <motion.div className="sent-carrier-departure sent-carrier-departure-plane" initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 1, 0], transform: ["translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)", "translate3d(98px, 154px, 0) rotate(-4deg) scale(1)", "translate3d(184px, 122px, 0) rotate(5deg) scale(.96)", "translate3d(256px, 54px, 0) rotate(1deg) scale(.9)", "translate3d(458px, -54px, 0) rotate(18deg) scale(.72)"] } : { opacity: 1, transform: "translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)" }} transition={{ duration: departureSeconds, times: [0, .18, .42, .72, 1], ease: [0.77, 0, 0.175, 1] }}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>}
+        <motion.img className="delivery-sun sent-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="delivery-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: motionEase.ui }, transform: { duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: motionEase.ui } }} />
+        {carrier.id === "firefly" && <><motion.img className="sent-reeds sent-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-left" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["rotate(-3deg) translate3d(0, 12px, 0)", "rotate(2deg) translate3d(0, 0, 0)", "rotate(-1deg) translate3d(0, 0, 0)", "rotate(0deg) translate3d(0, 0, 0)"] : "rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .38, .72, 1], ease: motionEase.ui }} /><motion.img className="sent-reeds sent-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} data-asset-slot="firefly-reeds-right" initial={reduceMotion ? false : { opacity: 0, transform: "scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: departureStarted && !reduceMotion ? ["scaleX(-1) rotate(-3deg) translate3d(0, 12px, 0)", "scaleX(-1) rotate(2deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(-1deg) translate3d(0, 0, 0)", "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)"] : "scaleX(-1) rotate(0deg) translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .34, .68, 1], ease: motionEase.ui }} /></>}
+        {carrier.id === "plane" && <div className="sent-plane-clouds" aria-hidden="true"><motion.img className="sent-plane-cloud sent-plane-cloud-top" data-asset-slot="plane-cloud" src={artwork.environment.planeCloudTop} alt="" draggable={false} initial={reduceMotion ? false : { transform: "translate3d(42px, 12px, 0)" }} animate={{ transform: departureStarted && !reduceMotion ? ["translate3d(42px, 12px, 0)", "translate3d(8px, 2px, 0)", "translate3d(-28px, -8px, 0)"] : "translate3d(-28px, -8px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /><motion.img className="sent-plane-cloud sent-plane-cloud-middle" data-asset-slot="plane-cloud" src={artwork.environment.planeCloudMiddle} alt="" draggable={false} initial={reduceMotion ? false : { transform: "translate3d(44px, 0, 0)" }} animate={{ transform: departureStarted && !reduceMotion ? ["translate3d(44px, 0, 0)", "translate3d(10px, 5px, 0)", "translate3d(-34px, 12px, 0)"] : "translate3d(-34px, 12px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /><motion.img className="sent-plane-cloud sent-plane-cloud-bottom" data-asset-slot="plane-cloud" src={artwork.environment.planeCloudBottom} alt="" draggable={false} initial={reduceMotion ? false : { transform: "translate3d(-38px, -4px, 0)" }} animate={{ transform: departureStarted && !reduceMotion ? ["translate3d(-38px, -4px, 0)", "translate3d(4px, 7px, 0)", "translate3d(42px, 18px, 0)"] : "translate3d(42px, 18px, 0)" }} transition={{ duration: reduceMotion ? .01 : departureSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /></div>}
+        {reduceMotion ? carrier.id === "bottle" ? <><img className="sent-water-still" src={artwork.environment.waveA} alt="" draggable={false} /><CarrierIcon id={carrier.id} size="sealed" /></> : carrier.id === "firefly" ? <span className="sent-firefly-carrying sent-delivery-still"><DeliveryMascot /></span> : <CarrierIcon id={carrier.id} size="sealed" /> : !sentComplete && (carrier.id === "firefly" ? <><motion.img className="sent-letter-object" src={artwork.containers.envelope} alt="" draggable={false} initial={false} animate={departureStarted ? { opacity: [1, 1, 1, 0], transform: ["translate3d(0, 0, 0) rotate(-1deg) scale(1)", "translate3d(-3px, 1px, 0) rotate(-1.5deg) scale(1.01)", "translate3d(0, -2px, 0) rotate(0deg) scale(.96)", "translate3d(0, -8px, 0) rotate(2deg) scale(.78)"] } : { opacity: 1, transform: "translate3d(0, 0, 0) rotate(-1deg) scale(1)" }} transition={{ duration: departureSeconds, times: [0, .36, .52, .68], ease: motionEase.travel }} /><motion.div className="sent-pickup-courier" initial={false} animate={{ transform: departureStarted ? ["translate3d(360px, 6px, 0) rotate(13deg) scale(.68)", "translate3d(286px, 54px, 0) rotate(5deg) scale(.76)", "translate3d(224px, 24px, 0) rotate(-4deg) scale(.8)", "translate3d(142px, 104px, 0) rotate(4deg) scale(.84)", "translate3d(126px, 174px, 0) rotate(-3deg) scale(.84)", "translate3d(248px, 108px, 0) rotate(6deg) scale(.78)", "translate3d(422px, -12px, 0) rotate(14deg) scale(.66)"] : "translate3d(360px, 6px, 0) rotate(13deg) scale(.68)" }} transition={{ ...departureTransition, times: [0, .16, .29, .42, .56, .74, 1] }} onAnimationComplete={completeDeparture}><motion.span className="sent-firefly-empty" initial={false} animate={{ opacity: departureStarted ? [1, 1, 0, 0] : 1 }} transition={{ duration: departureSeconds, times: [0, .45, .53, 1], ease: motionEase.ui }}><img className="sent-firefly-wing-frame sent-firefly-wing-one" src={artwork.firefly.filledA} alt="" draggable={false} /><img className="sent-firefly-wing-frame sent-firefly-wing-two" src={artwork.firefly.filledB} alt="" draggable={false} /></motion.span><motion.span className="sent-firefly-carrying" initial={false} animate={{ opacity: departureStarted ? [0, 0, 1, 1] : 0 }} transition={{ duration: departureSeconds, times: [0, .47, .55, 1], ease: motionEase.ui }}><DeliveryMascot /></motion.span></motion.div></> : carrier.id === "bottle" ? <><motion.img className="sent-water-departure sent-water-departure-a" data-asset-slot="bottle-water" src={artwork.environment.waveA} alt="" draggable={false} initial={false} animate={{ opacity: departureStarted ? [0, .72, .72, .72, .68] : 0, transform: departureStarted ? ["translate3d(-24px, 216px, 0) scale(.94)", "translate3d(-10px, 212px, 0) scale(.94)", "translate3d(-36px, 218px, 0) scale(.94)", "translate3d(-14px, 210px, 0) scale(.94)", "translate3d(-24px, 216px, 0) scale(.94)"] : "translate3d(-24px, 216px, 0) scale(.94)" }} transition={{ duration: departureSeconds, times: [0, .12, .46, .75, 1], ease: motionEase.travel }} /><motion.img className="sent-water-departure sent-water-departure-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={{ opacity: departureStarted ? [0, .44, .44, .44, .4] : 0, transform: departureStarted ? ["translate3d(-40px, 244px, 0) scale(.9)", "translate3d(-56px, 242px, 0) scale(.9)", "translate3d(-28px, 248px, 0) scale(.9)", "translate3d(-50px, 242px, 0) scale(.9)", "translate3d(-40px, 244px, 0) scale(.9)"] : "translate3d(-40px, 244px, 0) scale(.9)" }} transition={{ duration: departureSeconds, times: [0, .12, .46, .75, 1], ease: motionEase.travel }} /><motion.div className="sent-carrier-departure sent-carrier-departure-bottle" initial={false} animate={{ transform: departureStarted ? ["translate3d(128px, 112px, 0) scale(.92)", "translate3d(128px, 168px, 0) scale(.92)", "translate3d(128px, 252px, 0) scale(.92)", "translate3d(128px, 354px, 0) scale(.92)", "translate3d(128px, 540px, 0) scale(.92)"] : "translate3d(128px, 112px, 0) scale(.92)" }} transition={{ ...departureTransition, times: [0, .22, .48, .75, 1] }} onAnimationComplete={completeDeparture}><CarrierIcon id={carrier.id} size="sealed" /></motion.div></> : <motion.div className="sent-carrier-departure sent-carrier-departure-plane" initial={false} animate={{ transform: departureStarted ? ["translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)", "translate3d(98px, 154px, 0) rotate(-4deg) scale(1)", "translate3d(184px, 122px, 0) rotate(5deg) scale(.96)", "translate3d(256px, 54px, 0) rotate(1deg) scale(.9)", "translate3d(458px, -54px, 0) rotate(18deg) scale(.72)"] : "translate3d(16px, 212px, 0) rotate(-16deg) scale(.78)" }} transition={{ ...departureTransition, times: [0, .18, .42, .72, 1] }} onAnimationComplete={completeDeparture}><CarrierIcon id={carrier.id} size="sealed" /></motion.div>)}
       </div>
-      <AnimatePresence>
-        {sentComplete && <motion.div className="sent-completion" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}>
-          <div className="sent-copy"><h1>that&apos;s it from you…</h1></div>
-          <div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another one…</button><button className="quiet-link" type="button" onClick={onLeave}>leave for now…</button></div>
-        </motion.div>}
-      </AnimatePresence>
+      <AnimatePresence>{sentComplete && <motion.div className="sent-completion" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 12px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: motionEase.ui }}><div className="sent-copy"><h1>that&apos;s it from you…</h1></div><div className="sent-secondary"><button className="quiet-link" type="button" onClick={onAgain}>make another one…</button><button className="quiet-link" type="button" onClick={onLeave}>leave for now…</button></div></motion.div>}</AnimatePresence>
       <p className="sr-only" role="status">{sentComplete ? `Your ${carrier.shortLabel} has left with the letter for ${recipient}.` : `Your ${carrier.shortLabel} is taking the letter to ${recipient}.`}</p>
     </Page>
   );
@@ -2178,48 +2206,21 @@ function Arrival({ recipient, senderName, carrier, reduceMotion, onOpen, onDefer
   const [tapPrimed, setTapPrimed] = useState(false);
   const lastTapRef = useRef(0);
   const tapTimerRef = useRef<number | null>(null);
-  const arrivalSeconds = carrier.id === "bottle" ? 4.2 : carrier.id === "firefly" ? 4 : 3.8;
-  const arrivalTransforms = carrier.id === "firefly"
-    ? ["translate3d(-210px, 62px, 0) rotate(-12deg) scale(.72)", "translate3d(-72px, 18px, 0) rotate(5deg) scale(.8)", "translate3d(18px, 80px, 0) rotate(-5deg) scale(.86)", "translate3d(-18px, 158px, 0) rotate(4deg) scale(.9)", "translate3d(42px, 218px, 0) rotate(-3deg) scale(.86)", "translate3d(244px, 116px, 0) rotate(14deg) scale(.7)"]
-    : carrier.id === "plane"
-      ? ["translate3d(-220px, 182px, 0) rotate(-14deg) scale(.72)", "translate3d(-88px, 124px, 0) rotate(-4deg) scale(.88)", "translate3d(8px, 88px, 0) rotate(5deg) scale(1)", "translate3d(52px, 52px, 0) rotate(-1deg) scale(.96)", "translate3d(246px, -46px, 0) rotate(16deg) scale(.72)"]
-      : ["translate3d(218px, 72px, 0) rotate(9deg) scale(.74)", "translate3d(112px, 102px, 0) rotate(-4deg) scale(.88)", "translate3d(26px, 118px, 0) rotate(4deg) scale(1)", "translate3d(-12px, 108px, 0) rotate(-3deg) scale(.98)", "translate3d(-218px, 92px, 0) rotate(7deg) scale(.76)"];
+  const settledRef = useRef(reduceMotion);
+  const [arrivalStarted, setArrivalStarted] = useState(false);
+  const arrivalSeconds = motionTiming.arrival[carrier.id];
+  const arrivalTransforms = carrier.id === "firefly" ? ["translate3d(-230px, -28px, 0) rotate(-12deg) scale(.72)", "translate3d(-116px, 18px, 0) rotate(5deg) scale(.8)", "translate3d(34px, 78px, 0) rotate(-5deg) scale(.9)", "translate3d(-22px, 124px, 0) rotate(4deg) scale(.94)", "translate3d(10px, 42px, 0) rotate(-3deg) scale(.98)", "translate3d(0, 0, 0) rotate(0deg) scale(1)"] : carrier.id === "plane" ? ["translate3d(-242px, 138px, 0) rotate(-14deg) scale(.72)", "translate3d(-106px, 84px, 0) rotate(-4deg) scale(.88)", "translate3d(28px, 34px, 0) rotate(5deg) scale(1)", "translate3d(62px, 16px, 0) rotate(-1deg) scale(.98)", "translate3d(0, 0, 0) rotate(0deg) scale(1)"] : ["translate3d(0, -258px, 0) scale(.78)", "translate3d(0, -132px, 0) scale(.9)", "translate3d(0, -42px, 0) scale(.98)", "translate3d(0, 0, 0) scale(1)"];
   useEffect(() => {
-    setLanded(reduceMotion);
-    if (reduceMotion) return;
-    const timer = window.setTimeout(() => setLanded(true), arrivalSeconds * 1000);
-    return () => window.clearTimeout(timer);
-  }, [arrivalSeconds, carrier.id, reduceMotion]);
+    if (reduceMotion) { settledRef.current = true; setLanded(true); return; }
+    if (settledRef.current) return;
+    const frame = window.requestAnimationFrame(() => setArrivalStarted(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, [reduceMotion]);
   useEffect(() => () => { if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current); }, []);
-  const open = () => {
-    if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current);
-    setTapPrimed(false);
-    navigator.vibrate?.([10, 18, 12]);
-    onOpen();
-  };
-  const attemptOpen = () => {
-    const now = performance.now();
-    if (now - lastTapRef.current < 420) { open(); return; }
-    lastTapRef.current = now;
-    setTapPrimed(true);
-    navigator.vibrate?.(8);
-    if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current);
-    tapTimerRef.current = window.setTimeout(() => setTapPrimed(false), 460);
-  };
-  return (
-    <Page className={`arrival-page arrival-carrier-${carrier.id}`}>
-      <motion.header aria-hidden={!landed} initial={false} animate={{ opacity: landed ? 1 : 0, transform: landed ? "translate3d(0, 0, 0)" : "translate3d(0, 10px, 0)" }} transition={{ duration: reduceMotion ? .01 : .38, ease: [0.23, 1, 0.32, 1] }}><span>for {recipient}</span><h1>you’ve got something from {senderName}.</h1></motion.header>
-      <div className="arrival-object" data-carrier={carrier.id}>
-        <motion.img className="delivery-sun arrival-sun" src={artwork.environment.sun} alt="" draggable={false} data-asset-slot="arrival-sun" initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: !landed && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }, transform: { duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: [0.23, 1, 0.32, 1] } }} />
-        {carrier.id === "firefly" && <div className="arrival-firefly-reeds" aria-hidden="true"><motion.img className="arrival-environment arrival-reeds arrival-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "rotate(-3deg)" }} animate={{ transform: !landed && !reduceMotion ? ["rotate(-3deg)", "rotate(2deg)", "rotate(-1deg)", "rotate(0deg)"] : "rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .35, .72, 1], ease: [0.23, 1, 0.32, 1] }} /><motion.img className="arrival-environment arrival-reeds arrival-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "scaleX(-1) rotate(-3deg)" }} animate={{ transform: !landed && !reduceMotion ? ["scaleX(-1) rotate(-3deg)", "scaleX(-1) rotate(2deg)", "scaleX(-1) rotate(-1deg)", "scaleX(-1) rotate(0deg)"] : "scaleX(-1) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .32, .68, 1], ease: [0.23, 1, 0.32, 1] }} /></div>}
-        {carrier.id === "plane" && <motion.img className="arrival-environment arrival-clouds" src={artwork.environment.planeClouds} alt="" draggable={false} initial={reduceMotion ? false : { transform: "translate3d(18px, 4px, 0)" }} animate={{ transform: !landed && !reduceMotion ? ["translate3d(18px, 4px, 0)", "translate3d(-12px, 0, 0)", "translate3d(-28px, -3px, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: [0.23, 1, 0.32, 1] }} />}
-        {carrier.id === "bottle" && <div className="arrival-water" aria-hidden="true"><motion.img className="arrival-wave arrival-wave-a" src={artwork.environment.waveA} alt="" draggable={false} initial={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(-12px, 0, 0)", "translate3d(6px, 5px, 0)", "translate3d(12px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: [0.23, 1, 0.32, 1] }} /><motion.img className="arrival-wave arrival-wave-b" src={artwork.environment.waveB} alt="" draggable={false} initial={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(10px, 0, 0)", "translate3d(-4px, -4px, 0)", "translate3d(-10px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: [0.23, 1, 0.32, 1] }} /></div>}
-        <AnimatePresence>{!landed && <motion.div className={`arrival-courier-motion arrival-courier-${carrier.id}`} initial={{ opacity: 0, transform: arrivalTransforms[0] }} animate={{ opacity: [0, 1, 1, 1, 0], transform: arrivalTransforms }} transition={{ duration: arrivalSeconds, times: carrier.id === "firefly" ? [0, .16, .34, .55, .76, 1] : [0, .2, .48, .72, 1], ease: [0.77, 0, 0.175, 1] }}><Courier carrier={carrier} state="arrival" /></motion.div>}</AnimatePresence>
-        {landed && <motion.div className="arrival-drop" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, -10px, 0) scale(.96)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" }} transition={{ duration: reduceMotion ? .01 : .42, ease: [0.23, 1, 0.32, 1] }}><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} aria-label={`Double tap the ${carrier.shortLabel} to open`} onPointerUp={attemptOpen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); open(); } }} animate={{ transform: tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: [0.23, 1, 0.32, 1] }}>{carrier.id === "firefly" ? <DeliveryMascot className="arrival-delivery-mascot" /> : <CarrierIcon id={carrier.id} size="arrival" />}</motion.button><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></motion.div>}
-      </div>
-      <AnimatePresence>{landed && <motion.div className="arrival-options" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 10px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ delay: reduceMotion ? 0 : .12, duration: reduceMotion ? .01 : .34, ease: [0.23, 1, 0.32, 1] }}><button className="quiet-link" type="button" onClick={onDefer}>another time</button><button className="quiet-link unavailable-link" type="button" onClick={onRemove}>remove it</button></motion.div>}</AnimatePresence>
-    </Page>
-  );
+  const settleArrival = () => { if (!arrivalStarted || settledRef.current) return; settledRef.current = true; setLanded(true); };
+  const open = () => { if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current); setTapPrimed(false); navigator.vibrate?.([10, 18, 12]); onOpen(); };
+  const attemptOpen = () => { if (!landed) return; const now = performance.now(); if (now - lastTapRef.current < 420) { open(); return; } lastTapRef.current = now; setTapPrimed(true); navigator.vibrate?.(8); if (tapTimerRef.current !== null) window.clearTimeout(tapTimerRef.current); tapTimerRef.current = window.setTimeout(() => setTapPrimed(false), 460); };
+  return <Page className={`arrival-page arrival-carrier-${carrier.id}`}><motion.header aria-hidden={!landed} initial={false} animate={{ opacity: landed ? 1 : 0, transform: landed ? "translate3d(0, 0, 0)" : "translate3d(0, 10px, 0)" }} transition={{ duration: reduceMotion ? .01 : .38, ease: motionEase.ui }}><span>for {recipient}</span><h1>you’ve got something from {senderName}.</h1></motion.header><div className="arrival-object" data-carrier={carrier.id}><motion.img className="delivery-sun arrival-sun" data-asset-slot="arrival-sun" src={artwork.environment.sun} alt="" draggable={false} initial={reduceMotion ? false : { opacity: 0, transform: "rotate(-5deg) scale(.94)" }} animate={{ opacity: 1, transform: !landed && !reduceMotion ? ["rotate(-5deg) scale(.94)", "rotate(4deg) scale(1)", "rotate(0deg) scale(1)"] : "rotate(0deg) scale(1)" }} transition={{ opacity: { duration: reduceMotion ? .01 : .42, ease: motionEase.ui }, transform: { duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .7, 1], ease: motionEase.ui } }} />{carrier.id === "firefly" && <div className="arrival-firefly-reeds" aria-hidden="true"><motion.img className="arrival-environment arrival-reeds arrival-reeds-left" src={artwork.environment.reeds} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["rotate(-3deg)", "rotate(2deg)", "rotate(-1deg)", "rotate(0deg)"] : "rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .35, .72, 1], ease: motionEase.ui }} /><motion.img className="arrival-environment arrival-reeds arrival-reeds-right" src={artwork.environment.reeds} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["scaleX(-1) rotate(-3deg)", "scaleX(-1) rotate(2deg)", "scaleX(-1) rotate(-1deg)", "scaleX(-1) rotate(0deg)"] : "scaleX(-1) rotate(0deg)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .32, .68, 1], ease: motionEase.ui }} /></div>}{carrier.id === "plane" && <div className="arrival-plane-clouds" aria-hidden="true"><motion.img className="arrival-plane-cloud arrival-plane-cloud-top" src={artwork.environment.planeCloudTop} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(-34px, -8px, 0)", "translate3d(8px, 2px, 0)", "translate3d(42px, 12px, 0)"] : "translate3d(42px, 12px, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /><motion.img className="arrival-plane-cloud arrival-plane-cloud-middle" src={artwork.environment.planeCloudMiddle} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(-34px, 12px, 0)", "translate3d(10px, 5px, 0)", "translate3d(44px, 0, 0)"] : "translate3d(44px, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /><motion.img className="arrival-plane-cloud arrival-plane-cloud-bottom" src={artwork.environment.planeCloudBottom} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(42px, 18px, 0)", "translate3d(4px, 7px, 0)", "translate3d(-38px, -4px, 0)"] : "translate3d(-38px, -4px, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .62, 1], ease: motionEase.ui }} /></div>}{carrier.id === "bottle" && <div className="arrival-water" aria-hidden="true"><motion.img className="arrival-wave arrival-wave-a" src={artwork.environment.waveA} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(-12px, 0, 0)", "translate3d(6px, 5px, 0)", "translate3d(12px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: motionEase.ui }} /><motion.img className="arrival-wave arrival-wave-b" src={artwork.environment.waveB} alt="" draggable={false} animate={{ transform: !landed && !reduceMotion ? ["translate3d(10px, 0, 0)", "translate3d(-4px, -4px, 0)", "translate3d(-10px, 0, 0)"] : "translate3d(0, 0, 0)" }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: reduceMotion ? undefined : [0, .5, 1], ease: motionEase.ui }} /></div>}<motion.div className="arrival-carrier-journey" data-arrival-state={landed ? "landed" : "travelling"} initial={false} animate={{ transform: landed || reduceMotion ? "translate3d(0, 0, 0) rotate(0deg) scale(1)" : arrivalStarted ? arrivalTransforms : arrivalTransforms[0] }} transition={{ duration: reduceMotion ? .01 : arrivalSeconds, times: carrier.id === "firefly" ? [0, .16, .34, .55, .76, 1] : carrier.id === "plane" ? [0, .2, .48, .72, 1] : [0, .28, .68, 1], ease: motionEase.travel }} onAnimationComplete={settleArrival}><motion.button type="button" className={`arrival-carrier-button ${tapPrimed ? "is-tap-primed" : ""}`} disabled={!landed} aria-label={landed ? `Double tap the ${carrier.shortLabel} to open` : `${carrier.shortLabel} is arriving`} onPointerUp={attemptOpen} onKeyDown={(event) => { if ((event.key === "Enter" || event.key === " ") && landed) { event.preventDefault(); open(); } }} animate={{ transform: landed && tapPrimed ? "scale(.965) rotate(-1deg)" : "scale(1) rotate(0deg)" }} transition={{ duration: .14, ease: motionEase.ui }}>{carrier.id === "firefly" ? <DeliveryMascot className="arrival-delivery-mascot" /> : <CarrierIcon id={carrier.id} size="arrival" />}</motion.button></motion.div>{landed && <motion.div className="arrival-drop-copy" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 10px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ delay: reduceMotion ? 0 : .12, duration: reduceMotion ? .01 : .34, ease: motionEase.ui }}><p aria-live="polite">{tapPrimed ? <>tap once more<br /><small>to unfold what they made</small></> : <>double tap to open<br /><small>or use the open button</small></>}</p><button className="quiet-link direct-open" type="button" onClick={open}>open it</button></motion.div>}</div><AnimatePresence>{landed && <motion.div className="arrival-options" initial={reduceMotion ? false : { opacity: 0, transform: "translate3d(0, 10px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ delay: reduceMotion ? 0 : .12, duration: reduceMotion ? .01 : .34, ease: motionEase.ui }}><button className="quiet-link" type="button" onClick={onDefer}>another time</button><button className="quiet-link unavailable-link" type="button" onClick={onRemove}>remove it</button></motion.div>}</AnimatePresence></Page>;
 }
 
 type ReceiverObjectProps = {
@@ -2240,35 +2241,19 @@ type ReceiverObjectProps = {
 };
 
 function Opening({ snapshot, removeOpen, reduceMotion, onKeep, onClose, onRemove, onCancelRemove, onConfirmRemove }: { snapshot: KeepsakeSnapshot; removeOpen: boolean; reduceMotion: boolean; onKeep: () => boolean; onClose: () => void; onRemove: () => void; onCancelRemove: () => void; onConfirmRemove: () => void }) {
-  const moveEase = [0.77, 0, 0.175, 1] as const;
   const [opened, setOpened] = useState(reduceMotion);
   const [actionsOpen, setActionsOpen] = useState(false);
   const [keepFailed, setKeepFailed] = useState(false);
-  useEffect(() => {
-    if (reduceMotion) return;
-    const timer = window.setTimeout(() => setOpened(true), 1540);
-    return () => window.clearTimeout(timer);
-  }, [reduceMotion]);
-  const keep = () => {
-    if (!onKeep()) setKeepFailed(true);
-  };
-  return (
-    <motion.section className={`opening-page opening-envelope ${opened ? "is-open" : "is-unfolding"}`} initial={{ backgroundColor: "#ffffff" }} animate={{ backgroundColor: "#ffffff" }} transition={{ duration: .18, ease: [0.23, 1, 0.32, 1] }} aria-label="Opening the sealed private envelope">
-      {!opened && <motion.div className="opening-sealed-object" initial={{ opacity: 1, transform: "translate3d(0, 0, 0) scale(1) rotate(-1deg)" }} animate={{ opacity: [1, 1, 1, .58, 0], transform: ["translate3d(0, 0, 0) scale(1) rotate(-1deg)", "translate3d(0, 2px, 0) scale(.97) rotate(-1.5deg)", "translate3d(0, 18px, 0) scale(.94) rotate(.4deg)", "translate3d(0, 76px, 0) scale(.84) rotate(.8deg)", "translate3d(0, 126px, 0) scale(.76) rotate(1deg)"] }} transition={{ duration: .82, times: [0, .2, .46, .76, 1], ease: [0.23, 1, 0.32, 1] }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>}
-      <div className="opening-object-content">
-        <div className="receiver-paper-stage" aria-hidden={!opened} inert={!opened ? true : undefined}>
-          <motion.div className="receiver-paper-final" initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: reduceMotion || opened ? 1 : 0 }} transition={{ duration: reduceMotion ? .18 : .24, ease: [0.23, 1, 0.32, 1] }}><AuthoredPaper snapshot={snapshot} receiver={opened} /></motion.div>
-          {!opened && <motion.div className="receiver-fold-panels" aria-hidden="true" initial={{ opacity: 0, transform: "translate3d(0, 66px, 0) scale(.42) rotate(-2deg)" }} animate={{ opacity: [0, 1, 1, 1, 0], transform: ["translate3d(0, 66px, 0) scale(.42) rotate(-2deg)", "translate3d(0, 42px, 0) scale(.56) rotate(.8deg)", "translate3d(0, 12px, 0) scale(.82) rotate(-.3deg)", "translate3d(0, 0, 0) scale(1) rotate(0deg)", "translate3d(0, 0, 0) scale(1) rotate(0deg)"] }} transition={{ delay: .16, duration: 1.34, times: [0, .2, .57, .88, 1], ease: moveEase }}>
-            <motion.div className="receiver-fold-segment receiver-fold-segment-top" initial={{ transform: "rotateX(178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: .38, duration: .52, ease: moveEase }}><AuthoredPaper snapshot={snapshot} /></motion.div>
-            <div className="receiver-fold-segment receiver-fold-segment-middle"><AuthoredPaper snapshot={snapshot} /></div>
-            <motion.div className="receiver-fold-segment receiver-fold-segment-bottom" initial={{ transform: "rotateX(-178deg)" }} animate={{ transform: "rotateX(0deg)" }} transition={{ delay: .72, duration: .56, ease: moveEase }}><AuthoredPaper snapshot={snapshot} /></motion.div>
-          </motion.div>}
-        </div>
-        <AnimatePresence initial={false}>{opened && <motion.div className={`receiver-actions-reveal ${actionsOpen ? "is-expanded" : "is-collapsed"}`} initial={{ opacity: 0, transform: "translate3d(0, 14px, 0)" }} animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }} transition={{ duration: .28, ease: [0.23, 1, 0.32, 1] }}>{actionsOpen ? <><button className="receiver-actions-back" type="button" onClick={() => { setActionsOpen(false); onCancelRemove(); }}><Mark direction="left" /> back to the letter</button><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></> : <button className="receiver-actions-trigger" type="button" onClick={() => setActionsOpen(true)}>what should this become? <Mark /></button>}</motion.div>}</AnimatePresence>
-      </div>
-      {!opened && <motion.p className="receiver-opening-status" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ delay: .22, duration: 1.08, times: [0, .18, .74, 1], ease: [0.23, 1, 0.32, 1] }}>unfolding what {snapshot.sender} made.</motion.p>}
-    </motion.section>
-  );
+  useEffect(() => { if (reduceMotion) setOpened(true); }, [reduceMotion]);
+  const keep = () => { if (!onKeep()) setKeepFailed(true); };
+  return <motion.section className={`opening-page opening-envelope ${opened ? "is-open" : "is-unfolding"}`} initial={false} data-opening-state={opened ? "opened" : "folding"} aria-label="Opening the sealed private envelope">
+    {!opened && <motion.div className="opening-sealed-object" initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><SealedEnvelopeArtwork snapshot={snapshot} /></motion.div>}
+    <div className="opening-object-content"><div className="receiver-paper-stage" aria-hidden={!opened} inert={!opened ? true : undefined}>
+      <div className="receiver-paper-final" style={{ opacity: opened ? 1 : 0 }}><AuthoredPaper snapshot={snapshot} receiver={opened} /></div>
+      {!opened && <div className="receiver-fold-panels" aria-hidden="true"><PaperFold snapshot={snapshot} direction="open" onComplete={() => setOpened(true)} /></div>}
+    </div><AnimatePresence initial={false}>{opened && <motion.div className={`receiver-actions-reveal ${actionsOpen ? "is-expanded" : "is-collapsed"}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}>{actionsOpen ? <><button className="receiver-actions-back" type="button" onClick={() => { setActionsOpen(false); onCancelRemove(); }}><Mark direction="left" /> back to the letter</button><ReceiverActions removeOpen={removeOpen} keepFailed={keepFailed} onKeep={keep} onClose={onClose} onRemove={onRemove} onCancelRemove={onCancelRemove} onConfirmRemove={onConfirmRemove} /></> : <button className="receiver-actions-trigger" type="button" onClick={() => setActionsOpen(true)}>what should this become? <Mark /></button>}</motion.div>}</AnimatePresence></div>
+    {!opened && <p className="receiver-opening-status">unfolding what {snapshot.sender} made.</p>}
+  </motion.section>;
 }
 
 function ReceiverActions({ removeOpen, keepFailed, onKeep, onClose, onRemove, onCancelRemove, onConfirmRemove }: { removeOpen: boolean; keepFailed: boolean; onKeep: () => void; onClose: () => void; onRemove: () => void; onCancelRemove: () => void; onConfirmRemove: () => void }) {
@@ -2319,7 +2304,7 @@ function Cabinet({ items, removingId, onHome, onMake, onOpen, onRemove, onCancel
     <Page className="cabinet-page">
       <header><h1 ref={headingRef} tabIndex={-1}>things you kept.</h1></header>
       <div className="cabinet-field">
-        {items.length ? visibleItems.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0, transform: "translateY(8px)" }} animate={{ opacity: 1, transform: "translateY(0)" }} transition={{ duration: 0.22, ease: [0.23, 1, 0.32, 1] }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
+        {items.length ? visibleItems.map((item) => <motion.div key={item.id} className="cabinet-item cabinet-object" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: motionTiming.enter, ease: motionEase.ui }}><button type="button" onClick={() => onOpen(item)} aria-label={`Open kept object from ${item.sender} for ${item.recipient}`}><CarrierIcon id={item.carrier} size="cabinet" /><span>from {item.sender}<small>for {item.recipient}</small></span></button>{removingId === item.id ? <div className="cabinet-remove" role="alert"><p>Remove it? {item.sender} will not be told.</p><button type="button" onClick={() => onConfirmRemove(item)}>remove</button><button type="button" onClick={onCancelRemove}>cancel</button></div> : <button className="cabinet-remove-link" type="button" onClick={() => onRemove(item)}>remove from here</button>}</motion.div>) : <div className="empty-cabinet"><p>nothing kept here yet.</p></div>}
       </div>
       {pageCount > 1 && <nav className="cabinet-pagination" aria-label="Kept letter pages"><button type="button" onClick={() => setPage((current) => Math.max(0, current - 1))} disabled={page === 0}>previous</button><span aria-live="polite">{page + 1} of {pageCount}</span><button type="button" onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))} disabled={page === pageCount - 1}>next</button></nav>}
       <AppBottomNav lettersCurrent onHome={onHome} onMake={onMake} onLetters={returnToLetters} />

@@ -1,6 +1,17 @@
 <!-- This note records what the current coded exploratory prototype implements and what remains simulated. -->
 # Prototype implementation notes
 
+## Motion continuity — 6 September
+
+Ethan reported that motion felt disconnected across the whole app. This pass applies the same physical language to making, carrying and opening the existing finite keepsake; it does not change the chosen brand or invent another product flow.
+
+- Editing, material selection and routine navigation no longer use generic float/scale entrances. Pointer-driven canvas framing uses a short 180 ms adjustment; keyboard framing is immediate. The hub's single firefly entrance is shortened to 1.2 seconds and does not delay its actions.
+- Sender and receiver use one three-panel PaperFold of the actual authored snapshot, with opposite hinges and a 1.32-second sequence. Each panel crops a full-size copy of the chosen paper, preserving text wrapping and material positions. The final receiver paper replaces that geometry without a fade gap. Direct-entry completion is guarded and has a bounded lifecycle fallback.
+- The arrival carrier persists as the same DOM object from its carrier-specific approach to its tappable resting pose. The upright bottle travels vertically; firefly and plane have distinct routes. Plane arrival uses the three authored cloud pieces, kept clear of the opening controls. Sender completion is driven by the carrier's completed transform, and in-flight taps cannot open early.
+- A live matchMedia subscription replaces the library hook's mount-only preference read. Switching reduced motion on during folding, departure or arrival reaches the final usable state immediately; switching it off does not replay a completed journey.
+- Verification: 51 distinct browser checks passed across the integrated and focused runs. The final focused motion/artwork run passed 15/15; an additional departure preference-interruption test passed. The earlier broad run passed 48/50; its two failures were a lost artwork identifier (restored) and a clipboard-dependent scene test (now uses the real QR route). Existing scrapbook, exact-link, legacy payload, demo, keyboard and phone-layout checks passed. TypeScript/Vite build, 28 protected runtime checks and four Sites packaging checks passed. Phone screenshots were reviewed for intermediate fold frames and all three arrivals; an overlapping plane cloud was corrected. Independent source review found no remaining blocker.
+- These are implementation checks, not user validation. Real-phone motion comfort, camera/microphone capture and a QR scan on a second physical phone remain human verification steps.
+
 ## Live handoff recovery — 6 September
 
 A live Vercel report made handoff reliability the release priority. A new ordinary text-only keepsake was created, copied and opened with its exact message on the deployed receiver; the ten deployed demo-route checks also passed again. This did not reproduce Ethan's exact reported failure. Source and browser review exposed concrete failure paths, which this patch addresses:
@@ -9,7 +20,7 @@ A live Vercel report made handoff reliability the release priority. A new ordina
 - A valid URL is a full selectable read-only field, with Select Link and Open Receiver actions. Clipboard denial leaves the exact URL usable and selects it after rendering. An explicit manual-copy acknowledgement permits finishing when neither clipboard permission nor a dense-object QR is available; it does not claim the browser copied or delivered anything.
 - Copy/failed state resets every time a handoff begins, so a newly edited page cannot inherit the previous version's copied status.
 - Local media, invalid drafts and excessive payload size show a specific explanation immediately instead of an empty field. Unsupported media stays intact on the device, with a route back to the paper; it is never silently dropped or uploaded.
-- Optional motion work is parked outside the repository. This patch changes handoff behavior only and retains the independently verified scrapbook redesign.
+- At this release, motion work was kept separate so the handoff recovery could ship first; the later motion pass above retains these repairs.
 
 ## Customisable scrapbook — 6 September
 
